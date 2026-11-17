@@ -1,0 +1,4 @@
+
+/tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+
+SYMBOL TABLE:
