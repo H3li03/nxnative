@@ -59,6 +59,62 @@ static const lock_t k_locks[] = {
 
 static int rd(uint64_t a, void *out, size_t n) { vm_size_t got = 0; return a >= 0x1000 && vm_read_overwrite(mach_task_self(), (vm_address_t)a, n, (vm_address_t)out, &got) == KERN_SUCCESS && got == n; }
 
+// Resident Evil 0 1.0.0: read-only check of the MT Framework timing value used by
+// sRender::end (main+0x1285650 -> object1 -> object2+0x48). The addresses were
+// identified in the surveyed executable; do not turn this into a write row until
+// the live pointer chain and value have been confirmed on device.
+static void re0_timing_probe(void) {
+    static int done, tries;
+    if (done) return;
+    module_t *m = NULL;
+    for (int i = 0; i < g_nmod; i++)
+        if (!strcmp(g_mod[i].name, "main") &&
+            !strcmp(g_mod[i].build_id, "fb4239aa962b429b3d1776af92d93e79")) {
+            m = &g_mod[i];
+            break;
+        }
+    if (!m) { done = 1; return; }
+    const uint64_t slot_off = 0x1285650;
+    if (slot_off > m->size || m->size - slot_off < sizeof(uint64_t)) {
+        LOG("[RE0 timing probe] main image is too small for the surveyed timing slot");
+        done = 1;
+        return;
+    }
+    uint64_t object1 = 0, object2 = 0;
+    uint32_t raw = 0;
+    uint64_t slot = (uint64_t)(uintptr_t)(m->base + slot_off);
+    if (!rd(slot, &object1, sizeof object1) || object1 < 0x1000 ||
+        !rd(object1, &object2, sizeof object2) || object2 < 0x1000 ||
+        object2 > UINT64_MAX - 0x48 ||
+        !rd(object2 + 0x48, &raw, sizeof raw)) {
+        if (++tries >= 600) {
+            LOG("[RE0 timing probe] timing pointer chain not readable after %d presents; no memory written", tries);
+            done = 1;
+        }
+        return;
+    }
+    float fps;
+    memcpy(&fps, &raw, sizeof fps);
+    if (!(fps >= 10.0f && fps <= 120.0f)) {
+        if (++tries >= 600) {
+            LOG("[RE0 timing probe] object chain readable but +0x48 is not a plausible FPS value (bits=%08x); no memory written", raw);
+            done = 1;
+        }
+        return;
+    }
+    FILE *pf = fopen("/tmp/re0_timing_probe.log", "w");
+    if (pf) {
+        fprintf(pf, "build=fb4239aa962b429b3d1776af92d93e79\\nslot=main+%#llx\\nobject1=%p\\nobject2=%p\\nobject2+0x48=%g fps (bits=%08x)\\n",
+                (unsigned long long)slot_off, (void *)(uintptr_t)object1,
+                (void *)(uintptr_t)object2, fps, raw);
+        fclose(pf);
+    }
+    LOG("[RE0 timing probe] live MT timing chain verified: main+%#llx -> %p -> %p, +0x48=%g fps; read-only",
+        (unsigned long long)slot_off, (void *)(uintptr_t)object1,
+        (void *)(uintptr_t)object2, fps);
+    done = 1;
+}
+
 // NieR 1.0.3 exposes its preset minimum but ships fixed mode-specific fallbacks.
 // Keep the native current-scale and UV controller intact; only select its
 // verified lower bound. This is independent of the FPS choice.
@@ -255,6 +311,7 @@ int dm_fps_lock_engine(void) { pthread_once(&g_found, lock_find); return nrow ||
 int nvn_fps_high_now(void);   // hle_nvn.c
 int nvn_game_fps(void);       // hle_nvn.c: sustained game-requested 30 fps interval
 void dm_fps_lock_tick(void) {
+    re0_timing_probe();       // RE0: verify its live timing pointer chain without writing guest memory
     dynamic_resolution_tick();   // separate from the FPS cap
     static int state = -2, nlog[NLOCKS + 5], target, high; static const char *src;
     if (state == -1) return;
