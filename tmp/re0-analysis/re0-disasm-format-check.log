@@ -1,0 +1,45 @@
+===== FILE SIZE =====
+-rw-r--r--  1 maclifedrive  staff    92M 17 nov 16:33 tmp/re0-analysis/main.disasm.txt
+===== FIRST 25 LINES =====
+
+/Users/maclifedrive/Downloads/nxnative-clean-check/tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+       0:      	udf	#0x0
+       4:      	udf	#0x8
+       8:      	adr	x13, 0x889f1 <PT_LOAD#0+0x889f1>
+       c:      	<unknown>
+      10:      	<unknown>
+      14:      	<unknown>
+      18:      	<unknown>
+      1c:      	<unknown>
+      20:      	<unknown>
+		...
+      30:      	sub	sp, sp, #0x90
+      34:      	stp	x20, x19, [sp, #0x70]
+      38:      	stp	x29, x30, [sp, #0x80]
+      3c:      	add	x29, sp, #0x80
+      40:      	adrp	x19, 0x129a000 <PT_LOAD#0+0x129a000>
+      44:      	ldr	w8, [x19, #0xc8]
+      48:      	cbnz	w8, 0x124 <PT_LOAD#0+0x124>
+      4c:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+      50:      	ldr	x8, [x8, #0x458]
+===== SAMPLE AROUND MAIN LOOP =====
+695613:  2b688c:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+695805:  2b6b8c:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+910372:  38e604:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+911215:  38f364:      	bl	0x7aa5a0 <PT_LOAD#0+0x7aa5a0>
+1942347:  78c648:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+===== LAST 10 LINES =====
+  a05f80:      	add	x16, x16, #0x438
+  a05f84:      	br	x17
+  a05f88:      	adrp	x16, 0x1285000 <PT_LOAD#0+0x1285000>
+  a05f8c:      	ldr	x17, [x16, #0x440]
+  a05f90:      	add	x16, x16, #0x440
+  a05f94:      	br	x17
+  a05f98:      	adrp	x16, 0x1285000 <PT_LOAD#0+0x1285000>
+  a05f9c:      	ldr	x17, [x16, #0x448]
+  a05fa0:      	add	x16, x16, #0x448
+  a05fa4:      	br	x17
