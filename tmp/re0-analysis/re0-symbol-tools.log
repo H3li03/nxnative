@@ -1,0 +1,20 @@
+RE0 - TOOLCHAIN ELF
+mar 17 nov 2026 17:41:57 CET
+=== COMMANDS ===
+llvm-readelf     llvm-nm          readelf          llvm-objdump     objdump          /usr/bin/objdump
+nm               /usr/bin/nm
+
+=== XCODE LLVM ===
+xcrun: error: sh -c '/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -sdk macosx -find llvm-readelf 2> /dev/null' failed with exit code 17664: (null) (errno=Undefined error: 0)
+xcrun: error: unable to find utility "llvm-readelf", not a developer tool or in PATH
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-nm
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump
+
+=== HOMEBREW LLVM ===
+
+=== PYTHON ELF LIBRARIES ===
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import elftools; print("pyelftools:", elftools.__file__)
+    ^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'elftools'
