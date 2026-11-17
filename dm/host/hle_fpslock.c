@@ -73,7 +73,7 @@ static void re0_timing_probe(void) {
             m = &g_mod[i];
             break;
         }
-    if (!m) { if (++tries >= 600) { FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fputs("main module with the surveyed RE0 build ID was not found\\n", pf); fclose(pf); } done = 1; } return; }
+    if (!m) { if (++tries >= 600) { FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fputs("main module with the surveyed RE0 build ID was not found\n", pf); fclose(pf); } done = 1; } return; }
     const uint64_t slot_off = 0x1285650;
     if (slot_off > m->size || m->size - slot_off < sizeof(uint64_t)) {
         LOG("[RE0 timing probe] main image is too small for the surveyed timing slot");
@@ -89,7 +89,7 @@ static void re0_timing_probe(void) {
         !rd(object2 + 0x48, &raw, sizeof raw)) {
         if (++tries >= 600) {
             LOG("[RE0 timing probe] timing pointer chain not readable after %d presents; no memory written", tries);
-            FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fprintf(pf, "pointer chain unreadable after %d presents\\n", tries); fclose(pf); }
+            FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fprintf(pf, "pointer chain unreadable after %d presents\n", tries); fclose(pf); }
             done = 1;
         }
         return;
@@ -99,7 +99,7 @@ static void re0_timing_probe(void) {
     if (!(fps >= 10.0f && fps <= 120.0f)) {
         if (++tries >= 600) {
             LOG("[RE0 timing probe] object chain readable but +0x48 is not a plausible FPS value (bits=%08x); no memory written", raw);
-            FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fprintf(pf, "object chain readable; +0x48 bits=%08x is outside 10..120 FPS\\n", raw); fclose(pf); }
+            FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fprintf(pf, "object chain readable; +0x48 bits=%08x is outside 10..120 FPS\n", raw); fclose(pf); }
             done = 1;
         }
         return;
