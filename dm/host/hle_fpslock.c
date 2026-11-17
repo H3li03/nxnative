@@ -117,6 +117,50 @@ static void re0_timing_probe(void) {
     done = 1;
 }
 
+// EXPERIMENTAL, intentionally unsafe RE0 timing-field test. This is opt-in only:
+// DM_RE0_UNSAFE_TIMING=1 plus DM_FPS_TARGET=60 or 120. The field is known to
+// participate in MT Framework time scaling, but is NOT proven to be an FPS
+// selector; this test may change simulation speed. Build-ID and pointer/value
+// guards keep it confined to the surveyed RE0 1.0.0 process.
+static module_t *re0_unsafe_main(void) {
+    for (int i = 0; i < g_nmod; i++)
+        if (!strcmp(g_mod[i].name, "main") &&
+            !strcmp(g_mod[i].build_id, "fb4239aa962b429b3d1776af92d93e79"))
+            return &g_mod[i];
+    return NULL;
+}
+static int re0_unsafe_enabled(void) {
+    const char *e = getenv("DM_RE0_UNSAFE_TIMING");
+    const char *t = getenv("DM_FPS_TARGET");
+    int fps = t ? atoi(t) : DM_GAME_FPS_TARGET;
+    return e && !strcmp(e, "1") && (fps == 60 || fps == 120) &&
+           re0_unsafe_main() != NULL;
+}
+static void re0_unsafe_tick(int target, const char *src) {
+    static int nlog;
+    module_t *m = re0_unsafe_main();
+    if (!m || (target != 60 && target != 120) || 0x1285650 > m->size ||
+        m->size - 0x1285650 < sizeof(uint64_t)) return;
+    uint64_t object1 = 0, object2 = 0;
+    if (!rd((uint64_t)(uintptr_t)(m->base + 0x1285650), &object1, sizeof object1) ||
+        object1 < 0x1000 ||
+        !rd(object1, &object2, sizeof object2) || object2 < 0x1000 ||
+        object2 > UINT64_MAX - 0x48) return;
+    uint32_t cur;
+    if (!rd(object2 + 0x48, &cur, sizeof cur)) return;
+    float value; memcpy(&value, &cur, sizeof value);
+    if (!(value >= 10.0f && value <= 120.0f)) return;
+    if (value == (float)target) return;
+    float want_f = (float)target; uint32_t want;
+    memcpy(&want, &want_f, sizeof want);
+    uint32_t *p = (uint32_t *)(uintptr_t)(object2 + 0x48);
+    dm_guest_write_prepare(p, sizeof *p);
+    __atomic_store_n(p, want, __ATOMIC_RELAXED);
+    if (nlog++ < 16)
+        LOG("[RE0 UNSAFE TEST] object2+0x48 %.3f → %d (DM_RE0_UNSAFE_TIMING=1; %s); simulation speed may change",
+            value, target, src);
+}
+
 // NieR 1.0.3 exposes its preset minimum but ships fixed mode-specific fallbacks.
 // Keep the native current-scale and UV controller intact; only select its
 // verified lower bound. This is independent of the FPS choice.
@@ -309,7 +353,7 @@ static void lock_find(void) {
 // Frostbite's simulation rate, found by name).
 // Without one, and without a frame step state page, nothing makes the game follow the cap, so the graphics layer keeps the game's own present interval (hle_nvn.c fps_present_cap):
 // presenting at a cap the game does not step by runs a fixed-step game fast or slow (Tears of the Kingdom 1.4.2 at 2x with DM_FPS_TARGET=60)
-int dm_fps_lock_engine(void) { pthread_once(&g_found, lock_find); return nrow || nier || fb.n || uq.base; }
+int dm_fps_lock_engine(void) { pthread_once(&g_found, lock_find); return nrow || nier || fb.n || uq.base || re0_unsafe_enabled(); }
 int nvn_fps_high_now(void);   // hle_nvn.c
 int nvn_game_fps(void);       // hle_nvn.c: sustained game-requested 30 fps interval
 void dm_fps_lock_tick(void) {
@@ -319,18 +363,19 @@ void dm_fps_lock_tick(void) {
     if (state == -1) return;
     if (state == -2) {
         state = -1; pthread_once(&g_found, lock_find);
-        if (!nrow && !nier && !fb.n && !uq.base && !ue_missing) return;
+        if (!nrow && !nier && !fb.n && !uq.base && !ue_missing && !re0_unsafe_enabled()) return;
         const char *e = getenv("DM_FPS_TARGET"); int t = e ? atoi(e) : DM_GAME_FPS_TARGET; src = e ? "DM_FPS_TARGET" : "game profile fps_target";
         if (t != 0 && t != 30 && t != 60 && t != 120) { LOG("[RED] DM_FPS_TARGET=%s: must be 0, 30, 60 or 120; leaving the game's frame limit", e); t = 0; }
         if (t == 120 && DM_GAME_FPS_MAX < 120) { LOG("[RED] DM_FPS_TARGET=120: this game's speed at 120 fps is not checked (profile fps_max); running at 60"); t = 60; }
         high = t == 120;
         if (t && ue_missing) LOG("[RED] main: Unreal %s not found by the rewriter (ue_cvar.py NAMES; game profile ue_fps_cvar): the game's own frame limit stays", DM_GAME_UE_FPS_CVAR);
-        if (!nrow && !nier && !fb.n && !uq.base) return;
+        if (!nrow && !nier && !fb.n && !uq.base && !re0_unsafe_enabled()) return;
         if (!t) { for (int r = 0; r < nrow; r++) LOG("main: %s left as the game sets it (%s)", rows[r]->what, src); if (nier) LOG("main: NieR frame interval left as the game sets it (%s)", src);
                   if (fb.n) LOG("main: Frostbite simulation rate left as the game sets it (%s)", src); if (uq.base) LOG("main: Unity vSyncCount left as the game sets it (%s)", src); return; }
         target = t; state = 0;
     }
-    if (high) target = nvn_fps_high_now();   // only a requested 120 fps target follows the dynamic 120/60 hold; 30/60 overrides remain exact
+    if (high) target = nvn_fps_high_now();   // only a requested 120 fps target follows the dynamic 120/60 hold
+    if (re0_unsafe_enabled()) re0_unsafe_tick(target, src);; 30/60 overrides remain exact
     if (nier) {
         // NieR:Automata US/EU 1.0.3 (3c10ec35c5ef4c3686b4053afb0e58e7):
         // - [base + 0x192be00] points to the NVN graphics device object whose +0x9c160 holds the present interval (1 = 60 FPS, 2 = 30 FPS),
