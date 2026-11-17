@@ -1,0 +1,668 @@
+RE0 - FRAME WAIT CALLERS AND SLEEP ROUTINE
+mar 17 nov 2026 17:44:03 CET
+
+===== setFrameWait caller 0x2b688c =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x2b680c,0x2b6910) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  2b680c: 14000167     	b	0x2b6da8 <PT_LOAD#0+0x2b6da8>
+  2b6810: 90006740     	adrp	x0, 0xf9e000 <PT_LOAD#0+0xf9e000>
+  2b6814: 91204800     	add	x0, x0, #0x812
+  2b6818: 90006742     	adrp	x2, 0xf9e000 <PT_LOAD#0+0xf9e000>
+  2b681c: 91209442     	add	x2, x2, #0x825
+  2b6820: 52803161     	mov	w1, #0x18b              // =395
+  2b6824: 97f534a3     	bl	0x3ab0 <PT_LOAD#0+0x3ab0>
+  2b6828: aa1403e0     	mov	x0, x20
+  2b682c: 94000f0d     	bl	0x2ba460 <PT_LOAD#0+0x2ba460>
+  2b6830: 3707fcc0     	tbnz	w0, #0x0, 0x2b67c8 <PT_LOAD#0+0x2b67c8>
+  2b6834: 320003e8     	orr	w8, wzr, #0x1
+  2b6838: b9401e69     	ldr	w9, [x19, #0x1c]
+  2b683c: 71001d3f     	cmp	w9, #0x7
+  2b6840: 54002b48     	b.hi	0x2b6da8 <PT_LOAD#0+0x2b6da8>
+  2b6844: 9000694a     	adrp	x10, 0xfde000 <PT_LOAD#0+0xfde000>
+  2b6848: 9123d14a     	add	x10, x10, #0x8f4
+  2b684c: b8a97949     	ldrsw	x9, [x10, x9, lsl #2]
+  2b6850: 8b0a0129     	add	x9, x9, x10
+  2b6854: d61f0120     	br	x9
+  2b6858: f0007e68     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b685c: f9432908     	ldr	x8, [x8, #0x650]
+  2b6860: f9400100     	ldr	x0, [x8]
+  2b6864: b9404808     	ldr	w8, [x0, #0x48]
+  2b6868: b9004a68     	str	w8, [x19, #0x48]
+  2b686c: b9404c08     	ldr	w8, [x0, #0x4c]
+  2b6870: b9004e68     	str	w8, [x19, #0x4c]
+  2b6874: 39414008     	ldrb	w8, [x0, #0x50]
+  2b6878: 39014268     	strb	w8, [x19, #0x50]
+  2b687c: d2a83e08     	mov	x8, #0x41f00000         // =1106247680
+  2b6880: f2e83e08     	movk	x8, #0x41f0, lsl #48
+  2b6884: 2a1f03e1     	mov	w1, wzr
+  2b6888: f9002408     	str	x8, [x0, #0x48]
+  2b688c: 9413cea9     	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  2b6890: f0007e68     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b6894: f9432d08     	ldr	x8, [x8, #0x658]
+  2b6898: f9400114     	ldr	x20, [x8]
+  2b689c: b4002154     	cbz	x20, 0x2b6cc4 <PT_LOAD#0+0x2b6cc4>
+  2b68a0: aa1403e0     	mov	x0, x20
+  2b68a4: 94000eef     	bl	0x2ba460 <PT_LOAD#0+0x2ba460>
+  2b68a8: 36002200     	tbz	w0, #0x0, 0x2b6ce8 <PT_LOAD#0+0x2b6ce8>
+  2b68ac: 14000113     	b	0x2b6cf8 <PT_LOAD#0+0x2b6cf8>
+  2b68b0: d0007e89     	adrp	x9, 0x1288000 <PT_LOAD#0+0x1288000>
+  2b68b4: f9415529     	ldr	x9, [x9, #0x2a8]
+  2b68b8: f9401668     	ldr	x8, [x19, #0x28]
+  2b68bc: f100011f     	cmp	x8, #0x0
+  2b68c0: 9a8903e9     	csel	x9, xzr, x9, eq
+  2b68c4: b4002729     	cbz	x9, 0x2b6da8 <PT_LOAD#0+0x2b6da8>
+  2b68c8: b4002188     	cbz	x8, 0x2b6cf8 <PT_LOAD#0+0x2b6cf8>
+  2b68cc: 39415108     	ldrb	w8, [x8, #0x54]
+  2b68d0: 7200e11f     	tst	w8, #0x11111111
+  2b68d4: 54002121     	b.ne	0x2b6cf8 <PT_LOAD#0+0x2b6cf8>
+  2b68d8: 14000134     	b	0x2b6da8 <PT_LOAD#0+0x2b6da8>
+  2b68dc: aa1303e0     	mov	x0, x19
+  2b68e0: 9400048c     	bl	0x2b7b10 <PT_LOAD#0+0x2b7b10>
+  2b68e4: 36002620     	tbz	w0, #0x0, 0x2b6da8 <PT_LOAD#0+0x2b6da8>
+  2b68e8: f0007e68     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b68ec: f9443d08     	ldr	x8, [x8, #0x878]
+  2b68f0: f9400100     	ldr	x0, [x8]
+  2b68f4: 9401eba7     	bl	0x331790 <PT_LOAD#0+0x331790>
+  2b68f8: 36002580     	tbz	w0, #0x0, 0x2b6da8 <PT_LOAD#0+0x2b6da8>
+  2b68fc: d0007e88     	adrp	x8, 0x1288000 <PT_LOAD#0+0x1288000>
+  2b6900: f9415508     	ldr	x8, [x8, #0x2a8]
+  2b6904: f9401669     	ldr	x9, [x19, #0x28]
+  2b6908: f100013f     	cmp	x9, #0x0
+  2b690c: 9a8803e8     	csel	x8, xzr, x8, eq
+
+===== setFrameWait caller 0x2b6b8c =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x2b6b0c,0x2b6c10) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  2b6b0c: 140000a6     	b	0x2b6da4 <PT_LOAD#0+0x2b6da4>
+  2b6b10: f9400660     	ldr	x0, [x19, #0x8]
+  2b6b14: b4000200     	cbz	x0, 0x2b6b54 <PT_LOAD#0+0x2b6b54>
+  2b6b18: f0007e68     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b6b1c: f9432908     	ldr	x8, [x8, #0x650]
+  2b6b20: f9400108     	ldr	x8, [x8]
+  2b6b24: bd404900     	ldr	s0, [x8, #0x48]
+  2b6b28: 1e3e1001     	fmov	s1, #-1.00000000
+  2b6b2c: 1e201820     	fdiv	s0, s1, s0
+  2b6b30: bd407901     	ldr	s1, [x8, #0x78]
+  2b6b34: 1e210800     	fmul	s0, s0, s1
+  2b6b38: bd405661     	ldr	s1, [x19, #0x54]
+  2b6b3c: 1e202820     	fadd	s0, s1, s0
+  2b6b40: 1e202008     	fcmp	s0, #0.0
+  2b6b44: bd005660     	str	s0, [x19, #0x54]
+  2b6b48: 5400130a     	b.ge	0x2b6da8 <PT_LOAD#0+0x2b6da8>
+  2b6b4c: 940a2729     	bl	0x5407f0 <PT_LOAD#0+0x5407f0>
+  2b6b50: 350012c0     	cbnz	w0, 0x2b6da8 <PT_LOAD#0+0x2b6da8>
+  2b6b54: 321f07e8     	orr	w8, wzr, #0x6
+  2b6b58: 14000093     	b	0x2b6da4 <PT_LOAD#0+0x2b6da4>
+  2b6b5c: f94002a8     	ldr	x8, [x21]
+  2b6b60: 5290ce89     	mov	w9, #0x8674             // =34420
+  2b6b64: 320003ea     	orr	w10, wzr, #0x1
+  2b6b68: 3829690a     	strb	w10, [x8, x9]
+  2b6b6c: f0007e68     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b6b70: f9432908     	ldr	x8, [x8, #0x650]
+  2b6b74: f9400100     	ldr	x0, [x8]
+  2b6b78: b9404a68     	ldr	w8, [x19, #0x48]
+  2b6b7c: b9004808     	str	w8, [x0, #0x48]
+  2b6b80: b9404e68     	ldr	w8, [x19, #0x4c]
+  2b6b84: b9004c08     	str	w8, [x0, #0x4c]
+  2b6b88: 39414261     	ldrb	w1, [x19, #0x50]
+  2b6b8c: 9413cde9     	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  2b6b90: f9401660     	ldr	x0, [x19, #0x28]
+  2b6b94: b4000060     	cbz	x0, 0x2b6ba0 <PT_LOAD#0+0x2b6ba0>
+  2b6b98: 9406c4c6     	bl	0x467eb0 <PT_LOAD#0+0x467eb0>
+  2b6b9c: f900167f     	str	xzr, [x19, #0x28]
+  2b6ba0: f9400668     	ldr	x8, [x19, #0x8]
+  2b6ba4: f900167f     	str	xzr, [x19, #0x28]
+  2b6ba8: b4000128     	cbz	x8, 0x2b6bcc <PT_LOAD#0+0x2b6bcc>
+  2b6bac: b9401109     	ldr	w9, [x8, #0x10]
+  2b6bb0: 12127929     	and	w9, w9, #0xffffdfff
+  2b6bb4: b9001109     	str	w9, [x8, #0x10]
+  2b6bb8: f9400660     	ldr	x0, [x19, #0x8]
+  2b6bbc: f9400008     	ldr	x8, [x0]
+  2b6bc0: f9404108     	ldr	x8, [x8, #0x80]
+  2b6bc4: d63f0100     	blr	x8
+  2b6bc8: f900067f     	str	xzr, [x19, #0x8]
+  2b6bcc: f9401a68     	ldr	x8, [x19, #0x30]
+  2b6bd0: b4000128     	cbz	x8, 0x2b6bf4 <PT_LOAD#0+0x2b6bf4>
+  2b6bd4: b9401109     	ldr	w9, [x8, #0x10]
+  2b6bd8: 12127929     	and	w9, w9, #0xffffdfff
+  2b6bdc: b9001109     	str	w9, [x8, #0x10]
+  2b6be0: f9401a60     	ldr	x0, [x19, #0x30]
+  2b6be4: f9400008     	ldr	x8, [x0]
+  2b6be8: f9404108     	ldr	x8, [x8, #0x80]
+  2b6bec: d63f0100     	blr	x8
+  2b6bf0: f9001a7f     	str	xzr, [x19, #0x30]
+  2b6bf4: f9401e68     	ldr	x8, [x19, #0x38]
+  2b6bf8: b4000128     	cbz	x8, 0x2b6c1c <PT_LOAD#0+0x2b6c1c>
+  2b6bfc: b9401109     	ldr	w9, [x8, #0x10]
+  2b6c00: 12127929     	and	w9, w9, #0xffffdfff
+  2b6c04: b9001109     	str	w9, [x8, #0x10]
+  2b6c08: f9401e60     	ldr	x0, [x19, #0x38]
+  2b6c0c: f9400008     	ldr	x8, [x0]
+
+===== setFrameWait caller 0x38e604 =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x38e584,0x38e688) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  38e584: 9405916f     	bl	0x4f2b40 <PT_LOAD#0+0x4f2b40>
+  38e588: 94058f36     	bl	0x4f2260 <PT_LOAD#0+0x4f2260>
+  38e58c: 94058875     	bl	0x4f0760 <PT_LOAD#0+0x4f0760>
+  38e590: 9407e970     	bl	0x588b50 <PT_LOAD#0+0x588b50>
+  38e594: 9407e767     	bl	0x588330 <PT_LOAD#0+0x588330>
+  38e598: 940782b2     	bl	0x56f060 <PT_LOAD#0+0x56f060>
+  38e59c: 9407f695     	bl	0x58bff0 <PT_LOAD#0+0x58bff0>
+  38e5a0: 9405bb1c     	bl	0x4fd210 <PT_LOAD#0+0x4fd210>
+  38e5a4: 940ec86f     	bl	0x740760 <PT_LOAD#0+0x740760>
+  38e5a8: 940ea496     	bl	0x737800 <PT_LOAD#0+0x737800>
+  38e5ac: 9406d311     	bl	0x5431f0 <PT_LOAD#0+0x5431f0>
+  38e5b0: 94061724     	bl	0x514240 <PT_LOAD#0+0x514240>
+  38e5b4: 94037f43     	bl	0x46e2c0 <PT_LOAD#0+0x46e2c0>
+  38e5b8: 9406eb8e     	bl	0x5493f0 <PT_LOAD#0+0x5493f0>
+  38e5bc: 94056b51     	bl	0x4e9300 <PT_LOAD#0+0x4e9300>
+  38e5c0: 9407c828     	bl	0x580660 <PT_LOAD#0+0x580660>
+  38e5c4: 940f0057     	bl	0x74e720 <PT_LOAD#0+0x74e720>
+  38e5c8: 9403d26a     	bl	0x482f70 <PT_LOAD#0+0x482f70>
+  38e5cc: 940e9a4d     	bl	0x734f00 <PT_LOAD#0+0x734f00>
+  38e5d0: 94083db4     	bl	0x59dca0 <PT_LOAD#0+0x59dca0>
+  38e5d4: 9406e64b     	bl	0x547f00 <PT_LOAD#0+0x547f00>
+  38e5d8: 94068626     	bl	0x52fe70 <PT_LOAD#0+0x52fe70>
+  38e5dc: 94051dad     	bl	0x4d5c90 <PT_LOAD#0+0x4d5c90>
+  38e5e0: b0006121     	adrp	x1, 0xfb3000 <PT_LOAD#0+0xfb3000>
+  38e5e4: 91155421     	add	x1, x1, #0x555
+  38e5e8: aa1303e0     	mov	x0, x19
+  38e5ec: 94106cdd     	bl	0x7a9960 <PT_LOAD#0+0x7a9960>
+  38e5f0: d2a83e08     	mov	x8, #0x41f00000         // =1106247680
+  38e5f4: f2e83e08     	movk	x8, #0x41f0, lsl #48
+  38e5f8: aa1303e0     	mov	x0, x19
+  38e5fc: 2a1f03e1     	mov	w1, wzr
+  38e600: f9002668     	str	x8, [x19, #0x48]
+  38e604: 94106f4b     	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  38e608: b20203e8     	mov	x8, #0x4000000040000000 // =4611686019501129728
+  38e60c: 321803e0     	orr	w0, wzr, #0x100
+  38e610: 321c03e1     	orr	w1, wzr, #0x10
+  38e614: f807c268     	stur	x8, [x19, #0x7c]
+  38e618: 97faa386     	bl	0x237430 <PT_LOAD#0+0x237430>
+  38e61c: aa0003f4     	mov	x20, x0
+  38e620: 97faa3f0     	bl	0x2375e0 <PT_LOAD#0+0x2375e0>
+  38e624: 52903208     	mov	w8, #0x8190             // =33168
+  38e628: 72a000a8     	movk	w8, #0x5, lsl #16
+  38e62c: f8286a74     	str	x20, [x19, x8]
+  38e630: f94002c0     	ldr	x0, [x22]
+  38e634: 97f2dd23     	bl	0x45ac0 <PT_LOAD#0+0x45ac0>
+  38e638: f94002e0     	ldr	x0, [x23]
+  38e63c: 97fbcc65     	bl	0x2817d0 <PT_LOAD#0+0x2817d0>
+  38e640: f00077a8     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  38e644: f9432108     	ldr	x8, [x8, #0x640]
+  38e648: f9400100     	ldr	x0, [x8]
+  38e64c: f9400008     	ldr	x8, [x0]
+  38e650: f00077a1     	adrp	x1, 0x1285000 <PT_LOAD#0+0x1285000>
+  38e654: f9402d08     	ldr	x8, [x8, #0x58]
+  38e658: f944a821     	ldr	x1, [x1, #0x950]
+  38e65c: d63f0100     	blr	x8
+  38e660: 940035bc     	bl	0x39bd50 <PT_LOAD#0+0x39bd50>
+  38e664: f94002a0     	ldr	x0, [x21]
+  38e668: 941118ca     	bl	0x7d4990 <PT_LOAD#0+0x7d4990>
+  38e66c: 9419d6bf     	bl	0xa04168 <PT_LOAD#0+0xa04168>
+  38e670: 910123e0     	add	x0, sp, #0x48
+  38e674: 94137163     	bl	0x86ac00 <PT_LOAD#0+0x86ac00>
+  38e678: 910c43ff     	add	sp, sp, #0x310
+  38e67c: a9447bfd     	ldp	x29, x30, [sp, #0x40]
+  38e680: a9434ff4     	ldp	x20, x19, [sp, #0x30]
+  38e684: a94257f6     	ldp	x22, x21, [sp, #0x20]
+
+===== setFrameWait caller 0x78c648 =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x78c5c8,0x78c6c8) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  78c5c8: 9b084e88     	madd	x8, x20, x8, x19
+  78c5cc: b9404909     	ldr	w9, [x8, #0x48]
+  78c5d0: b9284669     	str	w9, [x19, #0x2844]
+  78c5d4: b9284a7f     	str	wzr, [x19, #0x2848]
+  78c5d8: b9404d09     	ldr	w9, [x8, #0x4c]
+  78c5dc: b9005109     	str	w9, [x8, #0x50]
+  78c5e0: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  78c5e4: a8c24ff4     	ldp	x20, x19, [sp], #0x20
+  78c5e8: d65f03c0     	ret
+  78c5ec: b9683668     	ldr	w8, [x19, #0x2834]
+  78c5f0: 52800509     	mov	w9, #0x28               // =40
+  78c5f4: 9b094d08     	madd	x8, x8, x9, x19
+  78c5f8: 9100c101     	add	x1, x8, #0x30
+  78c5fc: f9400268     	ldr	x8, [x19]
+  78c600: f9402d08     	ldr	x8, [x8, #0x58]
+  78c604: aa1303e0     	mov	x0, x19
+  78c608: d63f0100     	blr	x8
+  78c60c: 36000820     	tbz	w0, #0x0, 0x78c710 <PT_LOAD#0+0x78c710>
+  78c610: b00057d4     	adrp	x20, 0x1285000 <PT_LOAD#0+0x1285000>
+  78c614: f9432a94     	ldr	x20, [x20, #0x650]
+  78c618: 321e03e8     	orr	w8, wzr, #0x4
+  78c61c: b9283e68     	str	w8, [x19, #0x283c]
+  78c620: f9400280     	ldr	x0, [x20]
+  78c624: 39414008     	ldrb	w8, [x0, #0x50]
+  78c628: 52850989     	mov	w9, #0x284c             // =10316
+  78c62c: 38296a68     	strb	w8, [x19, x9]
+  78c630: b9404c09     	ldr	w9, [x0, #0x4c]
+  78c634: 52850a88     	mov	w8, #0x2854             // =10324
+  78c638: 2a1f03e1     	mov	w1, wzr
+  78c63c: b9285269     	str	w9, [x19, #0x2850]
+  78c640: 38286a7f     	strb	wzr, [x19, x8]
+  78c644: b9284a7f     	str	wzr, [x19, #0x2848]
+  78c648: 9400773a     	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  78c64c: f9400288     	ldr	x8, [x20]
+  78c650: 52880009     	mov	w9, #0x4000             // =16384
+  78c654: 72a8c389     	movk	w9, #0x461c, lsl #16
+  78c658: 14000050     	b	0x78c798 <PT_LOAD#0+0x78c798>
+  78c65c: b00057c8     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  78c660: f9432908     	ldr	x8, [x8, #0x650]
+  78c664: f9400108     	ldr	x8, [x8]
+  78c668: 320003e9     	orr	w9, wzr, #0x1
+  78c66c: 3901d109     	strb	w9, [x8, #0x74]
+  78c670: b9684a69     	ldr	w9, [x19, #0x2848]
+  78c674: 11000529     	add	w9, w9, #0x1
+  78c678: 7100553f     	cmp	w9, #0x15
+  78c67c: b9284a69     	str	w9, [x19, #0x2848]
+  78c680: 54000483     	b.lo	0x78c710 <PT_LOAD#0+0x78c710>
+  78c684: b9284a7f     	str	wzr, [x19, #0x2848]
+  78c688: 3901d11f     	strb	wzr, [x8, #0x74]
+  78c68c: 528000a8     	mov	w8, #0x5                // =5
+  78c690: b9283e68     	str	w8, [x19, #0x283c]
+  78c694: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  78c698: a8c24ff4     	ldp	x20, x19, [sp], #0x20
+  78c69c: d65f03c0     	ret
+  78c6a0: b00057c9     	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+  78c6a4: b9683668     	ldr	w8, [x19, #0x2834]
+  78c6a8: f9432929     	ldr	x9, [x9, #0x650]
+  78c6ac: f9400129     	ldr	x9, [x9]
+  78c6b0: bd407920     	ldr	s0, [x9, #0x78]
+  78c6b4: bd684261     	ldr	s1, [x19, #0x2840]
+  78c6b8: 1e212800     	fadd	s0, s0, s1
+  78c6bc: b9684a6a     	ldr	w10, [x19, #0x2848]
+  78c6c0: 1100054a     	add	w10, w10, #0x1
+  78c6c4: b9284a6a     	str	w10, [x19, #0x2848]
+
+===== setFrameWait caller 0x78c78c =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x78c70c,0x78c80c) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  78c70c: b9283e68     	str	w8, [x19, #0x283c]
+  78c710: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  78c714: a8c24ff4     	ldp	x20, x19, [sp], #0x20
+  78c718: d65f03c0     	ret
+  78c71c: 52850728     	mov	w8, #0x2839             // =10297
+  78c720: 38686a68     	ldrb	w8, [x19, x8]
+  78c724: 34000108     	cbz	w8, 0x78c744 <PT_LOAD#0+0x78c744>
+  78c728: 2a1f03e8     	mov	w8, wzr
+  78c72c: 14000012     	b	0x78c774 <PT_LOAD#0+0x78c774>
+  78c730: 320003e8     	orr	w8, wzr, #0x1
+  78c734: b9283e68     	str	w8, [x19, #0x283c]
+  78c738: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  78c73c: a8c24ff4     	ldp	x20, x19, [sp], #0x20
+  78c740: d65f03c0     	ret
+  78c744: 52850708     	mov	w8, #0x2838             // =10296
+  78c748: 38686a68     	ldrb	w8, [x19, x8]
+  78c74c: 34000128     	cbz	w8, 0x78c770 <PT_LOAD#0+0x78c770>
+  78c750: b9683668     	ldr	w8, [x19, #0x2834]
+  78c754: b9683269     	ldr	w9, [x19, #0x2830]
+  78c758: 11000508     	add	w8, w8, #0x1
+  78c75c: 6b09011f     	cmp	w8, w9
+  78c760: 54000082     	b.hs	0x78c770 <PT_LOAD#0+0x78c770>
+  78c764: b9283668     	str	w8, [x19, #0x2834]
+  78c768: 321f03e8     	orr	w8, wzr, #0x2
+  78c76c: 14000002     	b	0x78c774 <PT_LOAD#0+0x78c774>
+  78c770: 320003e8     	orr	w8, wzr, #0x1
+  78c774: b9283e68     	str	w8, [x19, #0x283c]
+  78c778: b00057d4     	adrp	x20, 0x1285000 <PT_LOAD#0+0x1285000>
+  78c77c: f9432a94     	ldr	x20, [x20, #0x650]
+  78c780: 52850988     	mov	w8, #0x284c             // =10316
+  78c784: 38686a61     	ldrb	w1, [x19, x8]
+  78c788: f9400280     	ldr	x0, [x20]
+  78c78c: 940076e9     	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  78c790: f9400288     	ldr	x8, [x20]
+  78c794: b9685269     	ldr	w9, [x19, #0x2850]
+  78c798: b9004d09     	str	w9, [x8, #0x4c]
+  78c79c: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  78c7a0: a8c24ff4     	ldp	x20, x19, [sp], #0x20
+  78c7a4: d65f03c0     	ret
+		...
+  78c7b0: 52800508     	mov	w8, #0x28               // =40
+  78c7b4: 9ba80028     	umaddl	x8, w1, w8, x0
+  78c7b8: 9100c100     	add	x0, x8, #0x30
+  78c7bc: d65f03c0     	ret
+  78c7c0: b9683c08     	ldr	w8, [x0, #0x283c]
+  78c7c4: 7100091f     	cmp	w8, #0x2
+  78c7c8: 540000c3     	b.lo	0x78c7e0 <PT_LOAD#0+0x78c7e0>
+  78c7cc: b9683408     	ldr	w8, [x0, #0x2834]
+  78c7d0: 52800509     	mov	w9, #0x28               // =40
+  78c7d4: 9b090108     	madd	x8, x8, x9, x0
+  78c7d8: 9100c100     	add	x0, x8, #0x30
+  78c7dc: d65f03c0     	ret
+  78c7e0: aa1f03e0     	mov	x0, xzr
+  78c7e4: d65f03c0     	ret
+		...
+  78c7f0: d10243ff     	sub	sp, sp, #0x90
+  78c7f4: f9001bfb     	str	x27, [sp, #0x30]
+  78c7f8: a90467fa     	stp	x26, x25, [sp, #0x40]
+  78c7fc: a9055ff8     	stp	x24, x23, [sp, #0x50]
+  78c800: a90657f6     	stp	x22, x21, [sp, #0x60]
+  78c804: a9074ff4     	stp	x20, x19, [sp, #0x70]
+  78c808: a9087bfd     	stp	x29, x30, [sp, #0x80]
+
+===== setFrameWait caller 0x791bbc =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x791b3c,0x791c3c) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  791b3c: f84207f3     	ldr	x19, [sp], #0x20
+  791b40: d65f03c0     	ret
+  791b44: aa1303e0     	mov	x0, x19
+  791b48: 9400011a     	bl	0x791fb0 <PT_LOAD#0+0x791fb0>
+  791b4c: b940ae68     	ldr	w8, [x19, #0xac]
+  791b50: 11000508     	add	w8, w8, #0x1
+  791b54: b900ae68     	str	w8, [x19, #0xac]
+  791b58: f9407260     	ldr	x0, [x19, #0xe0]
+  791b5c: b980be62     	ldrsw	x2, [x19, #0xbc]
+  791b60: 2a1f03e1     	mov	w1, wzr
+  791b64: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  791b68: f84207f3     	ldr	x19, [sp], #0x20
+  791b6c: 1409c8bb     	b	0xa03e58 <PT_LOAD#0+0xa03e58>
+  791b70: 900057a8     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  791b74: f9432908     	ldr	x8, [x8, #0x650]
+  791b78: f9400108     	ldr	x8, [x8]
+  791b7c: 12000029     	and	w9, w1, #0x1
+  791b80: 3901d109     	strb	w9, [x8, #0x74]
+  791b84: d65f03c0     	ret
+		...
+  791b90: f81d0ffc     	str	x28, [sp, #-0x30]!
+  791b94: a9014ff4     	stp	x20, x19, [sp, #0x10]
+  791b98: a9027bfd     	stp	x29, x30, [sp, #0x20]
+  791b9c: 910083fd     	add	x29, sp, #0x20
+  791ba0: d10c03ff     	sub	sp, sp, #0x300
+  791ba4: 900057b4     	adrp	x20, 0x1285000 <PT_LOAD#0+0x1285000>
+  791ba8: f9432a94     	ldr	x20, [x20, #0x650]
+  791bac: aa0003f3     	mov	x19, x0
+  791bb0: 3901d67f     	strb	wzr, [x19, #0x75]
+  791bb4: f9400280     	ldr	x0, [x20]
+  791bb8: 3941da61     	ldrb	w1, [x19, #0x76]
+  791bbc: 940061dd     	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  791bc0: 900057a8     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  791bc4: f9447108     	ldr	x8, [x8, #0x8e0]
+  791bc8: f9400108     	ldr	x8, [x8]
+  791bcc: f803411f     	stur	xzr, [x8, #0x34]
+  791bd0: f802c11f     	stur	xzr, [x8, #0x2c]
+  791bd4: b9406669     	ldr	w9, [x19, #0x64]
+  791bd8: b90d6509     	str	w9, [x8, #0xd64]
+  791bdc: f9400288     	ldr	x8, [x20]
+  791be0: 3941de69     	ldrb	w9, [x19, #0x77]
+  791be4: 3901d109     	strb	w9, [x8, #0x74]
+  791be8: f00057a8     	adrp	x8, 0x1288000 <PT_LOAD#0+0x1288000>
+  791bec: f940c908     	ldr	x8, [x8, #0x190]
+  791bf0: f9400108     	ldr	x8, [x8]
+  791bf4: b9407a69     	ldr	w9, [x19, #0x78]
+  791bf8: b9032109     	str	w9, [x8, #0x320]
+  791bfc: f9406661     	ldr	x1, [x19, #0xc8]
+  791c00: b40000e1     	cbz	x1, 0x791c1c <PT_LOAD#0+0x791c1c>
+  791c04: 900057a8     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  791c08: f9436d08     	ldr	x8, [x8, #0x6d8]
+  791c0c: f9401d00     	ldr	x0, [x8, #0x38]
+  791c10: f9400008     	ldr	x8, [x0]
+  791c14: f9403508     	ldr	x8, [x8, #0x68]
+  791c18: d63f0100     	blr	x8
+  791c1c: aa1303f4     	mov	x20, x19
+  791c20: f84c0e81     	ldr	x1, [x20, #0xc0]!
+  791c24: b40000e1     	cbz	x1, 0x791c40 <PT_LOAD#0+0x791c40>
+  791c28: 900057a8     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  791c2c: f9436d08     	ldr	x8, [x8, #0x6d8]
+  791c30: f9401d00     	ldr	x0, [x8, #0x38]
+  791c34: f9400008     	ldr	x8, [x0]
+  791c38: f9403508     	ldr	x8, [x8, #0x68]
+
+===== setFrameWait caller 0x792c10 =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x792b90,0x792c90) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  792b90: 9a8a0342     	csel	x2, x26, x10, eq
+  792b94: f100013f     	cmp	x9, #0x0
+  792b98: 9a880343     	csel	x3, x26, x8, eq
+  792b9c: 910c43e0     	add	x0, sp, #0x310
+  792ba0: aa1603e1     	mov	x1, x22
+  792ba4: 14000014     	b	0x792bf4 <PT_LOAD#0+0x792bf4>
+  792ba8: a9432668     	ldp	x8, x9, [x19, #0x30]
+  792bac: 9100210a     	add	x10, x8, #0x8
+  792bb0: f100011f     	cmp	x8, #0x0
+  792bb4: 91002128     	add	x8, x9, #0x8
+  792bb8: 9a8a0342     	csel	x2, x26, x10, eq
+  792bbc: f100013f     	cmp	x9, #0x0
+  792bc0: 9a880343     	csel	x3, x26, x8, eq
+  792bc4: 910c43e0     	add	x0, sp, #0x310
+  792bc8: aa1703e1     	mov	x1, x23
+  792bcc: 1400000a     	b	0x792bf4 <PT_LOAD#0+0x792bf4>
+  792bd0: a9432668     	ldp	x8, x9, [x19, #0x30]
+  792bd4: 9100210a     	add	x10, x8, #0x8
+  792bd8: f100011f     	cmp	x8, #0x0
+  792bdc: 91002128     	add	x8, x9, #0x8
+  792be0: 9a8a0342     	csel	x2, x26, x10, eq
+  792be4: f100013f     	cmp	x9, #0x0
+  792be8: 9a880343     	csel	x3, x26, x8, eq
+  792bec: 910c43e0     	add	x0, sp, #0x310
+  792bf0: aa1803e1     	mov	x1, x24
+  792bf4: 9409c4d5     	bl	0xa03f48 <PT_LOAD#0+0xa03f48>
+  792bf8: 910c43e0     	add	x0, sp, #0x310
+  792bfc: 97f249d9     	bl	0x425360 <PT_LOAD#0+0x425360>
+  792c00: 3707f860     	tbnz	w0, #0x0, 0x792b0c <PT_LOAD#0+0x792b0c>
+  792c04: f9400360     	ldr	x0, [x27]
+  792c08: 320003e1     	orr	w1, wzr, #0x1
+  792c0c: 320003f5     	orr	w21, wzr, #0x1
+  792c10: 94005dc8     	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  792c14: f9400368     	ldr	x8, [x27]
+  792c18: f0005794     	adrp	x20, 0x1285000 <PT_LOAD#0+0x1285000>
+  792c1c: f9436e94     	ldr	x20, [x20, #0x6d8]
+  792c20: 3901d115     	strb	w21, [x8, #0x74]
+  792c24: f9401e80     	ldr	x0, [x20, #0x38]
+  792c28: f9400008     	ldr	x8, [x0]
+  792c2c: b980ba69     	ldrsw	x9, [x19, #0xb8]
+  792c30: d37df121     	lsl	x1, x9, #3
+  792c34: f9401d08     	ldr	x8, [x8, #0x38]
+  792c38: 321c03e2     	orr	w2, wzr, #0x10
+  792c3c: d63f0100     	blr	x8
+  792c40: f9006260     	str	x0, [x19, #0xc0]
+  792c44: f9401e80     	ldr	x0, [x20, #0x38]
+  792c48: f9400008     	ldr	x8, [x0]
+  792c4c: f9401d08     	ldr	x8, [x8, #0x38]
+  792c50: b980be61     	ldrsw	x1, [x19, #0xbc]
+  792c54: 321c03e2     	orr	w2, wzr, #0x10
+  792c58: d63f0100     	blr	x8
+  792c5c: f9406268     	ldr	x8, [x19, #0xc0]
+  792c60: f100001f     	cmp	x0, #0x0
+  792c64: fa401904     	ccmp	x8, #0x0, #0x4, ne
+  792c68: f9007260     	str	x0, [x19, #0xe0]
+  792c6c: 540008a0     	b.eq	0x792d80 <PT_LOAD#0+0x792d80>
+  792c70: b940be68     	ldr	w8, [x19, #0xbc]
+  792c74: 11000d09     	add	w9, w8, #0x3
+  792c78: 7100011f     	cmp	w8, #0x0
+  792c7c: 1a88b128     	csel	w8, w9, w8, lt
+  792c80: 93427d02     	sbfx	x2, x8, #2, #30
+  792c84: 2a1f03e1     	mov	w1, wzr
+  792c88: 9409c474     	bl	0xa03e58 <PT_LOAD#0+0xa03e58>
+  792c8c: 3941d268     	ldrb	w8, [x19, #0x74]
+
+===== sleep helper 0xa04238 =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0xa04238,0xa04338) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  a04238: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0423c: f942ce11     	ldr	x17, [x16, #0x598]
+  a04240: 91166210     	add	x16, x16, #0x598
+  a04244: d61f0220     	br	x17
+  a04248: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0424c: f942d211     	ldr	x17, [x16, #0x5a0]
+  a04250: 91168210     	add	x16, x16, #0x5a0
+  a04254: d61f0220     	br	x17
+  a04258: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0425c: f942d611     	ldr	x17, [x16, #0x5a8]
+  a04260: 9116a210     	add	x16, x16, #0x5a8
+  a04264: d61f0220     	br	x17
+  a04268: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0426c: f942da11     	ldr	x17, [x16, #0x5b0]
+  a04270: 9116c210     	add	x16, x16, #0x5b0
+  a04274: d61f0220     	br	x17
+  a04278: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0427c: f942de11     	ldr	x17, [x16, #0x5b8]
+  a04280: 9116e210     	add	x16, x16, #0x5b8
+  a04284: d61f0220     	br	x17
+  a04288: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0428c: f942e211     	ldr	x17, [x16, #0x5c0]
+  a04290: 91170210     	add	x16, x16, #0x5c0
+  a04294: d61f0220     	br	x17
+  a04298: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0429c: f942e611     	ldr	x17, [x16, #0x5c8]
+  a042a0: 91172210     	add	x16, x16, #0x5c8
+  a042a4: d61f0220     	br	x17
+  a042a8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a042ac: f942ea11     	ldr	x17, [x16, #0x5d0]
+  a042b0: 91174210     	add	x16, x16, #0x5d0
+  a042b4: d61f0220     	br	x17
+  a042b8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a042bc: f942ee11     	ldr	x17, [x16, #0x5d8]
+  a042c0: 91176210     	add	x16, x16, #0x5d8
+  a042c4: d61f0220     	br	x17
+  a042c8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a042cc: f942f211     	ldr	x17, [x16, #0x5e0]
+  a042d0: 91178210     	add	x16, x16, #0x5e0
+  a042d4: d61f0220     	br	x17
+  a042d8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a042dc: f942f611     	ldr	x17, [x16, #0x5e8]
+  a042e0: 9117a210     	add	x16, x16, #0x5e8
+  a042e4: d61f0220     	br	x17
+  a042e8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a042ec: f942fa11     	ldr	x17, [x16, #0x5f0]
+  a042f0: 9117c210     	add	x16, x16, #0x5f0
+  a042f4: d61f0220     	br	x17
+  a042f8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a042fc: f942fe11     	ldr	x17, [x16, #0x5f8]
+  a04300: 9117e210     	add	x16, x16, #0x5f8
+  a04304: d61f0220     	br	x17
+  a04308: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0430c: f9430211     	ldr	x17, [x16, #0x600]
+  a04310: 91180210     	add	x16, x16, #0x600
+  a04314: d61f0220     	br	x17
+  a04318: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0431c: f9430611     	ldr	x17, [x16, #0x608]
+  a04320: 91182210     	add	x16, x16, #0x608
+  a04324: d61f0220     	br	x17
+  a04328: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0432c: f9430a11     	ldr	x17, [x16, #0x610]
+  a04330: 91184210     	add	x16, x16, #0x610
+  a04334: d61f0220     	br	x17
+
+===== timer helper 0x9c1120 =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x9c1120,0x9c11a0) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  9c1120: 14010ea2     	b	0xa04ba8 <PT_LOAD#0+0xa04ba8>
+		...
+  9c1130: f81e0ff3     	str	x19, [sp, #-0x20]!
+  9c1134: a9017bfd     	stp	x29, x30, [sp, #0x10]
+  9c1138: 910043fd     	add	x29, sp, #0x10
+  9c113c: b00046b3     	adrp	x19, 0x1296000 <PT_LOAD#0+0x1296000>
+  9c1140: f9445673     	ldr	x19, [x19, #0x8a8]
+  9c1144: f9400260     	ldr	x0, [x19]
+  9c1148: b4000080     	cbz	x0, 0x9c1158 <PT_LOAD#0+0x9c1158>
+  9c114c: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  9c1150: f84207f3     	ldr	x19, [sp], #0x20
+  9c1154: d65f03c0     	ret
+  9c1158: 94011108     	bl	0xa05578 <PT_LOAD#0+0xa05578>
+  9c115c: f9000260     	str	x0, [x19]
+  9c1160: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  9c1164: f84207f3     	ldr	x19, [sp], #0x20
+  9c1168: d65f03c0     	ret
+  9c116c: 00000000     	udf	#0x0
+  9c1170: f81e0ff3     	str	x19, [sp, #-0x20]!
+  9c1174: a9017bfd     	stp	x29, x30, [sp, #0x10]
+  9c1178: 910043fd     	add	x29, sp, #0x10
+  9c117c: aa0003f3     	mov	x19, x0
+  9c1180: 94010e8a     	bl	0xa04ba8 <PT_LOAD#0+0xa04ba8>
+  9c1184: a9008260     	stp	x0, x0, [x19, #0x8]
+  9c1188: b9001a7f     	str	wzr, [x19, #0x18]
+  9c118c: a9020260     	stp	x0, x0, [x19, #0x20]
+  9c1190: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  9c1194: f84207f3     	ldr	x19, [sp], #0x20
+  9c1198: d65f03c0     	ret
+  9c119c: 00000000     	udf	#0x0
+
+===== timer helper 0x9c1130 =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x9c1130,0x9c11b0) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  9c1130: f81e0ff3     	str	x19, [sp, #-0x20]!
+  9c1134: a9017bfd     	stp	x29, x30, [sp, #0x10]
+  9c1138: 910043fd     	add	x29, sp, #0x10
+  9c113c: b00046b3     	adrp	x19, 0x1296000 <PT_LOAD#0+0x1296000>
+  9c1140: f9445673     	ldr	x19, [x19, #0x8a8]
+  9c1144: f9400260     	ldr	x0, [x19]
+  9c1148: b4000080     	cbz	x0, 0x9c1158 <PT_LOAD#0+0x9c1158>
+  9c114c: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  9c1150: f84207f3     	ldr	x19, [sp], #0x20
+  9c1154: d65f03c0     	ret
+  9c1158: 94011108     	bl	0xa05578 <PT_LOAD#0+0xa05578>
+  9c115c: f9000260     	str	x0, [x19]
+  9c1160: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  9c1164: f84207f3     	ldr	x19, [sp], #0x20
+  9c1168: d65f03c0     	ret
+  9c116c: 00000000     	udf	#0x0
+  9c1170: f81e0ff3     	str	x19, [sp, #-0x20]!
+  9c1174: a9017bfd     	stp	x29, x30, [sp, #0x10]
+  9c1178: 910043fd     	add	x29, sp, #0x10
+  9c117c: aa0003f3     	mov	x19, x0
+  9c1180: 94010e8a     	bl	0xa04ba8 <PT_LOAD#0+0xa04ba8>
+  9c1184: a9008260     	stp	x0, x0, [x19, #0x8]
+  9c1188: b9001a7f     	str	wzr, [x19, #0x18]
+  9c118c: a9020260     	stp	x0, x0, [x19, #0x20]
+  9c1190: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  9c1194: f84207f3     	ldr	x19, [sp], #0x20
+  9c1198: d65f03c0     	ret
+  9c119c: 00000000     	udf	#0x0
+  9c11a0: f81e0ff3     	str	x19, [sp, #-0x20]!
+  9c11a4: a9017bfd     	stp	x29, x30, [sp, #0x10]
+  9c11a8: 910043fd     	add	x29, sp, #0x10
+  9c11ac: aa0003f3     	mov	x19, x0
+
+===== SYMBOL NAMES NEAR SLEEP HELPER =====
