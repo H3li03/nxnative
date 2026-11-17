@@ -1,0 +1,38 @@
+=== Dynamic symbols for dispatch slots ===
+symbol[33]: name='rand' value=0x0 size=0x0 shndx=0
+symbol[34]: name='atan2f' value=0x0 size=0x0 shndx=0
+symbol[35]: name='fmodf' value=0x0 size=0x0 shndx=0
+
+=== Static object at 0x1baac60 ===
++0x00: not file-backed (possibly BSS)
++0x08: not file-backed (possibly BSS)
++0x10: not file-backed (possibly BSS)
++0x18: not file-backed (possibly BSS)
++0x20: not file-backed (possibly BSS)
++0x28: not file-backed (possibly BSS)
++0x30: not file-backed (possibly BSS)
++0x38: not file-backed (possibly BSS)
++0x40: not file-backed (possibly BSS)
++0x48: not file-backed (possibly BSS)
++0x50: not file-backed (possibly BSS)
++0x58: not file-backed (possibly BSS)
++0x60: not file-backed (possibly BSS)
++0x68: not file-backed (possibly BSS)
++0x70: not file-backed (possibly BSS)
++0x78: not file-backed (possibly BSS)
++0x80: not file-backed (possibly BSS)
++0x88: not file-backed (possibly BSS)
++0x90: not file-backed (possibly BSS)
++0x98: not file-backed (possibly BSS)
++0xa0: not file-backed (possibly BSS)
++0xa8: not file-backed (possibly BSS)
++0xb0: not file-backed (possibly BSS)
++0xb8: not file-backed (possibly BSS)
++0xc0: not file-backed (possibly BSS)
++0xc8: not file-backed (possibly BSS)
++0xd0: not file-backed (possibly BSS)
++0xd8: not file-backed (possibly BSS)
++0xe0: not file-backed (possibly BSS)
++0xe8: not file-backed (possibly BSS)
++0xf0: not file-backed (possibly BSS)
++0xf8: not file-backed (possibly BSS)
