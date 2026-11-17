@@ -1,0 +1,1375 @@
+
+
+===== SLEEP WRAPPER =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0xa04200,0xa042a0) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  a04200: 9115e210     	add	x16, x16, #0x578
+  a04204: d61f0220     	br	x17
+  a04208: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0420c: f942c211     	ldr	x17, [x16, #0x580]
+  a04210: 91160210     	add	x16, x16, #0x580
+  a04214: d61f0220     	br	x17
+  a04218: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0421c: f942c611     	ldr	x17, [x16, #0x588]
+  a04220: 91162210     	add	x16, x16, #0x588
+  a04224: d61f0220     	br	x17
+  a04228: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0422c: f942ca11     	ldr	x17, [x16, #0x590]
+  a04230: 91164210     	add	x16, x16, #0x590
+  a04234: d61f0220     	br	x17
+  a04238: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0423c: f942ce11     	ldr	x17, [x16, #0x598]
+  a04240: 91166210     	add	x16, x16, #0x598
+  a04244: d61f0220     	br	x17
+  a04248: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0424c: f942d211     	ldr	x17, [x16, #0x5a0]
+  a04250: 91168210     	add	x16, x16, #0x5a0
+  a04254: d61f0220     	br	x17
+  a04258: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0425c: f942d611     	ldr	x17, [x16, #0x5a8]
+  a04260: 9116a210     	add	x16, x16, #0x5a8
+  a04264: d61f0220     	br	x17
+  a04268: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0426c: f942da11     	ldr	x17, [x16, #0x5b0]
+  a04270: 9116c210     	add	x16, x16, #0x5b0
+  a04274: d61f0220     	br	x17
+  a04278: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0427c: f942de11     	ldr	x17, [x16, #0x5b8]
+  a04280: 9116e210     	add	x16, x16, #0x5b8
+  a04284: d61f0220     	br	x17
+  a04288: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0428c: f942e211     	ldr	x17, [x16, #0x5c0]
+  a04290: 91170210     	add	x16, x16, #0x5c0
+  a04294: d61f0220     	br	x17
+  a04298: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0429c: f942e611     	ldr	x17, [x16, #0x5c8]
+
+
+===== RAW CLOCK SOURCE =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0xa04b80,0xa04c10) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  a04b80: 9128e210     	add	x16, x16, #0xa38
+  a04b84: d61f0220     	br	x17
+  a04b88: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a04b8c: f9452211     	ldr	x17, [x16, #0xa40]
+  a04b90: 91290210     	add	x16, x16, #0xa40
+  a04b94: d61f0220     	br	x17
+  a04b98: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a04b9c: f9452611     	ldr	x17, [x16, #0xa48]
+  a04ba0: 91292210     	add	x16, x16, #0xa48
+  a04ba4: d61f0220     	br	x17
+  a04ba8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a04bac: f9452a11     	ldr	x17, [x16, #0xa50]
+  a04bb0: 91294210     	add	x16, x16, #0xa50
+  a04bb4: d61f0220     	br	x17
+  a04bb8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a04bbc: f9452e11     	ldr	x17, [x16, #0xa58]
+  a04bc0: 91296210     	add	x16, x16, #0xa58
+  a04bc4: d61f0220     	br	x17
+  a04bc8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a04bcc: f9453211     	ldr	x17, [x16, #0xa60]
+  a04bd0: 91298210     	add	x16, x16, #0xa60
+  a04bd4: d61f0220     	br	x17
+  a04bd8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a04bdc: f9453611     	ldr	x17, [x16, #0xa68]
+  a04be0: 9129a210     	add	x16, x16, #0xa68
+  a04be4: d61f0220     	br	x17
+  a04be8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a04bec: f9453a11     	ldr	x17, [x16, #0xa70]
+  a04bf0: 9129c210     	add	x16, x16, #0xa70
+  a04bf4: d61f0220     	br	x17
+  a04bf8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a04bfc: f9453e11     	ldr	x17, [x16, #0xa78]
+  a04c00: 9129e210     	add	x16, x16, #0xa78
+  a04c04: d61f0220     	br	x17
+  a04c08: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a04c0c: f9454211     	ldr	x17, [x16, #0xa80]
+
+
+===== CLOCK INITIALIZATION =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0xa05540,0xa055c0) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  a05540: 913c6210     	add	x16, x16, #0xf18
+  a05544: d61f0220     	br	x17
+  a05548: f00043f0     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0554c: f9479211     	ldr	x17, [x16, #0xf20]
+  a05550: 913c8210     	add	x16, x16, #0xf20
+  a05554: d61f0220     	br	x17
+  a05558: f00043f0     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0555c: f9479611     	ldr	x17, [x16, #0xf28]
+  a05560: 913ca210     	add	x16, x16, #0xf28
+  a05564: d61f0220     	br	x17
+  a05568: f00043f0     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0556c: f9479a11     	ldr	x17, [x16, #0xf30]
+  a05570: 913cc210     	add	x16, x16, #0xf30
+  a05574: d61f0220     	br	x17
+  a05578: f00043f0     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0557c: f9479e11     	ldr	x17, [x16, #0xf38]
+  a05580: 913ce210     	add	x16, x16, #0xf38
+  a05584: d61f0220     	br	x17
+  a05588: f00043f0     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0558c: f947a211     	ldr	x17, [x16, #0xf40]
+  a05590: 913d0210     	add	x16, x16, #0xf40
+  a05594: d61f0220     	br	x17
+  a05598: f00043f0     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0559c: f947a611     	ldr	x17, [x16, #0xf48]
+  a055a0: 913d2210     	add	x16, x16, #0xf48
+  a055a4: d61f0220     	br	x17
+  a055a8: f00043f0     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a055ac: f947aa11     	ldr	x17, [x16, #0xf50]
+  a055b0: 913d4210     	add	x16, x16, #0xf50
+  a055b4: d61f0220     	br	x17
+  a055b8: f00043f0     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a055bc: f947ae11     	ldr	x17, [x16, #0xf58]
+
+
+===== MAIN LOOP CALLER =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x38f280,0x38f460) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  38f280: 910586b5     	add	x21, x21, #0x161
+  38f284: f9400288     	ldr	x8, [x20]
+  38f288: f9403908     	ldr	x8, [x8, #0x70]
+  38f28c: aa1403e0     	mov	x0, x20
+  38f290: d63f0100     	blr	x8
+  38f294: aa1503e1     	mov	x1, x21
+  38f298: 9419d334     	bl	0xa03f68 <PT_LOAD#0+0xa03f68>
+  38f29c: 34000080     	cbz	w0, 0x38f2ac <PT_LOAD#0+0x38f2ac>
+  38f2a0: f9400e94     	ldr	x20, [x20, #0x18]
+  38f2a4: b5ffff14     	cbnz	x20, 0x38f284 <PT_LOAD#0+0x38f284>
+  38f2a8: 14000006     	b	0x38f2c0 <PT_LOAD#0+0x38f2c0>
+  38f2ac: b9401288     	ldr	w8, [x20, #0x10]
+  38f2b0: 12147908     	and	w8, w8, #0xfffff7ff
+  38f2b4: b9001288     	str	w8, [x20, #0x10]
+  38f2b8: f9400e94     	ldr	x20, [x20, #0x18]
+  38f2bc: b5fffe54     	cbnz	x20, 0x38f284 <PT_LOAD#0+0x38f284>
+  38f2c0: b9401268     	ldr	w8, [x19, #0x10]
+  38f2c4: 7100a91f     	cmp	w8, #0x2a
+  38f2c8: 54000301     	b.ne	0x38f328 <PT_LOAD#0+0x38f328>
+  38f2cc: b9401668     	ldr	w8, [x19, #0x14]
+  38f2d0: 7100111f     	cmp	w8, #0x4
+  38f2d4: 540002a1     	b.ne	0x38f328 <PT_LOAD#0+0x38f328>
+  38f2d8: d00077a8     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  38f2dc: f943a508     	ldr	x8, [x8, #0x748]
+  38f2e0: f9400108     	ldr	x8, [x8]
+  38f2e4: f9429513     	ldr	x19, [x8, #0x528]
+  38f2e8: b4000213     	cbz	x19, 0x38f328 <PT_LOAD#0+0x38f328>
+  38f2ec: d00060b4     	adrp	x20, 0xfa5000 <PT_LOAD#0+0xfa5000>
+  38f2f0: 9115fa94     	add	x20, x20, #0x57e
+  38f2f4: f9400268     	ldr	x8, [x19]
+  38f2f8: f9403908     	ldr	x8, [x8, #0x70]
+  38f2fc: aa1303e0     	mov	x0, x19
+  38f300: d63f0100     	blr	x8
+  38f304: aa1403e1     	mov	x1, x20
+  38f308: 9419d318     	bl	0xa03f68 <PT_LOAD#0+0xa03f68>
+  38f30c: 34000080     	cbz	w0, 0x38f31c <PT_LOAD#0+0x38f31c>
+  38f310: f9400e73     	ldr	x19, [x19, #0x18]
+  38f314: b5ffff13     	cbnz	x19, 0x38f2f4 <PT_LOAD#0+0x38f2f4>
+  38f318: 14000004     	b	0x38f328 <PT_LOAD#0+0x38f328>
+  38f31c: b9401268     	ldr	w8, [x19, #0x10]
+  38f320: 12147908     	and	w8, w8, #0xfffff7ff
+  38f324: b9001268     	str	w8, [x19, #0x10]
+  38f328: a9427bfd     	ldp	x29, x30, [sp, #0x20]
+  38f32c: a9414ff4     	ldp	x20, x19, [sp, #0x10]
+  38f330: f84307f5     	ldr	x21, [sp], #0x30
+  38f334: d65f03c0     	ret
+		...
+  38f340: d10203ff     	sub	sp, sp, #0x80
+  38f344: a9026ffc     	stp	x28, x27, [sp, #0x20]
+  38f348: a90367fa     	stp	x26, x25, [sp, #0x30]
+  38f34c: a9045ff8     	stp	x24, x23, [sp, #0x40]
+  38f350: a90557f6     	stp	x22, x21, [sp, #0x50]
+  38f354: a9064ff4     	stp	x20, x19, [sp, #0x60]
+  38f358: a9077bfd     	stp	x29, x30, [sp, #0x70]
+  38f35c: 9101c3fd     	add	x29, sp, #0x70
+  38f360: aa0003f3     	mov	x19, x0
+  38f364: 94106c8f     	bl	0x7aa5a0 <PT_LOAD#0+0x7aa5a0>
+  38f368: 52903108     	mov	w8, #0x8188             // =33160
+  38f36c: 72a000a8     	movk	w8, #0x5, lsl #16
+  38f370: f8686a60     	ldr	x0, [x19, x8]
+  38f374: f9400008     	ldr	x8, [x0]
+  38f378: f9401d08     	ldr	x8, [x8, #0x38]
+  38f37c: d63f0100     	blr	x8
+  38f380: 52903708     	mov	w8, #0x81b8             // =33208
+  38f384: 72a000a8     	movk	w8, #0x5, lsl #16
+  38f388: 8b080268     	add	x8, x19, x8
+  38f38c: f9000fe8     	str	x8, [sp, #0x18]
+  38f390: f9400100     	ldr	x0, [x8]
+  38f394: 94101303     	bl	0x793fa0 <PT_LOAD#0+0x793fa0>
+  38f398: 52901408     	mov	w8, #0x80a0             // =32928
+  38f39c: 72a000a8     	movk	w8, #0x5, lsl #16
+  38f3a0: f8686a60     	ldr	x0, [x19, x8]
+  38f3a4: f9400008     	ldr	x8, [x0]
+  38f3a8: f9402908     	ldr	x8, [x8, #0x50]
+  38f3ac: d63f0100     	blr	x8
+  38f3b0: 52901208     	mov	w8, #0x8090             // =32912
+  38f3b4: 72a000a8     	movk	w8, #0x5, lsl #16
+  38f3b8: 8b080268     	add	x8, x19, x8
+  38f3bc: f90003e8     	str	x8, [sp]
+  38f3c0: f9400100     	ldr	x0, [x8]
+  38f3c4: f9400008     	ldr	x8, [x0]
+  38f3c8: f9402908     	ldr	x8, [x8, #0x50]
+  38f3cc: d63f0100     	blr	x8
+  38f3d0: 52901708     	mov	w8, #0x80b8             // =32952
+  38f3d4: 72a000a8     	movk	w8, #0x5, lsl #16
+  38f3d8: 8b080276     	add	x22, x19, x8
+  38f3dc: f94002c0     	ldr	x0, [x22]
+  38f3e0: f9400008     	ldr	x8, [x0]
+  38f3e4: f9402908     	ldr	x8, [x8, #0x50]
+  38f3e8: d63f0100     	blr	x8
+  38f3ec: 52901808     	mov	w8, #0x80c0             // =32960
+  38f3f0: 72a000a8     	movk	w8, #0x5, lsl #16
+  38f3f4: 8b08027b     	add	x27, x19, x8
+  38f3f8: f9400360     	ldr	x0, [x27]
+  38f3fc: 94138375     	bl	0x8701d0 <PT_LOAD#0+0x8701d0>
+  38f400: 52902708     	mov	w8, #0x8138             // =33080
+  38f404: 72a000a8     	movk	w8, #0x5, lsl #16
+  38f408: 8b080275     	add	x21, x19, x8
+  38f40c: f94002a0     	ldr	x0, [x21]
+  38f410: f9400008     	ldr	x8, [x0]
+  38f414: f9402908     	ldr	x8, [x8, #0x50]
+  38f418: d63f0100     	blr	x8
+  38f41c: 52902508     	mov	w8, #0x8128             // =33064
+  38f420: 72a000a8     	movk	w8, #0x5, lsl #16
+  38f424: 8b080274     	add	x20, x19, x8
+  38f428: f9400280     	ldr	x0, [x20]
+  38f42c: 940d94f5     	bl	0x6f4800 <PT_LOAD#0+0x6f4800>
+  38f430: f9000bf4     	str	x20, [sp, #0x10]
+  38f434: f9400280     	ldr	x0, [x20]
+  38f438: 940d96f6     	bl	0x6f5010 <PT_LOAD#0+0x6f5010>
+  38f43c: 52903408     	mov	w8, #0x81a0             // =33184
+  38f440: 72a000a8     	movk	w8, #0x5, lsl #16
+  38f444: 8b080268     	add	x8, x19, x8
+  38f448: f90007e8     	str	x8, [sp, #0x8]
+  38f44c: f9400100     	ldr	x0, [x8]
+  38f450: f9400008     	ldr	x8, [x0]
+  38f454: f9402908     	ldr	x8, [x8, #0x50]
+  38f458: d63f0100     	blr	x8
+  38f45c: 52901d08     	mov	w8, #0x80e8             // =33000
+
+
+===== RENDER END CALLER =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x38f700,0x38f880) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  38f700: 72a000a8     	movk	w8, #0x5, lsl #16
+  38f704: f8686a60     	ldr	x0, [x19, x8]
+  38f708: f9400008     	ldr	x8, [x0]
+  38f70c: f9401d08     	ldr	x8, [x8, #0x38]
+  38f710: d63f0100     	blr	x8
+  38f714: 52902408     	mov	w8, #0x8120             // =33056
+  38f718: 72a000a8     	movk	w8, #0x5, lsl #16
+  38f71c: f8686a60     	ldr	x0, [x19, x8]
+  38f720: f9400008     	ldr	x8, [x0]
+  38f724: f9401d08     	ldr	x8, [x8, #0x38]
+  38f728: d63f0100     	blr	x8
+  38f72c: f9400340     	ldr	x0, [x26]
+  38f730: 94104df4     	bl	0x7a2f00 <PT_LOAD#0+0x7a2f00>
+  38f734: 52902d08     	mov	w8, #0x8168             // =33128
+  38f738: 72a000a8     	movk	w8, #0x5, lsl #16
+  38f73c: f8686a60     	ldr	x0, [x19, x8]
+  38f740: f9400008     	ldr	x8, [x0]
+  38f744: f9401d08     	ldr	x8, [x8, #0x38]
+  38f748: d63f0100     	blr	x8
+  38f74c: 52902f08     	mov	w8, #0x8178             // =33144
+  38f750: 72a000a8     	movk	w8, #0x5, lsl #16
+  38f754: f8686a60     	ldr	x0, [x19, x8]
+  38f758: f9400008     	ldr	x8, [x0]
+  38f75c: f9401d08     	ldr	x8, [x8, #0x38]
+  38f760: d63f0100     	blr	x8
+  38f764: f94003e8     	ldr	x8, [sp]
+  38f768: f9400100     	ldr	x0, [x8]
+  38f76c: f9400008     	ldr	x8, [x0]
+  38f770: f9401d08     	ldr	x8, [x8, #0x38]
+  38f774: d63f0100     	blr	x8
+  38f778: f94007f5     	ldr	x21, [sp, #0x8]
+  38f77c: f94002a0     	ldr	x0, [x21]
+  38f780: f9400008     	ldr	x8, [x0]
+  38f784: f9401d08     	ldr	x8, [x8, #0x38]
+  38f788: d63f0100     	blr	x8
+  38f78c: f9400ff4     	ldr	x20, [sp, #0x18]
+  38f790: f9400280     	ldr	x0, [x20]
+  38f794: f9400008     	ldr	x8, [x0]
+  38f798: f9401d08     	ldr	x8, [x8, #0x38]
+  38f79c: d63f0100     	blr	x8
+  38f7a0: f9400360     	ldr	x0, [x27]
+  38f7a4: f9400008     	ldr	x8, [x0]
+  38f7a8: f9402908     	ldr	x8, [x8, #0x50]
+  38f7ac: d63f0100     	blr	x8
+  38f7b0: 97fffe78     	bl	0x38f190 <PT_LOAD#0+0x38f190>
+  38f7b4: f9400380     	ldr	x0, [x28]
+  38f7b8: f9400008     	ldr	x8, [x0]
+  38f7bc: f9401d08     	ldr	x8, [x8, #0x38]
+  38f7c0: d63f0100     	blr	x8
+  38f7c4: f9400380     	ldr	x0, [x28]
+  38f7c8: 3940bc08     	ldrb	w8, [x0, #0x2f]
+  38f7cc: 35000148     	cbnz	w8, 0x38f7f4 <PT_LOAD#0+0x38f7f4>
+  38f7d0: f9400320     	ldr	x0, [x25]
+  38f7d4: f9400008     	ldr	x8, [x0]
+  38f7d8: f9403108     	ldr	x8, [x8, #0x60]
+  38f7dc: d63f0100     	blr	x8
+  38f7e0: f9400300     	ldr	x0, [x24]
+  38f7e4: f9400008     	ldr	x8, [x0]
+  38f7e8: f9402d08     	ldr	x8, [x8, #0x58]
+  38f7ec: d63f0100     	blr	x8
+  38f7f0: f9400380     	ldr	x0, [x28]
+  38f7f4: 9410fb9b     	bl	0x7ce660 <PT_LOAD#0+0x7ce660>
+  38f7f8: f9400388     	ldr	x8, [x28]
+  38f7fc: 3940bd08     	ldrb	w8, [x8, #0x2f]
+  38f800: 34000128     	cbz	w8, 0x38f824 <PT_LOAD#0+0x38f824>
+  38f804: f9400320     	ldr	x0, [x25]
+  38f808: f9400008     	ldr	x8, [x0]
+  38f80c: f9403108     	ldr	x8, [x8, #0x60]
+  38f810: d63f0100     	blr	x8
+  38f814: f9400300     	ldr	x0, [x24]
+  38f818: f9400008     	ldr	x8, [x0]
+  38f81c: f9402d08     	ldr	x8, [x8, #0x58]
+  38f820: d63f0100     	blr	x8
+  38f824: f9400320     	ldr	x0, [x25]
+  38f828: 94105ab6     	bl	0x7a6300 <PT_LOAD#0+0x7a6300>
+  38f82c: f94002a0     	ldr	x0, [x21]
+  38f830: f9400008     	ldr	x8, [x0]
+  38f834: f9402d08     	ldr	x8, [x8, #0x58]
+  38f838: d63f0100     	blr	x8
+  38f83c: f9400be8     	ldr	x8, [sp, #0x10]
+  38f840: f9400100     	ldr	x0, [x8]
+  38f844: 940d95fb     	bl	0x6f5030 <PT_LOAD#0+0x6f5030>
+  38f848: f9400280     	ldr	x0, [x20]
+  38f84c: 941011dd     	bl	0x793fc0 <PT_LOAD#0+0x793fc0>
+  38f850: 52901b08     	mov	w8, #0x80d8             // =32984
+  38f854: 72a000a8     	movk	w8, #0x5, lsl #16
+  38f858: f8686a60     	ldr	x0, [x19, x8]
+  38f85c: f9400008     	ldr	x8, [x0]
+  38f860: a9477bfd     	ldp	x29, x30, [sp, #0x70]
+  38f864: f9401d01     	ldr	x1, [x8, #0x38]
+  38f868: a9464ff4     	ldp	x20, x19, [sp, #0x60]
+  38f86c: a94557f6     	ldp	x22, x21, [sp, #0x50]
+  38f870: a9445ff8     	ldp	x24, x23, [sp, #0x40]
+  38f874: a94367fa     	ldp	x26, x25, [sp, #0x30]
+  38f878: a9426ffc     	ldp	x28, x27, [sp, #0x20]
+  38f87c: 910203ff     	add	sp, sp, #0x80
+
+
+===== REFRESH RATE SETTER AND GETTER CALLERS =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x7d2000,0x7d2300) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  7d2000: 8b080000     	add	x0, x0, x8
+  7d2004: 17f1f623     	b	0x44f890 <PT_LOAD#0+0x44f890>
+		...
+  7d2010: d65f03c0     	ret
+		...
+  7d2020: 529ec208     	mov	w8, #0xf610             // =62992
+  7d2024: 72a010c8     	movk	w8, #0x86, lsl #16
+  7d2028: b8686800     	ldr	w0, [x0, x8]
+  7d202c: d65f03c0     	ret
+  7d2030: 529ec288     	mov	w8, #0xf614             // =62996
+  7d2034: 72a010c8     	movk	w8, #0x86, lsl #16
+  7d2038: b8686800     	ldr	w0, [x0, x8]
+  7d203c: d65f03c0     	ret
+  7d2040: 34000121     	cbz	w1, 0x7d2064 <PT_LOAD#0+0x7d2064>
+  7d2044: b940c808     	ldr	w8, [x0, #0xc8]
+  7d2048: 4b010108     	sub	w8, w8, w1
+  7d204c: 7100011f     	cmp	w8, #0x0
+  7d2050: 1a88a508     	cinc	w8, w8, lt
+  7d2054: 13017d08     	asr	w8, w8, #1
+  7d2058: b900b808     	str	w8, [x0, #0xb8]
+  7d205c: 0b010108     	add	w8, w8, w1
+  7d2060: b900c008     	str	w8, [x0, #0xc0]
+  7d2064: d65f03c0     	ret
+		...
+  7d2070: 34000121     	cbz	w1, 0x7d2094 <PT_LOAD#0+0x7d2094>
+  7d2074: b940cc08     	ldr	w8, [x0, #0xcc]
+  7d2078: 4b010108     	sub	w8, w8, w1
+  7d207c: 7100011f     	cmp	w8, #0x0
+  7d2080: 1a88a508     	cinc	w8, w8, lt
+  7d2084: 13017d08     	asr	w8, w8, #1
+  7d2088: b900bc08     	str	w8, [x0, #0xbc]
+  7d208c: 0b010108     	add	w8, w8, w1
+  7d2090: b900c408     	str	w8, [x0, #0xc4]
+  7d2094: d65f03c0     	ret
+		...
+  7d20a0: a9be4ff4     	stp	x20, x19, [sp, #-0x20]!
+  7d20a4: a9017bfd     	stp	x29, x30, [sp, #0x10]
+  7d20a8: 910043fd     	add	x29, sp, #0x10
+  7d20ac: d00055b3     	adrp	x19, 0x1288000 <PT_LOAD#0+0x1288000>
+  7d20b0: f940ca73     	ldr	x19, [x19, #0x190]
+  7d20b4: f9400274     	ldr	x20, [x19]
+  7d20b8: 9407bc1a     	bl	0x9c1120 <PT_LOAD#0+0x9c1120>
+  7d20bc: 529ed008     	mov	w8, #0xf680             // =63104
+  7d20c0: 72a010c8     	movk	w8, #0x86, lsl #16
+  7d20c4: 529ed20a     	mov	w10, #0xf690            // =63120
+  7d20c8: 72a010ca     	movk	w10, #0x86, lsl #16
+  7d20cc: f8286a80     	str	x0, [x20, x8]
+  7d20d0: 529ed108     	mov	w8, #0xf688             // =63112
+  7d20d4: 72a010c8     	movk	w8, #0x86, lsl #16
+  7d20d8: b8686a89     	ldr	w9, [x20, x8]
+  7d20dc: 4b090009     	sub	w9, w0, w9
+  7d20e0: b82a6a89     	str	w9, [x20, x10]
+  7d20e4: 529ec609     	mov	w9, #0xf630             // =63024
+  7d20e8: 72a010c9     	movk	w9, #0x86, lsl #16
+  7d20ec: f8286a80     	str	x0, [x20, x8]
+  7d20f0: f9400268     	ldr	x8, [x19]
+  7d20f4: f8296900     	str	x0, [x8, x9]
+  7d20f8: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  7d20fc: a8c24ff4     	ldp	x20, x19, [sp], #0x20
+  7d2100: d65f03c0     	ret
+		...
+  7d2110: a9be4ff4     	stp	x20, x19, [sp, #-0x20]!
+  7d2114: a9017bfd     	stp	x29, x30, [sp, #0x10]
+  7d2118: 910043fd     	add	x29, sp, #0x10
+  7d211c: d00055b3     	adrp	x19, 0x1288000 <PT_LOAD#0+0x1288000>
+  7d2120: f940ca73     	ldr	x19, [x19, #0x190]
+  7d2124: f9400274     	ldr	x20, [x19]
+  7d2128: 9407bbfe     	bl	0x9c1120 <PT_LOAD#0+0x9c1120>
+  7d212c: 529ed008     	mov	w8, #0xf680             // =63104
+  7d2130: 72a010c8     	movk	w8, #0x86, lsl #16
+  7d2134: 529ed20a     	mov	w10, #0xf690            // =63120
+  7d2138: 72a010ca     	movk	w10, #0x86, lsl #16
+  7d213c: f8286a80     	str	x0, [x20, x8]
+  7d2140: 529ed108     	mov	w8, #0xf688             // =63112
+  7d2144: 72a010c8     	movk	w8, #0x86, lsl #16
+  7d2148: f8686a89     	ldr	x9, [x20, x8]
+  7d214c: cb090009     	sub	x9, x0, x9
+  7d2150: b82a6a89     	str	w9, [x20, x10]
+  7d2154: 529ec70a     	mov	w10, #0xf638            // =63032
+  7d2158: 72a010ca     	movk	w10, #0x86, lsl #16
+  7d215c: f8286a80     	str	x0, [x20, x8]
+  7d2160: 93407d28     	sxtw	x8, w9
+  7d2164: f9400269     	ldr	x9, [x19]
+  7d2168: f82a6928     	str	x8, [x9, x10]
+  7d216c: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  7d2170: a8c24ff4     	ldp	x20, x19, [sp], #0x20
+  7d2174: d65f03c0     	ret
+		...
+  7d2180: a9bc5ff8     	stp	x24, x23, [sp, #-0x40]!
+  7d2184: a90157f6     	stp	x22, x21, [sp, #0x10]
+  7d2188: a9024ff4     	stp	x20, x19, [sp, #0x20]
+  7d218c: a9037bfd     	stp	x29, x30, [sp, #0x30]
+  7d2190: 9100c3fd     	add	x29, sp, #0x30
+  7d2194: aa0003f3     	mov	x19, x0
+  7d2198: 7100803f     	cmp	w1, #0x20
+  7d219c: 54000488     	b.hi	0x7d222c <PT_LOAD#0+0x7d222c>
+  7d21a0: 52907f08     	mov	w8, #0x83f8             // =33784
+  7d21a4: 72a01108     	movk	w8, #0x88, lsl #16
+  7d21a8: b8686a76     	ldr	w22, [x19, x8]
+  7d21ac: 34000416     	cbz	w22, 0x7d222c <PT_LOAD#0+0x7d222c>
+  7d21b0: 8b21d268     	add	x8, x19, w1, sxtw #4
+  7d21b4: 52928209     	mov	w9, #0x9410             // =37904
+  7d21b8: 72a01109     	movk	w9, #0x88, lsl #16
+  7d21bc: f8696914     	ldr	x20, [x8, x9]
+  7d21c0: 5284ff08     	mov	w8, #0x27f8             // =10232
+  7d21c4: 72a01108     	movk	w8, #0x88, lsl #16
+  7d21c8: aa1f03f7     	mov	x23, xzr
+  7d21cc: aa1f03f5     	mov	x21, xzr
+  7d21d0: 8b080278     	add	x24, x19, x8
+  7d21d4: 91010300     	add	x0, x24, #0x40
+  7d21d8: aa1403e1     	mov	x1, x20
+  7d21dc: 9408c763     	bl	0xa03f68 <PT_LOAD#0+0xa03f68>
+  7d21e0: 7100001f     	cmp	w0, #0x0
+  7d21e4: 910006f7     	add	x23, x23, #0x1
+  7d21e8: 9a950315     	csel	x21, x24, x21, eq
+  7d21ec: 91017318     	add	x24, x24, #0x5c
+  7d21f0: eb1602ff     	cmp	x23, x22
+  7d21f4: 54ffff03     	b.lo	0x7d21d4 <PT_LOAD#0+0x7d21d4>
+  7d21f8: b40001b5     	cbz	x21, 0x7d222c <PT_LOAD#0+0x7d222c>
+  7d21fc: 529ec908     	mov	w8, #0xf648             // =63048
+  7d2200: 72a010c8     	movk	w8, #0x86, lsl #16
+  7d2204: 8b080268     	add	x8, x19, x8
+  7d2208: bd400101     	ldr	s1, [x8]
+  7d220c: bd405aa0     	ldr	s0, [x21, #0x58]
+  7d2210: 1e202020     	fcmp	s1, s0
+  7d2214: 540000c0     	b.eq	0x7d222c <PT_LOAD#0+0x7d222c>
+  7d2218: 529ec889     	mov	w9, #0xf644             // =63044
+  7d221c: 72a010c9     	movk	w9, #0x86, lsl #16
+  7d2220: 38696a69     	ldrb	w9, [x19, x9]
+  7d2224: 37000049     	tbnz	w9, #0x0, 0x7d222c <PT_LOAD#0+0x7d222c>
+  7d2228: bd000100     	str	s0, [x8]
+  7d222c: a9437bfd     	ldp	x29, x30, [sp, #0x30]
+  7d2230: a9424ff4     	ldp	x20, x19, [sp, #0x20]
+  7d2234: a94157f6     	ldp	x22, x21, [sp, #0x10]
+  7d2238: a8c45ff8     	ldp	x24, x23, [sp], #0x40
+  7d223c: d65f03c0     	ret
+  7d2240: d101c3ff     	sub	sp, sp, #0x70
+  7d2244: f90023f5     	str	x21, [sp, #0x40]
+  7d2248: a9054ff4     	stp	x20, x19, [sp, #0x50]
+  7d224c: a9067bfd     	stp	x29, x30, [sp, #0x60]
+  7d2250: 910183fd     	add	x29, sp, #0x60
+  7d2254: aa0003f4     	mov	x20, x0
+  7d2258: 529ec908     	mov	w8, #0xf648             // =63048
+  7d225c: 72a010c8     	movk	w8, #0x86, lsl #16
+  7d2260: bc686a80     	ldr	s0, [x20, x8]
+  7d2264: 1e22c000     	fcvt	d0, s0
+  7d2268: d0003f61     	adrp	x1, 0xfc0000 <PT_LOAD#0+0xfc0000>
+  7d226c: 9110b421     	add	x1, x1, #0x42d
+  7d2270: 910003e0     	mov	x0, sp
+  7d2274: 9408c735     	bl	0xa03f48 <PT_LOAD#0+0xa03f48>
+  7d2278: 52928208     	mov	w8, #0x9410             // =37904
+  7d227c: 72a01108     	movk	w8, #0x88, lsl #16
+  7d2280: f8686a80     	ldr	x0, [x20, x8]
+  7d2284: b40001c0     	cbz	x0, 0x7d22bc <PT_LOAD#0+0x7d22bc>
+  7d2288: 52928408     	mov	w8, #0x9420             // =37920
+  7d228c: 72a01108     	movk	w8, #0x88, lsl #16
+  7d2290: 2a1f03f3     	mov	w19, wzr
+  7d2294: 8b080294     	add	x20, x20, x8
+  7d2298: 12800015     	mov	w21, #-0x1              // =-1
+  7d229c: 910003e1     	mov	x1, sp
+  7d22a0: 9408c732     	bl	0xa03f68 <PT_LOAD#0+0xa03f68>
+  7d22a4: 340000e0     	cbz	w0, 0x7d22c0 <PT_LOAD#0+0x7d22c0>
+  7d22a8: f8410680     	ldr	x0, [x20], #0x10
+  7d22ac: 11000673     	add	w19, w19, #0x1
+  7d22b0: b5ffff60     	cbnz	x0, 0x7d229c <PT_LOAD#0+0x7d229c>
+  7d22b4: 2a1503f3     	mov	w19, w21
+  7d22b8: 14000002     	b	0x7d22c0 <PT_LOAD#0+0x7d22c0>
+  7d22bc: 12800013     	mov	w19, #-0x1              // =-1
+  7d22c0: 2a1303e0     	mov	w0, w19
+  7d22c4: a9467bfd     	ldp	x29, x30, [sp, #0x60]
+  7d22c8: a9454ff4     	ldp	x20, x19, [sp, #0x50]
+  7d22cc: f94023f5     	ldr	x21, [sp, #0x40]
+  7d22d0: 9101c3ff     	add	sp, sp, #0x70
+  7d22d4: d65f03c0     	ret
+		...
+  7d22e0: 529ec828     	mov	w8, #0xf641             // =63041
+  7d22e4: 72a010c8     	movk	w8, #0x86, lsl #16
+  7d22e8: 8b080008     	add	x8, x0, x8
+  7d22ec: 3940010a     	ldrb	w10, [x8]
+  7d22f0: 12000029     	and	w9, w1, #0x1
+  7d22f4: 6b09015f     	cmp	w10, w9
+  7d22f8: 540000e0     	b.eq	0x7d2314 <PT_LOAD#0+0x7d2314>
+  7d22fc: 39000109     	strb	w9, [x8]
+
+
+===== RENDER END CONTINUATION =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x7ce9f0,0x7cea80) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  7ce9f0: d63f0100     	blr	x8
+  7ce9f4: f900033f     	str	xzr, [x25]
+  7ce9f8: b94002a8     	ldr	w8, [x21]
+  7ce9fc: 110006d6     	add	w22, w22, #0x1
+  7cea00: 6b0802df     	cmp	w22, w8
+  7cea04: 54fffe23     	b.lo	0x7ce9c8 <PT_LOAD#0+0x7ce9c8>
+  7cea08: 34000208     	cbz	w8, 0x7cea48 <PT_LOAD#0+0x7cea48>
+  7cea0c: 2a1f03ea     	mov	w10, wzr
+  7cea10: 2a1f03e9     	mov	w9, wzr
+  7cea14: 529ed80b     	mov	w11, #0xf6c0            // =63168
+  7cea18: 72a010cb     	movk	w11, #0x86, lsl #16
+  7cea1c: 8b2a4e6c     	add	x12, x19, w10, uxtw #3
+  7cea20: f86b698c     	ldr	x12, [x12, x11]
+  7cea24: b40000ac     	cbz	x12, 0x7cea38 <PT_LOAD#0+0x7cea38>
+  7cea28: 8b294e68     	add	x8, x19, w9, uxtw #3
+  7cea2c: 11000529     	add	w9, w9, #0x1
+  7cea30: f82b690c     	str	x12, [x8, x11]
+  7cea34: b94002a8     	ldr	w8, [x21]
+  7cea38: 1100054a     	add	w10, w10, #0x1
+  7cea3c: 6b08015f     	cmp	w10, w8
+  7cea40: 54fffee3     	b.lo	0x7cea1c <PT_LOAD#0+0x7cea1c>
+  7cea44: 14000002     	b	0x7cea4c <PT_LOAD#0+0x7cea4c>
+  7cea48: 2a1f03e9     	mov	w9, wzr
+  7cea4c: b90002a9     	str	w9, [x21]
+  7cea50: 3940a268     	ldrb	w8, [x19, #0x28]
+  7cea54: 39400289     	ldrb	w9, [x20]
+  7cea58: 2a080128     	orr	w8, w9, w8
+  7cea5c: 72001d1f     	tst	w8, #0xff
+  7cea60: 54000100     	b.eq	0x7cea80 <PT_LOAD#0+0x7cea80>
+  7cea64: 91002260     	add	x0, x19, #0x8
+  7cea68: a9447bfd     	ldp	x29, x30, [sp, #0x40]
+  7cea6c: a9434ff4     	ldp	x20, x19, [sp, #0x30]
+  7cea70: a94257f6     	ldp	x22, x21, [sp, #0x20]
+  7cea74: a9415ff8     	ldp	x24, x23, [sp, #0x10]
+  7cea78: f84507f9     	ldr	x25, [sp], #0x50
+  7cea7c: 1408d51f     	b	0xa03ef8 <PT_LOAD#0+0xa03ef8>
+
+===== DIRECT REFERENCES TO REFRESH FUNCTIONS =====
+2009301:  7cec60:      	mov	w8, #0xf638             // =63032
+2012665:  7d2180:      	stp	x24, x23, [sp, #-0x40]!
+2012713:  7d2240:      	sub	sp, sp, #0x70
+
+===== GLOBAL FLOAT CONSTANT REFERENCES =====
+5119:    5360:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+6375:    6818:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+6450:    694c:      	adrp	x11, 0xfca000 <PT_LOAD#0+0xfca000>
+7245:    7620:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+8005:    8208:      	adrp	x10, 0xfca000 <PT_LOAD#0+0xfca000>
+9848:    9ef0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+10068:    a270:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+60838:   40bd8:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+60841:   40be4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+60856:   40c20:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+60865:   40c44:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+60869:   40c54:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+60874:   40c68:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+62835:   42b54:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+66834:   46a9c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+66843:   46ac0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+67789:   47a08:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+69774:   49aa4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+70694:   4a9dc:      	adrp	x11, 0xfca000 <PT_LOAD#0+0xfca000>
+70711:   4aa20:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+70717:   4aa38:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+74393:   4e548:      	adrp	x12, 0xfca000 <PT_LOAD#0+0xfca000>
+74456:   4e644:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+74698:   4ea0c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+75001:   4eed8:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+75004:   4eee4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+79097:   52ff0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+79128:   5306c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+79178:   53134:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+79387:   53478:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+79391:   53488:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+79523:   53698:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+79544:   536ec:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+79865:   53bf0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+79899:   53c78:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+79982:   53dc4:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+80141:   5404c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+80178:   540e0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+80218:   54180:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+80322:   54320:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+80366:   543d0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+80498:   545e0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+80500:   545e8:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+80502:   545f0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+81186:   550a0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+81285:   55234:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+81293:   55254:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+81450:   554c8:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+81580:   556d0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+81725:   55914:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+81858:   55b28:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+82017:   55da4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+82094:   55edc:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+82132:   55f7c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+82367:   5632c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+82467:   564c4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+83079:   56e64:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+83083:   56e74:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+83437:   57410:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+84105:   57e98:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+84405:   58350:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+84463:   58438:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+84595:   58648:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+84692:   587cc:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+84749:   588b0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+84751:   588b8:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+85006:   58cc0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+85027:   58d14:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+85035:   58d34:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+85081:   58dec:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+85085:   58dfc:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+85257:   590b4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+85260:   590c0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+85307:   5917c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+85312:   59190:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+85380:   592a0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+85644:   596c0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+85702:   597a8:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+85779:   598dc:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+86306:   5a11c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+86390:   5a26c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+86429:   5a308:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+86789:   5a8a8:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+86808:   5a8f4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+86810:   5a8fc:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+86829:   5a948:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87362:   5b1a8:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87369:   5b1c4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87397:   5b238:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87404:   5b254:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87437:   5b2dc:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87514:   5b410:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87573:   5b4fc:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87701:   5b70c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87798:   5b890:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87802:   5b8a0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87811:   5b8c4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87815:   5b8d4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87822:   5b8f0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87826:   5b900:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87833:   5b91c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87837:   5b92c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87867:   5b9a4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87889:   5b9fc:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87897:   5ba1c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87918:   5ba70:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+87999:   5bbb4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88263:   5bfe4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88268:   5bff8:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88274:   5c010:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88280:   5c028:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88289:   5c04c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88293:   5c05c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88299:   5c074:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88303:   5c084:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+88322:   5c0d0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88328:   5c0e8:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88334:   5c100:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88345:   5c12c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88351:   5c144:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88355:   5c154:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+88367:   5c184:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88373:   5c19c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88379:   5c1b4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88390:   5c1e0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88396:   5c1f8:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88400:   5c208:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+88418:   5c250:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88426:   5c270:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88432:   5c288:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88438:   5c2a0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88449:   5c2cc:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88455:   5c2e4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+88461:   5c2fc:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+89040:   5cc9c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89061:   5ccf0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89096:   5cd7c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89173:   5ceb0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89236:   5cfac:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89278:   5d054:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+89285:   5d070:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+89289:   5d080:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+89304:   5d0bc:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89310:   5d0d4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89339:   5d148:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89414:   5d278:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89464:   5d340:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89492:   5d3b0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89537:   5d464:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89545:   5d484:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89553:   5d4a4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89567:   5d4dc:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89572:   5d4f0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89603:   5d56c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89659:   5d64c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89742:   5d79c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89816:   5d8c4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89829:   5d8f8:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89837:   5d918:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89843:   5d930:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89856:   5d964:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89897:   5da08:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89900:   5da14:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+89932:   5da94:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+90122:   5dd90:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+90132:   5ddb8:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+90592:   5e4f4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+90603:   5e520:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+90659:   5e600:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+90709:   5e6c8:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+90778:   5e7dc:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+90780:   5e7e4:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+90906:   5e9dc:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+90960:   5eab4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+90971:   5eae0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+91028:   5ebc4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+91079:   5ec90:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+91119:   5ed30:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+91204:   5ee84:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+91291:   5efe0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+91293:   5efe8:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+91297:   5eff8:      	adrp	x10, 0xfca000 <PT_LOAD#0+0xfca000>
+91308:   5f024:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+91359:   5f0f0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+91369:   5f118:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+91414:   5f1cc:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+91456:   5f274:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+91459:   5f280:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+91759:   5f730:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+91884:   5f924:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+92042:   5fb9c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+92468:   60248:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+93681:   61548:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+93813:   61758:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+93912:   618e4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+94423:   620e4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+94583:   62364:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+94997:   629e4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95005:   62a04:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95031:   62a6c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95042:   62a98:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95128:   62bf0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95508:   631f8:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95526:   63240:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95534:   63260:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95537:   6326c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95550:   632a0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95562:   632d0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95569:   632ec:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95576:   63308:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95587:   63334:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95605:   6337c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95658:   63450:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95809:   636ac:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95811:   636b4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95823:   636e4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95833:   6370c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95842:   63730:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95853:   6375c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95877:   637bc:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95937:   638ac:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95982:   63960:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+95984:   63968:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+96005:   639bc:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+96018:   639f0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+96024:   63a08:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+96071:   63ac4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+96078:   63ae0:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+96088:   63b08:      	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+96164:   63c44:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+96180:   63c84:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+96205:   63ce8:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+96256:   63db4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+96301:   63e68:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+96520:   641d8:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+96580:   642c8:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+96740:   6454c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+96866:   6474c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+96879:   64780:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+96903:   647e0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+97088:   64ad4:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+97093:   64ae8:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+97623:   65350:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+98189:   65c5c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+98213:   65cbc:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+98218:   65cd0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+98226:   65cf0:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+98237:   65d1c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+98244:   65d38:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+98251:   65d54:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+
+===== TIMEOUT ARGUMENT REFERENCES =====
+81503-   5559c:      	bl	0x188b50 <PT_LOAD#0+0x188b50>
+81504-   555a0:      	cmp	w0, #0x1
+81505-   555a4:      	b.lt	0x557a0 <PT_LOAD#0+0x557a0>
+81506-   555a8:      	cmp	w20, #0x17
+81507-   555ac:      	b.hi	0x55ad4 <PT_LOAD#0+0x55ad4>
+81508-   555b0:      	orr	w8, wzr, #0x1
+81509-   555b4:      	lsl	w8, w8, w20
+81510-   555b8:      	mov	w9, #0xc                // =12
+81511:   555bc:      	movk	w9, #0xf, lsl #16
+81512-   555c0:      	tst	w8, w9
+81513-   555c4:      	b.ne	0x55790 <PT_LOAD#0+0x55790>
+81514-   555c8:      	mov	w9, #0x8030             // =32816
+81515-   555cc:      	movk	w9, #0x90, lsl #16
+81516-   555d0:      	tst	w8, w9
+81517-   555d4:      	b.eq	0x55abc <PT_LOAD#0+0x55abc>
+81518-   555d8:      	cmp	w27, #0x5
+81519-   555dc:      	b.hi	0x557a0 <PT_LOAD#0+0x557a0>
+--
+82042-   55e08:      	bl	0x188b50 <PT_LOAD#0+0x188b50>
+82043-   55e0c:      	cmp	w0, #0x1
+82044-   55e10:      	b.lt	0x55e64 <PT_LOAD#0+0x55e64>
+82045-   55e14:      	cmp	w20, #0x17
+82046-   55e18:      	b.hi	0x55e90 <PT_LOAD#0+0x55e90>
+82047-   55e1c:      	orr	w8, wzr, #0x1
+82048-   55e20:      	lsl	w8, w8, w20
+82049-   55e24:      	mov	w9, #0xc                // =12
+82050:   55e28:      	movk	w9, #0xf, lsl #16
+82051-   55e2c:      	tst	w8, w9
+82052-   55e30:      	b.ne	0x55e54 <PT_LOAD#0+0x55e54>
+82053-   55e34:      	mov	w9, #0x8030             // =32816
+82054-   55e38:      	movk	w9, #0x90, lsl #16
+82055-   55e3c:      	tst	w8, w9
+82056-   55e40:      	b.eq	0x55e78 <PT_LOAD#0+0x55e78>
+82057-   55e44:      	cmp	w19, #0x5
+82058-   55e48:      	b.hi	0x55e64 <PT_LOAD#0+0x55e64>
+--
+82177-   56034:      	bl	0x11ffb0 <PT_LOAD#0+0x11ffb0>
+82178-   56038:      	b	0x560f8 <PT_LOAD#0+0x560f8>
+82179-   5603c:      	mov	w21, wzr
+82180-   56040:      	cmp	w22, #0x17
+82181-   56044:      	b.hi	0x560f8 <PT_LOAD#0+0x560f8>
+82182-   56048:      	orr	w8, wzr, #0x1
+82183-   5604c:      	lsl	w8, w8, w22
+82184-   56050:      	mov	w9, #0xc                // =12
+82185:   56054:      	movk	w9, #0xf, lsl #16
+82186-   56058:      	tst	w8, w9
+82187-   5605c:      	b.ne	0x5609c <PT_LOAD#0+0x5609c>
+82188-   56060:      	mov	w9, #0x200              // =512
+82189-   56064:      	movk	w9, #0xe0, lsl #16
+82190-   56068:      	tst	w8, w9
+82191-   5606c:      	b.eq	0x560d8 <PT_LOAD#0+0x560d8>
+82192-   56070:      	mov	w8, #0x5556             // =21846
+82193-   56074:      	movk	w8, #0x5555, lsl #16
+--
+126205-   815cc:      	blr	x8
+126206-   815d0:      	mov	w8, #0x8340             // =33600
+126207-   815d4:      	ldr	w8, [x19, x8]
+126208-   815d8:      	cmp	w8, #0x13
+126209-   815dc:      	b.hi	0x817f8 <PT_LOAD#0+0x817f8>
+126210-   815e0:      	orr	w9, wzr, #0x1
+126211-   815e4:      	lsl	w8, w9, w8
+126212-   815e8:      	mov	w9, #0xc0c              // =3084
+126213:   815ec:      	movk	w9, #0xf, lsl #16
+126214-   815f0:      	tst	w8, w9
+126215-   815f4:      	b.eq	0x817f8 <PT_LOAD#0+0x817f8>
+126216-   815f8:      	mov	w1, #0xf0f              // =3855
+126217-   815fc:      	fmov	s0, wzr
+126218-   81600:      	mov	x0, x19
+126219-   81604:      	bl	0x7e5d0 <PT_LOAD#0+0x7e5d0>
+126220-   81608:      	orr	w8, wzr, #0x1
+126221-   8160c:      	str	w8, [x20]
+--
+175116-   b1a64:      	mov	x0, x19
+175117-   b1a68:      	mov	x1, x21
+175118-   b1a6c:      	mov	w2, w22
+175119-   b1a70:      	mov	w3, w20
+175120-   b1a74:      	bl	0x11f330 <PT_LOAD#0+0x11f330>
+175121-   b1a78:      	orr	w8, wzr, #0x1
+175122-   b1a7c:      	lsl	w8, w8, w20
+175123-   b1a80:      	mov	w9, #0x408c             // =16524
+175124:   b1a84:      	movk	w9, #0xf, lsl #16
+175125-   b1a88:      	cmp	w20, #0x13
+175126-   b1a8c:      	and	w8, w8, w9
+175127-   b1a90:      	ccmp	w8, #0x0, #0x4, ls
+175128-   b1a94:      	b.eq	0xb1bac <PT_LOAD#0+0xb1bac>
+175129-   b1a98:      	adrp	x8, 0x1286000 <PT_LOAD#0+0x1286000>
+175130-   b1a9c:      	ldr	x8, [x8, #0xcf0]
+175131-   b1aa0:      	ldr	w2, [x8]
+175132-   b1aa4:      	fmov	s0, #10.00000000
+--
+194293-   c495c:      	tbnz	w8, #0xa, 0xc4c0c <PT_LOAD#0+0xc4c0c>
+194294-   c4960:      	mov	w8, #0x8854             // =34900
+194295-   c4964:      	ldr	w8, [x19, x8]
+194296-   c4968:      	cmp	w8, #0x13
+194297-   c496c:      	b.hi	0xc4c20 <PT_LOAD#0+0xc4c20>
+194298-   c4970:      	orr	w22, wzr, #0x1
+194299-   c4974:      	lsl	w9, w22, w8
+194300-   c4978:      	mov	w10, #0xc00e            // =49166
+194301:   c497c:      	movk	w10, #0xf, lsl #16
+194302-   c4980:      	tst	w9, w10
+194303-   c4984:      	b.eq	0xc4b98 <PT_LOAD#0+0xc4b98>
+194304-   c4988:      	ldr	w8, [x21]
+194305-   c498c:      	tbnz	w8, #0xb, 0xc4bcc <PT_LOAD#0+0xc4bcc>
+194306-   c4990:      	cbnz	w22, 0xc4bdc <PT_LOAD#0+0xc4bdc>
+194307-   c4994:      	b	0xc4c0c <PT_LOAD#0+0xc4c0c>
+194308-   c4998:      	adrp	x8, 0x1286000 <PT_LOAD#0+0x1286000>
+194309-   c499c:      	ldr	x8, [x8, #0xca0]
+--
+197808-   c80bc:      	str	w11, [sp, #0x100]
+197809-   c80c0:      	str	w11, [sp, #0x130]
+197810-   c80c4:      	str	w17, [sp, #0x150]
+197811-   c80c8:      	str	wzr, [sp, #0x17c]
+197812-   c80cc:      	stp	x10, x9, [sp, #0x90]
+197813-   c80d0:      	mov	x10, #0x3f8000003f800000 // =4575657222473777152
+197814-   c80d4:      	movk	x10, #0x3f00, lsl #16
+197815-   c80d8:      	stp	x10, x12, [sp, #0xb0]
+197816:   c80dc:      	mov	x10, #0x42400000        // =1111490560
+197817-   c80e0:      	movk	x10, #0x2, lsl #32
+197818-   c80e4:      	stp	x10, x13, [sp, #0xc0]
+197819-   c80e8:      	mov	x10, #0x42c40000        // =1120141312
+197820-   c80ec:      	movk	x10, #0x6, lsl #32
+197821-   c80f0:      	stp	x10, x9, [sp, #0x120]
+197822-   c80f4:      	mov	x9, #0xcccd             // =52429
+197823-   c80f8:      	movk	x9, #0xbf4c, lsl #16
+197824-   c80fc:      	movk	x9, #0xcccd, lsl #32
+--
+204744-   cee34:      	bl	0x188a60 <PT_LOAD#0+0x188a60>
+204745-   cee38:      	ldr	s1, [x19, #0x5ac]
+204746-   cee3c:      	fcmp	s0, s1
+204747-   cee40:      	b.gt	0xceeb8 <PT_LOAD#0+0xceeb8>
+204748-   cee44:      	ldrh	w8, [x19, #0x568]
+204749-   cee48:      	cmp	x8, #0x14
+204750-   cee4c:      	b.hi	0xceeb8 <PT_LOAD#0+0xceeb8>
+204751-   cee50:      	mov	w9, #0x1799             // =6041
+204752:   cee54:      	movk	w9, #0xf, lsl #16
+204753-   cee58:      	lsr	x9, x9, x8
+204754-   cee5c:      	tbnz	w9, #0x0, 0xceeb8 <PT_LOAD#0+0xceeb8>
+204755-   cee60:      	adrp	x9, 0x1220000 <PT_LOAD#0+0x1220000>
+204756-   cee64:      	add	x9, x9, #0x3e0
+204757-   cee68:      	ldr	x9, [x9, x8, lsl #3]
+204758-   cee6c:      	ldr	w8, [x9]
+204759-   cee70:      	tbnz	w8, #0x1f, 0xceeb8 <PT_LOAD#0+0xceeb8>
+204760-   cee74:      	fmov	s8, wzr
+--
+294456-  1276ec:      	mov	x0, x19
+294457-  1276f0:      	bl	0x1200f0 <PT_LOAD#0+0x1200f0>
+294458-  1276f4:      	tbz	w0, #0x0, 0x127724 <PT_LOAD#0+0x127724>
+294459-  1276f8:      	cmp	w20, #0x13
+294460-  1276fc:      	b.hi	0x127820 <PT_LOAD#0+0x127820>
+294461-  127700:      	orr	w0, wzr, #0x1
+294462-  127704:      	lsl	w8, w0, w20
+294463-  127708:      	mov	w9, #0xc                // =12
+294464:  12770c:      	movk	w9, #0xf, lsl #16
+294465-  127710:      	tst	w8, w9
+294466-  127714:      	b.eq	0x12780c <PT_LOAD#0+0x12780c>
+294467-  127718:      	bl	0x358470 <PT_LOAD#0+0x358470>
+294468-  12771c:      	tst	w0, #0x3f
+294469-  127720:      	b.ne	0x1278a4 <PT_LOAD#0+0x1278a4>
+294470-  127724:      	orr	w1, wzr, #0x1
+294471-  127728:      	mov	x0, x19
+294472-  12772c:      	bl	0x1200f0 <PT_LOAD#0+0x1200f0>
+--
+297177-  12a1b8:      	b.le	0x12a290 <PT_LOAD#0+0x12a290>
+297178-  12a1bc:      	mov	w8, #0x8340             // =33600
+297179-  12a1c0:      	ldr	w8, [x19, x8]
+297180-  12a1c4:      	cmp	w8, #0x13
+297181-  12a1c8:      	b.hi	0x12a3c8 <PT_LOAD#0+0x12a3c8>
+297182-  12a1cc:      	orr	w9, wzr, #0x1
+297183-  12a1d0:      	lsl	w8, w9, w8
+297184-  12a1d4:      	mov	w9, #0xc                // =12
+297185:  12a1d8:      	movk	w9, #0xf, lsl #16
+297186-  12a1dc:      	tst	w8, w9
+297187-  12a1e0:      	b.eq	0x12a314 <PT_LOAD#0+0x12a314>
+297188-  12a1e4:      	mov	x0, x19
+297189-  12a1e8:      	bl	0x185d10 <PT_LOAD#0+0x185d10>
+297190-  12a1ec:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+297191-  12a1f0:      	ldr	w21, [x0, #0xc]
+297192-  12a1f4:      	ldr	x8, [x8, #0x718]
+297193-  12a1f8:      	ldr	x20, [x8]
+--
+297421-  12a588:      	b.lt	0x12a5c0 <PT_LOAD#0+0x12a5c0>
+297422-  12a58c:      	mov	w8, #0x8340             // =33600
+297423-  12a590:      	ldr	w8, [x19, x8]
+297424-  12a594:      	cmp	w8, #0x13
+297425-  12a598:      	b.hi	0x12a5c0 <PT_LOAD#0+0x12a5c0>
+297426-  12a59c:      	orr	w9, wzr, #0x1
+297427-  12a5a0:      	lsl	w9, w9, w8
+297428-  12a5a4:      	mov	w10, #0xc               // =12
+297429:  12a5a8:      	movk	w10, #0xf, lsl #16
+297430-  12a5ac:      	tst	w9, w10
+297431-  12a5b0:      	b.eq	0x12a7d4 <PT_LOAD#0+0x12a7d4>
+297432-  12a5b4:      	bl	0x358470 <PT_LOAD#0+0x358470>
+297433-  12a5b8:      	tst	w0, #0x3
+297434-  12a5bc:      	b.eq	0x12a800 <PT_LOAD#0+0x12a800>
+297435-  12a5c0:      	orr	w1, wzr, #0x4
+297436-  12a5c4:      	mov	x0, x19
+297437-  12a5c8:      	bl	0x11ffd0 <PT_LOAD#0+0x11ffd0>
+--
+297660-  12a944:      	cmp	w0, #0x0
+297661-  12a948:      	b.le	0x12aa78 <PT_LOAD#0+0x12aa78>
+297662-  12a94c:      	ldr	w8, [x23]
+297663-  12a950:      	cmp	w8, #0x13
+297664-  12a954:      	b.hi	0x12ac9c <PT_LOAD#0+0x12ac9c>
+297665-  12a958:      	orr	w9, wzr, #0x1
+297666-  12a95c:      	lsl	w8, w9, w8
+297667-  12a960:      	mov	w9, #0xc                // =12
+297668:  12a964:      	movk	w9, #0xf, lsl #16
+297669-  12a968:      	tst	w8, w9
+297670-  12a96c:      	b.eq	0x12aae8 <PT_LOAD#0+0x12aae8>
+297671-  12a970:      	mov	x0, x19
+297672-  12a974:      	bl	0x185d10 <PT_LOAD#0+0x185d10>
+297673-  12a978:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+297674-  12a97c:      	ldr	w21, [x0, #0xc]
+297675-  12a980:      	ldr	x8, [x8, #0x718]
+297676-  12a984:      	ldr	x20, [x8]
+--
+297958-  12adec:      	cmp	w0, #0x1
+297959-  12adf0:      	b.lt	0x12ae1c <PT_LOAD#0+0x12ae1c>
+297960-  12adf4:      	ldr	w8, [x23]
+297961-  12adf8:      	cmp	w8, #0x13
+297962-  12adfc:      	b.hi	0x12ae1c <PT_LOAD#0+0x12ae1c>
+297963-  12ae00:      	orr	w9, wzr, #0x1
+297964-  12ae04:      	lsl	w8, w9, w8
+297965-  12ae08:      	mov	w9, #0xe                // =14
+297966:  12ae0c:      	movk	w9, #0xf, lsl #16
+297967-  12ae10:      	tst	w8, w9
+297968-  12ae14:      	b.eq	0x12ae1c <PT_LOAD#0+0x12ae1c>
+297969-  12ae18:      	mov	w20, #0x54              // =84
+297970-  12ae1c:      	adrp	x8, 0x1286000 <PT_LOAD#0+0x1286000>
+297971-  12ae20:      	ldr	x8, [x8, #0xcf0]
+297972-  12ae24:      	ldr	w2, [x8]
+297973-  12ae28:      	fmov	s0, #4.00000000
+297974-  12ae2c:      	fmov	s1, wzr
+--
+366187-  16ea24:      	bl	0x188990 <PT_LOAD#0+0x188990>
+366188-  16ea28:      	str	xzr, [x28]
+366189-  16ea2c:      	ldr	w8, [x25]
+366190-  16ea30:      	cmp	w8, #0x13
+366191-  16ea34:      	b.hi	0x16eda4 <PT_LOAD#0+0x16eda4>
+366192-  16ea38:      	orr	w9, wzr, #0x1
+366193-  16ea3c:      	lsl	w8, w9, w8
+366194-  16ea40:      	mov	w9, #0x10               // =16
+366195:  16ea44:      	movk	w9, #0xf, lsl #16
+366196-  16ea48:      	tst	w8, w9
+366197-  16ea4c:      	b.eq	0x16eda4 <PT_LOAD#0+0x16eda4>
+366198-  16ea50:      	cbz	x22, 0x16ea70 <PT_LOAD#0+0x16ea70>
+366199-  16ea54:      	mov	x0, x22
+366200-  16ea58:      	bl	0x186590 <PT_LOAD#0+0x186590>
+366201-  16ea5c:      	cmp	w0, #0x3b
+366202-  16ea60:      	b.eq	0x16ea78 <PT_LOAD#0+0x16ea78>
+366203-  16ea64:      	sub	w8, w0, #0x10
+--
+571878-  23ad7c:      	add	x8, x8, #0xf7c
+571879-  23ad80:      	mov	x0, x24
+571880-  23ad84:      	ldr	w1, [x8, x27, lsl #2]
+571881-  23ad88:      	bl	0x60d7d0 <PT_LOAD#0+0x60d7d0>
+571882-  23ad8c:      	ldr	w8, [x19, #0x2e8]
+571883-  23ad90:      	cmp	x27, x8
+571884-  23ad94:      	mov	w8, #0x5                // =5
+571885-  23ad98:      	mov	w9, #0x4242             // =16962
+571886:  23ad9c:      	movk	w9, #0xf, lsl #16
+571887-  23ada0:      	orr	w10, wzr, #0x7
+571888-  23ada4:      	csinc	w8, w8, wzr, eq
+571889-  23ada8:      	csel	w9, w10, w9, ne
+571890-  23adac:      	cmp	w23, #0x0
+571891-  23adb0:      	csel	w1, w8, w9, ne
+571892-  23adb4:      	mov	x0, x24
+571893-  23adb8:      	bl	0x60d920 <PT_LOAD#0+0x60d920>
+571894-  23adbc:      	add	x27, x27, #0x1
+--
+571978-  23af0c:      	cmp	x10, x8
+571979-  23af10:      	b.eq	0x23af20 <PT_LOAD#0+0x23af20>
+571980-  23af14:      	ldr	x9, [x9, #0x20]
+571981-  23af18:      	cbnz	x9, 0x23af08 <PT_LOAD#0+0x23af08>
+571982-  23af1c:      	b	0x23b0a4 <PT_LOAD#0+0x23b0a4>
+571983-  23af20:      	mov	x0, x20
+571984-  23af24:      	bl	0x60d8f0 <PT_LOAD#0+0x60d8f0>
+571985-  23af28:      	mov	w8, #0x4242             // =16962
+571986:  23af2c:      	movk	w8, #0xf, lsl #16
+571987-  23af30:      	cmp	w0, w8
+571988-  23af34:      	b.eq	0x23af48 <PT_LOAD#0+0x23af48>
+571989-  23af38:      	cmp	w0, #0x5
+571990-  23af3c:      	b.ne	0x23af54 <PT_LOAD#0+0x23af54>
+571991-  23af40:      	orr	w1, wzr, #0x1
+571992-  23af44:      	b	0x23af4c <PT_LOAD#0+0x23af4c>
+571993-  23af48:      	orr	w1, wzr, #0x7
+571994-  23af4c:      	mov	x0, x20
+--
+572017-  23afa8:      	bl	0x60d8f0 <PT_LOAD#0+0x60d8f0>
+572018-  23afac:      	cmp	w0, #0x7
+572019-  23afb0:      	b.eq	0x23afc4 <PT_LOAD#0+0x23afc4>
+572020-  23afb4:      	cmp	w0, #0x1
+572021-  23afb8:      	b.ne	0x23afd4 <PT_LOAD#0+0x23afd4>
+572022-  23afbc:      	mov	w1, #0x5                // =5
+572023-  23afc0:      	b	0x23afcc <PT_LOAD#0+0x23afcc>
+572024-  23afc4:      	mov	w1, #0x4242             // =16962
+572025:  23afc8:      	movk	w1, #0xf, lsl #16
+572026-  23afcc:      	mov	x0, x20
+572027-  23afd0:      	bl	0x60d920 <PT_LOAD#0+0x60d920>
+572028-  23afd4:      	mov	x0, x19
+572029-  23afd8:      	bl	0x23b220 <PT_LOAD#0+0x23b220>
+572030-  23afdc:      	ldr	x8, [x19, #0x110]
+572031-  23afe0:      	cbz	x8, 0x23b0a4 <PT_LOAD#0+0x23b0a4>
+572032-  23afe4:      	ldr	x20, [x8, #0x28]
+572033-  23afe8:      	cbz	x20, 0x23b050 <PT_LOAD#0+0x23b050>
+--
+576890-  23fe44:      	bl	0x1aa040 <PT_LOAD#0+0x1aa040>
+576891-  23fe48:      	mov	x0, x19
+576892-  23fe4c:      	mov	w1, wzr
+576893-  23fe50:      	bl	0x242f20 <PT_LOAD#0+0x242f20>
+576894-  23fe54:      	bl	0x186590 <PT_LOAD#0+0x186590>
+576895-  23fe58:      	sub	w8, w0, #0x1
+576896-  23fe5c:      	ldr	x0, [x19, #0x540]
+576897-  23fe60:      	cmp	w8, #0x3
+576898:  23fe64:      	mov	w8, #0x4240             // =16960
+576899:  23fe68:      	movk	w8, #0xf, lsl #16
+576900-  23fe6c:      	csinc	w1, w8, wzr, hs
+576901-  23fe70:      	bl	0x60d920 <PT_LOAD#0+0x60d920>
+576902-  23fe74:      	ldrb	w8, [x19, #0x2bd]
+576903-  23fe78:      	cbnz	w8, 0x23fe80 <PT_LOAD#0+0x23fe80>
+576904-  23fe7c:      	strb	wzr, [x19, #0x2c0]
+576905-  23fe80:      	mov	x0, x19
+576906-  23fe84:      	bl	0x242ff0 <PT_LOAD#0+0x242ff0>
+576907-  23fe88:      	mov	x0, x19
+--
+579223-  2422d8:      	stp	x20, x19, [sp, #0x20]
+579224-  2422dc:      	stp	x29, x30, [sp, #0x30]
+579225-  2422e0:      	add	x29, sp, #0x30
+579226-  2422e4:      	mov	x20, x0
+579227-  2422e8:      	ldr	w23, [x20, #0x2c4]
+579228-  2422ec:      	mov	w21, w1
+579229-  2422f0:      	mov	w1, wzr
+579230-  2422f4:      	mov	w19, #0x4243            // =16963
+579231:  2422f8:      	movk	w19, #0xf, lsl #16
+579232-  2422fc:      	bl	0x242f20 <PT_LOAD#0+0x242f20>
+579233-  242300:      	bl	0x186590 <PT_LOAD#0+0x186590>
+579234-  242304:      	sub	w22, w0, #0x1
+579235-  242308:      	ldr	x0, [x20, #0x540]
+579236-  24230c:      	bl	0x60d8f0 <PT_LOAD#0+0x60d8f0>
+579237-  242310:      	tbz	w21, #0x0, 0x242330 <PT_LOAD#0+0x242330>
+579238-  242314:      	ldr	x0, [x20, #0x540]
+579239-  242318:      	mov	w8, #0x101              // =257
+--
+593876-  250da0:      	ldp	x29, x30, [sp, #0x30]
+593877-  250da4:      	mov	w0, #0x805              // =2053
+593878-  250da8:      	ldp	x20, x19, [sp, #0x20]
+593879-  250dac:      	ldp	x22, x21, [sp, #0x10]
+593880-  250db0:      	add	sp, sp, #0x40
+593881-  250db4:      	b	0x2a0e70 <PT_LOAD#0+0x2a0e70>
+593882-  250db8:      	mov	w8, w0
+593883-  250dbc:      	mov	w9, #0xf0               // =240
+593884:  250dc0:      	movk	w9, #0xf, lsl #16
+593885-  250dc4:      	tst	x8, x9
+593886-  250dc8:      	b.eq	0x250eb4 <PT_LOAD#0+0x250eb4>
+593887-  250dcc:      	mov	w9, #0x10               // =16
+593888-  250dd0:      	movk	w9, #0x1, lsl #16
+593889-  250dd4:      	tst	x8, x9
+593890-  250dd8:      	b.eq	0x250ec8 <PT_LOAD#0+0x250ec8>
+593891-  250ddc:      	ldr	w8, [x19, #0x2d0]
+593892-  250de0:      	subs	w8, w8, #0x1
+--
+598890-  255db8:      	str	w8, [x19, #0x310]
+598891-  255dbc:      	mov	w8, #0xcccd             // =52429
+598892-  255dc0:      	movk	w8, #0x3f4c, lsl #16
+598893-  255dc4:      	str	x8, [x19, #0x338]
+598894-  255dc8:      	ldp	x29, x30, [sp, #0x10]
+598895-  255dcc:      	ldp	x20, x19, [sp], #0x20
+598896-  255dd0:      	ret
+598897-  255dd4:      	ldr	x0, [x19, #0x358]
+598898:  255dd8:      	mov	w1, #0x4240             // =16960
+598899:  255ddc:      	movk	w1, #0xf, lsl #16
+598900-  255de0:      	bl	0x60d920 <PT_LOAD#0+0x60d920>
+598901-  255de4:      	orr	w8, wzr, #0x2
+598902-  255de8:      	str	w8, [x19, #0x314]
+598903-  255dec:      	str	wzr, [x19, #0x33c]
+598904-  255df0:      	ldp	x29, x30, [sp, #0x10]
+598905-  255df4:      	ldp	x20, x19, [sp], #0x20
+598906-  255df8:      	ret
+598907-  255dfc:      	add	w8, w8, #0x1
+--
+598985-  255f3c:      	mov	w8, #0xcccd             // =52429
+598986-  255f40:      	movk	w8, #0x3f4c, lsl #16
+598987-  255f44:      	str	x8, [x19, #0x338]
+598988-  255f48:      	ldp	x29, x30, [sp, #0x10]
+598989-  255f4c:      	ldp	x20, x19, [sp], #0x20
+598990-  255f50:      	ret
+598991-  255f54:      	ldr	x0, [x19, #0x358]
+598992-  255f58:      	mov	w1, #0x4241             // =16961
+598993:  255f5c:      	movk	w1, #0xf, lsl #16
+598994-  255f60:      	bl	0x60d920 <PT_LOAD#0+0x60d920>
+598995-  255f64:      	ldr	s0, [x19, #0x33c]
+598996-  255f68:      	fmov	s1, #1.00000000
+598997-  255f6c:      	fadd	s0, s0, s1
+598998-  255f70:      	orr	w8, wzr, #0x2
+598999-  255f74:      	str	w8, [x19, #0x314]
+599000-  255f78:      	str	s0, [x19, #0x33c]
+599001-  255f7c:      	ldp	x29, x30, [sp, #0x10]
+--
+599081-  2560bc:      	str	x8, [x19, #0x338]
+599082-  2560c0:      	orr	w8, wzr, #0xf
+599083-  2560c4:      	str	w8, [x19, #0x310]
+599084-  2560c8:      	ldp	x29, x30, [sp, #0x10]
+599085-  2560cc:      	ldp	x20, x19, [sp], #0x20
+599086-  2560d0:      	ret
+599087-  2560d4:      	ldr	x0, [x19, #0x358]
+599088-  2560d8:      	mov	w1, #0x4242             // =16962
+599089:  2560dc:      	movk	w1, #0xf, lsl #16
+599090-  2560e0:      	bl	0x60d920 <PT_LOAD#0+0x60d920>
+599091-  2560e4:      	ldr	w8, [x19, #0x314]
+599092-  2560e8:      	add	w8, w8, #0x1
+599093-  2560ec:      	str	w8, [x19, #0x314]
+599094-  2560f0:      	ldp	x29, x30, [sp, #0x10]
+599095-  2560f4:      	ldp	x20, x19, [sp], #0x20
+599096-  2560f8:      	ret
+599097-  2560fc:      	add	w8, w8, #0x1
+--
+599437-  25664c:      	orr	w9, wzr, #0x1
+599438-  256650:      	and	x8, x8, #0x1f
+599439-  256654:      	lsl	w8, w9, w8
+599440-  256658:      	ldr	w9, [x20, #0x3c]
+599441-  25665c:      	orr	w8, w8, w9
+599442-  256660:      	str	w8, [x20, #0x3c]
+599443-  256664:      	ldr	w8, [x19, #0x348]
+599444-  256668:      	mov	w20, #0x4243            // =16963
+599445:  25666c:      	movk	w20, #0xf, lsl #16
+599446-  256670:      	cmp	w8, #0x4
+599447-  256674:      	b.ne	0x256708 <PT_LOAD#0+0x256708>
+599448-  256678:      	ldrb	w8, [x19, #0x34f]
+599449-  25667c:      	cbnz	w8, 0x256714 <PT_LOAD#0+0x256714>
+599450-  256680:      	ldr	x0, [x19, #0x380]
+599451-  256684:      	add	w1, w20, #0x1
+599452-  256688:      	b	0x256710 <PT_LOAD#0+0x256710>
+599453-  25668c:      	ldrb	w8, [x19, #0x34e]
+--
+608239-  25f2fc:      	and	w20, w8, #0x1
+608240-  25f300:      	ldr	x8, [x19]
+608241-  25f304:      	ldr	x8, [x8, #0xd8]
+608242-  25f308:      	orr	w1, wzr, #0x1
+608243-  25f30c:      	mov	x0, x19
+608244-  25f310:      	blr	x8
+608245-  25f314:      	ldr	x0, [x19, #0x2380]
+608246-  25f318:      	mov	w1, #0x4243             // =16963
+608247:  25f31c:      	movk	w1, #0xf, lsl #16
+608248-  25f320:      	bl	0x60d920 <PT_LOAD#0+0x60d920>
+608249-  25f324:      	ldr	x0, [x19, #0x23e0]
+608250-  25f328:      	add	x8, sp, #0x18
+608251-  25f32c:      	bl	0x2ac8e0 <PT_LOAD#0+0x2ac8e0>
+608252-  25f330:      	ldr	w8, [sp, #0x18]
+608253-  25f334:      	ldr	x9, [x19, #0x23e0]
+608254-  25f338:      	str	w8, [x19, #0x308]
+608255-  25f33c:      	ldp	w8, w10, [x9, #0xd4]
+--
+608630-  25f920:      	csneg	w9, wzr, w22, le
+608631-  25f924:      	add	w8, w8, w9
+608632-  25f928:      	add	w2, w8, #0x5
+608633-  25f92c:      	orr	w1, wzr, #0x6
+608634-  25f930:      	mov	x0, x20
+608635-  25f934:      	bl	0x261810 <PT_LOAD#0+0x261810>
+608636-  25f938:      	ldr	w8, [x20, #0x1abc]
+608637-  25f93c:      	mov	w9, #0x4241             // =16961
+608638:  25f940:      	movk	w9, #0xf, lsl #16
+608639-  25f944:      	cmp	w21, w9
+608640-  25f948:      	b.ne	0x25f9fc <PT_LOAD#0+0x25f9fc>
+608641-  25f94c:      	add	w8, w8, #0x6
+608642-  25f950:      	cmp	w8, w22
+608643-  25f954:      	csel	w9, wzr, w22, lt
+608644-  25f958:      	sub	w2, w8, w9
+608645-  25f95c:      	orr	w1, wzr, #0x7
+608646-  25f960:      	mov	x0, x20
+--
+608658-  25f990:      	fdiv	s0, s1, s9
+608659-  25f994:      	ldr	s1, [x20, #0x28]
+608660-  25f998:      	ldr	x0, [x20, #0x2380]
+608661-  25f99c:      	fmul	s0, s0, s1
+608662-  25f9a0:      	ldr	s1, [x0, #0xec]
+608663-  25f9a4:      	fmul	s9, s0, s1
+608664-  25f9a8:      	bl	0x60d8f0 <PT_LOAD#0+0x60d8f0>
+608665-  25f9ac:      	mov	w8, #0x4241             // =16961
+608666:  25f9b0:      	movk	w8, #0xf, lsl #16
+608667-  25f9b4:      	cmp	w0, w8
+608668-  25f9b8:      	b.eq	0x25fa34 <PT_LOAD#0+0x25fa34>
+608669-  25f9bc:      	mov	w8, #0x4242             // =16962
+608670:  25f9c0:      	movk	w8, #0xf, lsl #16
+608671-  25f9c4:      	cmp	w0, w8
+608672-  25f9c8:      	b.ne	0x25fa70 <PT_LOAD#0+0x25fa70>
+608673-  25f9cc:      	ldr	x0, [x20, #0x23a0]
+608674-  25f9d0:      	ldr	s0, [x0, #0xb0]
+608675-  25f9d4:      	fsub	s0, s0, s9
+608676-  25f9d8:      	fcmp	s0, s8
+608677-  25f9dc:      	fcsel	s8, s8, s0, mi
+608678-  25f9e0:      	mov	v0.16b, v8.16b
+--
+608798-  25fbc0:      	b	0x25fdcc <PT_LOAD#0+0x25fdcc>
+608799-  25fbc4:      	ldr	x8, [x20, #0x2470]
+608800-  25fbc8:      	ldr	s1, [x8, #0xd4]
+608801-  25fbcc:      	fmov	s9, #6.00000000
+608802-  25fbd0:      	fdiv	s1, s1, s9
+608803-  25fbd4:      	ldr	s2, [x20, #0x28]
+608804-  25fbd8:      	fmul	s1, s1, s2
+608805-  25fbdc:      	mov	w8, #0x4241             // =16961
+
+===== VALIDATION =====
+    1373   65164 tmp/re0-analysis/re0-clock-sync-proof.log
+eaeac8b87185062ea58f2194aa22f5c72b0656e90612e55a2ea3ba86690bab30  tmp/re0-analysis/main.elf
