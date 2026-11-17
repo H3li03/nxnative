@@ -1,0 +1,65 @@
+===== ELF LOAD SEGMENTS =====
+xcrun: error: unrecognized option: --program-headers
+Usage: xcrun [options] <tool name> ... arguments ...
+
+Find and execute the named command line tool from the active developer
+directory.
+
+The active developer directory can be set using `xcode-select`, or via the
+DEVELOPER_DIR environment variable. See the xcrun and xcode-select manual
+pages for more information.
+
+Options:
+  -h, --help                  show this help message and exit
+  --version                   show the xcrun version
+  -v, --verbose               show verbose logging output
+  --sdk <sdk name>            find the tool for the given SDK name
+  --toolchain <name>          find the tool for the given toolchain
+  -l, --log                   show commands to be executed (with --run)
+  -f, --find                  only find and print the tool path
+  -r, --run                   find and execute the tool (the default behavior)
+  -n, --no-cache              do not use the lookup cache
+  -k, --kill-cache            invalidate all existing cache entries
+  --show-sdk-path             show selected SDK install path
+  --show-sdk-version          show selected SDK version
+  --show-sdk-build-version    show selected SDK build version
+  --show-sdk-platform-path    show selected SDK platform path
+  --show-sdk-platform-version show selected SDK platform version
+  --show-toolchain-path       show selected SDK preferred toolchain path
+===== DISASSEMBLY SAMPLE =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x7aa300,0x7aa380) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  7aa300: a9464ff4     	ldp	x20, x19, [sp, #0x60]
+  7aa304: f9401bf9     	ldr	x25, [sp, #0x30]
+  7aa308: a94557f6     	ldp	x22, x21, [sp, #0x50]
+  7aa30c: a9445ff8     	ldp	x24, x23, [sp, #0x40]
+  7aa310: 910203ff     	add	sp, sp, #0x80
+  7aa314: d65f03c0     	ret
+		...
+  7aa320: 39414000     	ldrb	w0, [x0, #0x50]
+  7aa324: d65f03c0     	ret
+		...
+  7aa330: 12000028     	and	w8, w1, #0x1
+  7aa334: 39014008     	strb	w8, [x0, #0x50]
+  7aa338: f9402c08     	ldr	x8, [x0, #0x58]
+  7aa33c: a9067c08     	stp	x8, xzr, [x0, #0x60]
+  7aa340: 32091be8     	orr	w8, wzr, #0x3f800000
+  7aa344: b9007808     	str	w8, [x0, #0x78]
+  7aa348: b900881f     	str	wzr, [x0, #0x88]
+  7aa34c: d65f03c0     	ret
+  7aa350: f9402c08     	ldr	x8, [x0, #0x58]
+  7aa354: a9067c08     	stp	x8, xzr, [x0, #0x60]
+  7aa358: 32091be8     	orr	w8, wzr, #0x3f800000
+  7aa35c: b9007808     	str	w8, [x0, #0x78]
+  7aa360: b900881f     	str	wzr, [x0, #0x88]
+  7aa364: d65f03c0     	ret
+		...
+  7aa370: 17f2f898     	b	0x4685d0 <PT_LOAD#0+0x4685d0>
+		...
+===== DISASSEMBLY OUTPUT SIZE =====
+ 2578238
