@@ -1,0 +1,288 @@
+
+======================================================================
+RIFERIMENTI A 0x8d3a60
+Occorrenze: 5
+  4f1368:      	fmul	s3, s5, s3
+  4f136c:      	fsub	s0, s1, s0
+  4f1370:      	fsub	s1, s4, s7
+  4f1374:      	fsub	s2, s6, s3
+  4f1378:      	fmul	s0, s0, s0
+  4f137c:      	fmul	s1, s1, s1
+  4f1380:      	fadd	s0, s0, s1
+  4f1384:      	fmul	s1, s2, s2
+  4f1388:      	fadd	s1, s0, s1
+  4f138c:      	fsqrt	s0, s1
+  4f1390:      	fcmp	s0, s0
+  4f1394:      	b.vc	0x4f13a0 <PT_LOAD#0+0x4f13a0>
+  4f1398:      	mov	v0.16b, v1.16b
+  4f139c:      	bl	0xa03f78 <PT_LOAD#0+0xa03f78>
+  4f13a0:      	str	s0, [x19, #0xc]
+  4f13a4:      	ldp	x29, x30, [sp, #0x10]
+  4f13a8:      	orr	w0, wzr, #0x1
+  4f13ac:      	ldr	x19, [sp], #0x20
+  4f13b0:      	ret
+		...
+  4f13c0:      	b	0x8d3a60 <PT_LOAD#0+0x8d3a60>
+		...
+  4f13d0:      	str	x19, [sp, #-0x20]!
+  4f13d4:      	stp	x29, x30, [sp, #0x10]
+  4f13d8:      	add	x29, sp, #0x10
+  4f13dc:      	mov	x19, x0
+  4f13e0:      	ldr	x8, [x19, #0xfc0]
+  4f13e4:      	ldr	w9, [x19, #0xfc8]
+  4f13e8:      	ldr	x0, [x19, #0xfd8]
+  4f13ec:      	str	x8, [x19, #0xfb0]
+  4f13f0:      	str	w9, [x19, #0xfb8]
+  4f13f4:      	str	wzr, [x19, #0xfbc]
+  4f13f8:      	cbz	x0, 0x4f14c0 <PT_LOAD#0+0x4f14c0>
+  4f13fc:      	ldr	w8, [x0, #0x10]
+  4f1400:      	and	w8, w8, #0x7
+
+  4f1a58:      	fmul	s3, s5, s3
+  4f1a5c:      	fsub	s0, s1, s0
+  4f1a60:      	fsub	s1, s4, s7
+  4f1a64:      	fsub	s2, s6, s3
+  4f1a68:      	fmul	s0, s0, s0
+  4f1a6c:      	fmul	s1, s1, s1
+  4f1a70:      	fadd	s0, s0, s1
+  4f1a74:      	fmul	s1, s2, s2
+  4f1a78:      	fadd	s1, s0, s1
+  4f1a7c:      	fsqrt	s0, s1
+  4f1a80:      	fcmp	s0, s0
+  4f1a84:      	b.vc	0x4f1a90 <PT_LOAD#0+0x4f1a90>
+  4f1a88:      	mov	v0.16b, v1.16b
+  4f1a8c:      	bl	0xa03f78 <PT_LOAD#0+0xa03f78>
+  4f1a90:      	str	s0, [x19, #0xc]
+  4f1a94:      	ldp	x29, x30, [sp, #0x10]
+  4f1a98:      	orr	w0, wzr, #0x1
+  4f1a9c:      	ldr	x19, [sp], #0x20
+  4f1aa0:      	ret
+		...
+  4f1ab0:      	b	0x8d3a60 <PT_LOAD#0+0x8d3a60>
+		...
+  4f1ac0:      	sub	sp, sp, #0x70
+  4f1ac4:      	str	x25, [sp, #0x20]
+  4f1ac8:      	stp	x24, x23, [sp, #0x30]
+  4f1acc:      	stp	x22, x21, [sp, #0x40]
+  4f1ad0:      	stp	x20, x19, [sp, #0x50]
+  4f1ad4:      	stp	x29, x30, [sp, #0x60]
+  4f1ad8:      	add	x29, sp, #0x60
+  4f1adc:      	mov	x19, x0
+  4f1ae0:      	ldr	w21, [x19, #0xfd0]
+  4f1ae4:      	ldr	w25, [x19, #0xfd4]
+  4f1ae8:      	ldr	w20, [x19, #0xfd8]
+  4f1aec:      	ldr	w24, [x19, #0xfe0]
+  4f1af0:      	ldr	w23, [x19, #0xfe4]
+
+  4f4f50:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  4f4f54:      	ldr	s0, [x19, #0xf80]
+  4f4f58:      	ldr	s1, [x19, #0x28]
+  4f4f5c:      	ldr	x8, [x8, #0x650]
+  4f4f60:      	fmul	s0, s0, s1
+  4f4f64:      	ldr	x8, [x8]
+  4f4f68:      	ldr	s1, [x8, #0x48]
+  4f4f6c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+  4f4f70:      	fdiv	s0, s0, s1
+  4f4f74:      	ldr	s1, [x19, #0x1024]
+  4f4f78:      	fmul	s3, s0, s1
+  4f4f7c:      	ldr	s1, [x19, #0xf84]
+  4f4f80:      	fadd	s0, s1, s3
+  4f4f84:      	ldr	s1, [x8, #0x714]
+  4f4f88:      	str	s0, [x19, #0xf84]
+  4f4f8c:      	bl	0xa03fd8 <PT_LOAD#0+0xa03fd8>
+  4f4f90:      	str	s0, [x19, #0xf84]
+  4f4f94:      	ldp	x29, x30, [sp, #0x10]
+  4f4f98:      	mov	x0, x19
+  4f4f9c:      	ldr	x19, [sp], #0x20
+  4f4fa0:      	b	0x8d3a60 <PT_LOAD#0+0x8d3a60>
+		...
+  4f4fb0:      	str	x19, [sp, #-0x20]!
+  4f4fb4:      	stp	x29, x30, [sp, #0x10]
+  4f4fb8:      	add	x29, sp, #0x10
+  4f4fbc:      	mov	x19, x0
+  4f4fc0:      	ldr	s0, [x19, #0xf8c]
+  4f4fc4:      	ldr	s1, [x19, #0xf90]
+  4f4fc8:      	ldp	s2, s3, [x1]
+  4f4fcc:      	fmul	s0, s0, s2
+  4f4fd0:      	fmul	s1, s1, s3
+  4f4fd4:      	ldr	s2, [x19, #0xf94]
+  4f4fd8:      	fadd	s0, s0, s1
+  4f4fdc:      	ldr	s1, [x1, #0x8]
+  4f4fe0:      	fmul	s1, s2, s1
+
+  4f5620:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  4f5624:      	ldr	s0, [x19, #0xf80]
+  4f5628:      	ldr	s1, [x19, #0x28]
+  4f562c:      	ldr	x8, [x8, #0x650]
+  4f5630:      	fmul	s0, s0, s1
+  4f5634:      	ldr	x8, [x8]
+  4f5638:      	ldr	s1, [x8, #0x48]
+  4f563c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+  4f5640:      	fdiv	s0, s0, s1
+  4f5644:      	ldr	s1, [x19, #0x1074]
+  4f5648:      	fmul	s3, s0, s1
+  4f564c:      	ldr	s1, [x19, #0xf84]
+  4f5650:      	fadd	s0, s1, s3
+  4f5654:      	ldr	s1, [x8, #0x714]
+  4f5658:      	str	s0, [x19, #0xf84]
+  4f565c:      	bl	0xa03fd8 <PT_LOAD#0+0xa03fd8>
+  4f5660:      	str	s0, [x19, #0xf84]
+  4f5664:      	ldp	x29, x30, [sp, #0x10]
+  4f5668:      	mov	x0, x19
+  4f566c:      	ldr	x19, [sp], #0x20
+  4f5670:      	b	0x8d3a60 <PT_LOAD#0+0x8d3a60>
+		...
+  4f5680:      	str	x19, [sp, #-0x20]!
+  4f5684:      	stp	x29, x30, [sp, #0x10]
+  4f5688:      	add	x29, sp, #0x10
+  4f568c:      	mov	x19, x0
+  4f5690:      	ldr	w8, [x19, #0xfc0]
+  4f5694:      	ldr	w9, [x19, #0xfc4]
+  4f5698:      	ldr	w10, [x19, #0xfc8]
+  4f569c:      	str	w8, [x19, #0xfb0]
+  4f56a0:      	ldr	x0, [x19, #0xfd8]
+  4f56a4:      	str	w9, [x19, #0xfb4]
+  4f56a8:      	str	w10, [x19, #0xfb8]
+  4f56ac:      	str	wzr, [x19, #0xfbc]
+  4f56b0:      	cbz	x0, 0x4f5794 <PT_LOAD#0+0x4f5794>
+
+  4f6208:      	add	x29, sp, #0x10
+  4f620c:      	mov	x19, x0
+  4f6210:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  4f6214:      	ldr	s0, [x19, #0xf80]
+  4f6218:      	ldr	s1, [x19, #0x28]
+  4f621c:      	ldr	x8, [x8, #0x650]
+  4f6220:      	fmul	s0, s0, s1
+  4f6224:      	ldr	x8, [x8]
+  4f6228:      	ldr	s1, [x8, #0x48]
+  4f622c:      	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+  4f6230:      	fdiv	s0, s0, s1
+  4f6234:      	ldr	s1, [x19, #0xf84]
+  4f6238:      	fadd	s0, s1, s0
+  4f623c:      	ldr	s1, [x8, #0x714]
+  4f6240:      	str	s0, [x19, #0xf84]
+  4f6244:      	bl	0xa03fd8 <PT_LOAD#0+0xa03fd8>
+  4f6248:      	str	s0, [x19, #0xf84]
+  4f624c:      	ldp	x29, x30, [sp, #0x10]
+  4f6250:      	mov	x0, x19
+  4f6254:      	ldr	x19, [sp], #0x20
+  4f6258:      	b	0x8d3a60 <PT_LOAD#0+0x8d3a60>
+  4f625c:      	udf	#0x0
+  4f6260:      	sub	sp, sp, #0x70
+  4f6264:      	str	x25, [sp, #0x20]
+  4f6268:      	stp	x24, x23, [sp, #0x30]
+  4f626c:      	stp	x22, x21, [sp, #0x40]
+  4f6270:      	stp	x20, x19, [sp, #0x50]
+  4f6274:      	stp	x29, x30, [sp, #0x60]
+  4f6278:      	add	x29, sp, #0x60
+  4f627c:      	mov	x19, x0
+  4f6280:      	ldr	w21, [x19, #0xfd0]
+  4f6284:      	ldr	w25, [x19, #0xfd4]
+  4f6288:      	ldr	w20, [x19, #0xfd8]
+  4f628c:      	ldr	w24, [x19, #0xfe0]
+  4f6290:      	ldr	w23, [x19, #0xfe4]
+
+
+======================================================================
+RIFERIMENTI A 0x97d4a0
+Occorrenze: 1
+  8d3a30:      	b	0x468890 <PT_LOAD#0+0x468890>
+		...
+  8d3a40:      	mov	x8, x0
+  8d3a44:      	ldr	x2, [x8, #0xf68]
+  8d3a48:      	cbz	x2, 0x8d3a58 <PT_LOAD#0+0x8d3a58>
+  8d3a4c:      	add	x0, x8, #0x48
+  8d3a50:      	mov	x1, x8
+  8d3a54:      	b	0x97d680 <PT_LOAD#0+0x97d680>
+  8d3a58:      	ret
+  8d3a5c:      	udf	#0x0
+  8d3a60:      	ldr	x8, [x0, #0xf68]
+  8d3a64:      	cbz	x8, 0x8d3a8c <PT_LOAD#0+0x8d3a8c>
+  8d3a68:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+  8d3a6c:      	ldr	x9, [x9, #0x650]
+  8d3a70:      	ldr	x9, [x9]
+  8d3a74:      	ldr	s0, [x9, #0x78]
+  8d3a78:      	ldr	s1, [x0, #0xf70]
+  8d3a7c:      	fmul	s0, s0, s1
+  8d3a80:      	add	x8, x0, #0x48
+  8d3a84:      	mov	x0, x8
+  8d3a88:      	b	0x97d4a0 <PT_LOAD#0+0x97d4a0>
+  8d3a8c:      	ret
+  8d3a90:      	ret
+		...
+  8d3aa0:      	str	s0, [x0, #0x48]
+  8d3aa4:      	ret
+		...
+  8d3ab0:      	b	0x39c370 <PT_LOAD#0+0x39c370>
+		...
+  8d3ac0:      	adrp	x0, 0x128e000 <PT_LOAD#0+0x128e000>
+  8d3ac4:      	ldr	x0, [x0, #0xd0]
+  8d3ac8:      	ret
+  8d3acc:      	udf	#0x0
+  8d3ad0:      	str	x19, [sp, #-0x20]!
+  8d3ad4:      	stp	x29, x30, [sp, #0x10]
+
+
+CONTESTO DELLA ROUTINE 0x8d3a60
+  8d39f0:      	bl	0x97d680 <PT_LOAD#0+0x97d680>
+  8d39f4:      	ldr	x8, [x19, #0xf68]
+  8d39f8:      	ldr	w8, [x8, #0x9c]
+  8d39fc:      	str	w8, [x19, #0x40]
+  8d3a00:      	ldp	x29, x30, [sp, #0x10]
+  8d3a04:      	ldp	x20, x19, [sp], #0x20
+  8d3a08:      	ret
+  8d3a0c:      	udf	#0x0
+  8d3a10:      	ldr	w0, [x0, #0x40]
+  8d3a14:      	ret
+  8d3a20:      	str	w1, [x0, #0x40]
+  8d3a24:      	ret
+  8d3a30:      	b	0x468890 <PT_LOAD#0+0x468890>
+  8d3a40:      	mov	x8, x0
+  8d3a44:      	ldr	x2, [x8, #0xf68]
+  8d3a48:      	cbz	x2, 0x8d3a58 <PT_LOAD#0+0x8d3a58>
+  8d3a4c:      	add	x0, x8, #0x48
+  8d3a50:      	mov	x1, x8
+  8d3a54:      	b	0x97d680 <PT_LOAD#0+0x97d680>
+  8d3a58:      	ret
+  8d3a5c:      	udf	#0x0
+  8d3a60:      	ldr	x8, [x0, #0xf68]
+  8d3a64:      	cbz	x8, 0x8d3a8c <PT_LOAD#0+0x8d3a8c>
+  8d3a68:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+  8d3a6c:      	ldr	x9, [x9, #0x650]
+  8d3a70:      	ldr	x9, [x9]
+  8d3a74:      	ldr	s0, [x9, #0x78]
+  8d3a78:      	ldr	s1, [x0, #0xf70]
+  8d3a7c:      	fmul	s0, s0, s1
+  8d3a80:      	add	x8, x0, #0x48
+  8d3a84:      	mov	x0, x8
+  8d3a88:      	b	0x97d4a0 <PT_LOAD#0+0x97d4a0>
+  8d3a8c:      	ret
+  8d3a90:      	ret
+  8d3aa0:      	str	s0, [x0, #0x48]
+  8d3aa4:      	ret
+  8d3ab0:      	b	0x39c370 <PT_LOAD#0+0x39c370>
+  8d3ac0:      	adrp	x0, 0x128e000 <PT_LOAD#0+0x128e000>
+  8d3ac4:      	ldr	x0, [x0, #0xd0]
+  8d3ac8:      	ret
+  8d3acc:      	udf	#0x0
+  8d3ad0:      	str	x19, [sp, #-0x20]!
+  8d3ad4:      	stp	x29, x30, [sp, #0x10]
+  8d3ad8:      	add	x29, sp, #0x10
+  8d3adc:      	mov	x9, #0x200000002        // =8589934594
+  8d3ae0:      	adrp	x8, 0x1bac000 <PT_LOAD#0+0x1bac000>
+  8d3ae4:      	add	x8, x8, #0xee0
+  8d3ae8:      	movk	x9, #0x1
+  8d3aec:      	stp	xzr, x9, [x8, #0x30]
+  8d3af0:      	mov	x9, #0x400000004        // =17179869188
+  8d3af4:      	mov	x10, #0x800000008       // =34359738376
+  8d3af8:      	movk	x10, #0x9, lsl #32
+  8d3afc:      	movk	x9, #0x3
+  8d3b00:      	stp	x9, x10, [x8, #0x40]
+  8d3b04:      	mov	x9, #0x600000006        // =25769803782
+  8d3b08:      	movk	x9, #0x5
+  8d3b0c:      	str	x9, [x8, #0x50]
+  8d3b10:      	mov	w9, #0x1b58             // =7000
+  8d3b14:      	mov	w10, #0x27c0            // =10176
+  8d3b18:      	movk	w10, #0x9, lsl #16
+  8d3b1c:      	stp	x9, x10, [x8]
+  8d3b20:      	adrp	x19, 0x128e000 <PT_LOAD#0+0x128e000>
