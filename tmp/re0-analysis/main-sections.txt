@@ -1,0 +1,6 @@
+
+/tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+
+Sections:
+Idx Name          Size     VMA              Type
+  0 PT_LOAD#0     00a05fa8 0000000000000000 TEXT
