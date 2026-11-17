@@ -1,0 +1,503 @@
+===== MAIN OBJECT SETUP FUNCTIONS =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x7a9f00,0x7aa080) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  7a9f00: f90012bf     	str	xzr, [x21, #0x20]
+  7a9f04: b9002abf     	str	wzr, [x21, #0x28]
+  7a9f08: a90126b4     	stp	x20, x9, [x21, #0x10]
+  7a9f0c: 940967df     	bl	0xa03e88 <PT_LOAD#0+0xa03e88>
+  7a9f10: a9067ebf     	stp	xzr, xzr, [x21, #0x60]
+  7a9f14: f9400668     	ldr	x8, [x19, #0x8]
+  7a9f18: b4000088     	cbz	x8, 0x7a9f28 <PT_LOAD#0+0x7a9f28>
+  7a9f1c: f9003115     	str	x21, [x8, #0x60]
+  7a9f20: f94002c8     	ldr	x8, [x22]
+  7a9f24: f90036a8     	str	x8, [x21, #0x68]
+  7a9f28: aa1303e0     	mov	x0, x19
+  7a9f2c: f9000675     	str	x21, [x19, #0x8]
+  7a9f30: b9002fff     	str	wzr, [sp, #0x2c]
+  7a9f34: f80243ff     	stur	xzr, [sp, #0x24]
+  7a9f38: f801c3ff     	stur	xzr, [sp, #0x1c]
+  7a9f3c: f80143ff     	stur	xzr, [sp, #0x14]
+  7a9f40: f800c3ff     	stur	xzr, [sp, #0xc]
+  7a9f44: 97effc47     	bl	0x3a9060 <PT_LOAD#0+0x3a9060>
+  7a9f48: aa0003f5     	mov	x21, x0
+  7a9f4c: b9000ab8     	str	w24, [x21, #0x8]
+  7a9f50: b0005749     	adrp	x9, 0x1292000 <PT_LOAD#0+0x1292000>
+  7a9f54: f945a529     	ldr	x9, [x9, #0xb48]
+  7a9f58: d00040a8     	adrp	x8, 0xfbf000 <PT_LOAD#0+0xfbf000>
+  7a9f5c: 91318108     	add	x8, x8, #0xc60
+  7a9f60: 9100b2a0     	add	x0, x21, #0x2c
+  7a9f64: 910003e1     	mov	x1, sp
+  7a9f68: 321c07e2     	orr	w2, wzr, #0x30
+  7a9f6c: f90002a8     	str	x8, [x21]
+  7a9f70: f90012bf     	str	xzr, [x21, #0x20]
+  7a9f74: b9002abf     	str	wzr, [x21, #0x28]
+  7a9f78: a90126b4     	stp	x20, x9, [x21, #0x10]
+  7a9f7c: 940967c3     	bl	0xa03e88 <PT_LOAD#0+0xa03e88>
+  7a9f80: a9067ebf     	stp	xzr, xzr, [x21, #0x60]
+  7a9f84: f9400668     	ldr	x8, [x19, #0x8]
+  7a9f88: b4000088     	cbz	x8, 0x7a9f98 <PT_LOAD#0+0x7a9f98>
+  7a9f8c: f9003115     	str	x21, [x8, #0x60]
+  7a9f90: f94002c8     	ldr	x8, [x22]
+  7a9f94: f90036a8     	str	x8, [x21, #0x68]
+  7a9f98: aa1303e0     	mov	x0, x19
+  7a9f9c: f9000675     	str	x21, [x19, #0x8]
+  7a9fa0: 97effc30     	bl	0x3a9060 <PT_LOAD#0+0x3a9060>
+  7a9fa4: d00040a8     	adrp	x8, 0xfbf000 <PT_LOAD#0+0xfbf000>
+  7a9fa8: 9131ad08     	add	x8, x8, #0xc6b
+  7a9fac: f9000008     	str	x8, [x0]
+  7a9fb0: 528000c8     	mov	w8, #0x6                // =6
+  7a9fb4: 72a01048     	movk	w8, #0x82, lsl #16
+  7a9fb8: b9000808     	str	w8, [x0, #0x8]
+  7a9fbc: b0005748     	adrp	x8, 0x1292000 <PT_LOAD#0+0x1292000>
+  7a9fc0: f9458108     	ldr	x8, [x8, #0xb00]
+  7a9fc4: a9012014     	stp	x20, x8, [x0, #0x10]
+  7a9fc8: b0005748     	adrp	x8, 0x1292000 <PT_LOAD#0+0x1292000>
+  7a9fcc: a9027c1f     	stp	xzr, xzr, [x0, #0x20]
+  7a9fd0: f9458508     	ldr	x8, [x8, #0xb08]
+  7a9fd4: a903201f     	stp	xzr, x8, [x0, #0x30]
+  7a9fd8: b900581f     	str	wzr, [x0, #0x58]
+  7a9fdc: a904fc1f     	stp	xzr, xzr, [x0, #0x48]
+  7a9fe0: f900201f     	str	xzr, [x0, #0x40]
+  7a9fe4: a9067c1f     	stp	xzr, xzr, [x0, #0x60]
+  7a9fe8: f9400668     	ldr	x8, [x19, #0x8]
+  7a9fec: b4000088     	cbz	x8, 0x7a9ffc <PT_LOAD#0+0x7a9ffc>
+  7a9ff0: f9003100     	str	x0, [x8, #0x60]
+  7a9ff4: f94002c8     	ldr	x8, [x22]
+  7a9ff8: f9003408     	str	x8, [x0, #0x68]
+  7a9ffc: f9000660     	str	x0, [x19, #0x8]
+  7aa000: aa1303e0     	mov	x0, x19
+  7aa004: 9102b298     	add	x24, x20, #0xac
+  7aa008: b9002fff     	str	wzr, [sp, #0x2c]
+  7aa00c: f80243ff     	stur	xzr, [sp, #0x24]
+  7aa010: f801c3ff     	stur	xzr, [sp, #0x1c]
+  7aa014: f80143ff     	stur	xzr, [sp, #0x14]
+  7aa018: f800c3ff     	stur	xzr, [sp, #0xc]
+  7aa01c: 97effc11     	bl	0x3a9060 <PT_LOAD#0+0x3a9060>
+  7aa020: aa0003f5     	mov	x21, x0
+  7aa024: b00040a8     	adrp	x8, 0xfbf000 <PT_LOAD#0+0xfbf000>
+  7aa028: 9131e508     	add	x8, x8, #0xc79
+  7aa02c: 9100b2a0     	add	x0, x21, #0x2c
+  7aa030: 910003e1     	mov	x1, sp
+  7aa034: b9000ab7     	str	w23, [x21, #0x8]
+  7aa038: 321c07e2     	orr	w2, wzr, #0x30
+  7aa03c: f90002a8     	str	x8, [x21]
+  7aa040: b9002abf     	str	wzr, [x21, #0x28]
+  7aa044: a90162b4     	stp	x20, x24, [x21, #0x10]
+  7aa048: 94096790     	bl	0xa03e88 <PT_LOAD#0+0xa03e88>
+  7aa04c: a9067ebf     	stp	xzr, xzr, [x21, #0x60]
+  7aa050: f9400668     	ldr	x8, [x19, #0x8]
+  7aa054: b4000088     	cbz	x8, 0x7aa064 <PT_LOAD#0+0x7aa064>
+  7aa058: f9003115     	str	x21, [x8, #0x60]
+  7aa05c: f94002c8     	ldr	x8, [x22]
+  7aa060: f90036a8     	str	x8, [x21, #0x68]
+  7aa064: aa1303e0     	mov	x0, x19
+  7aa068: f9000675     	str	x21, [x19, #0x8]
+  7aa06c: 9102c299     	add	x25, x20, #0xb0
+  7aa070: b9002fff     	str	wzr, [sp, #0x2c]
+  7aa074: f80243ff     	stur	xzr, [sp, #0x24]
+  7aa078: f801c3ff     	stur	xzr, [sp, #0x1c]
+  7aa07c: f80143ff     	stur	xzr, [sp, #0x14]
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x7aa000,0x7aa180) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  7aa000: aa1303e0     	mov	x0, x19
+  7aa004: 9102b298     	add	x24, x20, #0xac
+  7aa008: b9002fff     	str	wzr, [sp, #0x2c]
+  7aa00c: f80243ff     	stur	xzr, [sp, #0x24]
+  7aa010: f801c3ff     	stur	xzr, [sp, #0x1c]
+  7aa014: f80143ff     	stur	xzr, [sp, #0x14]
+  7aa018: f800c3ff     	stur	xzr, [sp, #0xc]
+  7aa01c: 97effc11     	bl	0x3a9060 <PT_LOAD#0+0x3a9060>
+  7aa020: aa0003f5     	mov	x21, x0
+  7aa024: b00040a8     	adrp	x8, 0xfbf000 <PT_LOAD#0+0xfbf000>
+  7aa028: 9131e508     	add	x8, x8, #0xc79
+  7aa02c: 9100b2a0     	add	x0, x21, #0x2c
+  7aa030: 910003e1     	mov	x1, sp
+  7aa034: b9000ab7     	str	w23, [x21, #0x8]
+  7aa038: 321c07e2     	orr	w2, wzr, #0x30
+  7aa03c: f90002a8     	str	x8, [x21]
+  7aa040: b9002abf     	str	wzr, [x21, #0x28]
+  7aa044: a90162b4     	stp	x20, x24, [x21, #0x10]
+  7aa048: 94096790     	bl	0xa03e88 <PT_LOAD#0+0xa03e88>
+  7aa04c: a9067ebf     	stp	xzr, xzr, [x21, #0x60]
+  7aa050: f9400668     	ldr	x8, [x19, #0x8]
+  7aa054: b4000088     	cbz	x8, 0x7aa064 <PT_LOAD#0+0x7aa064>
+  7aa058: f9003115     	str	x21, [x8, #0x60]
+  7aa05c: f94002c8     	ldr	x8, [x22]
+  7aa060: f90036a8     	str	x8, [x21, #0x68]
+  7aa064: aa1303e0     	mov	x0, x19
+  7aa068: f9000675     	str	x21, [x19, #0x8]
+  7aa06c: 9102c299     	add	x25, x20, #0xb0
+  7aa070: b9002fff     	str	wzr, [sp, #0x2c]
+  7aa074: f80243ff     	stur	xzr, [sp, #0x24]
+  7aa078: f801c3ff     	stur	xzr, [sp, #0x1c]
+  7aa07c: f80143ff     	stur	xzr, [sp, #0x14]
+  7aa080: f800c3ff     	stur	xzr, [sp, #0xc]
+  7aa084: 97effbf7     	bl	0x3a9060 <PT_LOAD#0+0x3a9060>
+  7aa088: aa0003f5     	mov	x21, x0
+  7aa08c: b00040a8     	adrp	x8, 0xfbf000 <PT_LOAD#0+0xfbf000>
+  7aa090: 91323108     	add	x8, x8, #0xc8c
+  7aa094: 110006f8     	add	w24, w23, #0x1
+  7aa098: 9100b2a0     	add	x0, x21, #0x2c
+  7aa09c: b9000ab8     	str	w24, [x21, #0x8]
+  7aa0a0: 910003e1     	mov	x1, sp
+  7aa0a4: 321c07e2     	orr	w2, wzr, #0x30
+  7aa0a8: f90002a8     	str	x8, [x21]
+  7aa0ac: a90166b4     	stp	x20, x25, [x21, #0x10]
+  7aa0b0: b9002abf     	str	wzr, [x21, #0x28]
+  7aa0b4: 94096775     	bl	0xa03e88 <PT_LOAD#0+0xa03e88>
+  7aa0b8: a9067ebf     	stp	xzr, xzr, [x21, #0x60]
+  7aa0bc: f9400668     	ldr	x8, [x19, #0x8]
+  7aa0c0: b4000088     	cbz	x8, 0x7aa0d0 <PT_LOAD#0+0x7aa0d0>
+  7aa0c4: f9003115     	str	x21, [x8, #0x60]
+  7aa0c8: f94002c8     	ldr	x8, [x22]
+  7aa0cc: f90036a8     	str	x8, [x21, #0x68]
+  7aa0d0: aa1303e0     	mov	x0, x19
+  7aa0d4: f9000675     	str	x21, [x19, #0x8]
+  7aa0d8: 9102e299     	add	x25, x20, #0xb8
+  7aa0dc: b9002fff     	str	wzr, [sp, #0x2c]
+  7aa0e0: f80243ff     	stur	xzr, [sp, #0x24]
+  7aa0e4: f801c3ff     	stur	xzr, [sp, #0x1c]
+  7aa0e8: f80143ff     	stur	xzr, [sp, #0x14]
+  7aa0ec: f800c3ff     	stur	xzr, [sp, #0xc]
+  7aa0f0: 97effbdc     	bl	0x3a9060 <PT_LOAD#0+0x3a9060>
+  7aa0f4: aa0003f5     	mov	x21, x0
+  7aa0f8: b00040a8     	adrp	x8, 0xfbf000 <PT_LOAD#0+0xfbf000>
+  7aa0fc: 91327508     	add	x8, x8, #0xc9d
+  7aa100: 9100b2a0     	add	x0, x21, #0x2c
+  7aa104: 910003e1     	mov	x1, sp
+  7aa108: b9000ab8     	str	w24, [x21, #0x8]
+  7aa10c: 321c07e2     	orr	w2, wzr, #0x30
+  7aa110: f90002a8     	str	x8, [x21]
+  7aa114: b9002abf     	str	wzr, [x21, #0x28]
+  7aa118: a90166b4     	stp	x20, x25, [x21, #0x10]
+  7aa11c: 9409675b     	bl	0xa03e88 <PT_LOAD#0+0xa03e88>
+  7aa120: a9067ebf     	stp	xzr, xzr, [x21, #0x60]
+  7aa124: f9400668     	ldr	x8, [x19, #0x8]
+  7aa128: b4000088     	cbz	x8, 0x7aa138 <PT_LOAD#0+0x7aa138>
+  7aa12c: f9003115     	str	x21, [x8, #0x60]
+  7aa130: f94002c8     	ldr	x8, [x22]
+  7aa134: f90036a8     	str	x8, [x21, #0x68]
+  7aa138: aa1303e0     	mov	x0, x19
+  7aa13c: f9000675     	str	x21, [x19, #0x8]
+  7aa140: b9002fff     	str	wzr, [sp, #0x2c]
+  7aa144: f80243ff     	stur	xzr, [sp, #0x24]
+  7aa148: f801c3ff     	stur	xzr, [sp, #0x1c]
+  7aa14c: f80143ff     	stur	xzr, [sp, #0x14]
+  7aa150: f800c3ff     	stur	xzr, [sp, #0xc]
+  7aa154: 97effbc3     	bl	0x3a9060 <PT_LOAD#0+0x3a9060>
+  7aa158: aa0003f5     	mov	x21, x0
+  7aa15c: b00040a8     	adrp	x8, 0xfbf000 <PT_LOAD#0+0xfbf000>
+  7aa160: 9132b508     	add	x8, x8, #0xcad
+  7aa164: f90002a8     	str	x8, [x21]
+  7aa168: 11006ae8     	add	w8, w23, #0x1a
+  7aa16c: b9000aa8     	str	w8, [x21, #0x8]
+  7aa170: 90005748     	adrp	x8, 0x1292000 <PT_LOAD#0+0x1292000>
+  7aa174: f945a908     	ldr	x8, [x8, #0xb50]
+  7aa178: 9100b2a0     	add	x0, x21, #0x2c
+  7aa17c: 910003e1     	mov	x1, sp
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x7aac00,0x7aad80) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  7aac00: 910143fd     	add	x29, sp, #0x50
+  7aac04: aa0103f3     	mov	x19, x1
+  7aac08: aa0003f4     	mov	x20, x0
+  7aac0c: aa1303e0     	mov	x0, x19
+  7aac10: b9002fff     	str	wzr, [sp, #0x2c]
+  7aac14: f80243ff     	stur	xzr, [sp, #0x24]
+  7aac18: 9101d296     	add	x22, x20, #0x74
+  7aac1c: f801c3ff     	stur	xzr, [sp, #0x1c]
+  7aac20: f80143ff     	stur	xzr, [sp, #0x14]
+  7aac24: f800c3ff     	stur	xzr, [sp, #0xc]
+  7aac28: 97eff90e     	bl	0x3a9060 <PT_LOAD#0+0x3a9060>
+  7aac2c: aa0003f5     	mov	x21, x0
+  7aac30: d0004068     	adrp	x8, 0xfb8000 <PT_LOAD#0+0xfb8000>
+  7aac34: 91178908     	add	x8, x8, #0x5e2
+  7aac38: 320007e9     	orr	w9, wzr, #0x3
+  7aac3c: 9100b2a0     	add	x0, x21, #0x2c
+  7aac40: b9000aa9     	str	w9, [x21, #0x8]
+  7aac44: 910003e1     	mov	x1, sp
+  7aac48: 321c07e2     	orr	w2, wzr, #0x30
+  7aac4c: f90002a8     	str	x8, [x21]
+  7aac50: a9015ab4     	stp	x20, x22, [x21, #0x10]
+  7aac54: b9002abf     	str	wzr, [x21, #0x28]
+  7aac58: 9409648c     	bl	0xa03e88 <PT_LOAD#0+0xa03e88>
+  7aac5c: a9067ebf     	stp	xzr, xzr, [x21, #0x60]
+  7aac60: f9400668     	ldr	x8, [x19, #0x8]
+  7aac64: b4000088     	cbz	x8, 0x7aac74 <PT_LOAD#0+0x7aac74>
+  7aac68: f9003115     	str	x21, [x8, #0x60]
+  7aac6c: f9400668     	ldr	x8, [x19, #0x8]
+  7aac70: f90036a8     	str	x8, [x21, #0x68]
+  7aac74: aa1303e0     	mov	x0, x19
+  7aac78: 52800316     	mov	w22, #0x18              // =24
+  7aac7c: 72a00156     	movk	w22, #0xa, lsl #16
+  7aac80: f9000675     	str	x21, [x19, #0x8]
+  7aac84: b9002fff     	str	wzr, [sp, #0x2c]
+  7aac88: f80243ff     	stur	xzr, [sp, #0x24]
+  7aac8c: f801c3ff     	stur	xzr, [sp, #0x1c]
+  7aac90: f80143ff     	stur	xzr, [sp, #0x14]
+  7aac94: f800c3ff     	stur	xzr, [sp, #0xc]
+  7aac98: 97eff8f2     	bl	0x3a9060 <PT_LOAD#0+0x3a9060>
+  7aac9c: aa0003f5     	mov	x21, x0
+  7aaca0: b9000ab6     	str	w22, [x21, #0x8]
+  7aaca4: 90005749     	adrp	x9, 0x1292000 <PT_LOAD#0+0x1292000>
+  7aaca8: f945ad29     	ldr	x9, [x9, #0xb58]
+  7aacac: b00040a8     	adrp	x8, 0xfbf000 <PT_LOAD#0+0xfbf000>
+  7aacb0: 9133a108     	add	x8, x8, #0xce8
+  7aacb4: 9100b2a0     	add	x0, x21, #0x2c
+  7aacb8: 910003e1     	mov	x1, sp
+  7aacbc: 321c07e2     	orr	w2, wzr, #0x30
+  7aacc0: f90002a8     	str	x8, [x21]
+  7aacc4: f90012bf     	str	xzr, [x21, #0x20]
+  7aacc8: b9002abf     	str	wzr, [x21, #0x28]
+  7aaccc: a90126b4     	stp	x20, x9, [x21, #0x10]
+  7aacd0: 9409646e     	bl	0xa03e88 <PT_LOAD#0+0xa03e88>
+  7aacd4: a9067ebf     	stp	xzr, xzr, [x21, #0x60]
+  7aacd8: f9400668     	ldr	x8, [x19, #0x8]
+  7aacdc: b4000088     	cbz	x8, 0x7aacec <PT_LOAD#0+0x7aacec>
+  7aace0: f9003115     	str	x21, [x8, #0x60]
+  7aace4: f9400668     	ldr	x8, [x19, #0x8]
+  7aace8: f90036a8     	str	x8, [x21, #0x68]
+  7aacec: f9000675     	str	x21, [x19, #0x8]
+  7aacf0: f00056e8     	adrp	x8, 0x1289000 <PT_LOAD#0+0x1289000>
+  7aacf4: f9428d08     	ldr	x8, [x8, #0x518]
+  7aacf8: f9400100     	ldr	x0, [x8]
+  7aacfc: b40000a0     	cbz	x0, 0x7aad10 <PT_LOAD#0+0x7aad10>
+  7aad00: f9400008     	ldr	x8, [x0]
+  7aad04: f9402108     	ldr	x8, [x8, #0x40]
+  7aad08: aa1303e1     	mov	x1, x19
+  7aad0c: d63f0100     	blr	x8
+  7aad10: aa1303e0     	mov	x0, x19
+  7aad14: b9002fff     	str	wzr, [sp, #0x2c]
+  7aad18: f80243ff     	stur	xzr, [sp, #0x24]
+  7aad1c: f801c3ff     	stur	xzr, [sp, #0x1c]
+  7aad20: f80143ff     	stur	xzr, [sp, #0x14]
+  7aad24: f800c3ff     	stur	xzr, [sp, #0xc]
+  7aad28: 97eff8ce     	bl	0x3a9060 <PT_LOAD#0+0x3a9060>
+  7aad2c: aa0003f5     	mov	x21, x0
+  7aad30: b9000ab6     	str	w22, [x21, #0x8]
+  7aad34: 90005749     	adrp	x9, 0x1292000 <PT_LOAD#0+0x1292000>
+  7aad38: f9459129     	ldr	x9, [x9, #0xb20]
+  7aad3c: f0003fe8     	adrp	x8, 0xfa9000 <PT_LOAD#0+0xfa9000>
+  7aad40: 91137508     	add	x8, x8, #0x4dd
+  7aad44: 9100b2a0     	add	x0, x21, #0x2c
+  7aad48: 910003e1     	mov	x1, sp
+  7aad4c: 321c07e2     	orr	w2, wzr, #0x30
+  7aad50: f90002a8     	str	x8, [x21]
+  7aad54: f90012bf     	str	xzr, [x21, #0x20]
+  7aad58: b9002abf     	str	wzr, [x21, #0x28]
+  7aad5c: a90126b4     	stp	x20, x9, [x21, #0x10]
+  7aad60: 9409644a     	bl	0xa03e88 <PT_LOAD#0+0xa03e88>
+  7aad64: a9067ebf     	stp	xzr, xzr, [x21, #0x60]
+  7aad68: f9400668     	ldr	x8, [x19, #0x8]
+  7aad6c: b4000088     	cbz	x8, 0x7aad7c <PT_LOAD#0+0x7aad7c>
+  7aad70: f9003115     	str	x21, [x8, #0x60]
+  7aad74: f9400668     	ldr	x8, [x19, #0x8]
+  7aad78: f90036a8     	str	x8, [x21, #0x68]
+  7aad7c: f9000675     	str	x21, [x19, #0x8]
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x7aad00,0x7aae80) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  7aad00: f9400008     	ldr	x8, [x0]
+  7aad04: f9402108     	ldr	x8, [x8, #0x40]
+  7aad08: aa1303e1     	mov	x1, x19
+  7aad0c: d63f0100     	blr	x8
+  7aad10: aa1303e0     	mov	x0, x19
+  7aad14: b9002fff     	str	wzr, [sp, #0x2c]
+  7aad18: f80243ff     	stur	xzr, [sp, #0x24]
+  7aad1c: f801c3ff     	stur	xzr, [sp, #0x1c]
+  7aad20: f80143ff     	stur	xzr, [sp, #0x14]
+  7aad24: f800c3ff     	stur	xzr, [sp, #0xc]
+  7aad28: 97eff8ce     	bl	0x3a9060 <PT_LOAD#0+0x3a9060>
+  7aad2c: aa0003f5     	mov	x21, x0
+  7aad30: b9000ab6     	str	w22, [x21, #0x8]
+  7aad34: 90005749     	adrp	x9, 0x1292000 <PT_LOAD#0+0x1292000>
+  7aad38: f9459129     	ldr	x9, [x9, #0xb20]
+  7aad3c: f0003fe8     	adrp	x8, 0xfa9000 <PT_LOAD#0+0xfa9000>
+  7aad40: 91137508     	add	x8, x8, #0x4dd
+  7aad44: 9100b2a0     	add	x0, x21, #0x2c
+  7aad48: 910003e1     	mov	x1, sp
+  7aad4c: 321c07e2     	orr	w2, wzr, #0x30
+  7aad50: f90002a8     	str	x8, [x21]
+  7aad54: f90012bf     	str	xzr, [x21, #0x20]
+  7aad58: b9002abf     	str	wzr, [x21, #0x28]
+  7aad5c: a90126b4     	stp	x20, x9, [x21, #0x10]
+  7aad60: 9409644a     	bl	0xa03e88 <PT_LOAD#0+0xa03e88>
+  7aad64: a9067ebf     	stp	xzr, xzr, [x21, #0x60]
+  7aad68: f9400668     	ldr	x8, [x19, #0x8]
+  7aad6c: b4000088     	cbz	x8, 0x7aad7c <PT_LOAD#0+0x7aad7c>
+  7aad70: f9003115     	str	x21, [x8, #0x60]
+  7aad74: f9400668     	ldr	x8, [x19, #0x8]
+  7aad78: f90036a8     	str	x8, [x21, #0x68]
+  7aad7c: f9000675     	str	x21, [x19, #0x8]
+  7aad80: a9457bfd     	ldp	x29, x30, [sp, #0x50]
+  7aad84: a9444ff4     	ldp	x20, x19, [sp, #0x40]
+  7aad88: a94357f6     	ldp	x22, x21, [sp, #0x30]
+  7aad8c: 910183ff     	add	sp, sp, #0x60
+  7aad90: d65f03c0     	ret
+		...
+  7aada0: 321f03e8     	orr	w8, wzr, #0x2
+  7aada4: b9007008     	str	w8, [x0, #0x70]
+  7aada8: d65f03c0     	ret
+  7aadac: 00000000     	udf	#0x0
+  7aadb0: f81d0ffc     	str	x28, [sp, #-0x30]!
+  7aadb4: a9014ff4     	stp	x20, x19, [sp, #0x10]
+  7aadb8: a9027bfd     	stp	x29, x30, [sp, #0x20]
+  7aadbc: 910083fd     	add	x29, sp, #0x20
+  7aadc0: d10dc3ff     	sub	sp, sp, #0x370
+  7aadc4: aa0103f3     	mov	x19, x1
+  7aadc8: aa0003f4     	mov	x20, x0
+  7aadcc: 910003e0     	mov	x0, sp
+  7aadd0: 321003e1     	orr	w1, wzr, #0x10000
+  7aadd4: 97f200ff     	bl	0x42b1d0 <PT_LOAD#0+0x42b1d0>
+  7aadd8: b00040a2     	adrp	x2, 0xfbf000 <PT_LOAD#0+0xfbf000>
+  7aaddc: 9133b442     	add	x2, x2, #0xced
+  7aade0: 910003e0     	mov	x0, sp
+  7aade4: aa1303e1     	mov	x1, x19
+  7aade8: aa1403e3     	mov	x3, x20
+  7aadec: 2a1f03e4     	mov	w4, wzr
+  7aadf0: 2a1f03e5     	mov	w5, wzr
+  7aadf4: 97f20def     	bl	0x42e5b0 <PT_LOAD#0+0x42e5b0>
+  7aadf8: 2a0003f3     	mov	w19, w0
+  7aadfc: 910003e0     	mov	x0, sp
+  7aae00: 97f200f8     	bl	0x42b1e0 <PT_LOAD#0+0x42b1e0>
+  7aae04: 12000260     	and	w0, w19, #0x1
+  7aae08: 910dc3ff     	add	sp, sp, #0x370
+  7aae0c: a9427bfd     	ldp	x29, x30, [sp, #0x20]
+  7aae10: a9414ff4     	ldp	x20, x19, [sp, #0x10]
+  7aae14: f84307fc     	ldr	x28, [sp], #0x30
+  7aae18: d65f03c0     	ret
+  7aae1c: 00000000     	udf	#0x0
+  7aae20: f81d0ffc     	str	x28, [sp, #-0x30]!
+  7aae24: a9014ff4     	stp	x20, x19, [sp, #0x10]
+  7aae28: a9027bfd     	stp	x29, x30, [sp, #0x20]
+  7aae2c: 910083fd     	add	x29, sp, #0x20
+  7aae30: d10dc3ff     	sub	sp, sp, #0x370
+  7aae34: aa0103f4     	mov	x20, x1
+  7aae38: f9400288     	ldr	x8, [x20]
+  7aae3c: f9401908     	ldr	x8, [x8, #0x30]
+  7aae40: aa0003f3     	mov	x19, x0
+  7aae44: aa1403e0     	mov	x0, x20
+  7aae48: d63f0100     	blr	x8
+  7aae4c: 36000220     	tbz	w0, #0x0, 0x7aae90 <PT_LOAD#0+0x7aae90>
+  7aae50: 910003e0     	mov	x0, sp
+  7aae54: 321003e1     	orr	w1, wzr, #0x10000
+  7aae58: 97f200de     	bl	0x42b1d0 <PT_LOAD#0+0x42b1d0>
+  7aae5c: b00040a2     	adrp	x2, 0xfbf000 <PT_LOAD#0+0xfbf000>
+  7aae60: 9133b442     	add	x2, x2, #0xced
+  7aae64: 910003e0     	mov	x0, sp
+  7aae68: aa1403e1     	mov	x1, x20
+  7aae6c: aa1303e3     	mov	x3, x19
+  7aae70: 2a1f03e4     	mov	w4, wzr
+  7aae74: 2a1f03e5     	mov	w5, wzr
+  7aae78: 97f21aca     	bl	0x4319a0 <PT_LOAD#0+0x4319a0>
+  7aae7c: f100001f     	cmp	x0, #0x0
+===== MAIN CONSTRUCTOR CANDIDATES =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x7aaab0,0x7aac00) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  7aaab0: f81e0ff3     	str	x19, [sp, #-0x20]!
+  7aaab4: a9017bfd     	stp	x29, x30, [sp, #0x10]
+  7aaab8: 910043fd     	add	x29, sp, #0x10
+  7aaabc: aa0003f3     	mov	x19, x0
+  7aaac0: 94085998     	bl	0x9c1120 <PT_LOAD#0+0x9c1120>
+  7aaac4: 528fe308     	mov	w8, #0x7f18             // =32536
+  7aaac8: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aaacc: 528fe50a     	mov	w10, #0x7f28            // =32552
+  7aaad0: 72a000aa     	movk	w10, #0x5, lsl #16
+  7aaad4: f8286a60     	str	x0, [x19, x8]
+  7aaad8: 528fe408     	mov	w8, #0x7f20             // =32544
+  7aaadc: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aaae0: 1e2e1002     	fmov	s2, #1.00000000
+  7aaae4: b8686a69     	ldr	w9, [x19, x8]
+  7aaae8: 4b090009     	sub	w9, w0, w9
+  7aaaec: 9e620000     	scvtf	d0, x0
+  7aaaf0: b82a6a69     	str	w9, [x19, x10]
+  7aaaf4: 528fe109     	mov	w9, #0x7f08             // =32520
+  7aaaf8: 72a000a9     	movk	w9, #0x5, lsl #16
+  7aaafc: f8286a60     	str	x0, [x19, x8]
+  7aab00: 528fe808     	mov	w8, #0x7f40             // =32576
+  7aab04: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aab08: fc686a61     	ldr	d1, [x19, x8]
+  7aab0c: 528fdf08     	mov	w8, #0x7ef8             // =32504
+  7aab10: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aab14: 1e600820     	fmul	d0, d1, d0
+  7aab18: fc286a60     	str	d0, [x19, x8]
+  7aab1c: 528fe008     	mov	w8, #0x7f00             // =32512
+  7aab20: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aab24: fc686a61     	ldr	d1, [x19, x8]
+  7aab28: 1e613801     	fsub	d1, d0, d1
+  7aab2c: 1e624021     	fcvt	s1, d1
+  7aab30: bc296a61     	str	s1, [x19, x9]
+  7aab34: fc286a60     	str	d0, [x19, x8]
+  7aab38: 1e624000     	fcvt	s0, d0
+  7aab3c: 528fdc08     	mov	w8, #0x7ee0             // =32480
+  7aab40: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aab44: bc286a60     	str	s0, [x19, x8]
+  7aab48: 528fdd88     	mov	w8, #0x7eec             // =32492
+  7aab4c: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aab50: 8b080268     	add	x8, x19, x8
+  7aab54: b9400109     	ldr	w9, [x8]
+  7aab58: 1100052a     	add	w10, w9, #0x1
+  7aab5c: 528fdc89     	mov	w9, #0x7ee4             // =32484
+  7aab60: 72a000a9     	movk	w9, #0x5, lsl #16
+  7aab64: b900010a     	str	w10, [x8]
+  7aab68: 8b090269     	add	x9, x19, x9
+  7aab6c: bd400121     	ldr	s1, [x9]
+  7aab70: 1e213801     	fsub	s1, s0, s1
+  7aab74: 1e222020     	fcmp	s1, s2
+  7aab78: 5400014d     	b.le	0x7aaba0 <PT_LOAD#0+0x7aaba0>
+  7aab7c: 1e230142     	ucvtf	s2, w10
+  7aab80: 528fdd0a     	mov	w10, #0x7ee8            // =32488
+  7aab84: 72a000aa     	movk	w10, #0x5, lsl #16
+  7aab88: 1e211841     	fdiv	s1, s2, s1
+  7aab8c: bc2a6a61     	str	s1, [x19, x10]
+  7aab90: bd000120     	str	s0, [x9]
+  7aab94: b900011f     	str	wzr, [x8]
+  7aab98: 1e260028     	fmov	w8, s1
+  7aab9c: 14000004     	b	0x7aabac <PT_LOAD#0+0x7aabac>
+  7aaba0: 528fdd08     	mov	w8, #0x7ee8             // =32488
+  7aaba4: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aaba8: b8686a68     	ldr	w8, [x19, x8]
+  7aabac: b9005668     	str	w8, [x19, #0x54]
+  7aabb0: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  7aabb4: f84207f3     	ldr	x19, [sp], #0x20
+  7aabb8: d65f03c0     	ret
+  7aabbc: 00000000     	udf	#0x0
+  7aabc0: a945a408     	ldp	x8, x9, [x0, #0x58]
+  7aabc4: cb090108     	sub	x8, x8, x9
+  7aabc8: 9e620100     	scvtf	d0, x8
+  7aabcc: 528fe908     	mov	w8, #0x7f48             // =32584
+  7aabd0: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aabd4: fc686802     	ldr	d2, [x0, x8]
+  7aabd8: bd408801     	ldr	s1, [x0, #0x88]
+  7aabdc: 5e61d842     	scvtf	d2, d2
+  7aabe0: 1e621800     	fdiv	d0, d0, d2
+  7aabe4: 1e624000     	fcvt	s0, d0
+  7aabe8: 1e202820     	fadd	s0, s1, s0
+  7aabec: d65f03c0     	ret
+  7aabf0: d10183ff     	sub	sp, sp, #0x60
+  7aabf4: a90357f6     	stp	x22, x21, [sp, #0x30]
+  7aabf8: a9044ff4     	stp	x20, x19, [sp, #0x40]
+  7aabfc: a9057bfd     	stp	x29, x30, [sp, #0x50]
