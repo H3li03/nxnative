@@ -46,9 +46,9 @@ extensions: `.arc` 2845, `.mrl` 1716, `.mod` 1715, `.efl` 1263, `.tex` 834, `.ev
 ## Rewrite-site census (insn_census.py)
 
 ```
-/Users/maclifedrive/games/Re0/010097000BC10000_survey/extract/ExeFS/main: 2627443 instructions decoded (119 undecodable words)
+extract/ExeFS/main: 2627443 instructions decoded (119 undecodable words)
   x18 use                4184
-/Users/maclifedrive/games/Re0/010097000BC10000_survey/extract/ExeFS/sdk: 1285450 instructions decoded (270 undecodable words)
+extract/ExeFS/sdk: 1285450 instructions decoded (270 undecodable words)
   x18 use                10354
   svc                    60
   mrs tpidrro_el0        54
@@ -56,7 +56,7 @@ extensions: `.arc` 2845, `.mrl` 1716, `.mod` 1715, `.efl` 1263, `.tex` 834, `.ev
   msr tpidr_el0          4
   mrs tpidr_el0          2
   svc numbers: #1 x1, #2 x1, #3 x1, #4 x1, #5 x1, #6 x1, #7 x1, #8 x1, #9 x1, #0xa x1, #0xb x1, #0xc x1, #0xd x1, #0xe x1, #0xf x1, #0x10 x1, #0x11 x1, #0x12 x1, #0x13 x1, #0x14 x1, #0x15 x1, #0x16 x1, #0x17 x1, #0x18 x1, #0x19 x1, #0x1a x1, #0x1b x1, #0x1c x1, #0x1d x1, #0x1f x1, #0x21 x1, #0x22 x1, #0x23 x1, #0x25 x1, #0x26 x1, #0x27 x1, #0x28 x1, #0x29 x1, #0x2a x1, #0x2c x1, #0x2d x1, #0x2f x1, #0x32 x1, #0x33 x1, #0x34 x1, #0x35 x1, #0x40 x1, #0x41 x1, #0x43 x1, #0x44 x1, #0x45 x1, #0x48 x1, #0x49 x1, #0x4b x1, #0x50 x1, #0x51 x1, #0x52 x1, #0x53 x1, #0x70 x1, #0x72 x1
-/Users/maclifedrive/games/Re0/010097000BC10000_survey/extract/ExeFS/subsdk0: 853238 instructions decoded (316 undecodable words)
+extract/ExeFS/subsdk0: 853238 instructions decoded (316 undecodable words)
   x18 use                8453
 ```
 
