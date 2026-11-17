@@ -33,3 +33,7 @@ sys_resource	0x0
 # ---- Shader split ----
 shader_groups	/nativeNXx64/=nativenxx64
 shader_note	resident evil 0 shaders
+
+# Frame-rate selector: keep the original 30 fps as the tested default; 60/120 remain experimental until the RE0 timing path is implemented.
+fps_target	30
+fps_max	120
