@@ -1,0 +1,257 @@
+===== sMain::move PROLOGUE =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x7aa5a0,0x7aa820) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  7aa5a0: d10243ff     	sub	sp, sp, #0x90
+  7aa5a4: fd000bea     	str	d10, [sp, #0x10]
+  7aa5a8: 6d0223e9     	stp	d9, d8, [sp, #0x20]
+  7aa5ac: a9036ffc     	stp	x28, x27, [sp, #0x30]
+  7aa5b0: a90467fa     	stp	x26, x25, [sp, #0x40]
+  7aa5b4: a9055ff8     	stp	x24, x23, [sp, #0x50]
+  7aa5b8: a90657f6     	stp	x22, x21, [sp, #0x60]
+  7aa5bc: a9074ff4     	stp	x20, x19, [sp, #0x70]
+  7aa5c0: a9087bfd     	stp	x29, x30, [sp, #0x80]
+  7aa5c4: 910203fd     	add	x29, sp, #0x80
+  7aa5c8: aa0003f3     	mov	x19, x0
+  7aa5cc: b940aa68     	ldr	w8, [x19, #0xa8]
+  7aa5d0: b900a668     	str	w8, [x19, #0xa4]
+  7aa5d4: 3941d268     	ldrb	w8, [x19, #0x74]
+  7aa5d8: 340000e8     	cbz	w8, 0x7aa5f4 <PT_LOAD#0+0x7aa5f4>
+  7aa5dc: b9407269     	ldr	w9, [x19, #0x70]
+  7aa5e0: 340000a9     	cbz	w9, 0x7aa5f4 <PT_LOAD#0+0x7aa5f4>
+  7aa5e4: 71000529     	subs	w9, w9, #0x1
+  7aa5e8: b9007269     	str	w9, [x19, #0x70]
+  7aa5ec: 1a9f17e9     	cset	w9, eq
+  7aa5f0: 14000003     	b	0x7aa5fc <PT_LOAD#0+0x7aa5fc>
+  7aa5f4: 320003e9     	orr	w9, wzr, #0x1
+  7aa5f8: b900727f     	str	wzr, [x19, #0x70]
+  7aa5fc: 7100011f     	cmp	w8, #0x0
+  7aa600: 1a9f07e8     	cset	w8, ne
+  7aa604: 0a090108     	and	w8, w8, w9
+  7aa608: 3901d668     	strb	w8, [x19, #0x75]
+  7aa60c: 528fe808     	mov	w8, #0x7f40             // =32576
+  7aa610: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aa614: 8b080275     	add	x21, x19, x8
+  7aa618: 94085ac2     	bl	0x9c1120 <PT_LOAD#0+0x9c1120>
+  7aa61c: 528fe308     	mov	w8, #0x7f18             // =32536
+  7aa620: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aa624: 8b080276     	add	x22, x19, x8
+  7aa628: 528fe408     	mov	w8, #0x7f20             // =32544
+  7aa62c: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aa630: f90002c0     	str	x0, [x22]
+  7aa634: 8b080277     	add	x23, x19, x8
+  7aa638: b94002e8     	ldr	w8, [x23]
+  7aa63c: 528fe509     	mov	w9, #0x7f28             // =32552
+  7aa640: 72a000a9     	movk	w9, #0x5, lsl #16
+  7aa644: 9e620000     	scvtf	d0, x0
+  7aa648: 8b090278     	add	x24, x19, x9
+  7aa64c: 4b080008     	sub	w8, w0, w8
+  7aa650: b9000308     	str	w8, [x24]
+  7aa654: f90002e0     	str	x0, [x23]
+  7aa658: fd4002a1     	ldr	d1, [x21]
+  7aa65c: 1e600820     	fmul	d0, d1, d0
+  7aa660: 528fdf08     	mov	w8, #0x7ef8             // =32504
+  7aa664: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aa668: 8b080279     	add	x25, x19, x8
+  7aa66c: 528fe008     	mov	w8, #0x7f00             // =32512
+  7aa670: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aa674: 8b08027a     	add	x26, x19, x8
+  7aa678: 528fe108     	mov	w8, #0x7f08             // =32520
+  7aa67c: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aa680: 8b08027b     	add	x27, x19, x8
+  7aa684: 528fdc08     	mov	w8, #0x7ee0             // =32480
+  7aa688: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aa68c: fd000320     	str	d0, [x25]
+  7aa690: fd400341     	ldr	d1, [x26]
+  7aa694: 1e613801     	fsub	d1, d0, d1
+  7aa698: 1e624021     	fcvt	s1, d1
+  7aa69c: bd000361     	str	s1, [x27]
+  7aa6a0: fd000340     	str	d0, [x26]
+  7aa6a4: 1e624000     	fcvt	s0, d0
+  7aa6a8: bc286a60     	str	s0, [x19, x8]
+  7aa6ac: 528fdd88     	mov	w8, #0x7eec             // =32492
+  7aa6b0: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aa6b4: 8b080268     	add	x8, x19, x8
+  7aa6b8: b9400109     	ldr	w9, [x8]
+  7aa6bc: 1100052a     	add	w10, w9, #0x1
+  7aa6c0: 528fdc89     	mov	w9, #0x7ee4             // =32484
+  7aa6c4: 72a000a9     	movk	w9, #0x5, lsl #16
+  7aa6c8: b900010a     	str	w10, [x8]
+  7aa6cc: 8b090269     	add	x9, x19, x9
+  7aa6d0: bd400121     	ldr	s1, [x9]
+  7aa6d4: 1e213801     	fsub	s1, s0, s1
+  7aa6d8: 1e2e1008     	fmov	s8, #1.00000000
+  7aa6dc: 1e282020     	fcmp	s1, s8
+  7aa6e0: 5400014d     	b.le	0x7aa708 <PT_LOAD#0+0x7aa708>
+  7aa6e4: 1e230142     	ucvtf	s2, w10
+  7aa6e8: 528fdd0a     	mov	w10, #0x7ee8            // =32488
+  7aa6ec: 72a000aa     	movk	w10, #0x5, lsl #16
+  7aa6f0: 1e211841     	fdiv	s1, s2, s1
+  7aa6f4: bc2a6a61     	str	s1, [x19, x10]
+  7aa6f8: bd000120     	str	s0, [x9]
+  7aa6fc: b900011f     	str	wzr, [x8]
+  7aa700: 1e260028     	fmov	w8, s1
+  7aa704: 14000004     	b	0x7aa714 <PT_LOAD#0+0x7aa714>
+  7aa708: 528fdd08     	mov	w8, #0x7ee8             // =32488
+  7aa70c: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aa710: b8686a68     	ldr	w8, [x19, x8]
+  7aa714: b9005668     	str	w8, [x19, #0x54]
+  7aa718: 94085a86     	bl	0x9c1130 <PT_LOAD#0+0x9c1130>
+  7aa71c: 9e620000     	scvtf	d0, x0
+  7aa720: 1e6e1001     	fmov	d1, #1.00000000
+  7aa724: 1e601820     	fdiv	d0, d1, d0
+  7aa728: 528fe914     	mov	w20, #0x7f48            // =32584
+  7aa72c: 72a000b4     	movk	w20, #0x5, lsl #16
+  7aa730: f8346a60     	str	x0, [x19, x20]
+  7aa734: fd0002a0     	str	d0, [x21]
+  7aa738: 94085a7a     	bl	0x9c1120 <PT_LOAD#0+0x9c1120>
+  7aa73c: f90002c0     	str	x0, [x22]
+  7aa740: b94002e8     	ldr	w8, [x23]
+  7aa744: 4b080008     	sub	w8, w0, w8
+  7aa748: 9e620000     	scvtf	d0, x0
+  7aa74c: b9000308     	str	w8, [x24]
+  7aa750: f90002e0     	str	x0, [x23]
+  7aa754: fd4002a1     	ldr	d1, [x21]
+  7aa758: 1e600820     	fmul	d0, d1, d0
+  7aa75c: fd000320     	str	d0, [x25]
+  7aa760: fd400341     	ldr	d1, [x26]
+  7aa764: 1e613801     	fsub	d1, d0, d1
+  7aa768: 1e624021     	fcvt	s1, d1
+  7aa76c: 52900f08     	mov	w8, #0x8078             // =32888
+  7aa770: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aa774: 8b08027c     	add	x28, x19, x8
+  7aa778: bd000361     	str	s1, [x27]
+  7aa77c: fd000340     	str	d0, [x26]
+  7aa780: f9400388     	ldr	x8, [x28]
+  7aa784: f8746a6d     	ldr	x13, [x19, x20]
+  7aa788: f9403669     	ldr	x9, [x19, #0x68]
+  7aa78c: cb080008     	sub	x8, x0, x8
+  7aa790: b4000069     	cbz	x9, 0x7aa79c <PT_LOAD#0+0x7aa79c>
+  7aa794: eb08013f     	cmp	x9, x8
+  7aa798: 5400006d     	b.le	0x7aa7a4 <PT_LOAD#0+0x7aa7a4>
+  7aa79c: aa0803e9     	mov	x9, x8
+  7aa7a0: f9003668     	str	x8, [x19, #0x68]
+  7aa7a4: f9401e6a     	ldr	x10, [x19, #0x38]
+  7aa7a8: 52807d0b     	mov	w11, #0x3e8             // =1000
+  7aa7ac: bd404a60     	ldr	s0, [x19, #0x48]
+  7aa7b0: cb0a010a     	sub	x10, x8, x10
+  7aa7b4: 9b0b7d4a     	mul	x10, x10, x11
+  7aa7b8: 9acd0d4b     	sdiv	x11, x10, x13
+  7aa7bc: cb09010a     	sub	x10, x8, x9
+  7aa7c0: a945a66c     	ldp	x12, x9, [x19, #0x58]
+  7aa7c4: 9e620141     	scvtf	d1, x10
+  7aa7c8: 1e22c002     	fcvt	d2, s0
+  7aa7cc: 1e610841     	fmul	d1, d2, d1
+  7aa7d0: 9e78002a     	fcvtzs	x10, d1
+  7aa7d4: 8b0a018a     	add	x10, x12, x10
+  7aa7d8: d378fd6c     	lsr	x12, x11, #56
+  7aa7dc: f100019f     	cmp	x12, #0x0
+  7aa7e0: b24823ec     	mov	x12, #-0xffffffffffffff // =-72057594037927935
+  7aa7e4: 8b0c016c     	add	x12, x11, x12
+  7aa7e8: 9a8b118b     	csel	x11, x12, x11, ne
+  7aa7ec: 9e38000c     	fcvtzs	x12, s0
+  7aa7f0: f9001a6b     	str	x11, [x19, #0x30]
+  7aa7f4: 9b0c7d6b     	mul	x11, x11, x12
+  7aa7f8: d29ef9ec     	mov	x12, #0xf7cf            // =63439
+  7aa7fc: f2bc6a6c     	movk	x12, #0xe353, lsl #16
+  7aa800: f2d374ac     	movk	x12, #0x9ba5, lsl #32
+  7aa804: f2e4188c     	movk	x12, #0x20c4, lsl #48
+  7aa808: d343fd6b     	lsr	x11, x11, #3
+  7aa80c: 9bcc7d6b     	umulh	x11, x11, x12
+  7aa810: f9003668     	str	x8, [x19, #0x68]
+  7aa814: 39414268     	ldrb	w8, [x19, #0x50]
+  7aa818: f9002e6a     	str	x10, [x19, #0x58]
+  7aa81c: d344fd6b     	lsr	x11, x11, #4
+===== sMain::move EPILOGUE =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x7aaa10,0x7aaab0) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  7aaa10: bd408660     	ldr	s0, [x19, #0x84]
+  7aaa14: 1e280800     	fmul	s0, s0, s8
+  7aaa18: 910063e0     	add	x0, sp, #0x18
+  7aaa1c: 2a1f03e1     	mov	w1, wzr
+  7aaa20: bd007a60     	str	s0, [x19, #0x78]
+  7aaa24: 94064817     	bl	0x93ca80 <PT_LOAD#0+0x93ca80>
+  7aaa28: 97f92772     	bl	0x5f47f0 <PT_LOAD#0+0x5f47f0>
+  7aaa2c: 97f92775     	bl	0x5f4800 <PT_LOAD#0+0x5f4800>
+  7aaa30: 910063e0     	add	x0, sp, #0x18
+  7aaa34: 94064823     	bl	0x93cac0 <PT_LOAD#0+0x93cac0>
+  7aaa38: 6d4223e9     	ldp	d9, d8, [sp, #0x20]
+  7aaa3c: fd400bea     	ldr	d10, [sp, #0x10]
+  7aaa40: a9487bfd     	ldp	x29, x30, [sp, #0x80]
+  7aaa44: a9474ff4     	ldp	x20, x19, [sp, #0x70]
+  7aaa48: a94657f6     	ldp	x22, x21, [sp, #0x60]
+  7aaa4c: a9455ff8     	ldp	x24, x23, [sp, #0x50]
+  7aaa50: a94467fa     	ldp	x26, x25, [sp, #0x40]
+  7aaa54: a9436ffc     	ldp	x28, x27, [sp, #0x30]
+  7aaa58: 910243ff     	add	sp, sp, #0x90
+  7aaa5c: d65f03c0     	ret
+  7aaa60: 1e2703e8     	fmov	s8, wzr
+  7aaa64: b9007a7f     	str	wzr, [x19, #0x78]
+  7aaa68: bd407e60     	ldr	s0, [x19, #0x7c]
+  7aaa6c: 1e202100     	fcmp	s8, s0
+  7aaa70: 54fffbad     	b.le	0x7aa9e4 <PT_LOAD#0+0x7aa9e4>
+  7aaa74: 1e3e1000     	fmov	s0, #-1.00000000
+  7aaa78: bd408a61     	ldr	s1, [x19, #0x88]
+  7aaa7c: 1e202900     	fadd	s0, s8, s0
+  7aaa80: 32091be8     	orr	w8, wzr, #0x3f800000
+  7aaa84: b9007a68     	str	w8, [x19, #0x78]
+  7aaa88: f9402e68     	ldr	x8, [x19, #0x58]
+  7aaa8c: f9003268     	str	x8, [x19, #0x60]
+  7aaa90: 1e212800     	fadd	s0, s0, s1
+  7aaa94: 1e2e1008     	fmov	s8, #1.00000000
+  7aaa98: bd008a60     	str	s0, [x19, #0x88]
+  7aaa9c: bd408260     	ldr	s0, [x19, #0x80]
+  7aaaa0: 1e202100     	fcmp	s8, s0
+  7aaaa4: 54fffa6c     	b.gt	0x7aa9f0 <PT_LOAD#0+0x7aa9f0>
+  7aaaa8: 17ffffd4     	b	0x7aa9f8 <PT_LOAD#0+0x7aa9f8>
+  7aaaac: 00000000     	udf	#0x0
+===== sMain::setFrameWait =====
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x7aa330,0x7aa3c0) specified by --start-address/--stop-address
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  7aa330: 12000028     	and	w8, w1, #0x1
+  7aa334: 39014008     	strb	w8, [x0, #0x50]
+  7aa338: f9402c08     	ldr	x8, [x0, #0x58]
+  7aa33c: a9067c08     	stp	x8, xzr, [x0, #0x60]
+  7aa340: 32091be8     	orr	w8, wzr, #0x3f800000
+  7aa344: b9007808     	str	w8, [x0, #0x78]
+  7aa348: b900881f     	str	wzr, [x0, #0x88]
+  7aa34c: d65f03c0     	ret
+  7aa350: f9402c08     	ldr	x8, [x0, #0x58]
+  7aa354: a9067c08     	stp	x8, xzr, [x0, #0x60]
+  7aa358: 32091be8     	orr	w8, wzr, #0x3f800000
+  7aa35c: b9007808     	str	w8, [x0, #0x78]
+  7aa360: b900881f     	str	wzr, [x0, #0x88]
+  7aa364: d65f03c0     	ret
+		...
+  7aa370: 17f2f898     	b	0x4685d0 <PT_LOAD#0+0x4685d0>
+		...
+  7aa380: f81e0ff3     	str	x19, [sp, #-0x20]!
+  7aa384: a9017bfd     	stp	x29, x30, [sp, #0x10]
+  7aa388: 910043fd     	add	x29, sp, #0x10
+  7aa38c: aa0003f3     	mov	x19, x0
+  7aa390: 940966c6     	bl	0xa03ea8 <PT_LOAD#0+0xa03ea8>
+  7aa394: f9404a68     	ldr	x8, [x19, #0x90]
+  7aa398: eb00011f     	cmp	x8, x0
+  7aa39c: 540000a1     	b.ne	0x7aa3b0 <PT_LOAD#0+0x7aa3b0>
+  7aa3a0: 320003e0     	orr	w0, wzr, #0x1
+  7aa3a4: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  7aa3a8: f84207f3     	ldr	x19, [sp], #0x20
+  7aa3ac: d65f03c0     	ret
+  7aa3b0: 528f4308     	mov	w8, #0x7a18             // =31256
+  7aa3b4: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aa3b8: f8686a68     	ldr	x8, [x19, x8]
+  7aa3bc: eb00011f     	cmp	x8, x0
