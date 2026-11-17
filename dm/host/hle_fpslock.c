@@ -73,7 +73,7 @@ static void re0_timing_probe(void) {
             m = &g_mod[i];
             break;
         }
-    if (!m) { done = 1; return; }
+    if (!m) { if (++tries >= 600) done = 1; return; }
     const uint64_t slot_off = 0x1285650;
     if (slot_off > m->size || m->size - slot_off < sizeof(uint64_t)) {
         LOG("[RE0 timing probe] main image is too small for the surveyed timing slot");
@@ -104,7 +104,7 @@ static void re0_timing_probe(void) {
     }
     FILE *pf = fopen("/tmp/re0_timing_probe.log", "w");
     if (pf) {
-        fprintf(pf, "build=fb4239aa962b429b3d1776af92d93e79\\nslot=main+%#llx\\nobject1=%p\\nobject2=%p\\nobject2+0x48=%g fps (bits=%08x)\\n",
+        fprintf(pf, "build=fb4239aa962b429b3d1776af92d93e79\nslot=main+%#llx\nobject1=%p\nobject2=%p\nobject2+0x48=%g fps (bits=%08x)\n",
                 (unsigned long long)slot_off, (void *)(uintptr_t)object1,
                 (void *)(uintptr_t)object2, fps, raw);
         fclose(pf);
