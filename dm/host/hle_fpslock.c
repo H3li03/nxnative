@@ -59,13 +59,12 @@ static const lock_t k_locks[] = {
 
 static int rd(uint64_t a, void *out, size_t n) { vm_size_t got = 0; return a >= 0x1000 && vm_read_overwrite(mach_task_self(), (vm_address_t)a, n, (vm_address_t)out, &got) == KERN_SUCCESS && got == n; }
 
-// Resident Evil 0 1.0.0: read-only check of the MT Framework timing value used by
-// sRender::end (main+0x1285650 -> object1 -> object2+0x48). The addresses were
-// identified in the surveyed executable; do not turn this into a write row until
-// the live pointer chain and value have been confirmed on device.
+// Resident Evil 0 1.0.0: read-only timing-field survey.
+// sRender::end reads object1+0x48; sMain::move uses the second object.
+// Keep both objects distinct in the log. This probe never writes guest memory.
 static void re0_timing_probe(void) {
-    static int done, tries;
-    if (done) return;
+    static int done, tries, presents, samples;
+    if (done || samples >= 12) { done = 1; return; }
     module_t *m = NULL;
     for (int i = 0; i < g_nmod; i++)
         if (!strcmp(g_mod[i].name, "main") &&
@@ -73,48 +72,65 @@ static void re0_timing_probe(void) {
             m = &g_mod[i];
             break;
         }
-    if (!m) { if (++tries >= 600) { FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fputs("main module with the surveyed RE0 build ID was not found\n", pf); fclose(pf); } done = 1; } return; }
+    if (!m) {
+        if (++tries >= 600) {
+            LOG("[RE0 timing probe] surveyed main build not found; no memory written");
+            done = 1;
+        }
+        return;
+    }
     const uint64_t slot_off = 0x1285650;
     if (slot_off > m->size || m->size - slot_off < sizeof(uint64_t)) {
-        LOG("[RE0 timing probe] main image is too small for the surveyed timing slot");
+        LOG("[RE0 timing probe] main image too small for timing slot");
         done = 1;
         return;
     }
     uint64_t object1 = 0, object2 = 0;
-    uint32_t raw = 0;
     uint64_t slot = (uint64_t)(uintptr_t)(m->base + slot_off);
     if (!rd(slot, &object1, sizeof object1) || object1 < 0x1000 ||
+        object1 > UINT64_MAX - 0x4c ||
         !rd(object1, &object2, sizeof object2) || object2 < 0x1000 ||
-        object2 > UINT64_MAX - 0x48 ||
-        !rd(object2 + 0x48, &raw, sizeof raw)) {
+        object2 > UINT64_MAX - 0x7c) {
         if (++tries >= 600) {
-            LOG("[RE0 timing probe] timing pointer chain not readable after %d presents; no memory written", tries);
-            FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fprintf(pf, "pointer chain unreadable after %d presents\n", tries); fclose(pf); }
+            LOG("[RE0 timing probe] pointer chain unreadable after %d presents; no memory written", tries);
             done = 1;
         }
         return;
     }
-    float fps;
-    memcpy(&fps, &raw, sizeof fps);
-    if (!(fps >= 10.0f && fps <= 120.0f)) {
+    if ((++presents - 1) % 120 != 0) return;
+    uint32_t o1_48 = 0, o1_4c = 0, o2_48 = 0, o2_4c = 0, o2_78 = 0;
+    uint8_t o2_50 = 0;
+    if (!rd(object1 + 0x48, &o1_48, 4) ||
+        !rd(object1 + 0x4c, &o1_4c, 4) ||
+        !rd(object2 + 0x48, &o2_48, 4) ||
+        !rd(object2 + 0x4c, &o2_4c, 4) ||
+        !rd(object2 + 0x50, &o2_50, 1) ||
+        !rd(object2 + 0x78, &o2_78, 4)) {
         if (++tries >= 600) {
-            LOG("[RE0 timing probe] object chain readable but +0x48 is not a plausible FPS value (bits=%08x); no memory written", raw);
-            FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fprintf(pf, "object chain readable; +0x48 bits=%08x is outside 10..120 FPS\n", raw); fclose(pf); }
+            LOG("[RE0 timing probe] timing fields unreadable; no memory written");
             done = 1;
         }
         return;
     }
-    FILE *pf = fopen("/tmp/re0_timing_probe.log", "w");
+    float f1_48, f1_4c, f2_48, f2_4c, f2_78;
+    memcpy(&f1_48, &o1_48, 4); memcpy(&f1_4c, &o1_4c, 4);
+    memcpy(&f2_48, &o2_48, 4); memcpy(&f2_4c, &o2_4c, 4);
+    memcpy(&f2_78, &o2_78, 4);
+    FILE *pf = fopen("/tmp/re0_timing_probe.log", samples ? "a" : "w");
     if (pf) {
-        fprintf(pf, "build=fb4239aa962b429b3d1776af92d93e79\nslot=main+%#llx\nobject1=%p\nobject2=%p\nobject2+0x48=%g fps (bits=%08x)\n",
-                (unsigned long long)slot_off, (void *)(uintptr_t)object1,
-                (void *)(uintptr_t)object2, fps, raw);
+        if (!samples)
+            fprintf(pf, "RE0 read-only timing samples; build=fb4239aa962b429b3d1776af92d93e79\nslot=main+%#llx\nobject1=%p\nobject2=%p\n",
+                    (unsigned long long)slot_off, (void *)(uintptr_t)object1, (void *)(uintptr_t)object2);
+        fprintf(pf, "sample=%d present=%d object1+48=%g (0x%08x) object1+4c=%g (0x%08x) object2+48=%g (0x%08x) object2+4c=%g (0x%08x) object2+50=%u (0x%02x) object2+78=%g (0x%08x)\n",
+                samples + 1, presents, f1_48, o1_48, f1_4c, o1_4c,
+                f2_48, o2_48, f2_4c, o2_4c, (unsigned)o2_50,
+                (unsigned)o2_50, f2_78, o2_78);
         fclose(pf);
     }
-    LOG("[RE0 timing probe] live MT timing chain verified: main+%#llx -> %p -> %p, +0x48=%g fps; read-only",
-        (unsigned long long)slot_off, (void *)(uintptr_t)object1,
-        (void *)(uintptr_t)object2, fps);
-    done = 1;
+    LOG("[RE0 timing probe] %d/12: obj1 +48=%g +4c=%g; obj2 +48=%g +4c=%g +50=%u +78=%g; read-only",
+        samples + 1, f1_48, f1_4c, f2_48, f2_4c, (unsigned)o2_50, f2_78);
+    samples++;
+    if (samples >= 12) done = 1;
 }
 
 // NieR 1.0.3 exposes its preset minimum but ships fixed mode-specific fallbacks.
