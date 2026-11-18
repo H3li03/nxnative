@@ -107,8 +107,9 @@ static void re0_timing_probe(void) {
     uint32_t o1_48 = 0, o1_4c = 0, o2_48 = 0, o2_4c = 0, o2_78 = 0;
     uint32_t frame_constant_bits = 0, render_58_bits = 0;
     uint8_t o2_50 = 0, render_29 = 0, render_2a = 0, render_2f = 0;
-    int have_main_instance = rd((uint64_t)(uintptr_t)(m->base + main_instance_off),
-                                &main_instance, sizeof main_instance) && main_instance >= 0x1000;
+    uint64_t main_instance_slot = (uint64_t)(uintptr_t)(m->base + main_instance_off);
+    int slot_owner_match = object1 == main_instance_slot;
+    int have_main_instance = rd(main_instance_slot, &main_instance, sizeof main_instance) && main_instance >= 0x1000;
     int have_render_instance = rd((uint64_t)(uintptr_t)(m->base + render_instance_off),
                                   &render_instance, sizeof render_instance) && render_instance >= 0x1000;
     int have_render_flags = have_render_instance &&
@@ -142,19 +143,20 @@ static void re0_timing_probe(void) {
                     (unsigned long long)slot_off, (unsigned long long)main_instance_off,
                     (unsigned long long)render_instance_off, (unsigned long long)frame_constant_off,
                     (void *)(uintptr_t)object1, (void *)(uintptr_t)object2);
-        fprintf(pf, "sample=%d present=%d object1+48=%g (0x%08x) object1+4c=%g (0x%08x) object2+48=%g (0x%08x) object2+4c=%g (0x%08x) object2+50=%u (0x%02x) object2+78=%g (0x%08x) main_instance=%p main_match=%u render_instance=%p render_flags_read=%u flags29=%u flags2a=%u flags2f=%u render+58=%g (0x%08x) frame_constant=%g (0x%08x)\n",
+        fprintf(pf, "sample=%d present=%d object1+48=%g (0x%08x) object1+4c=%g (0x%08x) object2+48=%g (0x%08x) object2+4c=%g (0x%08x) object2+50=%u (0x%02x) object2+78=%g (0x%08x) main_instance_slot=%p slot_owner_match=%u main_instance=%p main_match=%u render_instance=%p render_flags_read=%u flags29=%u flags2a=%u flags2f=%u render+58=%g (0x%08x) frame_constant=%g (0x%08x)\n",
                 samples + 1, presents, f1_48, o1_48, f1_4c, o1_4c,
                 f2_48, o2_48, f2_4c, o2_4c, (unsigned)o2_50,
                 (unsigned)o2_50, f2_78, o2_78,
+                (void *)(uintptr_t)main_instance_slot, (unsigned)slot_owner_match,
                 (void *)(uintptr_t)main_instance, (unsigned)(have_main_instance && main_instance == object2),
                 (void *)(uintptr_t)render_instance, (unsigned)have_render_flags,
                 (unsigned)render_29, (unsigned)render_2a, (unsigned)render_2f,
                 render_58, render_58_bits, frame_constant, frame_constant_bits);
         fclose(pf);
     }
-    LOG("[RE0 timing probe] %d/12: sMain +48=%g +4c=%g +50=%u; main_match=%u; sRender flags=%u/%u/%u; read-only",
+    LOG("[RE0 timing probe] %d/12: sMain +48=%g +4c=%g +50=%u; slot_owner=%u main_match=%u; sRender flags=%u/%u/%u; read-only",
         samples + 1, f2_48, f2_4c, (unsigned)o2_50,
-        (unsigned)(have_main_instance && main_instance == object2),
+        (unsigned)slot_owner_match, (unsigned)(have_main_instance && main_instance == object2),
         (unsigned)render_29, (unsigned)render_2a, (unsigned)render_2f);
     samples++;
     if (samples >= 12) done = 1;
