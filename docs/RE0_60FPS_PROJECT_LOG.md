@@ -1,0 +1,190 @@
+# Resident Evil 0 — 60 FPS investigation log
+
+> Persistent technical notebook for the RE0 frame-pacing investigation in `H3li03/nxnative`.
+> Last consolidated: 2026-11-18.
+>
+> This document records conversation context available to the assistant and repository evidence. It is not a substitute for runtime validation. Keep observations, source facts, and hypotheses separate.
+
+## 1. Objective and current conclusion
+
+**Goal:** achieve genuine 60 rendered/presented frames per second in Resident Evil 0 while preserving the original game/simulation speed.
+
+The user explicitly confirmed that the current experimental 60 FPS behavior runs **everything at approximately 2× speed** (character movement, animations, timers/gameplay as a whole). Therefore the experiment that raises the paired timing fields from 30/30 to 60/60 is not an acceptable solution: it changes simulation timing, not merely presentation cadence.
+
+Working direction:
+- Preserve the game's original simulation time step / timing semantics (currently observed values 30 and 30).
+- Find and decouple the 30 FPS limiter or present cadence from the simulation update.
+- Investigate whether the engine can update simulation at 30 Hz and render at 60 Hz using interpolation, or whether its render/present loop can be safely decoupled.
+- Do not assume that changing a field called a frame limit is safe: RE Engine examples show that a frame limiter can also determine how much real elapsed time the simulation consumes.
+
+**Do not change +0x48/+0x4c to 60 again as a proposed fix without first proving their semantics.** Do not claim success until both 60 presented FPS and correct real-time game speed are measured in the same run.
+
+## 2. Repository and game identity
+
+- Repository: `H3li03/nxnative`
+- Remote: `https://github.com/H3li03/nxnative.git`
+- Local working copy mentioned by user: `/Users/maclifedrive/Downloads/nxnative-clean-check`
+- Game: Resident Evil 0, Nintendo Switch title ID `010097000BC10000`
+- Main build ID: `fb4239aa962b429b3d1776af92d93e79`
+- Profile: `dm/games/010097000BC10000/game.tsv`
+- The profile currently has `fps_target 30` and `fps_max 120`; 30 is deliberately retained as the tested/default target. Do not silently change the profile default to 60.
+- The profile identifies version 1.0.0 and main build ID above.
+
+### Git references noted in the conversation
+
+These are historical references from the project discussion; re-check branch heads before basing new work on them.
+
+- Base branch: `analysis/re0-present-interval-20261118`
+- Base SHA: `0288d1ab0ae2bc3c5304ce34af3c77d7cfd75812`
+- Experimental branch: `experiment/re0-60fps-opt-in-20261118`
+- An early experimental patch commit: `3b7c6d79de81e2f0a49cdf044fff6120e98f0e63`
+- A later repository HEAD reported in the conversation: `74d65ec1887e52a0e00477c29531214da3da9c39`
+- Remote and local were reported synchronized at that later HEAD.
+- The early patch was described as 84 additions / 0 removals in `dm/host/hle_fpslock.c`, relative to the base. Do not assume that exact diff still describes the latest branch head.
+
+## 3. Relevant code and reverse-engineering notes
+
+### `dm/host/hle_fpslock.c`
+
+Repository source inspected while preparing this log contains:
+- Existing generic frame-lock handling for multiple games.
+- A read-only RE0 timing survey/probe targeting main build `fb4239aa962b429b3d1776af92d93e79`.
+- The probe follows the global slot and instance pointers, samples timing fields, and logs render flags. It is designed not to write game memory.
+- `rd()` reads process memory using `vm_read_overwrite(mach_task_self(), ...)`.
+
+A prior experimental change was described as opt-in via `DM_RE0_TIMING_60=1`. It checked the target build, singleton/instance identity, and expected 30/30 values at offsets +0x48/+0x4c before attempting to write 60/60 and read them back. This is an experimental/historical description; inspect the exact current source and diff before relying on it.
+
+**Important memory-safety question:** a previous implementation used `memcpy((void *)(uintptr_t)(instance + offset), ...)` to write fields. The fact that `rd()` can read an address through Mach VM APIs does not prove that the same address is a valid, writable host pointer for `memcpy`. Before any write experiment, establish the correct guest-memory write API/mapping and protection semantics. Do not treat successful readback alone as proof that an arbitrary pointer cast is safe.
+
+### RE0 symbols and offsets from prior analysis
+
+- `sMain::move`: main offset `0x7aa5a0`, size `0x50c`.
+- `sRender::end`: main offset `0x7ce660`.
+- Global timing slot: main + `0x1285650`.
+- `sMain::mpInstance` global: main + `0x1baac60`.
+- `sRender::mpInstance` global: main + `0x1bab108`.
+- Shared frame constant: main + `0xfca870`.
+- Probe verifies the pointer chain and whether the slot owner equals the main singleton.
+- The RE0 probe was described as taking 12 samples at 120-present intervals, with singleton matching checks and read-only sampling.
+
+### Timing fields
+
+- The active `sMain` instance has float fields at +`0x48` and +`0x4c`.
+- Prior disassembly analysis found `sMain::move` reads both fields: +0x48 scales a delta-time quantity; +0x4c participates in normalization / threshold behavior.
+- Runtime survey observed both fields at 30.0.
+- +0x50 was observed as 0 in the probe.
+- A constructor was reported to initialize adjacent floats +0x48 and +0x4c to 30.0 in the related RE timing investigation.
+- Do not yet assign a definitive one-field-one-purpose semantic without following all writers/readers and call paths. The pair may jointly encode the timing convention.
+- User's 2×-speed confirmation is strong evidence that raising the pair to 60/60 changes simulation speed in the tested configuration.
+
+### Render path
+
+- `sRender::end` at `0x7ce660` was inspected.
+- Previously observed live flags: +`0x2f` = 1, +`0x29` = 1, +`0x2a` = 0.
+- The earlier control-flow analysis reported that `sRender::end` exits before a suspected timing gate under those flag values.
+- A previous NOP experiment at `sMain::move` offset `0x7aa934` (described as a `SleepThread` call) did not achieve 60 FPS.
+- This makes it important to trace the actual frame loop, render submission, GPU completion/fence waits, and present/acquire pacing rather than guessing at a single sleep.
+
+## 4. Runtime evidence and logs
+
+### Read-only RE0 timing probe
+
+A prior probe report recorded:
+- 12 samples.
+- `slot_owner_match=1`.
+- `main_match=1`.
+- +0x48 = 30.
+- +0x4c = 30.
+- +0x50 = 0.
+- `frame_constant=1000`.
+
+This supports the identity of the sampled object and the observed default values. It does not establish 60 FPS behavior.
+
+A file named `re0-timing-probe-60fps.log` was reported on the experimental branch. Its first sample showed 30/30 and later samples showed 60/60 through sample 12. This proves that the sampled values changed in that test; by itself it does **not** prove 60 presented FPS or correct simulation speed.
+
+### Earlier present/gameplay measurements
+
+One earlier gameplay capture was described as approximately 66 seconds and 1,886 samples:
+- Present tick around 60 Hz.
+- Frame interval median around 33.339 ms.
+- Work time median around 33.3 ms.
+- CPU/GPU were not considered the limiting bottleneck in that capture.
+
+A separate `re0-runtime.log` from a prior remote session was described as 27 KB:
+- Host target 60 / present tick 60.
+- Game timing remained 30/30.
+- Frame duration remained around 33.3 ms.
+This was not a successful 60 FPS game run.
+
+A local `re0-gameplay-runtime.log` was described as 1,404,162 bytes, with blob SHA `9e59eaf1af402ffc6504725d2bf29c65a17997e7`. The same blob SHA and size were reported for local HEAD and remote branch at the time. A GitHub connector fetch returned empty content despite the file existing locally; treat that as a connector retrieval limitation, not evidence that the file is empty.
+
+The pasted head/tail of that gameplay log showed:
+- Launcher environment: `DM_FPS_TARGET=60`, `DM_FPS_HOLD=on`, `DM_OPMODE=1`.
+- Host build commit `820100b84865` (this is the dmhost build commit, not the game's main Build ID).
+- Around samples 1850–1877: `@frame_ms` roughly 32.9–34.0 ms; `@work_ms` roughly 32.7–33.9 ms; `@display_ms` around 33.3 ms; `@presented_ms` typically 33.333 ms, occasionally 50 ms; `@gpu_ms` around 7.2–8.4 ms; `@link_ticks` usually 2, sometimes 3.
+- This particular log therefore describes roughly 30 frames/s. It may be from a different run than the user's later 60 FPS / 2× speed observation. Do not use it to deny the user's observation.
+
+### User's direct runtime observation (latest clarification)
+
+The user explicitly stated:
+- The game does run at 60 FPS in the experimental test.
+- Everything runs at double speed.
+- The target is to retain 60 FPS while restoring normal game speed.
+
+This is the most important current test observation. The log evidence above must be associated with its own run and not conflated with this sped-up test.
+
+## 5. Other relevant frame-pacing context in the host
+
+The inspected `hle_fpslock.c` includes comments/examples showing that frame timing is game-specific:
+- Some games' frame limit values are also used by the simulation step.
+- Other games step according to actual elapsed time and can tolerate a higher render cap.
+- The file documents examples where a frame time in milliseconds and present interval interact; too-short frame time can result in cadence issues.
+- The source notes that a 60 FPS frame-time value may use a small margin (currently `MS_MARGIN 0.5f`) to avoid missing vsync due to work after the timer's start.
+- These examples are useful methodology, not proof that RE0 uses the same mechanism.
+
+## 6. Hypotheses to test (not established facts)
+
+1. RE0's simulation update and rendering are coupled to a 30 Hz loop.
+2. The 30/30 pair may be consumed by simulation time scaling and/or frame pacing.
+3. A distinct present interval, wait, fence, or frame limiter may be enforcing every-other-vsync behavior.
+4. A true 60 FPS implementation may require a 30 Hz simulation with render interpolation, or a safe decoupling of render cadence from simulation.
+5. The early NOP of one `SleepThread` call was insufficient because another limiter / synchronization path remained active, or because the loop's simulation cadence is controlled elsewhere.
+
+Do not promote these hypotheses to facts until backed by disassembly, instrumentation, or controlled tests.
+
+## 7. Recommended next investigation
+
+1. Identify the exact test build and exact environment for the run that produced 60 FPS at 2× speed. Preserve its complete log and record whether `DM_RE0_TIMING_60=1` was enabled.
+2. Reproduce a baseline run with original 30/30 timing and record, in the same capture:
+   - presented frames and timestamps,
+   - simulation/update calls per second,
+   - game-time progression (e.g. in-game timer),
+   - character displacement per real second,
+   - animation progression per real second.
+3. Reproduce the 60/60 run and collect the same measurements. This quantifies the 2× relation and confirms which code path was active.
+4. Trace every read and write of the +0x48/+0x4c fields, including constructor, post-boot initialization, and any per-frame writes.
+5. Trace callers and callees around `sMain::move` and `sRender::end`; identify where simulation update, render submission, GPU wait, present/acquire and sleep occur.
+6. Determine whether the present interval is set to 2, whether the host overrides it, and whether the observed 60 Hz tick is merely the display/vsync clock while the game submits one frame every two ticks.
+7. Inspect existing engine timing/interpolation support before implementing an extra render between simulation ticks.
+8. Only after identifying a safe mechanism, make one isolated opt-in change. Keep the default profile at 30 FPS and include build-ID guards.
+9. Validate the same-run acceptance criteria:
+   - 60 presented frames/s sustained;
+   - original gameplay speed (movement, animation, timers);
+   - no duplicated/incorrect input, physics instability, or visual interpolation artifacts;
+   - no regressions at the default 30 FPS setting.
+
+## 8. Working rules for future sessions
+
+- Do not modify source unless the user explicitly asks for implementation or approves a proposed edit.
+- Do not change the game's default profile from 30 FPS without explicit approval and validation.
+- Do not infer successful runtime behavior from a successful compile, a memory readback, or a changed timing field.
+- Never conflate host build commit, game Build ID, Git commit SHA, and runtime log identity.
+- Label every datum with its source: source inspection, disassembly, probe, runtime log, or user observation.
+- Record exact branch, commit, build ID, environment variables, and test procedure for every new test.
+- Preserve failed experiments and explain what they ruled out.
+- When new evidence contradicts an older log, keep both with their run identities; do not silently overwrite history.
+
+## 9. Change history for this notebook
+
+- 2026-11-18: Initial consolidation from available conversation context and repository inspection.
+- 2026-11-18: Confirmed current project direction: decouple rendering/presentation from simulation; the user's 60 FPS test runs all gameplay at approximately 2× speed.
