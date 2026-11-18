@@ -1,17 +1,21 @@
 # Resident Evil 0 1.0.0 (main build fb4239aa962b429b3d1776af92d93e79).
 #
-# Experimental 60 fps probe: bypass only the dynamically computed SleepThread
-# call in the main update loop. The native elapsed-tick calculation and the
-# +0x48/+0x4c simulation clock fields are deliberately left untouched.
+# Experimental 60 fps probe (main fixed-wait path).
+# sMain::move tests object+0x50 at main+0x7aa824:
+#   set:   fixed SleepThread at main+0x7aa840
+#   clear: dynamic pacing path at main+0x7aa934
 #
-# main+0x7aa934: BL nn::os::SleepThread(nn::TimeSpan) -> NOP.
-# The other SleepThread call at main+0x7aa840 is intentionally preserved.
+# This branch bypasses ONLY the fixed SleepThread call. It does not modify
+# the +0x48 time-scale multiplier, +0x4c timing field, elapsed-tick math,
+# or either branch's simulation-clock updates.
 #
-# This is a build-ID-scoped test, not a general RE0 update rule. If the loop
-# becomes unstable or simulation speed changes, remove this cut and rebuild.
+# main+0x7aa840: BL nn::os::SleepThread(nn::TimeSpan) -> NOP.
+# The dynamic wait at main+0x7aa934 remains untouched in this experiment.
+#
+# Build-ID-scoped diagnostic experiment, not a general RE0 update rule.
 CUTS = {
     "fb4239aa962b429b3d1776af92d93e79": [
-        (0x7aa934, "41660994", "1f2003d5",
-         "RE0 experiment: bypass only main-loop dynamic SleepThread at +0x7aa934; preserve tick-based delta and simulation clock"),
+        (0x7aa840, "7e660994", "1f2003d5",
+         "RE0 safer probe: bypass fixed main-loop SleepThread at +0x7aa840 only; preserve simulation timing fields and dynamic wait path"),
     ],
 }
