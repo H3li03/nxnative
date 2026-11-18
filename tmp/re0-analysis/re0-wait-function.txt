@@ -1,0 +1,108 @@
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  a041e0: 9115a210     	add	x16, x16, #0x568
+  a041e4: d61f0220     	br	x17
+  a041e8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a041ec: f942ba11     	ldr	x17, [x16, #0x570]
+  a041f0: 9115c210     	add	x16, x16, #0x570
+  a041f4: d61f0220     	br	x17
+  a041f8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a041fc: f942be11     	ldr	x17, [x16, #0x578]
+  a04200: 9115e210     	add	x16, x16, #0x578
+  a04204: d61f0220     	br	x17
+  a04208: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0420c: f942c211     	ldr	x17, [x16, #0x580]
+  a04210: 91160210     	add	x16, x16, #0x580
+  a04214: d61f0220     	br	x17
+  a04218: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0421c: f942c611     	ldr	x17, [x16, #0x588]
+  a04220: 91162210     	add	x16, x16, #0x588
+  a04224: d61f0220     	br	x17
+  a04228: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0422c: f942ca11     	ldr	x17, [x16, #0x590]
+  a04230: 91164210     	add	x16, x16, #0x590
+  a04234: d61f0220     	br	x17
+  a04238: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0423c: f942ce11     	ldr	x17, [x16, #0x598]
+  a04240: 91166210     	add	x16, x16, #0x598
+  a04244: d61f0220     	br	x17
+  a04248: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0424c: f942d211     	ldr	x17, [x16, #0x5a0]
+  a04250: 91168210     	add	x16, x16, #0x5a0
+  a04254: d61f0220     	br	x17
+  a04258: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0425c: f942d611     	ldr	x17, [x16, #0x5a8]
+  a04260: 9116a210     	add	x16, x16, #0x5a8
+  a04264: d61f0220     	br	x17
+  a04268: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0426c: f942da11     	ldr	x17, [x16, #0x5b0]
+  a04270: 9116c210     	add	x16, x16, #0x5b0
+  a04274: d61f0220     	br	x17
+  a04278: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0427c: f942de11     	ldr	x17, [x16, #0x5b8]
+  a04280: 9116e210     	add	x16, x16, #0x5b8
+  a04284: d61f0220     	br	x17
+  a04288: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0428c: f942e211     	ldr	x17, [x16, #0x5c0]
+  a04290: 91170210     	add	x16, x16, #0x5c0
+  a04294: d61f0220     	br	x17
+  a04298: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a0429c: f942e611     	ldr	x17, [x16, #0x5c8]
+  a042a0: 91172210     	add	x16, x16, #0x5c8
+  a042a4: d61f0220     	br	x17
+  a042a8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a042ac: f942ea11     	ldr	x17, [x16, #0x5d0]
+  a042b0: 91174210     	add	x16, x16, #0x5d0
+  a042b4: d61f0220     	br	x17
+  a042b8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a042bc: f942ee11     	ldr	x17, [x16, #0x5d8]
+  a042c0: 91176210     	add	x16, x16, #0x5d8
+  a042c4: d61f0220     	br	x17
+  a042c8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a042cc: f942f211     	ldr	x17, [x16, #0x5e0]
+  a042d0: 91178210     	add	x16, x16, #0x5e0
+  a042d4: d61f0220     	br	x17
+  a042d8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a042dc: f942f611     	ldr	x17, [x16, #0x5e8]
+  a042e0: 9117a210     	add	x16, x16, #0x5e8
+  a042e4: d61f0220     	br	x17
+  a042e8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a042ec: f942fa11     	ldr	x17, [x16, #0x5f0]
+  a042f0: 9117c210     	add	x16, x16, #0x5f0
+  a042f4: d61f0220     	br	x17
+  a042f8: 90004410     	adrp	x16, 0x1284000 <PT_LOAD#0+0x1284000>
+  a042fc: f942fe11     	ldr	x17, [x16, #0x5f8]
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  9c1100: f9403502     	ldr	x2, [x8, #0x68]
+  9c1104: aa1303e1     	mov	x1, x19
+  9c1108: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  9c110c: f84207f3     	ldr	x19, [sp], #0x20
+  9c1110: d61f0040     	br	x2
+		...
+  9c1120: 14010ea2     	b	0xa04ba8 <PT_LOAD#0+0xa04ba8>
+		...
+  9c1130: f81e0ff3     	str	x19, [sp, #-0x20]!
+  9c1134: a9017bfd     	stp	x29, x30, [sp, #0x10]
+  9c1138: 910043fd     	add	x29, sp, #0x10
+  9c113c: b00046b3     	adrp	x19, 0x1296000 <PT_LOAD#0+0x1296000>
+  9c1140: f9445673     	ldr	x19, [x19, #0x8a8]
+  9c1144: f9400260     	ldr	x0, [x19]
+  9c1148: b4000080     	cbz	x0, 0x9c1158 <PT_LOAD#0+0x9c1158>
+  9c114c: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  9c1150: f84207f3     	ldr	x19, [sp], #0x20
+  9c1154: d65f03c0     	ret
+  9c1158: 94011108     	bl	0xa05578 <PT_LOAD#0+0xa05578>
+  9c115c: f9000260     	str	x0, [x19]
+  9c1160: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  9c1164: f84207f3     	ldr	x19, [sp], #0x20
+  9c1168: d65f03c0     	ret
+  9c116c: 00000000     	udf	#0x0
