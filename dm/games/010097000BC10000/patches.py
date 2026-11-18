@@ -1,21 +1,26 @@
 # Resident Evil 0 1.0.0 (main build fb4239aa962b429b3d1776af92d93e79).
 #
-# Experimental 60 fps probe (main fixed-wait path).
-# sMain::move tests object+0x50 at main+0x7aa824:
-#   set:   fixed SleepThread at main+0x7aa840
-#   clear: dynamic pacing path at main+0x7aa934
+# Experimental 60 fps probe: bypass main fixed sleep and render-end frame gate.
 #
-# This branch bypasses ONLY the fixed SleepThread call. It does not modify
-# the +0x48 time-scale multiplier, +0x4c timing field, elapsed-tick math,
-# or either branch's simulation-clock updates.
+# sMain::move fixed SleepThread:
+#   main+0x7aa840: BL nn::os::SleepThread -> NOP.
 #
-# main+0x7aa840: BL nn::os::SleepThread(nn::TimeSpan) -> NOP.
-# The dynamic wait at main+0x7aa934 remains untouched in this experiment.
+# sRender::end frame pacing:
+#   main+0x7ce6f0: B.PL 0x7ce728 -> B 0x7ce728.
+# This skips the elapsed-frame threshold wait, but preserves the subsequent
+# callback polling path (including its 1 ms SleepThread) used for render work.
+#
+# No writes to the +0x48 time-scale multiplier, +0x4c timing field, or
+# simulation-clock accumulation are made by this patch.
+# The render-end gate may still affect presentation/synchronization; test
+# frame rate, gameplay speed, animation, audio, and stability.
 #
 # Build-ID-scoped diagnostic experiment, not a general RE0 update rule.
 CUTS = {
     "fb4239aa962b429b3d1776af92d93e79": [
         (0x7aa840, "7e660994", "1f2003d5",
-         "RE0 safer probe: bypass fixed main-loop SleepThread at +0x7aa840 only; preserve simulation timing fields and dynamic wait path"),
+         "RE0 probe: bypass fixed main-loop SleepThread; preserve simulation timing fields"),
+        (0x7ce6f0, "c5010054", "0e000014",
+         "RE0 probe: skip sRender::end elapsed-frame threshold wait; preserve render callback polling"),
     ],
 }
