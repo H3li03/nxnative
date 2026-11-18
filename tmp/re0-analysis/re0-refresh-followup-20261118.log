@@ -1,0 +1,38 @@
+RE0 HD REMASTER - REFRESH / FRAME PACING FOLLOW-UP
+Build ID: fb4239aa962b429b3d1776af92d93e79
+Date: 2026-11-18
+Source: existing main.elf disassembly logs in this analysis branch.
+
+1. sMain::setFrameWait at main+0x7aa330:
+  and w8, w1, #1
+  strb w8, [x0,#0x50]
+  This toggles the main-loop wait flag; it does not change +0x48.
+
+2. Two observed initialization/reset paths explicitly write 30.0 to the timing object's +0x48:
+  main+0x38e5f0..0x38e604:
+    mov x8, #0x41f00000; movk x8,#0x41f0,lsl #48
+    str x8,[x19,#0x48]
+    bl main+0x7aa330
+  main+0x2b687c..0x2b688c:
+    same 64-bit constant
+    str x8,[x0,#0x48]
+    bl main+0x7aa330
+  IEEE-754 double 0x41f0000000000000 = 30.0.
+  These are direct code evidence for the 30.0 timing field, but they do NOT prove this field is a pure render cap.
+
+3. sMain::move reads object +0x48 at main+0x7aa7ac and uses it in elapsed-time accumulation and frame/tick accounting. Changing this field to 60.0 previously accelerated gameplay. Do not patch this field as a 60-FPS fix.
+
+4. sRender::end at main+0x7ce660 reads timing singleton through [0x12850650] and loads its +0x48 at 0x7ce6a0. It divides a global float at 0xfca870 by that value at 0x7ce6bc to derive a render wait threshold (s9), then uses the threshold in its callback/poll path. Thus the same timing field participates in render pacing as well as main timing; it is unsafe to alter globally.
+
+5. sRender::setRefreshRate at main+0x7d2180 is a separate routine. It validates an index <= 0x20, looks up a display-mode entry, searches a mode list (stride 0x5c), reads candidate refresh at entry +0x58, and updates object +0x86f648 unless a lock flag at +0x86f644 is set. The inspected log does not yet identify its caller or establish that this field is the 30-FPS limiter. Do not claim this is the root cause yet.
+
+6. sRender::getRefreshRate at main+0x7d2240 reads +0x86f648 and formats/logs it, then performs mode lookup. Existing disassembly range in re0-mainloop-refresh.log is truncated at 0x7d2280.
+
+7. Previous experiments:
+  - main+0x7aa840 SleepThread bypass: gameplay accelerated / not a safe fix (historical).
+  - main+0x7ce6f0 render elapsed-threshold bypass: stayed at 30 FPS.
+  - main+0x7ce74c callback retry bypass: stayed at 30 FPS.
+  No timing-field patch is recommended from current evidence.
+
+Next static-analysis target:
+  Identify all callers / indirect dispatch paths for sRender::setRefreshRate (0x7d2180), trace initialization of the renderer mode list and refresh field (+0x86f648), and identify the indirect callback stored at global 0x128d310. Then correlate the selected display mode with the runtime value used by sRender::end. Only propose a patch if it can change presentation cadence without changing the simulation clock.
