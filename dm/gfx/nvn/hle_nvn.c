@@ -2401,16 +2401,6 @@ static int g_present_cap = -1;
 static int configured_display_mode(void) {
     const char *m = getenv("DM_PRESENT_INTERVAL");
     if (m) return !strcmp(m, "display");
-    // Resident Evil 0: experimental presentation-only 60 fps path.
-    // Keep the game's MT Framework timing fields at their native 30/30 values;
-    // only let NVN pace each submitted frame to the display link. This does not
-    // synthesize frames: the runtime test must confirm that RE0 submits at 60 Hz.
-    if (!strcmp(DM_GAME_ID, "010097000BC10000")) {
-        const char *e = getenv("DM_RE0_PRESENT_60");
-        const char *f = getenv("DM_FPS_TARGET");
-        int target = f ? atoi(f) : DM_GAME_FPS_TARGET;
-        return e && !strcmp(e, "1") && target == 60;
-    }
     // Resident Evil HD Remaster: its native 30 fps path owns its wait and present
     // interval; the 60/120 profiles bypass those waits and pace through display mode.
     if (!strcmp(DM_GAME_ID, "010050F00BC1A000")) {
@@ -2504,7 +2494,19 @@ static void re0_trace_present(const char *phase, const win_t *o, void *caller) {
             g_display_mode, g_hz, m ? m->name : "?", (unsigned long long)off);
     }
 }
-static int present_itv(const win_t *o) { int movie = dm_movie_hz(), c = fps_present_cap(), k = atomic_load(&g_fs_k); const char *e = getenv("DM_FPS_TARGET"); int t = e ? atoi(e) : DM_GAME_FPS_TARGET; int re_60_movie = !strcmp(DM_GAME_ID, "010050F00BC1A000") && t == 60; if (movie && (fps_high() || re_60_movie)) return fstep_hz() / movie; return c ? (k && fstep_on() ? k : fstep_hz() / c) : g_display_mode ? 1 : o->interval > 0 ? o->interval : 1; }   // vsyncs per frame that presentation follows
+static int present_itv(const win_t *o) {
+    int movie = dm_movie_hz(), c = fps_present_cap(), k = atomic_load(&g_fs_k);
+    const char *e = getenv("DM_FPS_TARGET");
+    int t = e ? atoi(e) : DM_GAME_FPS_TARGET;
+    // Resident Evil HD Remaster and Resident Evil 0 advance one decoded movie
+    // picture per game frame. Keep the game's movie clock on the decoder's PTS
+    // rate at 60 Hz too; high mode already uses the same ratio at 120 Hz.
+    int re_movie_60 = (!strcmp(DM_GAME_ID, "010050F00BC1A000") ||
+                       !strcmp(DM_GAME_ID, "010097000BC10000")) && t == 60;
+    if (movie && (fps_high() || re_movie_60)) return fstep_hz() / movie;
+    return c ? (k && fstep_on() ? k : fstep_hz() / c) :
+           g_display_mode ? 1 : o->interval > 0 ? o->interval : 1;
+}   // vsyncs per frame that presentation follows
 // Present interval 0 swaps without waiting for a vsync on Horizon: the window's acquire waits only for a texture the display has let go of, the display shows the newest frame at each
 // vsync, and the game paces itself (or runs as fast as it can; the Switch's unlocked-frame-rate mods set interval 0 to go past 60). The acquire took it as 1 and waited a display
 // tick each frame. Ori and the Blind Forest: Definitive Edition sets Unity's vSyncCount to 0 only for its shader prewarm behind the first loading screen and back to 1 after it: the
