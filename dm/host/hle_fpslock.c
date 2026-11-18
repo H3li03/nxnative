@@ -479,9 +479,9 @@ void dm_fps_lock_tick(void) {
                 if (movie_hz) movie_samples++; else baseline_samples++;
             }
         }
-        // Resident Evil's timing fields are in the second object: [main + 0x157daa0] -> object1 -> timing object.
-        // The generic lock path above resolves only object1, so advance once more before writing +0x48/+0x4c.
-        if (re_row) {
+        // Resident Evil timing fields are in the second object: [main + slot] -> object1 -> timing object.
+        // Both RE HD Remaster and RE0 need the extra dereference before writing +0x48/+0x4c.
+        if (re_row || re0_row) {
             uint64_t timing_obj = 0;
             if (!rd(obj, &timing_obj, sizeof timing_obj) || timing_obj < 0x1000) continue;
             obj = timing_obj;
