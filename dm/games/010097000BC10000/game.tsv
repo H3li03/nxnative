@@ -34,6 +34,7 @@ sys_resource	0x0
 shader_groups	/nativeNXx64/=nativenxx64
 shader_note	resident evil 0 shaders
 
-# Experimental RE0 1.0.0 test: hle_fpslock.c writes the paired +0x48/+0x4c timing fields to 60. Revert to 30 to disable the experiment.
-fps_target	60
-fps_max	120
+# RE0 timing-field experiment disabled: device testing showed accelerated simulation.
+# Keep the native 30 fps behavior until a separate render limiter is verified simulation-safe.
+fps_target	30
+fps_max	30
