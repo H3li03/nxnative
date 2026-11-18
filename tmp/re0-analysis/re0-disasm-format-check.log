@@ -1,6 +1,7 @@
-===== FILE SIZE =====
+=== FILE ===
 -rw-r--r--  1 maclifedrive  staff    92M 17 nov 16:33 tmp/re0-analysis/main.disasm.txt
-===== FIRST 25 LINES =====
+ 2578238 tmp/re0-analysis/main.disasm.txt
+=== PRIME 25 RIGHE ===
 
 /Users/maclifedrive/Downloads/nxnative-clean-check/tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
 
@@ -26,20 +27,110 @@ Disassembly of section PT_LOAD#0:
       48:      	cbnz	w8, 0x124 <PT_LOAD#0+0x124>
       4c:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
       50:      	ldr	x8, [x8, #0x458]
-===== SAMPLE AROUND MAIN LOOP =====
-695613:  2b688c:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
-695805:  2b6b8c:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
-910372:  38e604:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
-911215:  38f364:      	bl	0x7aa5a0 <PT_LOAD#0+0x7aa5a0>
-1942347:  78c648:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
-===== LAST 10 LINES =====
-  a05f80:      	add	x16, x16, #0x438
-  a05f84:      	br	x17
-  a05f88:      	adrp	x16, 0x1285000 <PT_LOAD#0+0x1285000>
-  a05f8c:      	ldr	x17, [x16, #0x440]
-  a05f90:      	add	x16, x16, #0x440
-  a05f94:      	br	x17
-  a05f98:      	adrp	x16, 0x1285000 <PT_LOAD#0+0x1285000>
-  a05f9c:      	ldr	x17, [x16, #0x448]
-  a05fa0:      	add	x16, x16, #0x448
-  a05fa4:      	br	x17
+=== RICERCA INDIRIZZI ===
+1942369:  78c6a0:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+1972614:  7aa7ac:      	ldr	s0, [x19, #0x48]
+1972644:  7aa824:      	cbz	w8, 0x7aa8e0 <PT_LOAD#0+0x7aa8e0>
+1972691:  7aa8e0:      	sub	x8, x10, x9
+1972712:  7aa934:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+=== RIFERIMENTI CAMPI ===
+148:     268:      	stur	x8, [x10, #0x4c]
+762:     c80:      	ldr	x0, [x19, #0x58]
+767:     c94:      	ldr	x0, [x19, #0x48]
+806:     d30:      	ldr	x0, [x19, #0x58]
+811:     d44:      	ldr	x0, [x19, #0x48]
+847:     dd4:      	ldr	x8, [x8, #0x48]
+891:     e84:      	ldr	x8, [x8, #0x48]
+926:     f10:      	ldp	x20, x0, [x19, #0x50]
+938:     f40:      	ldp	x20, x0, [x19, #0x50]
+1005:    104c:      	ldp	x20, x0, [x19, #0x50]
+1361:    15ec:      	ldp	x23, x0, [x20, #0x50]
+1401:    168c:      	ldp	x25, x0, [x20, #0x50]
+1560:    1908:      	ldr	x8, [x8, #0x50]
+1583:    1964:      	ldp	x26, x0, [x20, #0x50]
+1898:    1e64:      	ldr	x8, [x19, #0x78]
+1906:    1e84:      	ldr	x8, [x19, #0x60]
+1914:    1ea4:      	ldr	x8, [x19, #0x48]
+2069:    2128:      	ldr	x3, [x0, #0x58]
+2688:    2b18:      	ldr	x8, [x8, #0x48]
+2693:    2b2c:      	ldr	x8, [x8, #0x48]
+2931:    2ef4:      	ldr	x8, [x8, #0x50]
+2988:    2fd8:      	ldr	x8, [x8, #0x50]
+3101:    319c:      	ldr	x8, [x8, #0x50]
+3165:    329c:      	ldr	x8, [x8, #0x50]
+3959:    3fb0:      	str	wzr, [x10, #0x50]
+4173:    4350:      	str	wzr, [x9, #0x48]
+4176:    435c:      	stur	x8, [x9, #0x4c]
+4446:    4834:      	stur	x8, [x10, #0x4c]
+4544:    49d0:      	str	wzr, [x9, #0x48]
+4547:    49dc:      	stur	x8, [x9, #0x4c]
+4632:    4b38:      	stur	x8, [x10, #0x4c]
+5257:    5588:      	ldr	x8, [x8, #0x58]
+5510:    59dc:      	str	wzr, [x19, #0x58]
+5561:    5aa8:      	stp	x8, x9, [x19, #0x48]
+5601:    5b64:      	str	x1, [x8, #0x48]
+5701:    5d38:      	stp	xzr, xzr, [x19, #0x58]
+5702:    5d3c:      	stp	xzr, xzr, [x19, #0x48]
+5818:    5f34:      	stp	xzr, xzr, [x19, #0x58]
+5820:    5f3c:      	stp	xzr, xzr, [x19, #0x48]
+5839:    5f88:      	ldr	x1, [x19, #0x50]
+5841:    5f90:      	str	x1, [x19, #0x58]
+5874:    6018:      	ldr	x1, [x19, #0x50]
+5876:    6020:      	str	x1, [x19, #0x58]
+5917:    60cc:      	ldp	x8, x9, [x19, #0x50]
+5929:    60fc:      	ldr	x20, [x19, #0x50]
+5948:    6148:      	ldr	x8, [x19, #0x58]
+5956:    6168:      	str	x8, [x19, #0x58]
+5962:    6180:      	ldr	x8, [x8, #0x78]
+5980:    61c8:      	ldp	x8, x9, [x19, #0x50]
+5987:    61e4:      	ldp	x8, x9, [x19, #0x50]
+6011:    6244:      	ldr	x8, [x8, #0x78]
+6098:    63b4:      	ldp	x9, x8, [x19, #0x58]
+6102:    63c4:      	ldr	x8, [x19, #0x58]
+6104:    63cc:      	str	x8, [x19, #0x58]
+6139:    6458:      	ldp	x1, x10, [x19, #0x50]
+6177:    64f0:      	stp	x11, x9, [x19, #0x50]
+6178:    64f4:      	str	x8, [x19, #0x60]
+6289:    66c0:      	str	wzr, [x19, #0x50]
+6703:    6d44:      	str	xzr, [x19, #0x60]
+6705:    6d4c:      	stp	x8, xzr, [x19, #0x48]
+6765:    6e3c:      	str	xzr, [x19, #0x58]
+6893:    706c:      	str	xzr, [x19, #0x60]
+6895:    7074:      	stp	x8, xzr, [x19, #0x48]
+6955:    7164:      	str	xzr, [x19, #0x58]
+7124:    7424:      	str	w8, [x0, #0x60]
+7136:    7454:      	strh	w8, [x0, #0x78]
+7141:    7470:      	ldr	w8, [x0, #0x60]
+7153:    74a0:      	ldrh	w8, [x0, #0x78]
+7160:    74c4:      	stp	w8, w1, [x0, #0x50]
+7163:    74d0:      	ldr	w8, [x0, #0x50]
+7171:    74f0:      	ldr	x8, [x19, #0x58]
+7181:    7518:      	str	x20, [x19, #0x58]
+7189:    7538:      	ldr	x2, [x19, #0x58]
+7199:    7560:      	ldr	x8, [x19, #0x58]
+7204:    7574:      	ldr	x0, [x19, #0x58]
+7208:    7584:      	str	xzr, [x19, #0x58]
+7213:    75a0:      	ldr	x0, [x0, #0x58]
+8821:    8ecc:      	ldrh	w8, [x19, #0x78]
+8825:    8edc:      	strh	w8, [x19, #0x78]
+9191:    94a4:      	ldr	w8, [x19, #0x60]
+9194:    94b0:      	str	w9, [x19, #0x60]
+9199:    94c4:      	str	w8, [x19, #0x60]
+9681:    9c50:      	ldr	w9, [x19, #0x60]
+9683:    9c58:      	str	w9, [x19, #0x60]
+9874:    9f5c:      	ldrb	w8, [x19, #0x60]
+9898:    9fbc:      	ldr	w8, [x19, #0x60]
+9944:    a074:      	ldr	w8, [x19, #0x60]
+10626:    ab30:      	str	w8, [x19, #0x60]
+10627:    ab34:      	str	wzr, [x19, #0x78]
+10741:    acfc:      	str	w8, [x0, #0x60]
+10742:    ad00:      	str	wzr, [x0, #0x78]
+10749:    ad1c:      	str	w8, [x0, #0x60]
+10750:    ad20:      	str	wzr, [x0, #0x78]
+10962:    b080:      	ldr	w10, [x12, #0x50]
+10966:    b090:      	str	w13, [x12, #0x50]
+10967:    b094:      	ldr	x0, [x20, #0x58]
+11099:    b2ec:      	str	wzr, [x19, #0x58]
+11109:    b314:      	stp	x8, x9, [x19, #0x48]
+11456:    b8b4:      	str	wzr, [x19, #0x48]
+11457:    b8b8:      	str	xzr, [x19, #0x50]
