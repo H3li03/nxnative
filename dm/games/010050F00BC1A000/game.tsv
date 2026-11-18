@@ -36,3 +36,5 @@ shader_note	Resident Evil shaders
 present_interval	display
 fps_target	60
 fps_max	120
+# ProMotion iPads: expose the tested 120 fps target in the iOS launcher.
+fps_max_ios	120
