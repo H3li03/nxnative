@@ -311,74 +311,14 @@ void dm_fps_lock_tick(void) {
         // profile. Outside movies, follow the selected profile; the 120 fps profile
         // continues to follow the display's dynamic 120/60 hold.
         int movie_hz = dm_movie_hz();
-        int re_row = !strcmp(L->what, "Resident Evil MT Framework primary frame limit");
-        int re_movie = !strcmp(DM_GAME_ID, "010050F00BC1A000") && re_row && movie_hz != 0;
-        int row_target = re_movie ? movie_hz : re_row ? nvn_game_fps() : target;
-        // The macOS launcher may detach dmhost from the launching terminal, so stderr is
-        // not a reliable way to retrieve this one-off investigation. Keep a small,
-        // explicit diagnostic file in /tmp, independent of the app's working directory.
-        if (re_row) {
-            static int probe_file_started;
-            if (!probe_file_started) {
-                FILE *pf = fopen("/tmp/re_movie_clock_probe.log", "w");
-                if (pf) {
-                    fprintf(pf, "[RE movie clock probe] FPS-lock tick reached; target=%d, movie_hz=%d\n", target, movie_hz);
-                    fclose(pf);
-                    probe_file_started = 1;
-                }
-            }
-        }
+        int re_hd_row = !strcmp(L->what, "Resident Evil MT Framework primary frame limit");
+        int re_movie = !strcmp(DM_GAME_ID, "010050F00BC1A000") && re_hd_row && movie_hz != 0;
+        int row_target = re_movie ? movie_hz : re_hd_row ? nvn_game_fps() : target;
         if (L->ptr_off && (!rd((uint64_t)(uintptr_t)(base + L->ptr_off), &obj, sizeof obj) || !obj)) continue;   // not created yet
         if (L->flag) { uint8_t b; if (!rd(obj + (L->flag >> 8), &b, 1) || !(b & (L->flag & 0xff))) continue; }   // the object's flag is off (Unreal: no fixed frame rate in use)
-        // Resident Evil: the ELF reads the timing fields through two pointer
-        // indirections: [main + 0x157daa0] -> object -> timing object.
-        // The earlier probe stopped at the first object (whose +0x48/+0x4c
-        // are small integer fields), so inspect the second object instead.
-        if (re_row) {
-            static int baseline_samples, movie_samples;
-            if (baseline_samples < 4 || (movie_hz && movie_samples < 8)) {
-                uint32_t slot_words[4] = {0}, first_words[4] = {0}, mem[64] = {0};
-                uint64_t obj2 = 0;
-                int have_slot = rd((uint64_t)(uintptr_t)(base + L->ptr_off), slot_words, sizeof slot_words);
-                int have_obj2 = rd(obj, &obj2, sizeof obj2) && obj2 >= 0x1000;
-                int have_mem = have_obj2 && rd(obj2, mem, sizeof mem);
-                float at48 = 0.0f, at78 = 0.0f;
-                if (have_obj2) {
-                    uint32_t raw48 = 0, raw78 = 0;
-                    if (rd(obj2 + 0x48, &raw48, sizeof raw48)) memcpy(&at48, &raw48, sizeof at48);
-                    if (rd(obj2 + 0x78, &raw78, sizeof raw78)) memcpy(&at78, &raw78, sizeof at78);
-                }
-                rd(obj, first_words, sizeof first_words);
-                FILE *pf = fopen("/tmp/re_movie_clock_probe.log", "a");
-                if (pf) {
-                    fprintf(pf, "[RE MT double] slot=%p object1=%p object2=%p movie_hz=%d target=%d row_target=%d slot_read=%d slot_raw=%08x,%08x,%08x,%08x first_raw=%08x,%08x,%08x,%08x second_raw=%s",
-                        (void *)(uintptr_t)(base + L->ptr_off), (void *)(uintptr_t)obj,
-                        (void *)(uintptr_t)obj2, movie_hz, target, row_target, have_slot,
-                        slot_words[0], slot_words[1], slot_words[2], slot_words[3],
-                        first_words[0], first_words[1], first_words[2], first_words[3],
-                        have_mem ? "" : "(unreadable)");
-                    if (have_mem) {
-                        for (int i = 0; i < 8; i++) fprintf(pf, "%s%08x", i ? "," : "", mem[i]);
-                        fprintf(pf, " float_candidates=");
-                        int found = 0;
-                        for (int i = 0; i < 64; i++) {
-                            float x; memcpy(&x, &mem[i], sizeof x);
-                            if (x >= 0.001f && x <= 10000.0f) {
-                                fprintf(pf, "%s+%03x:%g", found ? "," : "", i * 4, x);
-                                found++;
-                            }
-                        }
-                        if (!found) fprintf(pf, "none");
-                    }
-                    fprintf(pf, " second_+48=%g second_+78=%g\n", at48, at78);
-                    fclose(pf);
-                }
-                if (movie_hz) movie_samples++; else baseline_samples++;
-            }
-        }
-        // Resident Evil's timing fields are in the second object: [main + 0x157daa0] -> object1 -> timing object.
+        // Resident Evil HD Remaster's timing fields are in the second object: [main + 0x157daa0] -> object1 -> timing object.
         // The generic lock path above resolves only object1, so advance once more before writing +0x48/+0x4c.
-        if (re_row) {
+        if (re_hd_row) {
             uint64_t timing_obj = 0;
             if (!rd(obj, &timing_obj, sizeof timing_obj) || timing_obj < 0x1000) continue;
             obj = timing_obj;
