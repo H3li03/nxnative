@@ -1,0 +1,47 @@
+RE0 HD REMASTER - SECOND-PASS FRAME-PACING ANALYSIS
+Build ID: fb4239aa962b429b3d1776af92d93e79
+Date: 2026-11-18
+Repository: H3li03/nxnative
+Source branch: analysis/re0-main-render-field-context-20261117-175603
+
+CONFIRMED DISASSEMBLY DETAILS
+
+A. sRender::setRefreshRate at main+0x7d2180
+- arg x0 is renderer/object base; arg w1 is an index, rejected if > 0x20.
+- Reads a count at object+0x883f8.
+- Reads a pointer from object + 0x89410 + index*16.
+- Iterates a mode list starting at object+0x827f8, advancing by 0x5c bytes.
+- Compares each list entry against the selected pointer using helper at 0xa03f68.
+- On match, reads float at matched entry+0x58.
+- Compares it to object+0x86f648 and, if different, writes it there unless lock byte object+0x86f644 bit 0 is set.
+This is a mode-selection helper. It does not itself impose a 30 FPS wait.
+
+B. sRender::getRefreshRate at main+0x7d2240
+- Reads object+0x86f648 and formats/logs it.
+- Then searches the mode list using helper 0xa03f68.
+- This supports that +0x86f648 stores a selected refresh-rate value, but does not prove the game loop consumes it.
+
+C. Important negative evidence:
+- Existing full direct-call scan in re0-clock-sync-proof.log has no direct BL references to 0x7d2180 or 0x7d2240. The only lines at those addresses are function definitions.
+- Therefore the setter/getter may be reached through a vtable/function pointer, or may be unused in this executable path. Caller resolution remains open.
+- sRender::end at main+0x7ce660 does NOT read object+0x86f648. It reads the timing singleton through global 0x12850650 and loads that object's +0x48 at 0x7ce6a0. It computes threshold s9 = global_float[0xfca870] / timing_object[+0x48], then compares elapsed accumulator [renderer+0x58] * global_float against that threshold.
+- Therefore the display refresh field +0x86f648 is not directly used by the inspected sRender::end wait path. The prior idea that setRefreshRate alone is the limiter is not established and should not be treated as the primary theory.
+
+D. The timing field +0x48 is demonstrably shared:
+- sMain::move reads it in main timing/update logic.
+- sRender::end reads the same singleton field to derive its elapsed-frame threshold.
+- Two observed initialization/reset paths write double 30.0 to +0x48 (0x38e5f0 and 0x2b687c).
+- Changing +0x48 globally to 60 previously accelerated gameplay, so never patch it globally.
+
+EXPERIMENT STATUS
+- Bypass sMain::move fixed SleepThread: unsafe/accelerated gameplay in earlier test.
+- Bypass sRender::end elapsed threshold branch at 0x7ce6f0: user reported still 30 FPS.
+- Bypass callback retry at 0x7ce74c: user reported still 30 FPS.
+- These negative tests mean the render-end wait alone is not the whole 30 FPS limiter.
+
+NEXT INVESTIGATION
+1. Resolve indirect callers/vtable entries for 0x7d2180 and determine whether setRefreshRate is called at runtime.
+2. Trace writes to timing singleton +0x48 after initialization; identify any mode/configuration logic that resets it to 30.
+3. Inspect main loop's accumulator and update dispatch around 0x7aa5a0, especially how it clamps/catches up and how often simulation update is invoked.
+4. Identify the callback stored at global 0x128d310 and its return semantics.
+5. Do not make a new patch until one path is shown to control presentation cadence independently of simulation delta.
