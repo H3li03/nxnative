@@ -1,0 +1,1470 @@
+RE0 - 80 VERIFICHE APPROFONDITE
+Branch: experiment/re0-60fps-timing-fields-20261118
+Analisi statica: nessun file sorgente modificato.
+==============================================================================
+File analizzati: 5
+Verifiche eseguite: 80
+==============================================================================
+
+========================================================================
+01. Main loop: letture campo +0x48
+Pattern: ldr\s+\w+,\s*\[x\d+,\s*#0x48\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 2611
+767:      c94:      	ldr	x0, [x19, #0x48]
+811:      d44:      	ldr	x0, [x19, #0x48]
+847:      dd4:      	ldr	x8, [x8, #0x48]
+891:      e84:      	ldr	x8, [x8, #0x48]
+1914:     1ea4:      	ldr	x8, [x19, #0x48]
+2688:     2b18:      	ldr	x8, [x8, #0x48]
+2693:     2b2c:      	ldr	x8, [x8, #0x48]
+11673:     bc60:      	ldr	w8, [x0, #0x48]
+11945:     c0dc:      	ldr	x0, [x19, #0x48]
+12049:     c288:      	ldr	x9, [x19, #0x48]
+12062:     c2bc:      	ldr	x0, [x19, #0x48]
+12071:     c2e0:      	ldr	x0, [x19, #0x48]
+... altre 2599 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 2611
+
+========================================================================
+02. Main loop: scritture campo +0x48
+Pattern: str\s+\w+,\s*\[x\d+,\s*#0x48\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 1132
+4173:     4350:      	str	wzr, [x9, #0x48]
+4544:     49d0:      	str	wzr, [x9, #0x48]
+5601:     5b64:      	str	x1, [x8, #0x48]
+11456:     b8b4:      	str	wzr, [x19, #0x48]
+11570:     baac:      	str	wzr, [x19, #0x48]
+11680:     bc7c:      	str	w8, [x0, #0x48]
+11798:     be68:      	str	xzr, [x19, #0x48]
+11914:     c060:      	str	xzr, [x19, #0x48]
+11951:     c0f4:      	str	xzr, [x19, #0x48]
+12072:     c2e4:      	str	x20, [x19, #0x48]
+15036:     f234:      	str	wzr, [x19, #0x48]
+15150:     f42c:      	str	wzr, [x19, #0x48]
+... altre 1120 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 1132
+
+========================================================================
+03. Campo +0x4c: letture
+Pattern: ldr\s+\w+,\s*\[x\d+,\s*#0x4c\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 490
+15900:    10040:      	ldr	w8, [x19, #0x4c]
+16492:    109dc:      	ldr	w8, [x19, #0x4c]
+17175:    11534:      	ldr	w8, [x19, #0x4c]
+18711:    12e28:      	ldr	w8, [x20, #0x4c]!
+60025:    3ff10:      	ldr	w27, [x24, #0x4c]!
+61819:    41b40:      	ldr	w19, [x24, #0x4c]
+62014:    41e54:      	ldr	w9, [x8, #0x4c]
+62082:    41f64:      	ldr	w9, [x8, #0x4c]
+62705:    4294c:      	ldr	w8, [x25, #0x4c]!
+63025:    42e58:      	ldr	w10, [x9, #0x4c]!
+63646:    43828:      	ldr	w8, [x8, #0x4c]
+63718:    43948:      	ldr	w8, [x8, #0x4c]
+... altre 478 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 490
+
+========================================================================
+04. Campo +0x4c: scritture
+Pattern: str\s+\w+,\s*\[x\d+,\s*#0x4c\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 498
+15902:    10048:      	str	w8, [x19, #0x4c]
+16494:    109e4:      	str	w8, [x19, #0x4c]
+17200:    11598:      	str	w8, [x19, #0x4c]
+17224:    115f8:      	str	w8, [x19, #0x4c]
+17226:    11600:      	str	wzr, [x19, #0x4c]
+62568:    42728:      	str	w0, [x23, #0x4c]
+69699:    49970:      	str	w8, [x19, #0x4c]
+158588:    a14f8:      	str	w23, [x19, #0x4c]
+210038:    d41dc:      	str	w8, [x0, #0x4c]
+326369:   1476cc:      	str	w8, [x0, #0x4c]
+345629:   15a624:      	str	w8, [x19, #0x4c]
+352543:   1612c0:      	str	w8, [x0, #0x4c]
+... altre 486 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 498
+
+========================================================================
+05. Campo +0x50: letture byte
+Pattern: ldrb\s+\w+,\s*\[x\d+,\s*#0x50\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 95
+416223:   1a0498:      	ldrb	w9, [x0, #0x50]
+429604:   1ada18:      	ldrb	w8, [x8, #0x50]
+435521:   1b37d8:      	ldrb	w9, [x19, #0x50]
+457526:   1c98d8:      	ldrb	w8, [x20, #0x50]
+457556:   1c9958:      	ldrb	w8, [x20, #0x50]
+463267:   1cf5b8:      	ldrb	w8, [x27, #0x50]
+464078:   1d027c:      	ldrb	w8, [x21, #0x50]
+464611:   1d0ad4:      	ldrb	w8, [x21, #0x50]
+465734:   1d1c80:      	ldrb	w8, [x21, #0x50]
+543241:   21e780:      	ldrb	w8, [x19, #0x50]
+543261:   21e7d0:      	ldrb	w8, [x19, #0x50]
+570703:   239a10:      	ldrb	w0, [x0, #0x50]
+... altre 83 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 95
+
+========================================================================
+06. Campo +0x50: scritture byte
+Pattern: strb\s+\w+,\s*\[x\d+,\s*#0x50\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 54
+18465:    12a1c:      	strb	wzr, [x19, #0x50]
+450159:   1c2204:      	strb	wzr, [x19, #0x50]
+457207:   1c93a0:      	strb	wzr, [x0, #0x50]
+457357:   1c9620:      	strb	wzr, [x0, #0x50]
+543092:   21e504:      	strb	wzr, [x19, #0x50]
+543223:   21e738:      	strb	wzr, [x19, #0x50]
+543418:   21ea58:      	strb	w20, [x19, #0x50]
+543436:   21eaa4:      	strb	w20, [x19, #0x50]
+543462:   21eb14:      	strb	wzr, [x19, #0x50]
+543479:   21eb60:      	strb	wzr, [x19, #0x50]
+570381:   2394bc:      	strb	wzr, [x19, #0x50]
+570503:   2396d4:      	strb	wzr, [x19, #0x50]
+... altre 42 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 54
+
+========================================================================
+07. Campo +0x54: letture
+Pattern: ldr\s+\w+,\s*\[x\d+,\s*#0x54\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 1244
+7164:     74d4:      	ldr	w0, [x0, #0x54]
+17687:    11d7c:      	ldr	w8, [x0, #0x54]
+17693:    11d94:      	ldr	w8, [x0, #0x54]
+17699:    11dac:      	ldr	w8, [x0, #0x54]
+17705:    11dc4:      	ldr	w8, [x0, #0x54]
+17711:    11ddc:      	ldr	w8, [x0, #0x54]
+17717:    11df4:      	ldr	w8, [x0, #0x54]
+17723:    11e0c:      	ldr	w8, [x0, #0x54]
+17729:    11e24:      	ldr	w8, [x0, #0x54]
+59838:    3fc24:      	ldr	w8, [x21, #0x54]!
+62582:    42760:      	ldr	w8, [x19, #0x54]
+62732:    429b8:      	ldr	w8, [x24, #0x54]!
+... altre 1232 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 1244
+
+========================================================================
+08. Campo +0x54: scritture
+Pattern: str\s+\w+,\s*\[x\d+,\s*#0x54\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 801
+69703:    49980:      	str	w8, [x19, #0x54]
+78986:    52e34:      	str	s1, [x19, #0x54]
+79042:    52f14:      	str	s0, [x19, #0x54]
+79111:    53028:      	str	s0, [x19, #0x54]
+83088:    56e88:      	str	s1, [x19, #0x54]
+104327:    6bcd8:      	str	w22, [x19, #0x54]
+104752:    6c37c:      	str	w22, [x19, #0x54]
+105862:    6d4f0:      	str	s0, [x19, #0x54]
+105966:    6d690:      	str	s0, [x19, #0x54]
+106349:    6dc9c:      	str	s0, [x19, #0x54]
+106510:    6df20:      	str	s0, [x19, #0x54]
+107375:    6ecc0:      	str	s1, [x19, #0x54]
+... altre 789 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 801
+
+========================================================================
+09. Campo +0x58: letture
+Pattern: ldr\s+\w+,\s*\[x\d+,\s*#0x58\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 3701
+762:      c80:      	ldr	x0, [x19, #0x58]
+806:      d30:      	ldr	x0, [x19, #0x58]
+2069:     2128:      	ldr	x3, [x0, #0x58]
+5257:     5588:      	ldr	x8, [x8, #0x58]
+5948:     6148:      	ldr	x8, [x19, #0x58]
+6102:     63c4:      	ldr	x8, [x19, #0x58]
+7171:     74f0:      	ldr	x8, [x19, #0x58]
+7189:     7538:      	ldr	x2, [x19, #0x58]
+7199:     7560:      	ldr	x8, [x19, #0x58]
+7204:     7574:      	ldr	x0, [x19, #0x58]
+7213:     75a0:      	ldr	x0, [x0, #0x58]
+10967:     b094:      	ldr	x0, [x20, #0x58]
+... altre 3689 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 3701
+
+========================================================================
+10. Campo +0x58: scritture
+Pattern: str\s+\w+,\s*\[x\d+,\s*#0x58\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 2427
+5510:     59dc:      	str	wzr, [x19, #0x58]
+5841:     5f90:      	str	x1, [x19, #0x58]
+5876:     6020:      	str	x1, [x19, #0x58]
+5956:     6168:      	str	x8, [x19, #0x58]
+6104:     63cc:      	str	x8, [x19, #0x58]
+6765:     6e3c:      	str	xzr, [x19, #0x58]
+6955:     7164:      	str	xzr, [x19, #0x58]
+7181:     7518:      	str	x20, [x19, #0x58]
+7208:     7584:      	str	xzr, [x19, #0x58]
+11099:     b2ec:      	str	wzr, [x19, #0x58]
+11939:     c0c4:      	str	xzr, [x19, #0x58]
+11941:     c0cc:      	str	xzr, [x19, #0x58]
+... altre 2415 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 2427
+
+========================================================================
+11. Campo +0x60: accessi
+Pattern: \[(?:x\d+),\s*#0x60\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 15308
+1906:     1e84:      	ldr	x8, [x19, #0x60]
+6178:     64f4:      	str	x8, [x19, #0x60]
+6703:     6d44:      	str	xzr, [x19, #0x60]
+6893:     706c:      	str	xzr, [x19, #0x60]
+7124:     7424:      	str	w8, [x0, #0x60]
+7141:     7470:      	ldr	w8, [x0, #0x60]
+9191:     94a4:      	ldr	w8, [x19, #0x60]
+9194:     94b0:      	str	w9, [x19, #0x60]
+9199:     94c4:      	str	w8, [x19, #0x60]
+9681:     9c50:      	ldr	w9, [x19, #0x60]
+9683:     9c58:      	str	w9, [x19, #0x60]
+9874:     9f5c:      	ldrb	w8, [x19, #0x60]
+... altre 15296 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 15308
+
+========================================================================
+12. Campo +0x64: accessi
+Pattern: \[(?:x\d+),\s*#0x64\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 935
+156:      288:      	str	w8, [x10, #0x64]
+3968:     3fd4:      	stur	x8, [x10, #0x64]
+4185:     4380:      	stur	x8, [x9, #0x64]
+4454:     4854:      	str	w8, [x10, #0x64]
+4556:     4a00:      	stur	x8, [x9, #0x64]
+4640:     4b58:      	str	w8, [x10, #0x64]
+5517:     59f8:      	stur	x8, [x19, #0x64]
+6279:     6698:      	stur	x8, [x19, #0x64]
+7126:     742c:      	str	w8, [x0, #0x64]
+7143:     7478:      	ldr	w8, [x0, #0x64]
+8892:     8ff0:      	ldr	w8, [x19, #0x64]
+8895:     8ffc:      	str	w8, [x19, #0x64]
+... altre 923 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 935
+
+========================================================================
+13. Campo +0x70: accessi
+Pattern: \[(?:x\d+),\s*#0x70\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 4490
+754:      c60:      	ldr	x8, [x19, #0x70]
+798:      d10:      	ldr	x8, [x19, #0x70]
+2079:     2158:      	ldr	x1, [x0, #0x70]
+5318:     569c:      	ldr	w9, [x8, #0x70]
+7132:     7444:      	str	w8, [x0, #0x70]
+7149:     7490:      	ldr	w8, [x0, #0x70]
+8012:     8224:      	ldr	w8, [x19, #0x70]
+8014:     822c:      	str	w8, [x19, #0x70]
+8021:     8248:      	ldr	w8, [x19, #0x70]
+8023:     8250:      	str	w8, [x19, #0x70]
+8043:     82a0:      	ldr	w9, [x19, #0x70]
+8045:     82a8:      	str	w8, [x19, #0x70]
+... altre 4478 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 4490
+
+========================================================================
+14. Campo +0x74: accessi
+Pattern: \[(?:x\d+),\s*#0x74\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 1000
+3973:     3fe8:      	str	w8, [x10, #0x74]
+5336:     56e4:      	ldrb	w8, [x8, #0x74]
+5523:     5a10:      	stur	x8, [x19, #0x74]
+6284:     66ac:      	str	w8, [x19, #0x74]
+7134:     744c:      	str	w8, [x0, #0x74]
+7151:     7498:      	ldr	w8, [x0, #0x74]
+9008:     91c0:      	ldr	w10, [x19, #0x74]
+9010:     91c8:      	str	w10, [x19, #0x74]
+10622:     ab20:      	str	w8, [x19, #0x74]
+10737:     acec:      	str	w8, [x0, #0x74]
+10901:     af88:      	ldr	w8, [x8, #0x74]
+11093:     b2d4:      	stur	x8, [x19, #0x74]
+... altre 988 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 1000
+
+========================================================================
+15. Campo +0x78: accessi
+Pattern: \[(?:x\d+),\s*#0x78\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 4063
+1898:     1e64:      	ldr	x8, [x19, #0x78]
+5962:     6180:      	ldr	x8, [x8, #0x78]
+6011:     6244:      	ldr	x8, [x8, #0x78]
+7136:     7454:      	strh	w8, [x0, #0x78]
+7153:     74a0:      	ldrh	w8, [x0, #0x78]
+8821:     8ecc:      	ldrh	w8, [x19, #0x78]
+8825:     8edc:      	strh	w8, [x19, #0x78]
+10627:     ab34:      	str	wzr, [x19, #0x78]
+10742:     ad00:      	str	wzr, [x0, #0x78]
+10750:     ad20:      	str	wzr, [x0, #0x78]
+15895:    1002c:      	ldr	s0, [x8, #0x78]
+16055:    102bc:      	strb	wzr, [x19, #0x78]
+... altre 4051 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 4063
+
+========================================================================
+16. Campo +0x7c: accessi
+Pattern: \[(?:x\d+),\s*#0x7c\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 1234
+5528:     5a24:      	str	w8, [x19, #0x7c]
+7775:     7e6c:      	ldrh	w8, [x21, #0x7c]
+7778:     7e78:      	strh	w8, [x21, #0x7c]
+8287:     8670:      	ldrh	w8, [x19, #0x7c]
+10628:     ab38:      	strh	wzr, [x19, #0x7c]
+10743:     ad04:      	strh	wzr, [x0, #0x7c]
+10751:     ad24:      	strh	wzr, [x0, #0x7c]
+11095:     b2dc:      	str	w8, [x19, #0x7c]
+14644:     eb9c:      	strh	wzr, [x19, #0x7c]
+14714:     ecd4:      	str	w8, [x19, #0x7c]
+16068:    102f0:      	str	w8, [x19, #0x7c]
+16187:    104f4:      	str	w8, [x19, #0x7c]
+... altre 1222 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 1234
+
+========================================================================
+17. Campo +0x80: accessi
+Pattern: \[(?:x\d+),\s*#0x80\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 3344
+2741:     2bec:      	ldr	x8, [x20, #0x80]
+2866:     2df0:      	ldr	x8, [x21, #0x80]
+3197:     3320:      	ldr	x8, [x21, #0x80]
+7206:     757c:      	ldr	x8, [x8, #0x80]
+11594:     bb10:      	ldr	x8, [x8, #0x80]
+11618:     bb70:      	ldr	x8, [x8, #0x80]
+15174:     f490:      	ldr	x8, [x8, #0x80]
+15198:     f4f0:      	ldr	x8, [x8, #0x80]
+15682:     fcd0:      	ldr	x8, [x8, #0x80]
+15706:     fd30:      	ldr	x8, [x8, #0x80]
+15732:     fd9c:      	ldr	w8, [x8, #0x80]
+15894:    10028:      	ldr	s2, [x8, #0x80]
+... altre 3332 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 3344
+
+========================================================================
+18. Campo +0x88: accessi
+Pattern: \[(?:x\d+),\s*#0x88\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 2552
+668:      ae4:      	stp	x8, xzr, [x19, #0x88]
+691:      b4c:      	str	w8, [x0, #0x88]
+747:      c44:      	ldr	x8, [x19, #0x88]
+791:      cf4:      	ldr	x8, [x19, #0x88]
+2718:     2b90:      	ldr	w8, [x19, #0x88]
+2949:     2f3c:      	ldr	w10, [x23, #0x88]!
+3108:     31b8:      	ldp	w8, w10, [x20, #0x88]
+17715:    11dec:      	ldr	x0, [x20, #0x88]!
+18066:    12374:      	ldr	x0, [x19, #0x88]
+18069:    12380:      	str	xzr, [x19, #0x88]
+18681:    12da8:      	ldr	x1, [x8, #0x88]
+35035:    24cf0:      	ldr	x19, [x19, #0x88]
+... altre 2540 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 2552
+
+========================================================================
+19. Campo +0x90: accessi
+Pattern: \[(?:x\d+),\s*#0x90\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 2760
+713:      bac:      	str	w8, [x0, #0x90]
+853:      dec:      	ldr	s0, [x19, #0x90]
+1827:     1d3c:      	stp	x8, x9, [x0, #0x90]
+2574:     2950:      	ldrsw	x9, [x19, #0x90]
+2699:     2b44:      	ldr	w22, [x19, #0x90]
+2709:     2b6c:      	ldr	w22, [x19, #0x90]
+3029:     307c:      	ldr	w9, [x20, #0x90]
+3047:     30c4:      	ldr	w9, [x20, #0x90]
+3089:     316c:      	ldr	w8, [x20, #0x90]
+17721:    11e04:      	ldr	x0, [x20, #0x90]!
+18070:    12384:      	ldr	x0, [x19, #0x90]
+18073:    12390:      	str	xzr, [x19, #0x90]
+... altre 2748 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 2760
+
+========================================================================
+20. Campo +0x1d4: accessi
+Pattern: \[(?:x\d+),\s*#0x1d4\]
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 510
+62836:    42b58:      	ldr	s1, [x8, #0x1d4]
+80499:    545e4:      	ldr	s11, [x8, #0x1d4]
+82469:    564cc:      	ldr	s1, [x8, #0x1d4]
+87834:    5b920:      	ldr	s0, [x8, #0x1d4]
+88269:    5bffc:      	ldr	s8, [x8, #0x1d4]
+88397:    5c1fc:      	ldr	s0, [x8, #0x1d4]
+88456:    5c2e8:      	ldr	s0, [x8, #0x1d4]
+95535:    63264:      	ldr	s1, [x8, #0x1d4]
+95539:    63274:      	ldr	s1, [x8, #0x1d4]
+98191:    65c64:      	ldr	s1, [x8, #0x1d4]
+98227:    65cf4:      	ldr	s1, [x8, #0x1d4]
+100551:    68184:      	ldr	s1, [x8, #0x1d4]
+... altre 498 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 510
+
+========================================================================
+21. Global timing pointer +0x650
+Pattern: #0x650
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 720
+4140:     42c0:      	str	x10, [x8, #0x650]
+5315:     5690:      	ldr	x8, [x8, #0x650]
+11584:     bae8:      	ldr	x9, [x9, #0x650]
+11608:     bb48:      	ldr	x9, [x9, #0x650]
+15164:     f468:      	ldr	x9, [x9, #0x650]
+15188:     f4c8:      	ldr	x9, [x9, #0x650]
+15672:     fca8:      	ldr	x9, [x9, #0x650]
+15696:     fd08:      	ldr	x9, [x9, #0x650]
+15730:     fd94:      	ldr	x8, [x8, #0x650]
+15891:    1001c:      	ldr	x8, [x8, #0x650]
+16198:    10528:      	ldr	x9, [x9, #0x650]
+16245:    105e8:      	ldr	x9, [x9, #0x650]
+... altre 708 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 720
+
+========================================================================
+22. Global timing pointer +0x658
+Pattern: #0x658
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 200
+4135:     42ac:      	add	x8, x8, #0x658
+5321:     56a8:      	ldr	x8, [x8, #0x658]
+48709:    33d40:      	ldr	x8, [x8, #0x658]
+48821:    33f28:      	ldr	x8, [x8, #0x658]
+69180:    490fc:      	ldr	x0, [x19, #0x658]
+69184:    4910c:      	str	xzr, [x19, #0x658]
+69186:    49114:      	str	xzr, [x19, #0x658]
+75329:    4f424:      	ldr	x9, [x8, #0x658]
+75437:    4f5d4:      	add	x8, x8, #0x658
+75520:    4f720:      	ldr	x8, [x0, #0x658]
+75590:    4f838:      	ldr	x8, [x0, #0x658]
+75593:    4f844:      	str	xzr, [x0, #0x658]
+... altre 188 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 200
+
+========================================================================
+23. Global timing pointer +0x660
+Pattern: #0x660
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 120
+5323:     56b0:      	ldr	x9, [x9, #0x660]
+48910:    340cc:      	ldr	x8, [x8, #0x660]
+68637:    48844:      	str	xzr, [x19, #0x660]
+68750:    48a08:      	ldr	x0, [x20, #0x660]
+68753:    48a14:      	str	xzr, [x20, #0x660]
+68754:    48a18:      	str	xzr, [x20, #0x660]
+70213:    4a1e8:      	add	x9, x9, #0x660
+180041:    b68cc:      	ldr	s2, [x8, #0x660]
+196404:    c6ab0:      	sub	sp, sp, #0x660
+196475:    c6bcc:      	add	sp, sp, #0x660
+275005:   1142f8:      	ldr	x25, [x25, #0x660]
+390235:   186908:      	ldr	x9, [x19, #0x660]
+... altre 108 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 120
+
+========================================================================
+24. Global timing pointer +0x878
+Pattern: #0x878
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 678
+4533:     49a0:      	str	x10, [x8, #0x878]
+13105:     d384:      	ldr	x8, [x8, #0x878]
+15853:     ff84:      	ldr	x8, [x8, #0x878]
+17733:    11e34:      	ldr	x20, [x20, #0x878]
+19093:    134c0:      	str	x10, [x9, #0x878]
+26261:    1b2c0:      	str	x10, [x9, #0x878]
+33429:    230c0:      	str	x10, [x9, #0x878]
+40597:    2aec0:      	str	x10, [x9, #0x878]
+47765:    32cc0:      	str	x10, [x9, #0x878]
+53849:    397a0:      	ldr	x19, [x19, #0x878]
+53874:    39804:      	ldr	x21, [x21, #0x878]
+53896:    39864:      	ldr	x21, [x21, #0x878]
+... altre 666 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 678
+
+========================================================================
+25. Global timing pointer +0x8e0
+Pattern: #0x8e0
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 223
+15364:     f798:      	ldr	x8, [x8, #0x8e0]
+15828:     ff20:      	ldr	x8, [x8, #0x8e0]
+16230:    105a8:      	ldr	x8, [x8, #0x8e0]
+16277:    10668:      	ldr	x8, [x8, #0x8e0]
+16426:    108cc:      	ldr	x19, [x19, #0x8e0]
+17894:    120c0:      	ldr	x8, [x8, #0x8e0]
+54730:    3a710:      	ldr	x9, [x9, #0x8e0]
+56637:    3c850:      	ldr	x8, [x8, #0x8e0]
+57087:    3cfb0:      	ldr	x8, [x8, #0x8e0]
+57923:    3dd84:      	ldr	x8, [x8, #0x8e0]
+66217:    460e0:      	ldr	x9, [x9, #0x8e0]
+239241:    f0eac:      	mov	w8, #0x8e0c             // =36364
+... altre 211 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 223
+
+========================================================================
+26. Global timing pointer +0x910
+Pattern: #0x910
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 312
+4576:     4a50:      	str	x10, [x8, #0x910]
+12162:     c44c:      	add	x4, x4, #0x910
+12366:     c784:      	add	x4, x4, #0x910
+16057:    102c4:      	ldr	x8, [x8, #0x910]
+16177:    104cc:      	ldr	x8, [x8, #0x910]
+16196:    10520:      	ldr	x8, [x8, #0x910]
+16243:    105e0:      	ldr	x8, [x8, #0x910]
+19113:    13510:      	movk	w4, #0x9100, lsl #16
+19337:    13900:      	movk	w4, #0x9100, lsl #16
+19561:    13cf0:      	movk	w4, #0x9100, lsl #16
+19785:    140e0:      	movk	w4, #0x9100, lsl #16
+20009:    144d0:      	movk	w4, #0x9100, lsl #16
+... altre 300 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 312
+
+========================================================================
+27. Global timing pointer +0x950
+Pattern: #0x950
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 108
+4592:     4a98:      	add	x8, x8, #0x950
+16981:    111f0:      	ldr	x19, [x19, #0x950]
+17009:    11264:      	ldr	x21, [x21, #0x950]
+17031:    112c4:      	ldr	x21, [x21, #0x950]
+17051:    11314:      	ldr	x0, [x0, #0x950]
+17065:    11354:      	ldr	x0, [x0, #0x950]
+17079:    11394:      	ldr	x0, [x0, #0x950]
+17093:    113d4:      	ldr	x0, [x0, #0x950]
+17126:    11468:      	ldr	x0, [x0, #0x950]
+17248:    11674:      	ldr	x0, [x0, #0x950]
+17313:    11778:      	ldr	x19, [x19, #0x950]
+55893:    3bb7c:      	ldr	x8, [x8, #0x950]
+... altre 96 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 108
+
+========================================================================
+28. Global timing pointer +0x990
+Pattern: #0x990
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 351
+4625:     4b1c:      	add	x10, x10, #0x990
+18367:    12874:      	ldr	x21, [x21, #0x990]
+18387:    128c4:      	ldr	x21, [x21, #0x990]
+18407:    12914:      	ldr	x0, [x0, #0x990]
+18421:    12954:      	ldr	x0, [x0, #0x990]
+18435:    12994:      	ldr	x0, [x0, #0x990]
+18449:    129d4:      	ldr	x0, [x0, #0x990]
+18481:    12a68:      	ldr	x0, [x0, #0x990]
+18828:    13014:      	ldr	x0, [x0, #0x990]
+18889:    13124:      	ldr	x19, [x19, #0x990]
+19109:    13500:      	ldr	x2, [x2, #0x990]
+19333:    138f0:      	ldr	x2, [x2, #0x990]
+... altre 339 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 351
+
+========================================================================
+29. setFrameWait function
+Pattern: 7aa330
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 8
+695613:   2b688c:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+695805:   2b6b8c:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+910372:   38e604:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+1942347:   78c648:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+1942428:   78c78c:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+1947735:   791bbc:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+1948771:   792c10:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+1972335:   7aa330:      	and	w8, w1, #0x1
+
+TOTALE CORRISPONDENZE: 8
+
+========================================================================
+30. setFrameWait getter
+Pattern: 7aa320
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 1
+1972332:   7aa320:      	ldrb	w0, [x0, #0x50]
+
+TOTALE CORRISPONDENZE: 1
+
+========================================================================
+31. Main-loop sleep call 0x7aa840
+Pattern: 7aa840
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 1
+1972651:   7aa840:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+
+TOTALE CORRISPONDENZE: 1
+
+========================================================================
+32. Main-loop sleep call 0x7aa934
+Pattern: 7aa934
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 1
+1972712:   7aa934:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+
+TOTALE CORRISPONDENZE: 1
+
+========================================================================
+33. SleepThread symbol
+Pattern: SleepThread
+========================================================================
+
+FILE: tmp/re0-analysis/re0-got-relocations.txt | occorrenze: 1
+70:   offset=0x1284598 type=1026 symbol_index=69 symbol=_ZN2nn2os11SleepThreadENS_8TimeSpanE addend=0
+
+TOTALE CORRISPONDENZE: 1
+
+========================================================================
+34. SleepThread GOT slot
+Pattern: 1284598
+========================================================================
+
+FILE: tmp/re0-analysis/re0-got-relocations.txt | occorrenze: 2
+4: Target GOT: 0x1284598
+70:   offset=0x1284598 type=1026 symbol_index=69 symbol=_ZN2nn2os11SleepThreadENS_8TimeSpanE addend=0
+
+TOTALE CORRISPONDENZE: 2
+
+========================================================================
+35. SleepThread PLT stub
+Pattern: a04238
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 84
+940446:   3ac52c:      	b	0xa04238 <PT_LOAD#0+0xa04238>
+1098292:   447f58:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+1107722:   451530:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+1112450:   4561f8:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+1112458:   456218:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+1112515:   4562fc:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+1112673:   456594:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+1112740:   4566a0:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+1112804:   4567a4:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+1114592:   4583b8:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+1114808:   458728:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+1115807:   4596f4:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+... altre 72 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 84
+
+========================================================================
+36. Costanti 1.000.000
+Pattern: f4240
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 10
+242521:    f4240:      	bl	0x3ab0 <PT_LOAD#0+0x3ab0>
+500418:   1f4240:      	orr	w11, wzr, #0x1
+756387:   2f4240:      	mov	w20, #0x19              // =25
+1013195:   3f4240:      	str	s2, [sp, #0x38]
+1272383:   4f4240:      	str	wzr, [x21, #0x28]
+1530768:   5f4240:      	fmul	s0, s10, s0
+1790045:   6f4240:      	mov	w9, #0x1d0c             // =7436
+2047226:   7f4240:      	strb	w10, [x9]
+2304621:   8f4240:      	str	x8, [x21]
+2560585:   9f4240:      	bl	0x6e97a0 <PT_LOAD#0+0x6e97a0>
+
+TOTALE CORRISPONDENZE: 10
+
+========================================================================
+37. Costanti 30.0 float
+Pattern: 41f00000
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 18
+78689:    52974:      	mov	w8, #0x41f00000         // =1106247680
+142719:    91a8c:      	mov	w12, #0x41f00000        // =1106247680
+146821:    95ad8:      	mov	w8, #0x41f00000         // =1106247680
+207900:    d1fcc:      	mov	w9, #0x41f00000         // =1106247680
+276190:   11557c:      	mov	w9, #0x41f00000         // =1106247680
+602218:   259328:      	mov	w8, #0x41f00000         // =1106247680
+687962:   2aebe0:      	mov	w8, #0x41f00000         // =1106247680
+694790:   2b5b68:      	mov	x10, #0x41f00000        // =1106247680
+694913:   2b5d7c:      	mov	x8, #0x41f00000         // =1106247680
+695609:   2b687c:      	mov	x8, #0x41f00000         // =1106247680
+792154:   3177b8:      	mov	x9, #0x41f00000         // =1106247680
+792171:   3177fc:      	mov	w8, #0x41f00000         // =1106247680
+... altre 6 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 18
+
+========================================================================
+38. Costanti 60.0 float
+Pattern: 42700000
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 19
+83678:    577d4:      	mov	w9, #0x42700000         // =1114636288
+92446:    601f0:      	mov	w9, #0x42700000         // =1114636288
+146791:    95a60:      	mov	w8, #0x42700000         // =1114636288
+167970:    aa8f8:      	mov	w11, #0x42700000        // =1114636288
+168017:    aa9b4:      	mov	w9, #0x42700000         // =1114636288
+197776:    c803c:      	mov	x14, #0x42700000        // =1114636288
+602165:   259254:      	mov	w8, #0x42700000         // =1114636288
+774922:   306954:      	mov	w8, #0x42700000         // =1114636288
+844207:   34b8c0:      	mov	w9, #0x42700000         // =1114636288
+844455:   34bca0:      	mov	w9, #0x42700000         // =1114636288
+845515:   34cda4:      	mov	w10, #0x42700000        // =1114636288
+1068060:   42a008:      	mov	x9, #0x4270000000000000 // =4787326403894837248
+... altre 7 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 19
+
+========================================================================
+39. Costanti 2.0 float
+Pattern: 40000000
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 585
+6320:     673c:      	mov	x8, #0x400000004        // =17179869188
+6331:     6768:      	mov	x8, #0x4000000040       // =274877907008
+6343:     6798:      	mov	x8, #0x40000000400      // =4398046512128
+6355:     67c8:      	mov	x9, #0x400000004000     // =70368744194048
+6391:     6858:      	mov	x8, #0x400000004        // =17179869188
+6421:     68d8:      	mov	x8, #0x400000004        // =17179869188
+6433:     6908:      	mov	x8, #0x4000000040       // =274877907008
+6480:     69c4:      	mov	x9, #0x400000004        // =17179869188
+6492:     69f4:      	mov	x9, #0x4000000040       // =274877907008
+6504:     6a24:      	mov	x9, #0x40000000400      // =4398046512128
+6516:     6a54:      	mov	x9, #0x400000004000     // =70368744194048
+9656:     9bec:      	mov	x8, #0x400000004        // =17179869188
+... altre 573 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 585
+
+========================================================================
+40. Costanti 1.0 float
+Pattern: 3f800000
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 2484
+1820:     1d20:      	mov	x8, #0x3f800000         // =1065353216
+3980:     4004:      	orr	w8, wzr, #0x3f800000
+4194:     43a4:      	orr	w8, wzr, #0x3f800000
+4565:     4a24:      	orr	w8, wzr, #0x3f800000
+5562:     5aac:      	mov	x8, #0x3f800000         // =1065353216
+11110:     b318:      	orr	w8, wzr, #0x3f800000
+12726:     cd48:      	orr	w8, wzr, #0x3f800000
+14723:     ecf8:      	orr	w8, wzr, #0x3f800000
+15992:    101b8:      	orr	w8, wzr, #0x3f800000
+16667:    10ca8:      	orr	w8, wzr, #0x3f800000
+16952:    11178:      	orr	w8, wzr, #0x3f800000
+18169:    12518:      	orr	w8, wzr, #0x3f800000
+... altre 2472 occorrenze omesse in questo file
+
+FILE: dm/host/hle_fpslock.c | occorrenze: 3
+204:     uint32_t minimum = dynamic ? 0x3f333333u : 0x3f800000u;
+210:     if (!dynamic && cur[1] != 0x3f800000u) {
+213:         __atomic_store_n(p, 0x3f800000u, __ATOMIC_RELAXED);
+
+TOTALE CORRISPONDENZE: 2487
+
+========================================================================
+41. System tick: mrs cntvct
+Pattern: cntvct
+========================================================================
+
+FILE: dm/gfx/nvn/hle_nvn.c | occorrenze: 1
+64: _Atomic uint64_t nvn_prof_ticks[NVN_NFUNC]; // DM_NVN_PROF: cumulative time of each function (cntvct counts)
+
+TOTALE CORRISPONDENZE: 1
+
+========================================================================
+42. System tick: cntfrq
+Pattern: cntfrq
+========================================================================
+NESSUNA CORRISPONDENZA nei file disponibili.
+
+========================================================================
+43. System clock API
+Pattern: GetSystemTick|GetSystemClock|GetCurrentTime
+========================================================================
+
+FILE: tmp/re0-analysis/re0-got-relocations.txt | occorrenze: 1
+77:   offset=0x12845d0 type=1026 symbol_index=80 symbol=_ZN2nn4time23StandardUserSystemClock14GetCurrentTimeEPNS0_9PosixTimeE addend=0
+
+FILE: dm/gfx/nvn/hle_nvn.c | occorrenze: 2
+3255: // Convert the raw 614.4 MHz report to ns on the same guest clock as GetCurrentTimestampInNanoseconds.
+3258: NVN(nvnDeviceGetCurrentTimestampInNanoseconds, uint64_t, const NVNdevice *d) { (void)d; return guest_ns(); }
+
+TOTALE CORRISPONDENZE: 3
+
+========================================================================
+44. Sleep API alternative
+Pattern: SleepThread|SleepNanoseconds|Sleep
+========================================================================
+
+FILE: tmp/re0-analysis/re0-got-relocations.txt | occorrenze: 1
+70:   offset=0x1284598 type=1026 symbol_index=69 symbol=_ZN2nn2os11SleepThreadENS_8TimeSpanE addend=0
+
+FILE: dm/host/hle_fpslock.c | occorrenze: 2
+30:     // Monster Hunter Rise 16.0.2: RE Engine's frame limit, a float at [main+0x1295b3f0]+0x434 (the pointer is a global in main's bss). The frame loop (main+0x6b106c8) sleeps until
+39:     // started; the limiter (main+0x7a3e70) runs jobs or sleeps until 33.333 ms have passed, the float at main+0x13c94dc (read only there, at main+0x7a3ea8 and main+0x7a3f18), and the game
+
+FILE: dm/gfx/nvn/hle_nvn.c | occorrenze: 10
+1871: static void sleep_until_ns(uint64_t dl);
+1912:         else if (snap && mtl_link_active() && mtl_link_stalled()) { o->follow = 0; if (wait) sleep_until_ns(at); }   // present snapshots (nvn_mtl.m) while the display link is silent (the window in the background or covered):
+1916:         else if (mtl_link_active()) { if (!link_wait(o, period ? 2 * period : 33333333ull)) { o->follow = 0; if (wait) sleep_until_ns(at); } }   // DM_PRESENT_LINK: pacing fully follows the display link (wait for the present interval's display-link ticks when running fast, go immediately when behind); our own 60 Hz clock is only the fallback when no display-link tick arrives
+1917:         else { o->follow = 0; if (wait) sleep_until_ns(at); }
+1925:         if (pace) { if (last && now_ns() < last + step) sleep_until_ns(last + step); last = now_ns(); }
+2284: static void sleep_until_ns(uint64_t dl) {   // absolute time on the monotonic clock
+2494: // and the interval before each present (main+0xb7a4b8): while that frame is not shown it sleeps 16.67 ms per vsync of the interval, and once shown it waits until (interval - 1)
+2665:         // Test switch DM_TEST_PRESENT_LAG=every N presents,milliseconds[,presents in a row][;…]: sleep that long before the Nth, 2Nth… present (and the ones after it in the run), imitating an occasional slow frame on a phone (Mario 1.2.1 then sets present interval 2; checks that the display link holds frames by interval),
+2674:                 LOG("DM_TEST_PRESENT_LAG: every %d presents, sleep an extra %d ms (%d presents in a row)", n, ms, lag_run[lag_k]); lag_k++;
+2679:         if (lag) usleep((useconds_t)lag * 1000);
+
+TOTALE CORRISPONDENZE: 13
+
+========================================================================
+45. Thread yield API
+Pattern: YieldThread|YieldCurrentThread
+========================================================================
+NESSUNA CORRISPONDENZA nei file disponibili.
+
+========================================================================
+46. Wait synchronization API
+Pattern: WaitSynchronization|WaitForAddress
+========================================================================
+NESSUNA CORRISPONDENZA nei file disponibili.
+
+========================================================================
+47. Mutex wait API
+Pattern: LockMutex|WaitMutex
+========================================================================
+NESSUNA CORRISPONDENZA nei file disponibili.
+
+========================================================================
+48. Condition variable wait
+Pattern: WaitConditionVariable|ConditionVariable
+========================================================================
+NESSUNA CORRISPONDENZA nei file disponibili.
+
+========================================================================
+49. Semaphore wait
+Pattern: WaitSemaphore|AcquireSemaphore
+========================================================================
+NESSUNA CORRISPONDENZA nei file disponibili.
+
+========================================================================
+50. Frame pacing identifiers
+Pattern: frame.?pacing|frame.?wait|fps.?lock
+========================================================================
+
+FILE: dm/host/hle_fpslock.c | occorrenze: 9
+1: // Engine frame limits kept in game memory (FPSLocker's evaluate_write entries): some engines cap their own frame rate with a value the host can raise. The target is the profile's
+33:     // From masagrator's FPSLocker config for this build (FPSLocker-Warehouse, patches/0100B04011742000/C9A3DD7702075ECD.yaml)
+44:     // (3D), is a float of seconds per frame. Its limiter, a spin on the system tick at main+0x483588..+0x4835a4, is cut by the rewriter (patches.py). From masagrator's FPSLocker config for this
+45:     // build (FPSLocker-Warehouse, patches/010029B0118E8000/799D1061182C1302.yaml; the frame-time instruction found by theboy181)
+134:     // simulation speed as well as frame pacing. Do not write them for RE0.
+328: // The running main's engine limiters, found once: by the first present (dm_fps_lock_tick) or by the graphics layer's present cap, which may ask first (dm_fps_lock_engine, from the acquire)
+354: int dm_fps_lock_engine(void) { pthread_once(&g_found, lock_find); return nrow || nier || fb.n || uq.base || re0_unsafe_enabled(); }
+357: void dm_fps_lock_tick(void) {
+420:                     fprintf(pf, "[RE movie clock probe] FPS-lock tick reached; target=%d, movie_hz=%d\n", target, movie_hz);
+
+FILE: dm/gfx/nvn/hle_nvn.c | occorrenze: 12
+2305: __attribute__((weak)) void dm_fps_lock_tick(void) {}   // hle_fpslock.c: engine frame limits in game memory (Monster Hunter Rise); graphics unit tests have no host
+2306: static int g_engine_stub = 1;   // the weak dm_fps_lock_engine's answer, for graphics unit tests (t_nvn sets it)
+2307: __attribute__((weak)) int dm_fps_lock_engine(void) { return g_engine_stub; }   // hle_fpslock.c: the host writes fps_target into an engine limiter of this main
+2335: // 120 fps (profile fps_max 120, DM_FPS_TARGET=120): an engine limiter the host writes (hle_fpslock.c) follows the frame step, counted here in ticks of 1/120 s: hold 1 is 120 fps, hold 2 is 60.
+2367:             (dm_fps_lock_engine() || re0_clocked);
+2398: // Without a limiter the host writes (dm_fps_lock_engine) nothing makes the game
+2431:         if (g_present_cap && !dm_fps_lock_engine() && display_mode())
+2433:         else if (g_present_cap && !dm_fps_lock_engine()) {
+2444: int nvn_fps_high_now(void) { return dm_movie_hz() ? 30 : (fps_high() && atomic_load(&g_fs_k) == 1 ? 120 : 60); }   // hle_fpslock.c: the target of the next game frame, from the hold in force
+2474:     if (!g_hz) LOG("[nvn] [WARNING] DM_PRESENT_HZ=0: frame rate uncapped, frame pacing unlike the device, UI logic may drift (for profiling only, not for verdicts / cross-checks)");
+2661:     dm_fps_lock_tick();   // after the frame step: at 120 fps the target follows the hold just decided
+2690:     { static int fin = -1; if (fin < 0) { const char *e = getenv("DM_NVN_PRESENT_FINISH"); fin = e && atoi(e); if (fin) LOG("DM_NVN_PRESENT_FINISH: every frame waited for at present (diagnostic)"); }
+
+TOTALE CORRISPONDENZE: 21
+
+========================================================================
+51. Refresh-rate identifiers
+Pattern: refresh.?rate|refreshRate
+========================================================================
+NESSUNA CORRISPONDENZA nei file disponibili.
+
+========================================================================
+52. Present interval identifiers
+Pattern: present.?interval|PresentInterval
+========================================================================
+
+FILE: dm/host/hle_fpslock.c | occorrenze: 11
+8: // present interval, rhi.SyncInterval (nvn.SyncInterval in UE 4.18's Switch RHI: DRAGON QUEST XI S). Each is a TAutoConsoleVariable whose +0x10 points to its value, the game thread's
+21: // (the acquire waits): Luigi's Mansion 3's display interval p99 18.69 → 16.67 ms, 60.0 fps. Not at 30: with present_interval display the presents follow every vsync and hold no
+32:     // at the same speed. The game sets 30 after boot; it also asks for present interval 2, which the profile's present_interval display ignores.
+40:     // steps by the time that really passed. The game asks for present interval 2 too, which the profile's present_interval display ignores; both are needed
+54:     // this row the game keeps 30 fps at the right speed (the simulation at 60 and the regulator at 30: match clock as at 30). The game asks for present interval 2
+55:     // (BaseDisplaySettings.PresentInterval), which the profile's present_interval display ignores
+168: // display is the game's display object: its first word points to the NVN device (the present interval at +0x9c160), and +0x504 is the frame-interval
+297: // The Unreal rows of this main: the profile's frame-limit variable and the present intervals, at the objects the rewriter found, and the engine's fixed frame rate on GEngine (0 rows:
+314: // vSyncCount vsyncs a frame: QualitySettings.vSyncCount's setter hands the count to the graphics device, which calls nvnWindowSetPresentInterval when it changes, and Unity steps
+352: // Without one, and without a frame step state page, nothing makes the game follow the cap, so the graphics layer keeps the game's own present interval (hle_nvn.c fps_present_cap):
+379:         // - [base + 0x192be00] points to the NVN graphics device object whose +0x9c160 holds the present interval (1 = 60 FPS, 2 = 30 FPS),
+
+FILE: dm/gfx/nvn/hle_nvn.c | occorrenze: 29
+1836: NVN(nvnWindowBuilderSetPresentInterval, void, NVNwindowBuilder *b, int v) { WB(b)->interval = v; }
+1837: NVN(nvnWindowBuilderGetPresentInterval, int, const NVNwindowBuilder *b) { return WB(b)->interval; }   // Yoshi and the Mysterious Book (Unreal Engine 5.4) reads it back
+1851: NVN(nvnWindowGetPresentInterval, int, const NVNwindow *w) { return window_interval((const win_t *)w); }   // Link's Awakening reads it back every frame
+1852: NVN(nvnWindowSetPresentInterval, void, NVNwindow *w, int v) {
+1854:         LOG("[nvn] the game sets present interval %d → %d (from %s+%#llx)", ((win_t *)w)->interval, v, m ? m->name : "?", m ? (unsigned long long)((uint64_t)__builtin_return_address(0) - (uint64_t)m->base) : 0ULL); }
+1911:         if (present_unpaced(o)) {}   // present interval 0: no vsync wait (below); only the free texture the ticket wait below gives
+1916:         else if (mtl_link_active()) { if (!link_wait(o, period ? 2 * period : 33333333ull)) { o->follow = 0; if (wait) sleep_until_ns(at); } }   // DM_PRESENT_LINK: pacing fully follows the display link (wait for the present interval's display-link ticks when running fast, go immediately when behind); our own 60 Hz clock is only the fallback when no display-link tick arrives
+1986: static double g_pres_iv[TWIN]; static unsigned g_presn;   // Present interval (ms; -1 = dropped by the system, 0 = no reading)
+2147: // Dropped-frame definition: on-screen present interval > the frame's hold (pres_expect_ms: 16.7 ms at 60 fps, 33.3 ms at 30 or with the frame step at 2 vsyncs) ×1.5 or −1; without a window (no on-screen present time) fall back to the present call interval
+2296: // The frame rate the game itself asks for: 30 in game mode when the present interval has been 2 (or another even interval) for a full second (the display link follows at 30 Hz, mtl_fps_target), otherwise 60; back to 60 at once when the interval returns to 1 or turns odd.
+2399: // follow the cap, so in game mode the game's own present interval stays: a fixed-step
+2401: // declares that the game steps by the time that passed (its present interval is its
+... altre 17 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 40
+
+========================================================================
+53. Vsync identifiers
+Pattern: vsync|VSync|vertical.?sync
+========================================================================
+
+FILE: dm/host/hle_fpslock.c | occorrenze: 21
+5: // Nor do Unity's Application.targetFrameRate and QualitySettings.vSyncCount: the rewriter finds them through the engine's internal-call table (dm/tools/unity_fps.py, main's fixups UNITY_*).
+16: // What a field holds: the frame rate as a float, double or int32, vsyncs per frame (60 / frame rate) as an int32, or the frame time in milliseconds as a float. Copies: consecutive copies of the
+19: // At 60 a frame time gets MS_MARGIN less than the vsync: such a limiter counts from the frame's start, and the work after it (the GPU fence wait, the next frame's start) adds to the
+20: // period, so frames at exactly 16.667 ms came 0.11 ms late each on the Mac (59.6 fps, every 150th frame shown two vsyncs). Slightly shorter, the host's present pacing sets the pace
+21: // (the acquire waits): Luigi's Mansion 3's display interval p99 18.69 → 16.67 ms, 60.0 fps. Not at 30: with present_interval display the presents follow every vsync and hold no
+25: enum { FPS_F32, VSYNCS_I32, MS_F32, FPS_I32, TICKS_U32, SECS_F32, MODE_U32, FPS_F64 };
+306:         out[n] = (lock_t){ "", what[n], m->ue_cvar[k].off + 0x10, 0, fps ? FPS_F32 : VSYNCS_I32, 2, 0 }; n++;
+313: // Application.targetFrameRate, an int32 in main's bss (-1 until a game sets it: left so), and the current quality level's vSyncCount. On the Switch, Unity presents at
+314: // vSyncCount vsyncs a frame: QualitySettings.vSyncCount's setter hands the count to the graphics device, which calls nvnWindowSetPresentInterval when it changes, and Unity steps
+315: // the game by the time that really passed (The Rogue Prince of Persia: vSyncCount 2, targetFrameRate -1; the same walk covers the same ground at 30 and 60 fps). The device
+317: // every engine limit here; the write keeps what the game reads back (QualitySettings.vSyncCount) the same as what it shows
+318: static struct { uint8_t *base; uint64_t ptr; uint32_t idx, arr, size, vsync; } uq;
+... altre 9 occorrenze omesse in questo file
+
+FILE: dm/gfx/nvn/hle_nvn.c | occorrenze: 27
+1905:     // Vsync blocks here (real-device NVN: when all textures in the swapchain are waiting for display, wait for the next one to be released), not in present -- the game often calls present while holding a lock
+1911:         if (present_unpaced(o)) {}   // present interval 0: no vsync wait (below); only the free texture the ticket wait below gives
+1988: // The hold (60 Hz vsyncs) each present was given, by present number. On-screen intervals are read 8 presents late, so each is judged against the holds of its own presents:
+1989: // with the frame step at 2 vsyncs every frame stays 33.3 ms, which is not a dropped frame
+2147: // Dropped-frame definition: on-screen present interval > the frame's hold (pres_expect_ms: 16.7 ms at 60 fps, 33.3 ms at 30 or with the frame step at 2 vsyncs) ×1.5 or −1; without a window (no on-screen present time) fall back to the present call interval
+2301: // Frame step (patch_nso.py FRAME_STEP: Tears of the Kingdom 1.4.3, Breath of the Wild 1.9.0): the game no longer picks an interval. The host hands it each frame's step in whole vsyncs
+2339: // A game with a frame step state page is out: its stubs hand the game whole vsyncs of 1/60 s
+2368:         if (t == 120 && DM_GAME_FPS_MAX >= 120 && !v) LOG("[RED] [nvn] 120 fps: this main has %s, so it runs at 60", dm_fps_state ? "a frame step in whole vsyncs" : "no engine frame limit the host writes");
+2395: static int fstep_on(void) { return fps_step_cap() != 0; }   // the host decides the steps in whole vsyncs
+2445: // The rate of vi::GetDisplayVsyncEvent (hle_sdk16.c, nvn_mtl.m mtl_link_wait_vsync): the Switch's 60 Hz, or 120 while 120 fps is on and its hold is one tick of 1/120 s. A game that
+2448: int nvn_vsync_hz(void) { return fps_high() && atomic_load(&g_fs_k) == 1 && atomic_load(&g_high_cap) == 120 ? 120 : 60; }
+2483: static int present_itv(const win_t *o) { int movie = dm_movie_hz(), c = fps_present_cap(), k = atomic_load(&g_fs_k); const char *e = getenv("DM_FPS_TARGET"); int t = e ? atoi(e) : DM_GAME_FPS_TARGET; int re_60_movie = t == 60 && (!strcmp(DM_GAME_ID, "010050F00BC1A000") || !strcmp(DM_GAME_ID, "010097000BC10000")); if (movie && (fps_high() || re_60_movie)) return fstep_hz() / movie; return c ? (k && fstep_on() ? k : fstep_hz() / c) : g_display_mode ? 1 : o->interval > 0 ? o->interval : 1; }   // vsyncs per frame that presentation follows
+... altre 15 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 48
+
+========================================================================
+54. Swap/present identifiers
+Pattern: swap.?buffer|present.?frame|PresentFrame
+========================================================================
+NESSUNA CORRISPONDENZA nei file disponibili.
+
+========================================================================
+55. NVN queue wait identifiers
+Pattern: QueueWait|queue.?wait|WaitQueue
+========================================================================
+
+FILE: dm/gfx/nvn/hle_nvn.c | occorrenze: 3
+855: NVN(nvnQueueWaitSync, NVNboolean, NVNqueue *q, const NVNsync *s) { nvn_queue_wait_sync((queue_t *)q,(const sync_t *)s); return 1; }
+1770:     if (on) { dm_vk_drain(); dm_gl_drain(); mtl_drain(); mtl_arch_save(0, 0); LOG("[nvn] graphics suspended: in-flight GPU work drained"); } else LOG("[nvn] graphics resumed");   // the Vulkan and GL queues first: presents on the NVN queue wait for their frames;
+1937: // The older API (NVN 53, Super Mario 3D World + Bowser's Fury): the queue waits for the texture on the GPU and no sync object is handed out. The host replays in submission order, so later commands already come after earlier presents; the same as WindowAcquireTexture without a sync object
+
+TOTALE CORRISPONDENZE: 3
+
+========================================================================
+56. NVN texture wait identifiers
+Pattern: waitPresentTexture|WaitTexture
+========================================================================
+NESSUNA CORRISPONDENZA nei file disponibili.
+
+========================================================================
+57. Render FPS identifiers
+Pattern: setRenderFps|SetRenderFps
+========================================================================
+NESSUNA CORRISPONDENZA nei file disponibili.
+
+========================================================================
+58. Frame counter identifiers
+Pattern: frame.?counter|frameCount
+========================================================================
+NESSUNA CORRISPONDENZA nei file disponibili.
+
+========================================================================
+59. Delta-time identifiers
+Pattern: delta.?time|deltaTime
+========================================================================
+NESSUNA CORRISPONDENZA nei file disponibili.
+
+========================================================================
+60. Time-step identifiers
+Pattern: time.?step|timeStep
+========================================================================
+NESSUNA CORRISPONDENZA nei file disponibili.
+
+========================================================================
+61. Float multiply timing
+Pattern: \bfmul\b
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 81268
+863:      e14:      	fmul	s8, s8, s0
+872:      e38:      	fmul	s8, s8, s0
+906:      ec0:      	fmul	s0, s0, s1
+60842:    40be8:      	fmul	s3, s1, s2
+60850:    40c08:      	fmul	s2, s8, s2
+60896:    40cc0:      	fmul	s4, s9, s0
+60897:    40cc4:      	fmul	s3, s11, s12
+60898:    40cc8:      	fmul	s3, s3, s13
+60900:    40cd0:      	fmul	s4, s12, s0
+60901:    40cd4:      	fmul	s5, s11, s4
+60902:    40cd8:      	fmul	s4, s8, s0
+60903:    40cdc:      	fmul	s1, s13, s8
+... altre 81256 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 81268
+
+========================================================================
+62. Float divide timing
+Pattern: \bfdiv\b
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 6386
+871:      e34:      	fdiv	s0, s1, s0
+62837:    42b5c:      	fdiv	s0, s0, s1
+67831:    47ab0:      	fdiv	s0, s0, s1
+69781:    49ac0:      	fdiv	s0, s1, s0
+69813:    49b40:      	fdiv	s1, s1, s0
+70713:    4aa28:      	fdiv	s0, s0, s2
+70721:    4aa48:      	fdiv	s2, s2, s1
+70722:    4aa4c:      	fdiv	s0, s0, s1
+80183:    540f4:      	fdiv	s0, s1, s0
+84253:    580e8:      	fdiv	s0, s1, s0
+84307:    581c0:      	fdiv	s0, s1, s0
+85649:    596d4:      	fdiv	s0, s1, s0
+... altre 6374 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 6386
+
+========================================================================
+63. Float compare timing
+Pattern: \bfcmp\b
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 23385
+1119:     1214:      	fcmp	s0, s1
+1124:     1228:      	fcmp	s0, s1
+1760:     1c28:      	fcmp	s0, #0.0
+9851:     9efc:      	fcmp	s0, s1
+15727:     fd88:      	fcmp	s0, s1
+15896:    10030:      	fcmp	s1, s2
+15898:    10038:      	fcmp	s0, s1
+16300:    106cc:      	fcmp	s0, s1
+16488:    109cc:      	fcmp	s1, s2
+16490:    109d4:      	fcmp	s0, s1
+60867:    40c4c:      	fcmp	s2, s3
+68159:    48060:      	fcmp	s0, #0.0
+... altre 23373 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 23385
+
+========================================================================
+64. Integer divide timing
+Pattern: \bsdiv\b|\budiv\b
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 755
+83002:    56d30:      	udiv	w8, w0, w22
+124005:    7f328:      	udiv	w9, w20, w8
+124035:    7f3a0:      	udiv	w9, w20, w8
+146092:    94f70:      	udiv	w9, w0, w8
+222551:    e071c:      	udiv	w8, w0, w20
+235267:    ed018:      	udiv	w8, w0, w21
+269866:   10f204:      	sdiv	w8, w0, w22
+276629:   115c58:      	sdiv	w8, w0, w21
+279133:   118380:      	udiv	w8, w23, w8
+284921:   11dfe0:      	sdiv	w20, w19, w28
+285630:   11eb18:      	sdiv	w8, w0, w20
+285809:   11edec:      	udiv	w9, w19, w8
+... altre 743 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 755
+
+========================================================================
+65. Integer multiply timing
+Pattern: \bmul\b
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 2180
+58372:    3e4bc:      	mul	x9, x9, x10
+58384:    3e4ec:      	mul	x23, x10, x9
+58645:    3e900:      	mul	x21, x8, x12
+58657:    3e930:      	mul	x9, x9, x12
+58672:    3e96c:      	mul	x1, x28, x19
+58808:    3eb8c:      	mul	w20, w8, w22
+60443:    405a0:      	mul	x22, x8, x9
+60489:    40658:      	mul	x8, x8, x9
+61126:    41060:      	mul	x21, x8, x9
+61174:    41120:      	mul	x8, x8, x9
+61467:    415b8:      	mul	x21, x8, x9
+61513:    41670:      	mul	w24, w10, w11
+... altre 2168 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 2180
+
+========================================================================
+66. Tick subtraction patterns
+Pattern: \bsub\s+x\d+,\s*x\d+,\s*x\d+
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 1350
+5950:     6150:      	sub	x2, x8, x1
+6110:     63e4:      	sub	x9, x9, x10
+6115:     63f8:      	sub	x8, x8, x10
+6143:     6468:      	sub	x13, x12, x1
+6717:     6d7c:      	sub	x11, x10, x1
+6907:     70a4:      	sub	x11, x10, x1
+7051:     72f0:      	sub	x10, x10, x9
+7098:     73b0:      	sub	x10, x10, x9
+7285:     76c0:      	sub	x9, x9, x10
+7290:     76d4:      	sub	x8, x8, x10
+7303:     7708:      	sub	x9, x9, x10
+7308:     771c:      	sub	x8, x8, x10
+... altre 1338 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 1350
+
+========================================================================
+67. Conditional wait branches
+Pattern: \bcbz\b|\bcbnz\b
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 68322
+23:       48:      	cbnz	w8, 0x124 <PT_LOAD#0+0x124>
+183:      2f8:      	cbnz	x9, 0x31c <PT_LOAD#0+0x31c>
+188:      30c:      	cbz	x9, 0x2f4 <PT_LOAD#0+0x2f4>
+191:      318:      	cbz	x9, 0x324 <PT_LOAD#0+0x324>
+207:      358:      	cbz	x9, 0x364 <PT_LOAD#0+0x364>
+211:      368:      	cbz	x9, 0x374 <PT_LOAD#0+0x374>
+234:      3c8:      	cbnz	x9, 0x3ec <PT_LOAD#0+0x3ec>
+239:      3dc:      	cbz	x9, 0x3c4 <PT_LOAD#0+0x3c4>
+242:      3e8:      	cbz	x9, 0x3f4 <PT_LOAD#0+0x3f4>
+258:      428:      	cbz	x9, 0x434 <PT_LOAD#0+0x434>
+262:      438:      	cbz	x9, 0x444 <PT_LOAD#0+0x444>
+297:      4d0:      	cbz	x9, 0x4d8 <PT_LOAD#0+0x4d8>
+... altre 68310 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 68322
+
+========================================================================
+68. Timing loops backward branches
+Pattern: \bb\.?(?:eq|ne|lt|le|gt|ge|hi|ls)\b
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 56600
+77:      120:      	b.eq	0x15c <PT_LOAD#0+0x15c>
+180:      2ec:      	b.ne	0x300 <PT_LOAD#0+0x300>
+200:      33c:      	b.ne	0x300 <PT_LOAD#0+0x300>
+231:      3bc:      	b.ne	0x3d0 <PT_LOAD#0+0x3d0>
+251:      40c:      	b.ne	0x3d0 <PT_LOAD#0+0x3d0>
+422:      6dc:      	b.ne	0x6f0 <PT_LOAD#0+0x6f0>
+442:      72c:      	b.ne	0x6f0 <PT_LOAD#0+0x6f0>
+678:      b18:      	b.eq	0xb34 <PT_LOAD#0+0xb34>
+683:      b2c:      	b.ne	0xb20 <PT_LOAD#0+0xb20>
+700:      b78:      	b.eq	0xb94 <PT_LOAD#0+0xb94>
+705:      b8c:      	b.ne	0xb80 <PT_LOAD#0+0xb80>
+852:      de8:      	b.eq	0x12c8 <PT_LOAD#0+0x12c8>
+... altre 56588 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 56600
+
+========================================================================
+69. Direct call to timing loop
+Pattern: bl\s+0x7aa
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 177
+695613:   2b688c:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+695805:   2b6b8c:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+910372:   38e604:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+911215:   38f364:      	bl	0x7aa5a0 <PT_LOAD#0+0x7aa5a0>
+911789:   38fc64:      	bl	0x7aabf0 <PT_LOAD#0+0x7aabf0>
+1124836:   462524:      	bl	0x7aafb0 <PT_LOAD#0+0x7aafb0>
+1124867:   4625a0:      	bl	0x7aafb0 <PT_LOAD#0+0x7aafb0>
+1459120:   5ad110:      	bl	0x7aa420 <PT_LOAD#0+0x7aa420>
+1464976:   5b2e04:      	bl	0x7aa420 <PT_LOAD#0+0x7aa420>
+1547401:   604a28:      	bl	0x7aa420 <PT_LOAD#0+0x7aa420>
+1548005:   6053dc:      	bl	0x7aa420 <PT_LOAD#0+0x7aa420>
+1549496:   606bc4:      	bl	0x7aa420 <PT_LOAD#0+0x7aa420>
+... altre 165 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 177
+
+========================================================================
+70. Init state function 0x2b6858
+Pattern: 2b6858
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 1
+695600:   2b6858:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+
+TOTALE CORRISPONDENZE: 1
+
+========================================================================
+71. Restore state function 0x2b6b5c
+Pattern: 2b6b5c
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 1
+695793:   2b6b5c:      	ldr	x8, [x21]
+
+TOTALE CORRISPONDENZE: 1
+
+========================================================================
+72. Transition state function 0x2b6c20
+Pattern: 2b6c20
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 1
+695842:   2b6c20:      	cbz	x8, 0x2b6c44 <PT_LOAD#0+0x2b6c44>
+
+TOTALE CORRISPONDENZE: 1
+
+========================================================================
+73. Secondary timing path 0x38e5
+Pattern: 38e5
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 106
+53324:    38e50:      	b	0x12a90 <PT_LOAD#0+0x12a90>
+311792:   138e38:      	b.hi	0x138e54 <PT_LOAD#0+0x138e54>
+311798:   138e50:      	ret
+311799:   138e54:      	orr	w0, wzr, #0x1
+311800:   138e58:      	ret
+311801:   138e5c:      	udf	#0x0
+569982:   238e50:      	adrp	x2, 0xf9e000 <PT_LOAD#0+0xf9e000>
+569983:   238e54:      	add	x2, x2, #0x959
+569984:   238e58:      	mov	w1, #0x36               // =54
+569985:   238e5c:      	bl	0x3ab0 <PT_LOAD#0+0x3ab0>
+825785:   338e50:      	csel	x8, xzr, x20, eq
+825786:   338e54:      	cbz	x8, 0x338b7c <PT_LOAD#0+0x338b7c>
+... altre 94 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 106
+
+========================================================================
+74. Secondary timing path 0x78c6
+Pattern: 78c6
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 103
+117484:    78c60:      	tst	x0, #0x300
+117485:    78c64:      	csel	x9, xzr, x8, eq
+117486:    78c68:      	ldr	x8, [x19]
+117487:    78c6c:      	ldr	x8, [x8, #0x200]
+376460:   178c60:      	mov	x9, x11
+376461:   178c64:      	add	x8, x0, x22, lsl #3
+376462:   178c68:      	str	x20, [x9], #0x8
+376463:   178c6c:      	ldp	x1, x10, [x19]
+633898:   278c60:      	br	x2
+889071:   378c60:      	mov	w19, w1
+889072:   378c64:      	bl	0x391a70 <PT_LOAD#0+0x391a70>
+889073:   378c68:      	ldr	x8, [x0]
+... altre 91 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 103
+
+========================================================================
+75. Secondary timing path 0x791b
+Pattern: 791b
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 114
+117822:    791b0:      	add	x8, x8, x9
+117823:    791b4:      	br	x8
+117824:    791b8:      	mov	w8, #0x8348             // =33608
+117825:    791bc:      	add	x23, x19, x8
+376790:   1791b0:      	cmp	x25, x28
+376791:   1791b4:      	b.ls	0x179164 <PT_LOAD#0+0x179164>
+376792:   1791b8:      	mov	x26, x25
+376793:   1791bc:      	mov	w25, #0x1f39            // =7993
+634221:   2791b0:      	sub	sp, sp, #0x80
+634222:   2791b4:      	str	x21, [sp, #0x50]
+634223:   2791b8:      	stp	x20, x19, [sp, #0x60]
+634224:   2791bc:      	stp	x29, x30, [sp, #0x70]
+... altre 102 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 114
+
+========================================================================
+76. Secondary timing path 0x792c
+Pattern: 792c
+========================================================================
+
+FILE: tmp/re0-analysis/main.disasm.txt | occorrenze: 272
+7439:     792c:      	cbz	w2, 0x7960 <PT_LOAD#0+0x7960>
+22992:    1792c:      	ldr	x4, [x8, #0x40]
+37556:    2792c:      	ldp	x29, x30, [sp, #0x20]
+52122:    3792c:      	mov	x19, x0
+67731:    4791c:      	cbz	x8, 0x4792c <PT_LOAD#0+0x4792c>
+67735:    4792c:      	mov	x0, x19
+83763:    5792c:      	ldr	s8, [x19, x8]
+100019:    6792c:      	add	x21, x19, x8
+116257:    7792c:      	mov	w8, #0x85b4             // =34228
+117890:    792c0:      	str	w8, [sp, #0x1c]
+117891:    792c4:      	orr	w8, wzr, #0x10
+117892:    792c8:      	stp	w9, w8, [sp, #0x28]
+... altre 260 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 272
+
+========================================================================
+77. RE0 title ID references
+Pattern: 010097000BC10000
+========================================================================
+
+FILE: dm/gfx/nvn/hle_nvn.c | occorrenze: 3
+2365:         int re0_clocked = !strcmp(DM_GAME_ID, "010097000BC10000");
+2413:         !strcmp(DM_GAME_ID, "010097000BC10000")) {
+2483: static int present_itv(const win_t *o) { int movie = dm_movie_hz(), c = fps_present_cap(), k = atomic_load(&g_fs_k); const char *e = getenv("DM_FPS_TARGET"); int t = e ? atoi(e) : DM_GAME_FPS_TARGET; int re_60_movie = t == 60 && (!strcmp(DM_GAME_ID, "010050F00BC1A000") || !strcmp(DM_GAME_ID, "010097000BC10000")); if (movie && (fps_high() || re_60_movie)) return fstep_hz() / movie; return c ? (k && fstep_on() ? k : fstep_hz() / c) : g_display_mode ? 1 : o->interval > 0 ? o->interval : 1; }   // vsyncs per frame that presentation follows
+
+FILE: dm/games/010097000BC10000/game.tsv | occorrenze: 3
+2: # resident evil 0, SDK 5, survey /Users/maclifedrive/games/Re0/010097000BC10000_survey/survey.md
+5: title_id	010097000BC10000
+6: program_id	010097000BC10000
+
+TOTALE CORRISPONDENZE: 6
+
+========================================================================
+78. RE0 unsafe timing override
+Pattern: re0_unsafe_enabled|re0.*timing
+========================================================================
+
+FILE: dm/host/hle_fpslock.c | occorrenze: 19
+66: static void re0_timing_probe(void) {
+76:     if (!m) { if (++tries >= 600) { FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fputs("main module with the surveyed RE0 build ID was not found\n", pf); fclose(pf); } done = 1; } return; }
+79:         LOG("[RE0 timing probe] main image is too small for the surveyed timing slot");
+91:             LOG("[RE0 timing probe] timing pointer chain not readable after %d presents; no memory written", tries);
+92:             FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fprintf(pf, "pointer chain unreadable after %d presents\n", tries); fclose(pf); }
+101:             LOG("[RE0 timing probe] object chain readable but +0x48 is not a plausible FPS value (bits=%08x); no memory written", raw);
+102:             FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fprintf(pf, "object chain readable; +0x48 bits=%08x is outside 10..120 FPS\n", raw); fclose(pf); }
+107:     FILE *pf = fopen("/tmp/re0_timing_probe.log", "w");
+114:     LOG("[RE0 timing probe] live MT timing chain verified: main+%#llx -> %p -> %p, +0x48=%g fps; read-only",
+120: // EXPERIMENTAL, intentionally unsafe RE0 timing-field test. This is opt-in only:
+121: // DM_RE0_UNSAFE_TIMING=1 plus DM_FPS_TARGET=60 or 120. The field is known to
+132: static int re0_unsafe_enabled(void) {
+... altre 7 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 19
+
+========================================================================
+79. NVN display pacing override
+Pattern: display.?mode|movie.?cadence|dm_fps_lock_engine
+========================================================================
+
+FILE: dm/host/hle_fpslock.c | occorrenze: 2
+328: // The running main's engine limiters, found once: by the first present (dm_fps_lock_tick) or by the graphics layer's present cap, which may ask first (dm_fps_lock_engine, from the acquire)
+354: int dm_fps_lock_engine(void) { pthread_once(&g_found, lock_find); return nrow || nier || fb.n || uq.base || re0_unsafe_enabled(); }
+
+FILE: dm/gfx/nvn/hle_nvn.c | occorrenze: 26
+2292: static int g_hz = -1, g_display_mode;
+2294: void nvn_present_config(int hz, int display_mode) { g_hz = hz; g_display_mode = display_mode; }
+2306: static int g_engine_stub = 1;   // the weak dm_fps_lock_engine's answer, for graphics unit tests (t_nvn sets it)
+2307: __attribute__((weak)) int dm_fps_lock_engine(void) { return g_engine_stub; }   // hle_fpslock.c: the host writes fps_target into an engine limiter of this main
+2367:             (dm_fps_lock_engine() || re0_clocked);
+2398: // Without a limiter the host writes (dm_fps_lock_engine) nothing makes the game
+2400: // game presented at a cap it does not step by runs fast or slow. Display mode already
+2405: static int configured_display_mode(void) {
+2409:     // The 60/120 profiles bypass those waits and pace through display mode.
+2419: static int display_mode(void) {   // present_cfg's choice, also before its first call (the cap can be asked for before the window's first interval)
+2420:     if (g_hz >= 0) return g_display_mode;
+2421:     return configured_display_mode();
+... altre 14 occorrenze omesse in questo file
+
+TOTALE CORRISPONDENZE: 28
+
+========================================================================
+80. Target FPS configuration
+Pattern: target_fps|max_fps|target.?fps|max.?fps
+========================================================================
+
+FILE: dm/host/hle_fpslock.c | occorrenze: 4
+7: // the frame limit, the profile's ue_fps_cvar (t.MaxFPS, or a game's own variable its settings apply to t.MaxFPS: SHIN MEGAMI TENSEI V: Vengeance's Project.FrameRateLimit), and the
+338:         if (g_mod[i].unity_target_fps) {   // unless a build row writes the same field
+339:             int dup = 0; for (int r = 0; r < nrow; r++) dup |= !rows[r]->ptr_off && rows[r]->field == (uint32_t)g_mod[i].unity_target_fps;
+340:             unity_tfr = (lock_t){ "", "Unity Application.targetFrameRate", 0, (uint32_t)g_mod[i].unity_target_fps, FPS_I32, 1, 0 };
+
+FILE: dm/gfx/nvn/hle_nvn.c | occorrenze: 2
+2378:     int ok = !win || front_screen_max_fps() >= 120, movie = dm_movie_hz();
+2584:     int hz = front_screen_max_fps(); g_fs.shown_slack = hz > fstep_hz() && hz % fstep_hz() && mtl_link_active() ? (double)fstep_hz() / hz : 0;
+
+TOTALE CORRISPONDENZE: 6
+
+==============================================================================
+FINE RAPPORTO - 80 VERIFICHE
