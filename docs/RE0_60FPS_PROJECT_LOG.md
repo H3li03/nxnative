@@ -238,3 +238,28 @@ Interpretation:
 - **unstable/irregular cadence:** capture full NVN acquire/present timings and compare `@frame_ms`, `@work_ms`, `@presented_ms`, `@gpu_ms`, and `@link_ticks`.
 
 No build or runtime test has been performed by the assistant. The patch is committed but remains unvalidated.
+
+
+## 11. Read-only NVN frame-loop trace (2026-11-18)
+
+- Branch: `experiment/re0-frame-loop-trace-20261118`
+- Parent: `ac48c76d21862c0e4cccc2aba17c0c08341cba20`
+- Source commit: `ba2569b60a6be301d7dba85138b57fc1267ca64a`
+- Changed source: `dm/gfx/nvn/hle_nvn.c`
+- New opt-in: `DM_RE0_TRACE_PRESENT=1` (RE0 Title ID guard).
+- The trace samples NVN `nvnWindowAcquireTexture` and `nvnQueuePresentTexture` separately. It logs the first four events and then every 60 events, with elapsed milliseconds, game-requested interval, effective interval, display-mode flag, tick rate, and caller module/offset.
+- The trace is read-only: it does not write guest memory, change frame pacing, alter present intervals, or modify the game profile. It is intended to distinguish a 30 Hz game submission loop from an NVN/display pacing problem.
+- Build and runtime validation have not been performed by the assistant. The patch is committed but unvalidated.
+
+Test configuration:
+- `DM_FPS_TARGET=60`
+- `DM_RE0_PRESENT_60=1`
+- `DM_RE0_TIMING_60=0` (or unset)
+- `DM_RE0_TRACE_PRESENT=1`
+- `DM_PRESENT_INTERVAL` unset
+
+Interpretation:
+- Acquire and present deltas near 33.3 ms: the game submits frames at about 30 Hz before presentation; investigate the MT Framework frame loop and its waits.
+- Acquire/present deltas near 16.7 ms but visible output remains 30: investigate downstream queue/display behavior and frame drops.
+- Acquire at 16.7 ms but present at 33.3 ms: investigate work between texture acquisition and queue submission.
+- Compare the caller offsets and the first interval/mode log; do not change timing fields based only on this trace.
