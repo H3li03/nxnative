@@ -1,0 +1,77 @@
+RE0 1.0.0 — present-interval follow-up (2026-11-18)
+==================================================
+
+Target
+------
+Title ID: 010097000BC10000
+Main build: fb4239aa962b429b3d1776af92d93e79
+Game profile: dm/games/010097000BC10000/game.tsv (provisional)
+
+Verified findings
+-----------------
+
+1. The game has a distinct NVN present-interval path.
+   The symbol map for this main identifies:
+   - sRender::setPresentInterval(unsigned): 0x7d1fd0 (56 bytes)
+   - sRender::getPresentInterval(): 0x7d2020
+   - sRender::setPresentThreshold(unsigned): 0x7d2010
+   - sRender::setRefreshRate(int): 0x7d2180
+   The import symbol pfncpp_nvnWindowBuilderSetPresentInterval is also present.
+   This is distinct from the indirect callback read by sRender::end through
+   global slot 0x128d310; that callback is not yet identified.
+
+2. The host implements an explicit display-interval override.
+   In dm/gfx/nvn/hle_nvn.c:
+   - nvnWindowBuilderSetPresentInterval stores the game's requested interval.
+   - nvnWindowSetPresentInterval logs changes and the caller module/address.
+   - present_cfg logs the selected mode and the interval the game requested.
+   - DM_PRESENT_INTERVAL=display selects one present per display tick.
+   - DM_PRESENT_INTERVAL=game (the default) follows the game's interval.
+   The profile parser in dm/games/game.py defaults a missing present_interval
+   key to "game".
+
+3. RE0's current profile leaves that default in force.
+   dm/games/010097000BC10000/game.tsv has fps_target=30 and fps_max=120,
+   but no present_interval key. Therefore it currently defaults to game mode.
+   The host's fps_present_cap path also documents that, without an engine
+   limiter it writes, a requested cap is not applied in game mode; display
+   mode is the path that can apply the cap through the present interval alone.
+   Consequently, changing only fps_target to 60 is not sufficient evidence
+   that presentation will move to 60 Hz.
+
+4. The previous RE0 wait experiments do not change presentation mode.
+   The experiment patch bypasses the sMain::move timed-wait branch and the
+   sRender::end timed-wait branch. It does not set DM_PRESENT_INTERVAL or
+   change the game's requested NVN interval. A continued 30 fps result is
+   therefore consistent with the host still following the game's interval.
+   This is a plausible explanation, not yet a measured confirmation that
+   RE0 requests interval 2.
+
+5. There is a useful but non-transferable sibling precedent.
+   The separate Resident Evil profile 010050F00BC1A000 (not RE0) uses
+   present_interval=display and fps_target=60. Its patches also bypass its
+   own native waits and initialize its own MT Framework timing fields.
+   Do not copy its addresses or timing-field writes to RE0: the title ID and
+   main build differ.
+
+Next verification (no patch / no build)
+---------------------------------------
+Capture the existing host log from an ordinary RE0 run and inspect:
+   - "[nvn] the game sets present interval ... (from main+...)"
+   - "[nvn] present tick ... interval mode ... (present interval set by game ...)"
+   - "WindowInitialize ... interval ..."
+
+This will establish the actual interval requested by RE0 and whether the
+current run follows game or display mode.
+
+If the log confirms interval 2 and game mode, the next controlled experiment
+should be environment-only: DM_FPS_TARGET=60 and DM_PRESENT_INTERVAL=display,
+keeping the RE0 +0x48 timing value unchanged and retaining the existing
+wait-bypass patch. Compare frame pacing and gameplay timing against the
+30 fps baseline. Do not change +0x48/+0x4c or transplant the other Resident
+Evil profile's constructor patches without a separate RE0-specific proof.
+
+Status
+------
+Static analysis only. No executable patch, profile change, build, or gameplay
+test was performed.
