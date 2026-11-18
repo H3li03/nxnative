@@ -78,7 +78,7 @@ static void re0_timing_probe(void) {
     if (!m) {
         if (++tries >= 600) {
             FILE *pf = fopen("/tmp/re0_timing_probe.log", "w");
-            if (pf) { fputs("main module with surveyed RE0 build ID was not found; no memory written\\n", pf); fclose(pf); }
+            if (pf) { fputs("main module with surveyed RE0 build ID was not found; no memory written\n", pf); fclose(pf); }
             done = 1;
         }
         return;
@@ -97,7 +97,7 @@ static void re0_timing_probe(void) {
         if (++tries >= 600) {
             LOG("[RE0 timing probe] timing pointer chain not readable after %d presents; no memory written", tries);
             FILE *pf = fopen("/tmp/re0_timing_probe.log", "w");
-            if (pf) { fprintf(pf, "pointer chain unreadable after %d presents; no memory written\\n", tries); fclose(pf); }
+            if (pf) { fprintf(pf, "pointer chain unreadable after %d presents; no memory written\n", tries); fclose(pf); }
             done = 1;
         }
         return;
@@ -122,9 +122,9 @@ static void re0_timing_probe(void) {
     FILE *pf = fopen("/tmp/re0_timing_probe.log", samples ? "a" : "w");
     if (pf) {
         if (!samples)
-            fprintf(pf, "RE0 read-only timing samples; build=fb4239aa962b429b3d1776af92d93e79\\nslot=main+%#llx\\nobject1=%p\\nobject2=%p\\nfields are raw bits plus float interpretation; +0x50 is a byte flag\\n",
+            fprintf(pf, "RE0 read-only timing samples; build=fb4239aa962b429b3d1776af92d93e79\nslot=main+%#llx\nobject1=%p\nobject2=%p\nfields are raw bits plus float interpretation; +0x50 is a byte flag\n",
                     (unsigned long long)slot_off, (void *)(uintptr_t)object1, (void *)(uintptr_t)object2);
-        fprintf(pf, "sample=%d present=%d +0x48=%g (0x%08x) +0x4c=%g (0x%08x) +0x50=%u (0x%02x) +0x78=%g (0x%08x)\\n",
+        fprintf(pf, "sample=%d present=%d +0x48=%g (0x%08x) +0x4c=%g (0x%08x) +0x50=%u (0x%02x) +0x78=%g (0x%08x)\n",
                 samples + 1, presents, value48, raw48, value4c, raw4c, (unsigned)flag50,
                 (unsigned)flag50, value78, raw78);
         fclose(pf);
