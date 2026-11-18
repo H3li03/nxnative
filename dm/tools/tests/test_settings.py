@@ -21,7 +21,7 @@ class ResolutionSetting(unittest.TestCase):
                 self.assertEqual(fps['options'],[['30','30 fps'],['60','60 fps']])
 
 class FrameRateOption(unittest.TestCase):
-    def test_120_only_on_the_mac_for_a_game_checked_at_that_speed(self):
+    def test_120_options_follow_platform_specific_profile_limits(self):
         with tempfile.TemporaryDirectory() as tmp,patch.object(settings.nacp,'languages',return_value=['en-US']):
             (Path(tmp)/'main.fixups.tsv').write_text('')
             for gid,platform,has,default in [('04007EF01F8AE000','mac',True,'60'),('04007EF01F8AE000','ios',False,'60'),('010056B015FE8000','mac',False,'60'),('010050F00BC1A000','ios',True,'60'),('010097000BC10000','ios',True,'120')]:   # Mac-only Fortune's Weave; NieR; Resident Evil and RE0 on iOS
