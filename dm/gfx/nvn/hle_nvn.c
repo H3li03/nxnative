@@ -1872,6 +1872,7 @@ static void sleep_until_ns(uint64_t dl);
 static uint64_t present_period(const win_t *o);
 static uint64_t rt_period_ns(const win_t *o, uint64_t period);
 static int present_itv(const win_t *o);
+static void re0_trace_present(const char *phase, const win_t *o, void *caller);
 static int present_unpaced(const win_t *o);
 static int link_wait(const win_t *o, uint64_t timeout_ns);
 __attribute__((weak)) void dm_main_yield_stats(uint64_t *n, uint64_t *ns) { *n = 0; *ns = 0; }   // The host's hle_thread.c provides the ground truth; 0 in graphics unit tests
@@ -1905,7 +1906,7 @@ NVN(nvnWindowAcquireTexture, NVNwindowAcquireTextureResult, NVNwindow *w, NVNsyn
     // Vsync blocks here (real-device NVN: when all textures in the swapchain are waiting for display, wait for the next one to be released), not in present -- the game often calls present while holding a lock
     uint64_t at = *idx < 4 ? o->avail[*idx] : 0, now = dm_detclock_enabled() ? guest_ns() : now_ns(), wait = at > now ? at - now : 0, pace_ns = 0, drain_ns = 0;
     if (!dm_detclock_enabled()) {   // Register the acquire thread as a time-constraint thread (no longer registered only when it "arrived early": it must also declare itself when it is constantly behind in the hot state)
-        uint64_t period = present_period(o); rt_acquire(rt_period_ns(o, period));
+        uint64_t period = present_period(o); re0_trace_present("acquire", o, __builtin_return_address(0)); rt_acquire(rt_period_ns(o, period));
         uint64_t p0 = now_ns(); int snap = mtl_snap_on();
         o->follow = 1;   // the beat paces this frame only where the branches below wait for the slot time (nvn_pace_follow)
         if (present_unpaced(o)) {}   // present interval 0: no vsync wait (below); only the free texture the ticket wait below gives
@@ -2482,6 +2483,27 @@ static void present_cfg(const win_t *o) {
     LOG("[nvn] present tick %d Hz, interval mode %s (%s; present interval set by the game %d; %s)", g_hz, g_display_mode ? "display (one frame per tick, a cut)" : "game (original semantics)",
         m ? "DM_PRESENT_INTERVAL" : "game profile / Resident Evil timing profile", o->interval, scr > 0 ? "window" : "no window");
 }
+static void re0_trace_present(const char *phase, const win_t *o, void *caller) {
+    static int enabled = -1;
+    static uint64_t count[2], last_ns[2];
+    if (enabled < 0) {
+        const char *e = getenv("DM_RE0_TRACE_PRESENT");
+        enabled = !strcmp(DM_GAME_ID, "010097000BC10000") && e && !strcmp(e, "1");
+        if (enabled) LOG("[RE0 frame trace] enabled; read-only NVN acquire/present cadence trace");
+    }
+    if (!enabled) return;
+    unsigned k = phase[0] == 'a' ? 0u : 1u;
+    uint64_t now = now_ns(), delta = last_ns[k] ? now - last_ns[k] : 0;
+    last_ns[k] = now;
+    uint64_t n = ++count[k];
+    if (n <= 4 || n % 60 == 0) {
+        module_t *m = module_of(caller);
+        uint64_t off = m ? (uint64_t)caller - (uint64_t)m->base : 0;
+        LOG("[RE0 frame trace] %s #%llu dt=%.3f ms game_interval=%d effective_interval=%d display_mode=%d tick_hz=%d caller=%s+%#llx",
+            phase, (unsigned long long)n, delta / 1e6, o->interval, present_itv(o),
+            g_display_mode, g_hz, m ? m->name : "?", (unsigned long long)off);
+    }
+}
 static int present_itv(const win_t *o) { int movie = dm_movie_hz(), c = fps_present_cap(), k = atomic_load(&g_fs_k); const char *e = getenv("DM_FPS_TARGET"); int t = e ? atoi(e) : DM_GAME_FPS_TARGET; int re_60_movie = !strcmp(DM_GAME_ID, "010050F00BC1A000") && t == 60; if (movie && (fps_high() || re_60_movie)) return fstep_hz() / movie; return c ? (k && fstep_on() ? k : fstep_hz() / c) : g_display_mode ? 1 : o->interval > 0 ? o->interval : 1; }   // vsyncs per frame that presentation follows
 // Present interval 0 swaps without waiting for a vsync on Horizon: the window's acquire waits only for a texture the display has let go of, the display shows the newest frame at each
 // vsync, and the game paces itself (or runs as fast as it can; the Switch's unlocked-frame-rate mods set interval 0 to go past 60). The acquire took it as 1 and waited a display
@@ -2663,6 +2685,7 @@ NVN(nvnQueuePresentTexture, void, NVNqueue *q, NVNwindow *w, int idx) {
     dm_fps_lock_tick();   // after the frame step: at 120 fps the target follows the hold just decided
     static uint64_t prev_in, prev_out, prev_pass, prev_draw;
     present_cfg(o);
+    re0_trace_present("present", o, __builtin_return_address(0));
     {
         // Test switch DM_TEST_PRESENT_LAG=every N presents,milliseconds[,presents in a row][;…]: sleep that long before the Nth, 2Nth… present (and the ones after it in the run), imitating an occasional slow frame on a phone (Mario 1.2.1 then sets present interval 2; checks that the display link holds frames by interval),
         // or with a run of 3 a hitch that steps the frame step up ("1,10;1200,30,3": 10 ms more on every frame, and 30 more on three in a row every 1,200). Not set in the product
