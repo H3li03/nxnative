@@ -35,6 +35,12 @@ static const lock_t k_locks[] = {
     // Resident Evil HD Remaster 1.0.0: timing probe. The constructor initializes adjacent floats at +0x48 and +0x4c to 30.0;
     // sMain::move reads both (main+0x775b34 and main+0x775b94). Keep the pair synchronized while testing the MT Framework limit.
     { "6bec9b23b09df46c315aa6f4bfacf91c", "Resident Evil MT Framework primary frame limit", 0x157daa0, 0x48, FPS_F32, 2 },
+    // Resident Evil 0 1.0.0: experimental timing-rate pair. The dispatch at main+0x2b6858
+    // resolves [main+0x1285650] to the object, copies its +0x48/+0x4c floats into the
+    // sMain object, then initializes both to 30.0 and disables frame-wait. sMain::move
+    // (main+0x7aa5a0) consumes both fields. Raise the pair together for a controlled
+    // 60 fps test; this is a candidate, not yet a verified simulation-safe limiter.
+    { "fb4239aa962b429b3d1776af92d93e79", "Resident Evil 0 experimental timing-rate pair", 0x1285650, 0x48, FPS_F32, 2 },
     // Luigi's Mansion 3 1.4.0: Next Level Games' frame limiter. At the end of each frame the main thread calls the frame callbacks (main+0xb7c308) with the milliseconds since the frame
     // started; the limiter (main+0x7a3e70) runs jobs or sleeps until 33.333 ms have passed, the float at main+0x13c94dc (read only there, at main+0x7a3ea8 and main+0x7a3f18), and the game
     // steps by the time that really passed. The game asks for present interval 2 too, which the profile's present_interval display ignores; both are needed
