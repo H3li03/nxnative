@@ -40,3 +40,5 @@ shader_note	resident evil 0 shaders
 present_interval	display
 fps_target	120
 fps_max	120
+# The writable MT Framework limiter is supported on iOS; expose 120 on ProMotion iPads.
+fps_max_ios	120

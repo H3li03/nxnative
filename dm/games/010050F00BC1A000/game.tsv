@@ -37,3 +37,5 @@ shader_note	Resident Evil shaders
 present_interval	display
 fps_target	60
 fps_max	120
+# iOS has signed 30/60/120 text variants (gen_embed.py --re-fps); expose 120 on ProMotion iPads.
+fps_max_ios	120
