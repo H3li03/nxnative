@@ -168,7 +168,7 @@ static void re0_timing_probe(void) {
 // We require the exact surveyed Build ID, singleton identity, and the original
 // 30/30 pair before writing. No render flags or other timing fields are touched.
 static void re0_timing_60fps_optin(void) {
-    static int config = -1, logged;
+    static int config = -1, logged, warned;
     if (config < 0) {
         const char *e = getenv("DM_RE0_TIMING_60");
         config = e && !strcmp(e, "1");
@@ -218,15 +218,15 @@ static void re0_timing_60fps_optin(void) {
         return;
     }
     if (rate48 != fps30 || rate4c != fps30) {
-        if (!logged) {
+        if (!warned) {
             LOG("[RE0 60 fps] expected sMain 30/30, found %08x/%08x; no write",
                 rate48, rate4c);
-            logged = 1;
+            warned = 1;
         }
         return;
     }
 
-    // These are the two verified writable fields in the live sMain instance.
+    // Write only the two surveyed timing fields in the identity-checked sMain instance.
     // Re-check the complete pair on every present so game-side resets are caught.
     memcpy((void *)(uintptr_t)(instance + 0x48), &fps60, sizeof fps60);
     memcpy((void *)(uintptr_t)(instance + 0x4c), &fps60, sizeof fps60);
