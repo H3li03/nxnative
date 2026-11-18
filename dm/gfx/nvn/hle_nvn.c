@@ -2400,8 +2400,18 @@ static int g_present_cap = -1;
 static int configured_display_mode(void) {
     const char *m = getenv("DM_PRESENT_INTERVAL");
     if (m) return !strcmp(m, "display");
-    // Resident Evil's native 30 fps path owns its wait and present interval.
-    // The 60/120 profiles bypass those waits and pace through display mode.
+    // Resident Evil 0: experimental presentation-only 60 fps path.
+    // Keep the game's MT Framework timing fields at their native 30/30 values;
+    // only let NVN pace each submitted frame to the display link. This does not
+    // synthesize frames: the runtime test must confirm that RE0 submits at 60 Hz.
+    if (!strcmp(DM_GAME_ID, "010097000BC10000")) {
+        const char *e = getenv("DM_RE0_PRESENT_60");
+        const char *f = getenv("DM_FPS_TARGET");
+        int target = f ? atoi(f) : DM_GAME_FPS_TARGET;
+        return e && !strcmp(e, "1") && target == 60;
+    }
+    // Resident Evil HD Remaster: its native 30 fps path owns its wait and present
+    // interval; the 60/120 profiles bypass those waits and pace through display mode.
     if (!strcmp(DM_GAME_ID, "010050F00BC1A000")) {
         const char *e = getenv("DM_FPS_TARGET"); int t = e ? atoi(e) : DM_GAME_FPS_TARGET;
         return t != 30 && t != 0;
