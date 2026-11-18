@@ -14,11 +14,11 @@ sha = hashlib.sha256(raw).hexdigest()
 
 # The singleton pointer is addressed through page 0x1285000 + 0x650.
 # Keep every occurrence of that page and nearby instructions, then separately
-# report direct +0x48/+0x4c/+0x50 accesses for manual data-flow review.
+# report direct register-based +0x48/+0x4c/+0x50 accesses.
 page_hits = [i for i, line in enumerate(lines) if "0x1285000" in line]
 field_hits = [
     i for i, line in enumerate(lines)
-    if re.search(r"\\[(?:x[0-9]+|xzr), #0x(?:48|4c|50)\\]", line)
+    if re.search(r"\[(?:x[0-9]+|xzr), #0x(?:48|4c|50)\]", line)
 ]
 windows = []
 for i in sorted(set(page_hits + field_hits)):
@@ -35,11 +35,10 @@ parts = [
     f"Source SHA256: {sha}",
     f"Source lines: {len(lines)}",
     f"Page-reference lines (0x1285000): {len(page_hits)}",
-    f"Candidate x0 field-access lines (+0x48/+0x4c/+0x50): {len(field_hits)}",
+    f"Register field-access lines (+0x48/+0x4c/+0x50): {len(field_hits)}",
     "",
 ]
 for lo, hi in windows:
-    # Only emit windows containing a page reference or an x0 field access.
     parts.append(f"## Lines {lo + 1}-{hi}")
     parts.extend(f"{n + 1}: {lines[n]}" for n in range(lo, hi))
     parts.append("")
