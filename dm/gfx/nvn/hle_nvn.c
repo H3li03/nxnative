@@ -2359,7 +2359,12 @@ static int fps_high(void) {
     int v = __atomic_load_n(&g_fps_high, __ATOMIC_RELAXED);
     if (v < 0) {
         const char *e = getenv("DM_FPS_TARGET"); int t = e ? atoi(e) : DM_GAME_FPS_TARGET;
-        v = t == 120 && DM_GAME_FPS_MAX >= 120 && !dm_fps_state && dm_fps_lock_engine();
+        // RE0's native update loop scales elapsed system ticks by its own 30 Hz
+        // clock (+0x48/+0x4c); it does not need an engine FPS field to be rewritten.
+        // Its presentation interval can therefore run independently at 120/60 Hz.
+        int re0_clocked = !strcmp(DM_GAME_ID, "010097000BC10000");
+        v = t == 120 && DM_GAME_FPS_MAX >= 120 && !dm_fps_state &&
+            (dm_fps_lock_engine() || re0_clocked);
         if (t == 120 && DM_GAME_FPS_MAX >= 120 && !v) LOG("[RED] [nvn] 120 fps: this main has %s, so it runs at 60", dm_fps_state ? "a frame step in whole vsyncs" : "no engine frame limit the host writes");
         __atomic_store_n(&g_fps_high, v, __ATOMIC_RELAXED);
     }
@@ -2402,7 +2407,10 @@ static int configured_display_mode(void) {
     if (m) return !strcmp(m, "display");
     // Resident Evil's native 30 fps path owns its wait and present interval.
     // The 60/120 profiles bypass those waits and pace through display mode.
-    if (!strcmp(DM_GAME_ID, "010050F00BC1A000")) {
+    // Resident Evil HD Remaster and RE0 keep their native simulation clocks;
+    // for targets above 30 the host overrides only NVN presentation pacing.
+    if (!strcmp(DM_GAME_ID, "010050F00BC1A000") ||
+        !strcmp(DM_GAME_ID, "010097000BC10000")) {
         const char *e = getenv("DM_FPS_TARGET"); int t = e ? atoi(e) : DM_GAME_FPS_TARGET;
         return t != 30 && t != 0;
     }
