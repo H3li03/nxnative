@@ -188,3 +188,53 @@ Do not promote these hypotheses to facts until backed by disassembly, instrument
 
 - 2026-11-18: Initial consolidation from available conversation context and repository inspection.
 - 2026-11-18: Confirmed current project direction: decouple rendering/presentation from simulation; the user's 60 FPS test runs all gameplay at approximately 2× speed.
+
+
+## 10. New experiment: presentation-only 60 Hz (2026-11-18)
+
+### Branch and commit
+
+- New branch: `experiment/re0-display-60-sim30-20261118`
+- Parent: `c1766636bb0b6e1d22c24ac9addaa9cb33567273`
+- Patch commit: `1707c07670e8901779e499708903bd62b4360912`
+- Changed file: `dm/gfx/nvn/hle_nvn.c` only.
+- Change: in `configured_display_mode()`, add an opt-in Resident Evil 0 Title ID case (`010097000BC10000`). It selects NVN display pacing only when `DM_RE0_PRESENT_60=1` and the selected target is exactly 60 (`DM_FPS_TARGET=60`, or profile target if environment absent). The existing `DM_PRESENT_INTERVAL` override remains higher priority.
+- The patch does not write RE0 guest memory, does not change +0x48/+0x4c, and does not change `game.tsv` (default remains 30 fps).
+- The existing `DM_RE0_TIMING_60` experiment remains in the source but must be **unset** for this test.
+
+### Why this experiment
+
+The NVN layer already supports display mode: it ignores the game's requested present interval and follows one present per display-link tick. `fps_present_cap()` permits a 60 fps present cap when display mode is active and the engine has no host-written engine limiter. RE0 currently lacks a special display-mode case; another Resident Evil Title ID (`010050F00BC1A000`, HD Remaster) has its own special handling, which is not assumed to apply to RE0.
+
+This patch isolates the presentation policy from the previously tested 30/30 → 60/60 guest-memory write. It does not synthesize extra frames and cannot guarantee 60 unique rendered frames if RE0's own update/render loop still waits at 30 Hz. That is exactly what the runtime test is meant to establish.
+
+### Test recipe
+
+Build and run this branch with:
+- `DM_FPS_TARGET=60`
+- `DM_RE0_PRESENT_60=1`
+- `DM_RE0_TIMING_60` unset (or explicitly `0`)
+- `DM_PRESENT_INTERVAL` unset, so the new opt-in branch is exercised rather than the global override.
+
+Keep all other test variables identical to the baseline. Do not change the game profile.
+
+### Expected diagnostics and acceptance
+
+Confirm in the log:
+- `[nvn] present tick 60 Hz`
+- `interval mode display`
+- `present cap 60 fps ... applied by the present interval alone`
+- The RE0 read-only timing probe continues to report +0x48/+0x4c as 30/30.
+
+Measure the same gameplay segment as baseline:
+- `@presented_ms` / actual unique presentation cadence near 16.667 ms (not just a 60 Hz display tick);
+- game timer and character movement per real second equal to baseline;
+- animation progression equal to baseline.
+
+Interpretation:
+- **60 presents/s + normal game speed:** promising decoupling; inspect for visual duplication and input/physics correctness.
+- **30 presents/s + normal speed:** RE0's native loop or another wait still limits frame submissions; this patch only changed the host present policy.
+- **60 presents/s + 2× speed:** display pacing alone is not enough; another simulation-step dependency is coupled to each rendered frame, so revert this branch and trace the update path before trying another timing write.
+- **unstable/irregular cadence:** capture full NVN acquire/present timings and compare `@frame_ms`, `@work_ms`, `@presented_ms`, `@gpu_ms`, and `@link_ticks`.
+
+No build or runtime test has been performed by the assistant. The patch is committed but remains unvalidated.
