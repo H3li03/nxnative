@@ -263,3 +263,41 @@ Interpretation:
 - Acquire/present deltas near 16.7 ms but visible output remains 30: investigate downstream queue/display behavior and frame drops.
 - Acquire at 16.7 ms but present at 33.3 ms: investigate work between texture acquisition and queue submission.
 - Compare the caller offsets and the first interval/mode log; do not change timing fields based only on this trace.
+
+
+## 12. RE0 single-field MT Framework limiter (2026-11-18)
+
+### External reference and finding
+
+- Exact title/build match found in FPSLocker-Warehouse: Title ID `010097000BC10000`, Build ID `FB4239AA962B429B`, version 1.0.0.
+- Reference patch: https://github.com/masagrator/FPSLocker-Warehouse/blob/b765680937f1177ec2719a6d31490b2d6e4edcb3/SaltySD/plugins/FPSLocker/patches/010097000BC10000/FB4239AA962B429B.yaml
+- Its `ALL_FPS` rule writes `FPS_LOCK_TARGET` only to `[MAIN, 0x1BAAC60, 0x4C]` as a float. It does not write `+0x48`.
+- Its cutscene rules separately detect prerendered cutscenes and temporarily select 30 Hz. That behavior is documented as a follow-up validation item; this first host-side port focuses on the gameplay limiter.
+
+### Host implementation
+
+- Branch: `experiment/re0-single-field-60fps-20261118`
+- Source commit: `025c4b9b7b77bf54cd1c2dcd6d046e3e8ce46352`
+- Added a build-ID-guarded `k_locks` row for RE0: global pointer `main+0x1BAAC60`, instance field `+0x4C`, one float copy.
+- Removed the earlier RE0 opt-in that wrote both `+0x48` and `+0x4C`; that pair is no longer written by this branch. The read-only probe remains.
+- The existing profile default remains 30 FPS. Selecting `DM_FPS_TARGET=60` asks the generic FPS-lock path to write 60.0 to +0x4C while leaving +0x48 untouched at 30.0.
+- The RE0 display-mode opt-in remains required for host presentation at 60 Hz: `DM_RE0_PRESENT_60=1`. Keep `DM_PRESENT_INTERVAL` unset.
+
+### Test configuration
+
+- `DM_FPS_TARGET=60`
+- `DM_RE0_PRESENT_60=1`
+- `DM_RE0_TIMING_60` unset (legacy option removed)
+- `DM_RE0_TRACE_PRESENT=1`
+- `DM_PRESENT_INTERVAL` unset
+
+### Acceptance criteria
+
+1. Runtime log reports the RE0 frame-limit row changing +0x4C from 30 to 60.
+2. Read-only timing probe reports +0x48 = 30 and +0x4C = 60 after the write.
+3. NVN acquire and present intervals approach 16.67 ms (about 60 Hz).
+4. In-game timer, movement distance per real second, and animation speed match the 30 FPS baseline. If any of these double, stop the test and report it; do not add a write to +0x48.
+5. Test a prerendered cutscene separately. The Warehouse patch holds these at 30 Hz; this first port has not yet added that cutscene-specific override.
+6. Re-test the default profile with no `DM_FPS_TARGET` override: it must remain 30 FPS.
+
+The source patch is committed but has not been built or run by the assistant. A successful local build and the runtime checks above are still required before treating this as validated.
