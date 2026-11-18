@@ -64,8 +64,10 @@ static int rd(uint64_t a, void *out, size_t n) { vm_size_t got = 0; return a >= 
 // identified in the surveyed executable; do not turn this into a write row until
 // the live pointer chain and value have been confirmed on device.
 static void re0_timing_probe(void) {
-    static int done, tries;
-    if (done) return;
+    // Sample once immediately, then every 120 presents (about two seconds at 60 Hz).
+    // All reads are guarded and read-only; no guest memory is ever modified.
+    static int done, tries, presents, samples;
+    if (done || samples >= 12) { done = 1; return; }
     module_t *m = NULL;
     for (int i = 0; i < g_nmod; i++)
         if (!strcmp(g_mod[i].name, "main") &&
@@ -73,7 +75,14 @@ static void re0_timing_probe(void) {
             m = &g_mod[i];
             break;
         }
-    if (!m) { if (++tries >= 600) { FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fputs("main module with the surveyed RE0 build ID was not found\n", pf); fclose(pf); } done = 1; } return; }
+    if (!m) {
+        if (++tries >= 600) {
+            FILE *pf = fopen("/tmp/re0_timing_probe.log", "w");
+            if (pf) { fputs("main module with surveyed RE0 build ID was not found; no memory written\\n", pf); fclose(pf); }
+            done = 1;
+        }
+        return;
+    }
     const uint64_t slot_off = 0x1285650;
     if (slot_off > m->size || m->size - slot_off < sizeof(uint64_t)) {
         LOG("[RE0 timing probe] main image is too small for the surveyed timing slot");
@@ -81,40 +90,49 @@ static void re0_timing_probe(void) {
         return;
     }
     uint64_t object1 = 0, object2 = 0;
-    uint32_t raw = 0;
     uint64_t slot = (uint64_t)(uintptr_t)(m->base + slot_off);
     if (!rd(slot, &object1, sizeof object1) || object1 < 0x1000 ||
         !rd(object1, &object2, sizeof object2) || object2 < 0x1000 ||
-        object2 > UINT64_MAX - 0x48 ||
-        !rd(object2 + 0x48, &raw, sizeof raw)) {
+        object2 > UINT64_MAX - 0x7c) {
         if (++tries >= 600) {
             LOG("[RE0 timing probe] timing pointer chain not readable after %d presents; no memory written", tries);
-            FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fprintf(pf, "pointer chain unreadable after %d presents\n", tries); fclose(pf); }
+            FILE *pf = fopen("/tmp/re0_timing_probe.log", "w");
+            if (pf) { fprintf(pf, "pointer chain unreadable after %d presents; no memory written\\n", tries); fclose(pf); }
             done = 1;
         }
         return;
     }
-    float fps;
-    memcpy(&fps, &raw, sizeof fps);
-    if (!(fps >= 10.0f && fps <= 120.0f)) {
+    if ((++presents - 1) % 120 != 0) return;
+    uint32_t raw48 = 0, raw4c = 0, raw78 = 0;
+    uint8_t flag50 = 0;
+    if (!rd(object2 + 0x48, &raw48, sizeof raw48) ||
+        !rd(object2 + 0x4c, &raw4c, sizeof raw4c) ||
+        !rd(object2 + 0x50, &flag50, sizeof flag50) ||
+        !rd(object2 + 0x78, &raw78, sizeof raw78)) {
         if (++tries >= 600) {
-            LOG("[RE0 timing probe] object chain readable but +0x48 is not a plausible FPS value (bits=%08x); no memory written", raw);
-            FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fprintf(pf, "object chain readable; +0x48 bits=%08x is outside 10..120 FPS\n", raw); fclose(pf); }
+            LOG("[RE0 timing probe] timing fields not readable; no memory written");
             done = 1;
         }
         return;
     }
-    FILE *pf = fopen("/tmp/re0_timing_probe.log", "w");
+    float value48, value4c, value78;
+    memcpy(&value48, &raw48, sizeof value48);
+    memcpy(&value4c, &raw4c, sizeof value4c);
+    memcpy(&value78, &raw78, sizeof value78);
+    FILE *pf = fopen("/tmp/re0_timing_probe.log", samples ? "a" : "w");
     if (pf) {
-        fprintf(pf, "build=fb4239aa962b429b3d1776af92d93e79\nslot=main+%#llx\nobject1=%p\nobject2=%p\nobject2+0x48=%g fps (bits=%08x)\n",
-                (unsigned long long)slot_off, (void *)(uintptr_t)object1,
-                (void *)(uintptr_t)object2, fps, raw);
+        if (!samples)
+            fprintf(pf, "RE0 read-only timing samples; build=fb4239aa962b429b3d1776af92d93e79\\nslot=main+%#llx\\nobject1=%p\\nobject2=%p\\nfields are raw bits plus float interpretation; +0x50 is a byte flag\\n",
+                    (unsigned long long)slot_off, (void *)(uintptr_t)object1, (void *)(uintptr_t)object2);
+        fprintf(pf, "sample=%d present=%d +0x48=%g (0x%08x) +0x4c=%g (0x%08x) +0x50=%u (0x%02x) +0x78=%g (0x%08x)\\n",
+                samples + 1, presents, value48, raw48, value4c, raw4c, (unsigned)flag50,
+                (unsigned)flag50, value78, raw78);
         fclose(pf);
     }
-    LOG("[RE0 timing probe] live MT timing chain verified: main+%#llx -> %p -> %p, +0x48=%g fps; read-only",
-        (unsigned long long)slot_off, (void *)(uintptr_t)object1,
-        (void *)(uintptr_t)object2, fps);
-    done = 1;
+    LOG("[RE0 timing probe] sample %d/12: +48=%g +4c=%g +50=%u +78=%g; read-only",
+        samples + 1, value48, value4c, (unsigned)flag50, value78);
+    samples++;
+    if (samples >= 12) done = 1;
 }
 
 // EXPERIMENTAL, intentionally unsafe RE0 timing-field test. This is opt-in only:
