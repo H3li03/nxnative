@@ -1,0 +1,102 @@
+RE0 ELF DYNAMIC RELOCATION REPORT
+File: tmp/re0-analysis/main.elf
+Size: 19505712 bytes
+Target GOT: 0x1284598
+
+PT_LOAD vaddr=0x0 filesz=0xa05fa8 offset=0x1000
+PT_LOAD vaddr=0xa06000 filesz=0x808c54 offset=0xa07000
+PT_LOAD vaddr=0x120f000 filesz=0x8a230 offset=0x1210000
+PT_DYNAMIC offset=0x12851c0 size=0x160
+
+DYNAMIC TAGS
+0x1: 0x24ab90
+DT_PLTRELSZ: 0x3258
+DT_PLTGOT: 0x1284370
+DT_HASH: 0xb41cd8
+DT_STRTAB: 0xd53be0
+DT_SYMTAB: 0xc01e58
+DT_RELA: 0xa06078
+DT_RELASZ: 0x138a08
+DT_RELAENT: 0x18
+DT_STRSZ: 0x24ab9a
+DT_SYMENT: 0x18
+0xc: 0x30
+0xd: 0x170
+DT_PLTREL: 0x7
+0x15: 0x0
+DT_JMPREL: 0xb3ea80
+0x19: 0x1297098
+0x1b: 0x2198
+DT_GNU_HASH: 0xb9a1d8
+0x6ffffff9: 0xcf84
+
+RELOCATIONS NEAR TARGET
+
+DT_RELA: addr=0xa06078 size=0x138a08 file_offset=10514552
+
+DT_JMPREL: addr=0xb3ea80 size=0x3258 file_offset=11795072
+  offset=0x1284498 type=1026 symbol_index=40 symbol=_ZN2nn8settings12LanguageCode4MakeENS0_8LanguageE addend=0
+  offset=0x12844a0 type=1026 symbol_index=41 symbol=_ZN2nn8settingseqERKNS0_12LanguageCodeES3_ addend=0
+  offset=0x12844a8 type=1026 symbol_index=43 symbol=strstr addend=0
+  offset=0x12844b0 type=1026 symbol_index=42 symbol=abort addend=0
+  offset=0x12844b8 type=1026 symbol_index=45 symbol=_ZN2nn2fs31QueryMountAddOnContentCacheSizeEPmi addend=0
+  offset=0x12844c0 type=1026 symbol_index=48 symbol=_ZnamRKSt9nothrow_t addend=0
+  offset=0x12844c8 type=1026 symbol_index=44 symbol=_ZN2nn2fs17MountAddOnContentEPKciPvm addend=0
+  offset=0x12844d0 type=1026 symbol_index=46 symbol=_ZN2nn2fs7UnmountEPKc addend=0
+  offset=0x12844d8 type=1026 symbol_index=50 symbol=_ZN2nn3aoc17CountAddOnContentEv addend=0
+  offset=0x12844e0 type=1026 symbol_index=49 symbol=_ZN2nn3aoc16ListAddOnContentEPiii addend=0
+  offset=0x12844e8 type=1026 symbol_index=51 symbol=expf addend=0
+  offset=0x12844f0 type=1026 symbol_index=52 symbol=logf addend=0
+  offset=0x12844f8 type=1026 symbol_index=53 symbol=powf addend=0
+  offset=0x1284500 type=1026 symbol_index=55 symbol=strncpy addend=0
+  offset=0x1284508 type=1026 symbol_index=54 symbol=strncasecmp addend=0
+  offset=0x1284510 type=1026 symbol_index=56 symbol=strncmp addend=0
+  offset=0x1284518 type=1026 symbol_index=57 symbol=srand addend=0
+  offset=0x1284520 type=1026 symbol_index=58 symbol=log10f addend=0
+  offset=0x1284528 type=1026 symbol_index=60 symbol=_ZN2nn2oe31LeaveExitRequestHandlingSectionEv addend=0
+  offset=0x1284530 type=1026 symbol_index=59 symbol=_ZN2nn2oe31EnterExitRequestHandlingSectionEv addend=0
+  offset=0x1284538 type=1026 symbol_index=63 symbol=strchr addend=0
+  offset=0x1284540 type=1026 symbol_index=62 symbol=atol addend=0
+  offset=0x1284548 type=1026 symbol_index=61 symbol=atoi addend=0
+  offset=0x1284550 type=1026 symbol_index=64 symbol=tolower addend=0
+  offset=0x1284558 type=1026 symbol_index=66 symbol=_ZN2nn2os15QueryMemoryInfoEPNS0_10MemoryInfoE addend=0
+  offset=0x1284560 type=1026 symbol_index=67 symbol=_ZN2nn2os19AllocateMemoryBlockEPmm addend=0
+  offset=0x1284568 type=1026 symbol_index=65 symbol=_ZN2nn2os15FreeMemoryBlockEmm addend=0
+  offset=0x1284570 type=1026 symbol_index=71 symbol=_ZN2nn2os12CreateThreadEPNS0_10ThreadTypeEPFvPvES3_S3_mi addend=0
+  offset=0x1284578 type=1026 symbol_index=74 symbol=_ZN2nn2os20SetThreadNamePointerEPNS0_10ThreadTypeEPKc addend=0
+  offset=0x1284580 type=1026 symbol_index=70 symbol=_ZN2nn2os11StartThreadEPNS0_10ThreadTypeE addend=0
+  offset=0x1284588 type=1026 symbol_index=72 symbol=_ZN2nn2os13DestroyThreadEPNS0_10ThreadTypeE addend=0
+  offset=0x1284590 type=1026 symbol_index=68 symbol=_ZN2nn2os10WaitThreadEPNS0_10ThreadTypeE addend=0
+  offset=0x1284598 type=1026 symbol_index=69 symbol=_ZN2nn2os11SleepThreadENS_8TimeSpanE addend=0
+  offset=0x12845a0 type=1026 symbol_index=73 symbol=_ZN2nn2os20ChangeThreadPriorityEPNS0_10ThreadTypeEi addend=0
+  offset=0x12845a8 type=1026 symbol_index=75 symbol=tanf addend=0
+  offset=0x12845b0 type=1026 symbol_index=76 symbol=toupper addend=0
+  offset=0x12845b8 type=1026 symbol_index=83 symbol=mktime addend=0
+  offset=0x12845c0 type=1026 symbol_index=79 symbol=_ZN2nn4time21GetDeviceLocationNameEPNS0_12LocationNameE addend=0
+  offset=0x12845c8 type=1026 symbol_index=78 symbol=_ZN2nn4time16LoadTimeZoneRuleEPNS0_12TimeZoneRuleERKNS0_12LocationNameE addend=0
+  offset=0x12845d0 type=1026 symbol_index=80 symbol=_ZN2nn4time23StandardUserSystemClock14GetCurrentTimeEPNS0_9PosixTimeE addend=0
+  offset=0x12845d8 type=1026 symbol_index=77 symbol=_ZN2nn4time14ToCalendarTimeEPNS0_12CalendarTimeEPNS0_22CalendarAdditionalInfoERKNS0_9PosixTimeERKNS0_12TimeZoneRuleE addend=0
+  offset=0x12845e0 type=1026 symbol_index=82 symbol=localtime addend=0
+  offset=0x12845e8 type=1026 symbol_index=84 symbol=strftime addend=0
+  offset=0x12845f0 type=1026 symbol_index=81 symbol=gmtime addend=0
+  offset=0x12845f8 type=1026 symbol_index=85 symbol=_ZN2nn4cstd5IsInfEf addend=0
+  offset=0x1284600 type=1026 symbol_index=94 symbol=_ZN2nn2fs14CloseDirectoryENS0_15DirectoryHandleE addend=0
+  offset=0x1284608 type=1026 symbol_index=104 symbol=strcat addend=0
+  offset=0x1284610 type=1026 symbol_index=95 symbol=_ZN2nn2fs15CreateDirectoryEPKc addend=0
+  offset=0x1284618 type=1026 symbol_index=96 symbol=_ZN2nn2fs15DeleteDirectoryEPKc addend=0
+  offset=0x1284620 type=1026 symbol_index=98 symbol=_ZN2nn2fs26DeleteDirectoryRecursivelyEPKc addend=0
+  offset=0x1284628 type=1026 symbol_index=87 symbol=_ZN2nn2fs10DeleteFileEPKc addend=0
+  offset=0x1284630 type=1026 symbol_index=88 symbol=_ZN2nn2fs10RenameFileEPKcS2_ addend=0
+  offset=0x1284638 type=1026 symbol_index=89 symbol=_ZN2nn2fs11GetFileSizeEPlNS0_10FileHandleE addend=0
+  offset=0x1284640 type=1026 symbol_index=100 symbol=_ZN2nn2fs8ReadFileEPmNS0_10FileHandleElPvm addend=0
+  offset=0x1284648 type=1026 symbol_index=103 symbol=_ZN2nn2fs9WriteFileENS0_10FileHandleElPKvmRKNS0_11WriteOptionE addend=0
+  offset=0x1284650 type=1026 symbol_index=102 symbol=_ZN2nn2fs9FlushFileENS0_10FileHandleE addend=0
+  offset=0x1284658 type=1026 symbol_index=101 symbol=_ZN2nn2fs9CloseFileENS0_10FileHandleE addend=0
+  offset=0x1284660 type=1026 symbol_index=105 symbol=strrchr addend=0
+  offset=0x1284668 type=1026 symbol_index=92 symbol=_ZN2nn2fs13OpenDirectoryEPNS0_15DirectoryHandleEPKci addend=0
+  offset=0x1284670 type=1026 symbol_index=97 symbol=_ZN2nn2fs22GetDirectoryEntryCountEPlNS0_15DirectoryHandleE addend=0
+  offset=0x1284678 type=1026 symbol_index=93 symbol=_ZN2nn2fs13ReadDirectoryEPlPNS0_14DirectoryEntryENS0_15DirectoryHandleEl addend=0
+  offset=0x1284680 type=1026 symbol_index=91 symbol=_ZN2nn2fs12GetEntryTypeEPNS0_18DirectoryEntryTypeEPKc addend=0
+  offset=0x1284688 type=1026 symbol_index=86 symbol=_ZN2nn2fs10CreateFileEPKcl addend=0
+  offset=0x1284690 type=1026 symbol_index=99 symbol=_ZN2nn2fs8OpenFileEPNS0_10FileHandleEPKci addend=0
+  offset=0x1284698 type=1026 symbol_index=90 symbol=_ZN2nn2fs11SetFileSizeENS0_10FileHandleEl addend=0
