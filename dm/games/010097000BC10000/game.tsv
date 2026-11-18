@@ -34,6 +34,6 @@ sys_resource	0x0
 shader_groups	/nativeNXx64/=nativenxx64
 shader_note	resident evil 0 shaders
 
-# Frame-rate selector: keep the original 30 fps as the tested default; 60/120 remain experimental until the RE0 timing path is implemented.
-fps_target	30
+# Experimental RE0 1.0.0 test: hle_fpslock.c writes the paired +0x48/+0x4c timing fields to 60. Revert to 30 to disable the experiment.
+fps_target	60
 fps_max	120
