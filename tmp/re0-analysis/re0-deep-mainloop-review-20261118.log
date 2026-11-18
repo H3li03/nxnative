@@ -1,0 +1,39 @@
+RE0 HD REMASTER - DEEPER MAIN-LOOP TIMING REVIEW
+Date: 2026-11-18
+Build ID: fb4239aa962b429b3d1776af92d93e79
+Repository: H3li03/nxnative
+Branch: analysis/re0-main-render-field-context-20261117-175603
+
+NEW CONFIRMED FINDINGS
+
+1. The 30.0 field is consumed directly by sMain::move, not merely by sRender::end.
+At 0x7aa7ac, sMain::move loads s0 from [x19+0x48]. This value participates in converting elapsed counter ticks to the main-loop's simulation-time accumulator:
+- 0x7aa7b0..0x7aa7bc: elapsed counter delta is multiplied by 1000 and divided by a clock-frequency value.
+- 0x7aa7c4..0x7aa7d4: elapsed delta is multiplied by the float from [x19+0x48] and converted to integer.
+- 0x7aa894..0x7aa8b4 and 0x7aa990..0x7aa9c4: the same float scales additional elapsed intervals while accumulating/catching up.
+This explains why changing the shared 30.0 value to 60.0 accelerates simulation: it is an actual time-scale conversion factor in the main loop.
+
+2. The fixed-wait path is a catch-up loop, not simply a one-time 30 FPS sleep.
+At 0x7aa824 the flag [x19+0x50] selects the fixed-wait path. When the accumulator has not reached its target, it calls SleepThread with 1,000,000 ns at 0x7aa83c..0x7aa840, samples the clock again, updates elapsed time, and loops at 0x7aa8b8. It then updates the accumulated frame/time state and dispatches work.
+The alternate path computes a dynamic sleep duration at 0x7aa920..0x7aa934, also through SleepThread, then continues accumulating elapsed time and eventually reaches the same update dispatch around 0x7aaa10..0x7aaa34.
+Therefore, bypassing sRender::end alone cannot remove the main-loop cadence constraint.
+
+3. The 30.0 write in the state/restore path is deliberate reset behavior.
+At 0x2b6858..0x2b688c, the global timing object is loaded from 0x12850650; its +0x48/+0x4c/+0x50 fields are copied into a state structure, then +0x48 is explicitly reset to 30.0 and setFrameWait is called with 0. This is not evidence of a live refresh-rate read. It is an explicit timing-mode reset.
+A second initialization path at 0x38e5f0..0x38e604 also writes 30.0.
+
+4. sMain::setFrameWait at 0x7aa330 only changes [this+0x50], resets the accumulator bookkeeping, and sets [this+0x78] to 1.0. It does not change +0x48. This confirms that +0x50 selects the wait strategy while +0x48 remains the time-scale conversion.
+
+5. The timing helper at 0x235a90 is not yet established as a main-loop caller.
+It reads a different singleton pointer at 0x12850608 and then the timing object at 0x12850650. It uses the timing object's +0x48 in a 1/value * 30 calculation and accumulates into caller [x19+0x48]. Existing caller dump was mislabeled around 0x8d3a60 and does not prove a direct call to 0x235a90. Do not treat it as a confirmed 60 FPS switch.
+
+PATCH CONCLUSION
+No safe patch is justified yet. The main-loop's +0x48 is intrinsically involved in elapsed-time scaling, so changing it globally or simply changing 30 to 60 is unsafe. The prior negative tests on sRender::end remain consistent: the main loop has its own accumulation/catch-up and update-dispatch path. A safe 60 FPS solution must identify a separate presentation cadence or split the conversion so simulation delta remains unchanged.
+
+NEXT RESEARCH
+- Map the update-dispatch calls at 0x93ca80 / 0x93cac0 and their downstream consumers, to see whether presentation and simulation are separable.
+- Resolve whether the 0x235a90 helper is called through a vtable/function pointer and identify its caller.
+- Trace all stores to timing singleton +0x48 and establish whether any runtime path can select another rate.
+- Resolve the indirect callback and global 0x128d310 only if it remains relevant after the dispatch path is understood.
+
+No executable patch was created or tested in this pass.
