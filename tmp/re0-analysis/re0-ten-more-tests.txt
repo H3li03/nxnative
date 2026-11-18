@@ -1,0 +1,563 @@
+
+========================================================================
+1. SIMBOLI DINAMICI ELF
+========================================================================
+Nessun risultato trovato.
+
+========================================================================
+2. RILOCazioni GOT/PLT
+========================================================================
+Nessun risultato trovato.
+
+========================================================================
+3. setRenderFps
+========================================================================
+Nessun risultato trovato.
+
+========================================================================
+4. setRefreshRate
+========================================================================
+Nessun risultato trovato.
+
+========================================================================
+5. setPresentInterval
+========================================================================
+Nessun risultato trovato.
+
+========================================================================
+6. waitPresentTexture
+========================================================================
+Nessun risultato trovato.
+
+========================================================================
+7. PRESENTAZIONE
+========================================================================
+Nessun risultato trovato.
+
+========================================================================
+8. SLEEP NEL LOOP PRINCIPALE
+========================================================================
+  3ac520:      	mov	w8, #0x4240             // =16960
+  3ac524:      	movk	w8, #0xf, lsl #16
+  3ac528:      	umull	x0, w1, w8
+  3ac52c:      	b	0xa04238 <PT_LOAD#0+0xa04238>
+  3ac530:      	add	x0, x0, #0x58
+  3ac534:      	b	0xa04248 <PT_LOAD#0+0xa04248>
+		...
+---
+  447f4c:      	mov	w9, #0x4240             // =16960
+  447f50:      	movk	w9, #0xf, lsl #16
+  447f54:      	mul	x0, x8, x9
+  447f58:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  447f5c:      	mov	x0, x19
+  447f60:      	bl	0x447ba0 <PT_LOAD#0+0x447ba0>
+  447f64:      	ldrb	w8, [x19, #0x540]
+---
+  451524:      	cbnz	x24, 0x45153c <PT_LOAD#0+0x45153c>
+  451528:      	b	0x451578 <PT_LOAD#0+0x451578>
+  45152c:      	mov	x0, x23
+  451530:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  451534:      	ldr	w8, [x19, #0x77c]
+  451538:      	cbnz	w8, 0x45152c <PT_LOAD#0+0x45152c>
+  45153c:      	ldr	x8, [x24]
+---
+  4561ec:      	ldr	w8, [x19, #0x30]
+  4561f0:      	cbz	w8, 0x456204 <PT_LOAD#0+0x456204>
+  4561f4:      	mov	x0, x21
+  4561f8:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  4561fc:      	ldr	w8, [x19, #0x30]
+  456200:      	cbnz	w8, 0x4561f4 <PT_LOAD#0+0x4561f4>
+  456204:      	mov	w8, #0x1328             // =4904
+---
+  45620c:      	ldr	w8, [x19, #0x15a8]
+  456210:      	cbz	w8, 0x456224 <PT_LOAD#0+0x456224>
+  456214:      	mov	x0, x21
+  456218:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  45621c:      	ldr	w8, [x19, #0x15a8]
+  456220:      	cbnz	w8, 0x456214 <PT_LOAD#0+0x456214>
+  456224:      	orr	w8, wzr, #0x8
+---
+  4562f0:      	mov	w21, #0x4240            // =16960
+  4562f4:      	movk	w21, #0xf, lsl #16
+  4562f8:      	mov	x0, x21
+  4562fc:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  456300:      	ldr	w8, [x19, #0x280]
+  456304:      	cbnz	w8, 0x4562f8 <PT_LOAD#0+0x4562f8>
+  456308:      	cmp	w20, #0x8
+---
+  456588:      	mov	w20, #0x4240            // =16960
+  45658c:      	movk	w20, #0xf, lsl #16
+  456590:      	mov	x0, x20
+  456594:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  456598:      	ldr	w8, [x19, #0x15a8]
+  45659c:      	cbnz	w8, 0x456590 <PT_LOAD#0+0x456590>
+  4565a0:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+---
+  456694:      	mov	w20, #0x4240            // =16960
+  456698:      	movk	w20, #0xf, lsl #16
+  45669c:      	mov	x0, x20
+  4566a0:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  4566a4:      	ldr	w8, [x19, #0x15a8]
+  4566a8:      	cbnz	w8, 0x45669c <PT_LOAD#0+0x45669c>
+  4566ac:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+---
+  456798:      	mov	w20, #0x4240            // =16960
+  45679c:      	movk	w20, #0xf, lsl #16
+  4567a0:      	mov	x0, x20
+  4567a4:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  4567a8:      	ldr	w8, [x19, #0x15a8]
+  4567ac:      	cbnz	w8, 0x4567a0 <PT_LOAD#0+0x4567a0>
+  4567b0:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+---
+  4583ac:      	mov	w24, #0x7884            // =30852
+  4583b0:      	movk	w24, #0x6, lsl #16
+  4583b4:      	mov	x0, x21
+  4583b8:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  4583bc:      	ldr	x8, [x25]
+  4583c0:      	ldr	w8, [x8, x24]
+  4583c4:      	cmp	w22, w8
+---
+  45871c:      	mov	w20, #0x4240            // =16960
+  458720:      	movk	w20, #0xf, lsl #16
+  458724:      	mov	x0, x20
+  458728:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  45872c:      	ldr	w8, [x19, #0x30]
+  458730:      	cbnz	w8, 0x458724 <PT_LOAD#0+0x458724>
+  458734:      	ldr	x8, [x19, #0x1640]
+---
+  4596e8:      	mov	w20, #0x4240            // =16960
+  4596ec:      	movk	w20, #0xf, lsl #16
+  4596f0:      	mov	x0, x20
+  4596f4:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  4596f8:      	ldr	w8, [x19, #0x15a8]
+  4596fc:      	cbnz	w8, 0x4596f0 <PT_LOAD#0+0x4596f0>
+  459700:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+---
+  459840:      	mov	w20, #0x4240            // =16960
+  459844:      	movk	w20, #0xf, lsl #16
+  459848:      	mov	x0, x20
+  45984c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  459850:      	ldr	w8, [x19, #0x15a8]
+  459854:      	cbnz	w8, 0x459848 <PT_LOAD#0+0x459848>
+  459858:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+---
+  45991c:      	mov	w20, #0x4240            // =16960
+  459920:      	movk	w20, #0xf, lsl #16
+  459924:      	mov	x0, x20
+  459928:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  45992c:      	ldr	w8, [x19, #0x15a8]
+  459930:      	cbnz	w8, 0x459924 <PT_LOAD#0+0x459924>
+  459934:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+---
+  459a00:      	mov	w20, #0x4240            // =16960
+  459a04:      	movk	w20, #0xf, lsl #16
+  459a08:      	mov	x0, x20
+  459a0c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  459a10:      	ldr	w8, [x19, #0x15a8]
+  459a14:      	cbnz	w8, 0x459a08 <PT_LOAD#0+0x459a08>
+  459a18:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+---
+  5422a0:      	mov	w21, #0x9680            // =38528
+  5422a4:      	movk	w21, #0x98, lsl #16
+  5422a8:      	mov	x0, x21
+  5422ac:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  5422b0:      	ldr	w8, [x20, #0x34]
+  5422b4:      	cmp	w8, #0x9
+  5422b8:      	b.ne	0x5422a8 <PT_LOAD#0+0x5422a8>
+---
+  56e220:      	mov	w21, #0x9680            // =38528
+  56e224:      	movk	w21, #0x98, lsl #16
+  56e228:      	mov	x0, x21
+  56e22c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  56e230:      	ldr	w8, [x20, #0x2c]
+  56e234:      	cmp	w8, #0x9
+  56e238:      	b.ne	0x56e228 <PT_LOAD#0+0x56e228>
+---
+  768354:      	mov	w21, #0x4240            // =16960
+  768358:      	movk	w21, #0xf, lsl #16
+  76835c:      	mov	x0, x21
+  768360:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  768364:      	ldr	x8, [x20]
+  768368:      	cbnz	x8, 0x76835c <PT_LOAD#0+0x76835c>
+  76836c:      	adrp	x21, 0x128a000 <PT_LOAD#0+0x128a000>
+---
+  793eec:      	b	0x793f04 <PT_LOAD#0+0x793f04>
+  793ef0:      	mov	w0, #0x4240             // =16960
+  793ef4:      	movk	w0, #0xf, lsl #16
+  793ef8:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  793efc:      	ldrb	w8, [x19, #0x30]
+  793f00:      	cbz	w8, 0x793db0 <PT_LOAD#0+0x793db0>
+  793f04:      	ldp	x29, x30, [sp, #0x60]
+---
+  7a9338:      	b.lo	0x7a9320 <PT_LOAD#0+0x7a9320>
+  7a933c:      	b	0x7a9360 <PT_LOAD#0+0x7a9360>
+  7a9340:      	mov	x0, x20
+  7a9344:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7a9348:      	ldr	w8, [x24]
+  7a934c:      	cbz	w8, 0x7a9340 <PT_LOAD#0+0x7a9340>
+  7a9350:      	ldr	w8, [x19, #0xac]
+---
+  7aa834:      	movk	w20, #0xf, lsl #16
+  7aa838:      	str	x13, [sp, #0x8]
+  7aa83c:      	mov	x0, x20
+  7aa840:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7aa844:      	bl	0x9c1120 <PT_LOAD#0+0x9c1120>
+  7aa848:      	str	x0, [x22]
+  7aa84c:      	ldr	w8, [x23]
+---
+  7aa928:      	mov	w9, #0x4240             // =16960
+  7aa92c:      	movk	w9, #0xf, lsl #16
+  7aa930:      	umull	x0, w8, w9
+  7aa934:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7aa938:      	ldr	s8, [x19, #0x78]
+  7aa93c:      	fcmp	s8, s10
+  7aa940:      	b.pl	0x7aa9d0 <PT_LOAD#0+0x7aa9d0>
+---
+  7ab8ac:      	cbz	w8, 0x7ab7cc <PT_LOAD#0+0x7ab7cc>
+  7ab8b0:      	b	0x7ab904 <PT_LOAD#0+0x7ab904>
+  7ab8b4:      	mov	x0, x24
+  7ab8b8:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7ab8bc:      	ldrb	w8, [x19, #0x248]
+  7ab8c0:      	cbz	w8, 0x7ab7cc <PT_LOAD#0+0x7ab7cc>
+  7ab8c4:      	b	0x7ab904 <PT_LOAD#0+0x7ab904>
+---
+  7ce72c:      	ldr	x22, [x22, #0x310]
+  7ce730:      	b	0x7ce73c <PT_LOAD#0+0x7ce73c>
+  7ce734:      	mov	x0, x20
+  7ce738:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7ce73c:      	ldr	x8, [x22]
+  7ce740:      	mov	x0, x21
+  7ce744:      	mov	x1, x20
+---
+  7d54fc:      	cmp	w26, w27
+  7d5500:      	b.lo	0x7d5540 <PT_LOAD#0+0x7d5540>
+  7d5504:      	mov	x0, x22
+  7d5508:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7d550c:      	ldr	x8, [x19, #0x8]
+  7d5510:      	add	x0, x8, #0x8
+  7d5514:      	bl	0xa03ee8 <PT_LOAD#0+0xa03ee8>
+---
+  7d6468:      	b.lo	0x7d6450 <PT_LOAD#0+0x7d6450>
+  7d646c:      	b	0x7d6490 <PT_LOAD#0+0x7d6490>
+  7d6470:      	mov	x0, x20
+  7d6474:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7d6478:      	ldrb	w8, [x23]
+  7d647c:      	cbz	w8, 0x7d6470 <PT_LOAD#0+0x7d6470>
+  7d6480:      	ldr	w8, [x26]
+---
+  7d686c:      	ldrb	w8, [x20]
+  7d6870:      	cbz	w8, 0x7d6884 <PT_LOAD#0+0x7d6884>
+  7d6874:      	mov	x0, x25
+  7d6878:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7d687c:      	ldrb	w8, [x20]
+  7d6880:      	cbnz	w8, 0x7d6874 <PT_LOAD#0+0x7d6874>
+  7d6884:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+---
+  7d6978:      	b	0x7d6998 <PT_LOAD#0+0x7d6998>
+  7d697c:      	mov	w0, #0x1200             // =4608
+  7d6980:      	movk	w0, #0x7a, lsl #16
+  7d6984:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+
+========================================================================
+9. COSTANTI E CALCOLI TEMPORALI
+========================================================================
+  7aa790: b4000069     	cbz	x9, 0x7aa79c <PT_LOAD#0+0x7aa79c>
+  7aa798: 5400006d     	b.le	0x7aa7a4 <PT_LOAD#0+0x7aa7a4>
+  7aa7b8: 9acd0d4b     	sdiv	x11, x10, x13
+  7aa7cc: 1e610841     	fmul	d1, d2, d1
+  7aa7e0: b24823ec     	mov	x12, #-0xffffffffffffff // =-72057594037927935
+  7aa7fc: f2bc6a6c     	movk	x12, #0xe353, lsl #16
+  7aa800: f2d374ac     	movk	x12, #0x9ba5, lsl #32
+  7aa804: f2e4188c     	movk	x12, #0x20c4, lsl #48
+  7aa824: 340005e8     	cbz	w8, 0x7aa8e0 <PT_LOAD#0+0x7aa8e0>
+  7aa82c: 540004aa     	b.ge	0x7aa8c0 <PT_LOAD#0+0x7aa8c0>
+  7aa834: 72a001f4     	movk	w20, #0xf, lsl #16
+  7aa840: 9409667e     	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7aa844: 94085a37     	bl	0x9c1120 <PT_LOAD#0+0x9c1120>
+  7aa864: 1e600820     	fmul	d0, d1, d0
+  7aa8a4: 1e610803     	fmul	d3, d0, d1
+  7aa8b8: 54fffc2b     	b.lt	0x7aa83c <PT_LOAD#0+0x7aa83c>
+  7aa8c0: 32091be8     	orr	w8, wzr, #0x3f800000
+  7aa8d4: 540009ed     	b.le	0x7aaa10 <PT_LOAD#0+0x7aaa10>
+  7aa8dc: 1400004d     	b	0x7aaa10 <PT_LOAD#0+0x7aaa10>
+  7aa8ec: 1e691821     	fdiv	d1, d1, d9
+  7aa8f8: 90004108     	adrp	x8, 0xfca000 <PT_LOAD#0+0xfca000>
+  7aa8fc: 1e21180a     	fdiv	s10, s0, s1
+  7aa904: 1e201820     	fdiv	s0, s1, s0
+  7aa908: 1e201001     	fmov	s1, #2.00000000
+  7aa910: 1e220800     	fmul	s0, s0, s2
+  7aa914: 1e212000     	fcmp	s0, s1
+  7aa91c: 5400010b     	b.lt	0x7aa93c <PT_LOAD#0+0x7aa93c>
+  7aa92c: 72a001e9     	movk	w9, #0xf, lsl #16
+  7aa934: 94096641     	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7aa93c: 1e2a2100     	fcmp	s8, s10
+  7aa940: 54000485     	b.pl	0x7aa9d0 <PT_LOAD#0+0x7aa9d0>
+  7aa944: 940859f7     	bl	0x9c1120 <PT_LOAD#0+0x9c1120>
+  7aa964: 1e600820     	fmul	d0, d1, d0
+  7aa99c: 1e610803     	fmul	d3, d0, d1
+  7aa9b8: 1e691800     	fdiv	d0, d0, d9
+  7aa9c0: 1e282140     	fcmp	s10, s8
+  7aa9cc: 54fffbcc     	b.gt	0x7aa944 <PT_LOAD#0+0x7aa944>
+  7aa9d0: 1e202108     	fcmp	s8, #0.0
+  7aa9d4: 54000464     	b.mi	0x7aaa60 <PT_LOAD#0+0x7aaa60>
+  7aa9dc: 1e202100     	fcmp	s8, s0
+  7aa9e0: 540004ac     	b.gt	0x7aaa74 <PT_LOAD#0+0x7aaa74>
+  7aa9e8: 1e202100     	fcmp	s8, s0
+  7aa9ec: 5400006d     	b.le	0x7aa9f8 <PT_LOAD#0+0x7aa9f8>
+  7aa9fc: 1e600920     	fmul	d0, d9, d0
+  7aaa14: 1e280800     	fmul	s0, s0, s8
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x7aa780,0x7aaa20) specified by --start-address/--stop-address
+
+========================================================================
+10. OVERRIDE DEL PROGETTO
+========================================================================
+dm/tools/docs_patches.py:128: ('present_interval', '', {'what': 'one frame per display tick', 'now': 'game', 'goal': 'game', 'purpose': 'frame rate', 'why': 'right only for games whose logic does not count frames'}),
+dm/tools/ue_fixed_rate.py:3: (UE_FIXED_RATE_PTR, GEngine's offset in main, and UE_FIXED_RATE_FIELD, the property's offset in UEngine), and the host writes the profile's fps_target there (hle_fpslock.c).
+dm/tools/ue_fixed_rate.py:6: Switch frame pace, main+0x1e1e904, and Pikmin 4's by the engine's default), so their gameplay stayed at 30 with the present interval raised. The value is the frame rate, so the game's speed
+dm/tools/ue_fixed_rate.py:19: time that passed (Princess Peach: Showtime!, at 60 by the present interval alone) is left as it is, and an object that is not the engine would also need the flag's bit and a frame rate.
+dm/tools/ue_cvar.py:3: and the host writes the variables the profile decides on (hle_fpslock.c: the frame limit and the present interval, fps_target and ue_fps_cvar; hle_uecvar.c: the texture streaming pool,
+dm/tools/ue_cvar.py:13: # The variables the host may write: the engine's frame limit, its present interval (rhi., or nvn. in the Switch RHI of UE 4.18), the texture streaming pool, and a game's own frame-limit
+dm/tools/fps_target.py:3: global pointer's offset, and FPS_TARGET_FIELD, the field's offset in the object it points to), and the host writes the profile's fps_target there (hle_fpslock.c).
+dm/tools/fps_target.py:4: The field is an int32 frame rate in an object a global points to. Its readers load it into a float register, convert it and divide 60.0 by it: the vsyncs one frame stands for, by which
+dm/tools/unity_fps.py:3: the profile's fps_target there (hle_fpslock.c).
+dm/tools/unity_fps.py:8: - QualitySettings.get_vSyncCount reads the current quality level's count: the QualitySettings object from a global (adrp; ldr xQ, [xP, #lo]) or from the engine's managers array
+dm/tools/unity_fps.py:10: (add xL, xA, xI, lsl #S, or mov wT, #SIZE; madd xL, xI, xT, xA), the count (ldr w0, [xL, #VSYNC]): UNITY_QS_PTR (the global), _IDX, _ARR, _SIZE, _VSYNC.
+dm/tools/unity_fps.py:11: Found on The Rogue Prince of Persia 1.1.0 (Unity 6000.0.64f1): targetFrameRate at main+0x8d33de8, vSyncCount at [[main+0x90957d8]+0x20] + [[main+0x90957d8]+0x64] * 0x100 + 0x88,
+dm/tools/unity_fps.py:12: which the game sets to 2 (present interval 2) and leaves targetFrameRate at -1. Checked on the Unity mains on the drives (2026-11-08): Donkey Kong Country Returns HD (6000.0.28f1)
+dm/tools/unity_fps.py:15: the manager getter; Return of the Obra Dinn (2017.4) registers from code (get_vSyncCount only), its managers-array lookup adding the index before an offset load. Unity 2022.3 (SUPER
+dm/tools/unity_fps.py:20: TFR, VSYNC = 'UnityEngine.Application::set_targetFrameRate', 'UnityEngine.QualitySettings::get_vSyncCount'
+dm/tools/unity_fps.py:123: def vsync_count(img, f, text_end):
+dm/tools/unity_fps.py:124: """(QualitySettings global, level index offset, levels offset, level size, count offset) from the vSyncCount getter, read straight-line, or None"""
+dm/tools/unity_fps.py:163: """({'target': global offset, 'qs': (global, idx, arr, size, vsync)} with what was found, reason); ({}, why) when main has no table. The reason has '[RED] ' when the table is
+dm/tools/unity_fps.py:166: calls = icall_table(img, rel, ro_off, data_off) or icall_code(img, rel, text_end, ro_off, data_off, (TFR, VSYNC))
+dm/tools/unity_fps.py:173: if VSYNC in calls:
+dm/tools/unity_fps.py:174: v = vsync_count(img, calls[VSYNC], text_end)
+dm/tools/unity_fps.py:175: if v is not None and v[0] >= data_off: out['qs'] = v; why.append(f'vSyncCount at [[{v[0]:#x}]+{v[2]:#x}] + [[{v[0]:#x}]+{v[1]:#x}] * {v[3]:#x} + {v[4]:#x}')
+dm/tools/unity_fps.py:176: else: why.append(f'[RED] vSyncCount getter at {calls[VSYNC]:#x} not read')
+dm/tools/impact_map.tsv:125: dm/host/hle_fpslock.c	present:*	build-gated engine frame limits and dynamic resolution
+dm/tools/patch_nso.py:89: #   FRAME_STEP = {build ID: function(ctx)}: the frame step stubs of a main ("Frame step in whole vsyncs" below)
+dm/tools/patch_nso.py:184: # The fixups table names each one's TAutoConsoleVariable (UE_CVAR:<name>); the host writes those the profile decides on (hle_fpslock.c, hle_uecvar.c)
+dm/tools/patch_nso.py:192: # The fixups table names the global pointer and the field (FPS_TARGET_PTR, FPS_TARGET_FIELD); the host writes the profile's fps_target there (hle_fpslock.c)
+dm/tools/patch_nso.py:199: # The fixups table names GEngine's offset, the property's and the flag's (UE_FIXED_RATE_PTR, UE_FIXED_RATE_FIELD, UE_FIXED_RATE_FLAG); the host writes the profile's fps_target there while the flag is set (hle_fpslock.c)
+dm/tools/patch_nso.py:205: # ---- Unity's frame rate (main: dm/tools/unity_fps.py finds Application.targetFrameRate and QualitySettings' vSyncCount through the engine's internal-call table, without a build ID) ----
+dm/tools/patch_nso.py:206: # The fixups table names their places (UNITY_TARGET_FPS; UNITY_QS_PTR, _IDX, _ARR, _SIZE, _VSYNC); the host writes the profile's fps_target there (hle_fpslock.c)
+dm/tools/patch_nso.py:1689: # ---- Frame step in whole vsyncs (the mains whose patch file has FRAME_STEP: The Legend of Zelda: Tears of the Kingdom 1.4.3, Breath of the Wild 1.9.0, Hyrule Warriors: Age of Calamity 1.3.0,
+dm/tools/patch_nso.py:1691: # The games step their game time by a whole number of vsyncs (1/60 s) per frame that their own interval logic picks. With the stubs the host picks it (hle_nvn.c fstep_tick,
+dm/tools/patch_nso.py:1692: # nvn_fstep.h): the step is the number of vsyncs the host keeps the frame on screen (1 = 60 fps, 2 = 30 when 60 does not hold), plus one while the game is behind real time after
+dm/tools/patch_nso.py:1697: # +0x20 u32 step in vsyncs (host; 0 = not decided yet), +0x24 u32 a step the game fixes itself (BotW's VFR override; 0 = none), +0x28 u32 AoC's vsyncs per update, marked by
+dm/tools/patch_nso.py:1698: # its first stub (0 = off), +0x30 u64 vsyncs stepped (the stubs; logged by the host to check the game's speed), +0x40 u32 1 = the game's own dynamic resolution runs, 0 = its
+dm/tools/patch_nso.py:1702: # ctx.step_max = n says the stubs hand the game steps of at most n vsyncs (its own interval logic stops there; 0 = FSTEP_MAX, 3), so the host holds frames and pays back at most n,
+dm/tools/patch_nso.py:1708: STEP_MAX = 0   # n = the stubs give the game steps of at most n vsyncs (ctx.step_max): the fixups table says so (STEP_MAX n), and the host holds frames at most n vsyncs (nvn_fstep.h smax)
+dm/tools/patch_nso.py:2106: if 'qs' in UNITY_FPS: f.write(''.join(f'# UNITY_QS_{k}\t{v:#x}\n' for k, v in zip(('PTR', 'IDX', 'ARR', 'SIZE', 'VSYNC'), UNITY_FPS['qs'])))   # its QualitySettings' vSyncCount (unity_fps.py)
+dm/tools/lint_c_baseline.tsv:103: dm/host/tests/t_fpslock.c	clang-analyzer-core.NullDereference	1
+dm/tools/usage.py:9: #   present <TAB> <feature> <TAB> 1           the frame step and present path the log names (frame step mode, present interval changes, display link, pipeline paths)
+dm/tools/usage.py:84: ('frame_step_vsync', re.compile(r'frame step in whole vsyncs')),
+dm/tools/usage.py:86: ('present_interval_changes', re.compile(r'the game sets present interval')),
+dm/tools/tests/test_unity_fps.py:69: def image(funcs: dict, names=(unity_fps.TFR, OTHER, unity_fps.VSYNC), table=True, got=()):
+dm/tools/tests/test_unity_fps.py:96: out, why = find(image({unity_fps.TFR: setter, unity_fps.VSYNC: getter6000}))
+dm/tools/tests/test_unity_fps.py:101: funcs = {'ctx': context, unity_fps.VSYNC: (getter2021, ['ctx']), REAL: setter, unity_fps.TFR: thunk}
+dm/tools/tests/test_unity_fps.py:102: out, why = find(image(funcs, names=(REAL, unity_fps.TFR, OTHER, unity_fps.VSYNC)))
+dm/tools/tests/test_unity_fps.py:106: names = (unity_fps.TFR, OTHER, unity_fps.VSYNC)
+dm/tools/tests/test_unity_fps.py:108: funcs = {'ctx': ctx, 'reg': lambda at: [RET], unity_fps.TFR: setter, OTHER: lambda at: [RET], unity_fps.VSYNC: (getter2021, ['ctx']),
+dm/tools/tests/test_unity_fps.py:116: names = (unity_fps.TFR, unity_fps.TFR + 'X', unity_fps.VSYNC)
+dm/tools/tests/test_unity_fps.py:124: out, why = find(image({unity_fps.TFR: setter, unity_fps.VSYNC: lambda at: [movz(0, 1), RET]}))
+dm/tools/tests/test_unity_fps.py:126: self.assertIn('[RED] vSyncCount getter', why)
+dm/tools/tests/test_unity_fps.py:129: out, why = find(image({unity_fps.TFR: setter, unity_fps.VSYNC: getter6000}, table=False))
+dm/tools/tests/test_astral_fps.py:59: def step(self, vsyncs=1, variable=True):
+dm/tools/tests/test_astral_fps.py:60: self.u.mem_write(self.state+0x20, struct.pack('<I', vsyncs))
+dm/tools/tests/test_astral_fps.py:67: for vsyncs, frames in ((1, 60), (2, 30)):
+dm/tools/tests/test_astral_fps.py:71: dt, ticks = self.step(vsyncs)
+dm/tools/tests/test_astral_fps.py:72: self.assertEqual(dt, vsyncs/2)
+dm/tools/tests/test_astral_fps.py:151: for vsyncs, frames in ((1, 60), (2, 30)):
+dm/tools/tests/test_astral_fps.py:154: self.step(vsyncs)
+dm/tools/tests/test_architecture.py:2: A comment may cite one, like hle_fpslock.c's path to an FPSLocker config. A game build's ID has its own check: docs_patches.py stops on a host row it cannot classify (test_docs.py).
+dm/tools/tests/test_patches.py:137: # its stub caps the step it gives the game at 2 (mov w8,#2; csel ls), the game's own intervals, and says so (ctx.step_max), or the host holds frames 3 vsyncs while the game
+dm/host/loader.c:282: else if (!strcmp(key, "UNITY_QS_VSYNC")) m->unity_qs_vsync = (uint32_t)v;
+dm/host/loader.c:305: // Frame step state (the page after the key page, read-write; layout in patch_nso.py FRAME_STEP): the rewriter's stubs step the game by the host's whole vsyncs capped at this
+dm/host/loader.c:372: LOG("%s: frame step %s%s (%s)", g_fps_mod, !t ? "as the game sets it" : "in whole vsyncs decided by the host", t ? cap : "", e ? "DM_FPS_TARGET" : "game profile fps_target");
+dm/host/hle_fpslock.c:1: // Engine frame limits kept in game memory (FPSLocker's evaluate_write entries): some engines cap their own frame rate with a value the host can raise. The target is the profile's
+dm/host/hle_fpslock.c:5: // Nor do Unity's Application.targetFrameRate and QualitySettings.vSyncCount: the rewriter finds them through the engine's internal-call table (dm/tools/unity_fps.py, main's fixups UNITY_*).
+dm/host/hle_fpslock.c:8: // present interval, rhi.SyncInterval (nvn.SyncInterval in UE 4.18's Switch RHI: DRAGON QUEST XI S). Each is a TAutoConsoleVariable whose +0x10 points to its value, the game thread's
+dm/host/hle_fpslock.c:16: // What a field holds: the frame rate as a float, double or int32, vsyncs per frame (60 / frame rate) as an int32, or the frame time in milliseconds as a float. Copies: consecutive copies of the
+dm/host/hle_fpslock.c:19: // At 60 a frame time gets MS_MARGIN less than the vsync: such a limiter counts from the frame's start, and the work after it (the GPU fence wait, the next frame's start) adds to the
+dm/host/hle_fpslock.c:20: // period, so frames at exactly 16.667 ms came 0.11 ms late each on the Mac (59.6 fps, every 150th frame shown two vsyncs). Slightly shorter, the host's present pacing sets the pace
+dm/host/hle_fpslock.c:21: // (the acquire waits): Luigi's Mansion 3's display interval p99 18.69 → 16.67 ms, 60.0 fps. Not at 30: with present_interval display the presents follow every vsync and hold no
+dm/host/hle_fpslock.c:25: enum { FPS_F32, VSYNCS_I32, MS_F32, FPS_I32, TICKS_U32, SECS_F32, MODE_U32, FPS_F64 };
+dm/host/hle_fpslock.c:32: // at the same speed. The game sets 30 after boot; it also asks for present interval 2, which the profile's present_interval display ignores.
+dm/host/hle_fpslock.c:33: // From masagrator's FPSLocker config for this build (FPSLocker-Warehouse, patches/0100B04011742000/C9A3DD7702075ECD.yaml)
+dm/host/hle_fpslock.c:40: // steps by the time that really passed. The game asks for present interval 2 too, which the profile's present_interval display ignores; both are needed
+dm/host/hle_fpslock.c:44: // (3D), is a float of seconds per frame. Its limiter, a spin on the system tick at main+0x483588..+0x4835a4, is cut by the rewriter (patches.py). From masagrator's FPSLocker config for this
+dm/host/hle_fpslock.c:45: // build (FPSLocker-Warehouse, patches/010029B0118E8000/799D1061182C1302.yaml; the frame-time instruction found by theboy181)
+dm/host/hle_fpslock.c:54: // this row the game keeps 30 fps at the right speed (the simulation at 60 and the regulator at 30: match clock as at 30). The game asks for present interval 2
+dm/host/hle_fpslock.c:55: // (BaseDisplaySettings.PresentInterval), which the profile's present_interval display ignores
+dm/host/hle_fpslock.c:66: static void re0_timing_probe(void) {
+dm/host/hle_fpslock.c:76: if (!m) { if (++tries >= 600) { FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fputs("main module with the surveyed RE0 build ID was not found\n", pf); fclose(pf); } done = 1; } return; }
+dm/host/hle_fpslock.c:79: LOG("[RE0 timing probe] main image is too small for the surveyed timing slot");
+dm/host/hle_fpslock.c:91: LOG("[RE0 timing probe] timing pointer chain not readable after %d presents; no memory written", tries);
+dm/host/hle_fpslock.c:92: FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fprintf(pf, "pointer chain unreadable after %d presents\n", tries); fclose(pf); }
+dm/host/hle_fpslock.c:101: LOG("[RE0 timing probe] object chain readable but +0x48 is not a plausible FPS value (bits=%08x); no memory written", raw);
+dm/host/hle_fpslock.c:102: FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fprintf(pf, "object chain readable; +0x48 bits=%08x is outside 10..120 FPS\n", raw); fclose(pf); }
+dm/host/hle_fpslock.c:107: FILE *pf = fopen("/tmp/re0_timing_probe.log", "w");
+dm/host/hle_fpslock.c:114: LOG("[RE0 timing probe] live MT timing chain verified: main+%#llx -> %p -> %p, +0x48=%g fps; read-only",
+dm/host/hle_fpslock.c:120: // EXPERIMENTAL, intentionally unsafe RE0 timing-field test. This is opt-in only:
+dm/host/hle_fpslock.c:121: // DM_RE0_UNSAFE_TIMING=1 plus DM_FPS_TARGET=60 or 120. The field is known to
+dm/host/hle_fpslock.c:124: // guards keep it confined to the surveyed RE0 1.0.0 process.
+dm/host/hle_fpslock.c:125: static module_t *re0_unsafe_main(void) {
+dm/host/hle_fpslock.c:132: static int re0_unsafe_enabled(void) {
+dm/host/hle_fpslock.c:134: // simulation speed as well as frame pacing. Do not write them for RE0.
+dm/host/hle_fpslock.c:137: static void re0_unsafe_tick(int target, const char *src) {
+dm/host/hle_fpslock.c:139: module_t *m = re0_unsafe_main();
+dm/host/hle_fpslock.c:158: LOG("[RE0 UNSAFE TEST] object2+0x48 %.3f → %d (DM_RE0_UNSAFE_TIMING=1; %s); simulation speed may change",
+dm/host/hle_fpslock.c:168: // display is the game's display object: its first word points to the NVN device (the present interval at +0x9c160), and +0x504 is the frame-interval
+dm/host/hle_fpslock.c:297: // The Unreal rows of this main: the profile's frame-limit variable and the present intervals, at the objects the rewriter found, and the engine's fixed frame rate on GEngine (0 rows:
+dm/host/hle_fpslock.c:306: out[n] = (lock_t){ "", what[n], m->ue_cvar[k].off + 0x10, 0, fps ? FPS_F32 : VSYNCS_I32, 2, 0 }; n++;
+dm/host/hle_fpslock.c:313: // Application.targetFrameRate, an int32 in main's bss (-1 until a game sets it: left so), and the current quality level's vSyncCount. On the Switch, Unity presents at
+dm/host/hle_fpslock.c:314: // vSyncCount vsyncs a frame: QualitySettings.vSyncCount's setter hands the count to the graphics device, which calls nvnWindowSetPresentInterval when it changes, and Unity steps
+dm/host/hle_fpslock.c:315: // the game by the time that really passed (The Rogue Prince of Persia: vSyncCount 2, targetFrameRate -1; the same walk covers the same ground at 30 and 60 fps). The device
+dm/host/hle_fpslock.c:317: // every engine limit here; the write keeps what the game reads back (QualitySettings.vSyncCount) the same as what it shows
+dm/host/hle_fpslock.c:318: static struct { uint8_t *base; uint64_t ptr; uint32_t idx, arr, size, vsync; } uq;
+dm/host/hle_fpslock.c:319: static void unity_vsync_tick(int target, const char *src) {
+dm/host/hle_fpslock.c:323: uint64_t a = arr + (uint64_t)lvl * uq.size + uq.vsync;
+dm/host/hle_fpslock.c:326: if (nlog < 8) { nlog++; LOG("main: Unity QualitySettings.vSyncCount (level %d) %u → %u vsyncs (%d fps; %s)", lvl, cur, want, target, src); }
+dm/host/hle_fpslock.c:328: // The running main's engine limiters, found once: by the first present (dm_fps_lock_tick) or by the graphics layer's present cap, which may ask first (dm_fps_lock_engine, from the acquire)
+dm/host/hle_fpslock.c:344: uq.base = g_mod[i].base; uq.ptr = g_mod[i].unity_qs_ptr; uq.idx = g_mod[i].unity_qs_idx; uq.arr = g_mod[i].unity_qs_arr; uq.size = g_mod[i].unity_qs_size; uq.vsync = g_mod[i].unity_qs_vsync;
+dm/host/hle_fpslock.c:345: LOG("main: Unity QualitySettings at [main+%#llx], vSyncCount at [+%#x] + [+%#x] * %#x + %#x", (unsigned long long)uq.ptr, uq.arr, uq.idx, uq.size, uq.vsync);
+dm/host/hle_fpslock.c:352: // Without one, and without a frame step state page, nothing makes the game follow the cap, so the graphics layer keeps the game's own present interval (hle_nvn.c fps_present_cap):
+dm/host/hle_fpslock.c:354: int dm_fps_lock_engine(void) { pthread_once(&g_found, lock_find); return nrow || nier || fb.n || uq.base || re0_unsafe_enabled(); }
+dm/host/hle_fpslock.c:357: void dm_fps_lock_tick(void) {
+dm/host/hle_fpslock.c:358: re0_timing_probe();       // RE0: verify its live timing pointer chain without writing guest memory
+dm/host/hle_fpslock.c:364: if (!nrow && !nier && !fb.n && !uq.base && !ue_missing && !re0_unsafe_enabled()) return;
+dm/host/hle_fpslock.c:370: if (!nrow && !nier && !fb.n && !uq.base && !re0_unsafe_enabled()) return;
+dm/host/hle_fpslock.c:372: if (fb.n) LOG("main: Frostbite simulation rate left as the game sets it (%s)", src); if (uq.base) LOG("main: Unity vSyncCount left as the game sets it (%s)", src); return; }
+dm/host/hle_fpslock.c:376: if (re0_unsafe_enabled()) re0_unsafe_tick(target, src);
+dm/host/hle_fpslock.c:379: // - [base + 0x192be00] points to the NVN graphics device object whose +0x9c160 holds the present interval (1 = 60 FPS, 2 = 30 FPS),
+dm/host/hle_fpslock.c:400: if (uq.base) unity_vsync_tick(target, src);
+dm/host/hle_fpslock.c:409: int re0_row = !strcmp(L->what, "Resident Evil 0 experimental timing-rate pair");
+dm/host/hle_fpslock.c:420: fprintf(pf, "[RE movie clock probe] FPS-lock tick reached; target=%d, movie_hz=%d\n", target, movie_hz);
+dm/host/hle_fpslock.c:475: // Both RE HD Remaster and RE0 need the extra dereference before writing +0x48/+0x4c.
+dm/host/hle_fpslock.c:476: if (re_row || re0_row) {
+dm/host/hle_fpslock.c:513: want = fps ? (uint32_t)row_target : row_target > 60 ? 1 : 60 / (uint32_t)row_target;   // above 60 the display link paces it: a vsync count stays 1
+dm/host/hle_fpslock.c:524: else snprintf(now, sizeof now, "%u%s", L->kind == FPS_F32 ? (unsigned)row_target : want, L->kind == FPS_F32 || L->kind == FPS_I32 ? " fps" : " vsyncs");
+dm/host/hle_thread.c:345: // A host helper thread (audio notify / silent sink, vsync, movie decode) created from a guest thread inherits that thread's class; under DM_QOS_MAP it sets its own instead
+dm/host/hle_thread.c:792: // frame's critical path). A sleep that overran the moment the workers finished pushed frames past 33 ms, and the game then drops itself to present interval 3 (20 fps) for a while:
+dm/host/hle_thread.c:1380: // A host thread (audio, vsync) signalling an event the game has destroyed: binding needs SDK code, which only a guest thread can run, and the event is gone anyway
+dm/host/hle_sdk16.c:1: // System service interfaces used by games on newer SDKs (16.x): oe / time / pl (shared font) / vi vsync / diag.
+dm/host/hle_sdk16.c:296: // ---------- vi: vsync event ----------
+dm/host/hle_sdk16.c:297: // The game passes a SystemEventType; after binding, a host thread fires it at 60 Hz, at 120 while 120 fps holds one tick of 1/120 s (nvn_vsync_hz; DM_VSYNC_HZ fixes another rate). While the display link presents, the event follows its ticks, as a
+dm/host/hle_sdk16.c:299: // against the screen's vsyncs, two in some display-link ticks and none in others (iPhone: about one tick in seven, a stutter the frame-rate counter showed as 50 to 60).
+dm/host/hle_sdk16.c:304: typedef struct vsync_event { void *ev; uint64_t binding; struct vsync_event *next; } vsync_event_t;
+dm/host/hle_sdk16.c:306: static vsync_event_t *g_vs_events;
+dm/host/hle_sdk16.c:307: static int vsync_tick(vsync_event_t *v) {   // 0: the event is gone and this thread has left the table
+dm/host/hle_sdk16.c:310: vsync_event_t **p = &g_vs_events; while (*p && *p != v) p = &(*p)->next;
+dm/host/hle_sdk16.c:313: LOG("vi: vsync event %p destroyed by the game, its thread ends", v->ev);
+dm/host/hle_sdk16.c:316: __attribute__((weak)) int mtl_link_wait_vsync(uint64_t *seen, uint64_t timeout_ns) { (void)seen; (void)timeout_ns; return 0; }   // nvn_mtl.m
+dm/host/hle_sdk16.c:317: __attribute__((weak)) int nvn_vsync_hz(void) { return 60; }   // hle_nvn.c: 120 while 120 fps holds one tick of 1/120 s
+dm/host/hle_sdk16.c:318: static void *vsync_thread(void *arg) {
+dm/host/hle_sdk16.c:319: vsync_event_t *v = arg;
+dm/host/hle_sdk16.c:321: const char *e = getenv("DM_VSYNC_HZ"); double hz = e ? atof(e) : 60.0; if (hz <= 0) hz = 60.0;
+dm/host/hle_sdk16.c:324: if (!e) period = nvn_vsync_hz() == 120 ? 1000000000ull / 120 : 1000000000ull / 60;   // follows 120 fps (a game that waits for each vblank is held to its rate)
+dm/host/hle_sdk16.c:325: if (!e && mtl_link_wait_vsync(&seen, 2 * period)) { if (!vsync_tick(v)) break; next = now_ns() + period; continue; }
+dm/host/hle_sdk16.c:327: if (!vsync_tick(v)) break;
+dm/host/hle_sdk16.c:336: HLE_FORCE("_ZN2nn2vi20GetDisplayVsyncEventEPNS_2os15SystemEventTypeEPNS0_7DisplayE", "vsync event: a host thread signals it at 60 Hz", Result, h_vi_VsyncEvent, void *ev, void *disp) {
+dm/host/hle_sdk16.c:340: int running = 0; for (vsync_event_t *v = g_vs_events; v; v = v->next) running |= v->binding == binding;
+dm/host/hle_sdk16.c:342: vsync_event_t *v = calloc(1, sizeof *v); if (!v) die("cannot allocate a vsync event");
+dm/host/hle_sdk16.c:344: pthread_t th; if (pthread_create(&th, NULL, vsync_thread, v)) die("cannot start the vsync thread"); pthread_detach(th);
+dm/host/hle_sdk16.c:347: LOG("vi::GetDisplayVsyncEvent: %p signalled by the host at 60 Hz%s", ev, running ? " (its thread already runs)" : ""); return RES_OK;
+dm/host/hle_os.c:66: // same clock's GPU timestamps 1.63 times too late: Donkey Kong Bananza's frame-rate controller took its frame for seconds long and held it at 20 fps (present interval 3)
+dm/host/hle_os.c:87: // guest threads go on until they block, so a guest reading the clock twice there saw no time pass. Super Mario Galaxy 2's frame pacing (main+0x5926a8) took the interval between two
+dm/host/dm.h:68: uint64_t fps_target_ptr;   // a target frame rate the game steps by, an int32 at [main + fps_target_ptr] + fps_target_field (patch_nso.py, fps_target.py; hle_fpslock.c); 0 = none
+dm/host/dm.h:70: uint64_t ue_fixed_ptr;     // Unreal's GEngine (main's offset of the global) and UEngine::FixedFrameRate in it, a float (patch_nso.py, ue_fixed_rate.py; hle_fpslock.c); 0 = none
+dm/host/dm.h:73: uint64_t unity_target_fps; // Unity's Application.targetFrameRate, an int32 at main + this (patch_nso.py, unity_fps.py; hle_fpslock.c); 0 = none
+dm/host/dm.h:74: uint64_t unity_qs_ptr;     // Unity's QualitySettings (main's offset of the global pointer); the current level's vSyncCount, an int32, is at
+dm/host/dm.h:75: uint32_t unity_qs_idx, unity_qs_arr, unity_qs_size, unity_qs_vsync;   // [obj + arr] + (int32)[obj + idx] * size + vsync; 0 = none
+dm/host/hle_oe.c:357: // the lock crashed: Hyrule Warriors: Age of Imprisonment sets 60 / its present interval at boot (main+0x1e5d244). The host paces by the window's present interval, so the mode is only noted
+dm/host/hle_oe.c:358: HLE_FORCE("_ZN2nn2gs3sdk26SetGraphicsFrameLengthModeENS1_23GraphicsFrameLengthModeE", "target frame length (Switch 2, gs): noted; the host paces by the present interval",
+dm/host/hle_hid.c:225: //   (hle_fpslock.c dm_ctl_cvar_f32; "cvari" an int one), "peek <address> <count>" logs that many floats of guest memory, "memdump <address> <bytes> <path>" saves guest memory
+dm/host/tests/t_resolution.c:3: #include "../hle_fpslock.c"
+dm/host/tests/t_resolution.c:31: dm_fps_lock_tick();
+dm/host/tests/t_resolution.c:38: if (dynamic) { scale[1] = 0x3f59999a; dm_fps_lock_tick(); CHECK(scale[1] == 0x3f59999a); }
+dm/host/tests/t_nfc.c:18: // The included SDK source also registers vsync hooks; NFC must never enter them.
+dm/host/tests/t_system_event.c:95: assert(!h_vi_VsyncEvent(&ev, NULL)); assert(!h_vi_VsyncEvent(&ev, NULL));
+dm/host/tests/t_system_event.c:100: for (unsigned i = 0; i < 9; i++) { assert(!h_vi_VsyncEvent(&ev[i], NULL)); destroy_event(&ev[i]); }
+dm/host/tests/t_system_event.c:105: test_event ev = {0}; assert(!h_vi_VsyncEvent(&ev, NULL));
+dm/host/tests/t_system_event.c:113: test_event ev = {0}; assert(!h_vi_VsyncEvent(&ev, NULL)); destroy_event(&ev);
+dm/host/tests/t_system_event.c:114: assert(!h_vi_VsyncEvent(&ev, NULL));
+dm/host/tests/t_system_event.c:190: if (!pid) { alarm(5); setenv("DM_VSYNC_HZ", "60", 1); svc_thread_main_init(); tests[i](); _exit(0); }
+dm/host/tests/t_fpslock.c:3: // Unity's targetFrameRate and vSyncCount from its internal-call table (UNITY_*).
+dm/host/tests/t_fpslock.c:10: static int test_game_fps = 60;   // the game's sustained present interval (hle_nvn.c)
+dm/host/tests/t_fpslock.c:12: #include "../hle_fpslock.c"
+dm/host/tests/t_fpslock.c:72: } else if (which == 8) {   // Octopath Traveler 0: the frame limit and the present interval, and a variable the host does not write
+dm/host/tests/t_fpslock.c:88: } else if (which == 21) {   // Unreal at 120: the frame limit follows, and the present interval stays one vsync (60 / 120 is no interval)
+dm/host/tests/t_fpslock.c:95: } else if (which == 22 || which == 23 || which == 24) {   // DRAGON BALL: Sparking! ZERO: GEngine->FixedFrameRate (+0x9c8), which the Switch frame pace sets to 30, and the present interval;
+dm/host/tests/t_fpslock.c:107: } else if (which >= 25 && which <= 29) {   // Unity, at the places the rewriter found through the internal-call table (The Rogue Prince of Persia 1.1.0): vSyncCount in quality
+dm/host/tests/t_fpslock.c:112: g_mod[0].unity_qs_ptr = 0x90957d8; g_mod[0].unity_qs_idx = 0x64; g_mod[0].unity_qs_arr = 0x20; g_mod[0].unity_qs_size = 0x100; g_mod[0].unity_qs_vsync = 0x88;
+dm/host/tests/t_fpslock.c:122: } else if (which >= 9) {   // the present interval alone (UE 4.18's nvn.SyncInterval); 12: a main the rewriter found no variable in
+dm/host/tests/t_fpslock.c:129: if (which & 1) assert(dm_fps_lock_engine() == engine);   // the graphics layer's present cap may ask before the first present (the acquire)
+dm/host/tests/t_fpslock.c:130: dm_fps_lock_tick();
+dm/host/tests/t_fpslock.c:131: assert(dm_fps_lock_engine() == engine);
+dm/host/tests/t_fpslock.c:135: test_high = 60; dm_fps_lock_tick(); assert(*t == 60);
+dm/host/tests/t_fpslock.c:136: test_high = 120; dm_fps_lock_tick(); assert(*t == 120);
+dm/host/tests/t_fpslock.c:137: *t = 30; dm_fps_lock_tick(); assert(*t == 120);
+dm/host/tests/t_fpslock.c:143: *f = 30; dm_fps_lock_tick(); assert(*f == 60 && writes == 4);
+dm/host/tests/t_fpslock.c:147: if (which == 23) {   // 120: the fixed rate follows the hold, the interval stays one vsync
+dm/host/tests/t_fpslock.c:149: test_high = 60; dm_fps_lock_tick(); assert(*f == 60);
+dm/host/tests/t_fpslock.c:150: test_high = 120; dm_fps_lock_tick(); assert(*f == 120);
+dm/host/tests/t_fpslock.c:156: if (which == 25) {   // 60: one vsync; targetFrameRate unset (-1) stays; the game setting 2 again (a scene change) is undone
+dm/host/tests/t_fpslock.c:158: dm_fps_lock_tick(); assert(writes == 1);
+dm/host/tests/t_fpslock.c:159: *sync = 2; dm_fps_lock_tick(); assert(*sync == 1 && writes == 2);
+dm/host/tests/t_fpslock.c:160: } else if (which == 26) {   // 120: still one vsync; the target follows the hold
+dm/host/tests/t_fpslock.c:162: test_high = 60; dm_fps_lock_tick(); assert(*sync == 1 && *t == 60);
+dm/host/tests/t_fpslock.c:170: test_high = 60; dm_fps_lock_tick(); assert(f[0] == 60 && f[1] == 60 && sync[0] == 1 && sync[1] == 1);
+dm/host/tests/t_fpslock.c:175: dm_fps_lock_tick(); assert(writes == 1);
+dm/host/tests/t_fpslock.c:176: *unity = 30; dm_fps_lock_tick(); assert(*unity == 60 && writes == 2);
+dm/host/tests/t_fpslock.c:186: dm_fps_lock_tick(); assert(writes == 2);
+dm/host/tests/t_fpslock.c:187: sync[0] = sync[1] = 2; dm_fps_lock_tick();
+dm/host/tests/t_fpslock.c:193: dm_fps_lock_tick(); assert(writes == 2);
+dm/host/tests/t_fpslock.c:194: *(int32_t *)(object + 0x38) = 30; dm_fps_lock_tick(); assert(*(int32_t *)(object + 0x38) == 60 && writes == 3);
+dm/host/tests/t_fpslock.c:198: dm_fps_lock_tick(); assert(writes == 1);
+dm/host/tests/t_fpslock.c:199: *t = 30; dm_fps_lock_tick(); assert(*t == 60 && writes == 2);   // the game sets 30 again where gameplay starts
+dm/host/tests/t_fpslock.c:205: dm_fps_lock_tick();
+dm/host/tests/t_fpslock.c:219: puts("Frame limits: integer/float FPS, milliseconds, vsync copies, build gates, found fields and overrides passed");
+dm/host/gen/010097000BC10000/game_profile.h:1: // Generated by dm/games/game.py from dm/games/010097000BC10000/game.tsv; do not edit
+dm/host/gen/010097000BC10000/game_profile.h:3: #define DM_GAME_ID "010097000BC10000"
+dm/host/gen/010097000BC10000/game_profile.h:5: #define DM_GAME_PROGRAM_ID 0x010097000BC10000ull
+dm/ios/Gen/src/host__hle_hid.c:225: //   (hle_fpslock.c dm_ctl_cvar_f32; "cvari" an int one), "peek <address> <count>" logs that many floats of guest memory, "memdump <address> <bytes> <path>" saves guest memory
+dm/ios/Gen/src/host__hle_fpslock.c:1: // Engine frame limits kept in game memory (FPSLocker's evaluate_write entries): some engines cap their own frame rate with a value the host can raise. The target is the profile's
+dm/ios/Gen/src/host__hle_fpslock.c:5: // Nor do Unity's Application.targetFrameRate and QualitySettings.vSyncCount: the rewriter finds them through the engine's internal-call table (dm/tools/unity_fps.py, main's fixups UNITY_*).
+dm/ios/Gen/src/host__hle_fpslock.c:8: // present interval, rhi.SyncInterval (nvn.SyncInterval in UE 4.18's Switch RHI: DRAGON QUEST XI S). Each is a TAutoConsoleVariable whose +0x10 points to its value, the game thread's
+dm/ios/Gen/src/host__hle_fpslock.c:16: // What a field holds: the frame rate as a float, double or int32, vsyncs per frame (60 / frame rate) as an int32, or the frame time in milliseconds as a float. Copies: consecutive copies of the
+dm/ios/Gen/src/host__hle_fpslock.c:19: // At 60 a frame time gets MS_MARGIN less than the vsync: such a limiter counts from the frame's start, and the work after it (the GPU fence wait, the next frame's start) adds to the
+dm/ios/Gen/src/host__hle_fpslock.c:20: // period, so frames at exactly 16.667 ms came 0.11 ms late each on the Mac (59.6 fps, every 150th frame shown two vsyncs). Slightly shorter, the host's present pacing sets the pace
+dm/ios/Gen/src/host__hle_fpslock.c:21: // (the acquire waits): Luigi's Mansion 3's display interval p99 18.69 → 16.67 ms, 60.0 fps. Not at 30: with present_interval display the presents follow every vsync and hold no
+dm/ios/Gen/src/host__hle_fpslock.c:25: enum { FPS_F32, VSYNCS_I32, MS_F32, FPS_I32, TICKS_U32, SECS_F32, MODE_U32, FPS_F64 };
+dm/ios/Gen/src/host__hle_fpslock.c:32: // at the same speed. The game sets 30 after boot; it also asks for present interval 2, which the profile's present_interval display ignores.
+dm/ios/Gen/src/host__hle_fpslock.c:33: // From masagrator's FPSLocker config for this build (FPSLocker-Warehouse, patches/0100B04011742000/C9A3DD7702075ECD.yaml)
+dm/ios/Gen/src/host__hle_fpslock.c:40: // steps by the time that really passed. The game asks for present interval 2 too, which the profile's present_interval display ignores; both are needed
+dm/ios/Gen/src/host__hle_fpslock.c:44: // (3D), is a float of seconds per frame. Its limiter, a spin on the system tick at main+0x483588..+0x4835a4, is cut by the rewriter (patches.py). From masagrator's FPSLocker config for this
+dm/ios/Gen/src/host__hle_fpslock.c:45: // build (FPSLocker-Warehouse, patches/010029B0118E8000/799D1061182C1302.yaml; the frame-time instruction found by theboy181)
+dm/ios/Gen/src/host__hle_fpslock.c:54: // this row the game keeps 30 fps at the right speed (the simulation at 60 and the regulator at 30: match clock as at 30). The game asks for present interval 2
+dm/ios/Gen/src/host__hle_fpslock.c:55: // (BaseDisplaySettings.PresentInterval), which the profile's present_interval display ignores
+dm/ios/Gen/src/host__hle_fpslock.c:66: static void re0_timing_probe(void) {
+dm/ios/Gen/src/host__hle_fpslock.c:76: if (!m) { if (++tries >= 600) { FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fputs("main module with the surveyed RE0 build ID was not found\n", pf); fclose(pf); } done = 1; } return; }
+dm/ios/Gen/src/host__hle_fpslock.c:79: LOG("[RE0 timing probe] main image is too small for the surveyed timing slot");
+dm/ios/Gen/src/host__hle_fpslock.c:91: LOG("[RE0 timing probe] timing pointer chain not readable after %d presents; no memory written", tries);
+dm/ios/Gen/src/host__hle_fpslock.c:92: FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fprintf(pf, "pointer chain unreadable after %d presents\n", tries); fclose(pf); }
+dm/ios/Gen/src/host__hle_fpslock.c:101: LOG("[RE0 timing probe] object chain readable but +0x48 is not a plausible FPS value (bits=%08x); no memory written", raw);
+dm/ios/Gen/src/host__hle_fpslock.c:102: FILE *pf = fopen("/tmp/re0_timing_probe.log", "w"); if (pf) { fprintf(pf, "object chain readable; +0x48 bits=%08x is outside 10..120 FPS\n", raw); fclose(pf); }
+dm/ios/Gen/src/host__hle_fpslock.c:107: FILE *pf = fopen("/tmp/re0_timing_probe.log", "w");
+dm/ios/Gen/src/host__hle_fpslock.c:114: LOG("[RE0 timing probe] live MT timing chain verified: main+%#llx -> %p -> %p, +0x48=%g fps; read-only",
+dm/ios/Gen/src/host__hle_fpslock.c:120: // EXPERIMENTAL, intentionally unsafe RE0 timing-field test. This is opt-in only:
+dm/ios/Gen/src/host__hle_fpslock.c:121: // DM_RE0_UNSAFE_TIMING=1 plus DM_FPS_TARGET=60 or 120. The field is known to
+dm/ios/Gen/src/host__hle_fpslock.c:124: // guards keep it confined to the surveyed RE0 1.0.0 process.
+dm/ios/Gen/src/host__hle_fpslock.c:125: static module_t *re0_unsafe_main(void) {
+dm/ios/Gen/src/host__hle_fpslock.c:132: static int re0_unsafe_enabled(void) {
+dm/ios/Gen/src/host__hle_fpslock.c:134: // simulation speed as well as frame pacing. Do not write them for RE0.
+dm/ios/Gen/src/host__hle_fpslock.c:137: static void re0_unsafe_tick(int target, const char *src) {
+dm/ios/Gen/src/host__hle_fpslock.c:139: module_t *m = re0_unsafe_main();
+dm/ios/Gen/src/host__hle_fpslock.c:158: LOG("[RE0 UNSAFE TEST] object2+0x48 %.3f → %d (DM_RE0_UNSAFE_TIMING=1; %s); simulation speed may change",
+dm/ios/Gen/src/host__hle_fpslock.c:168: // display is the game's display object: its first word points to the NVN device (the present interval at +0x9c160), and +0x504 is the frame-interval
+dm/ios/Gen/src/host__hle_fpslock.c:297: // The Unreal rows of this main: the profile's frame-limit variable and the present intervals, at the objects the rewriter found, and the engine's fixed frame rate on GEngine (0 rows:
+dm/ios/Gen/src/host__hle_fpslock.c:306: out[n] = (lock_t){ "", what[n], m->ue_cvar[k].off + 0x10, 0, fps ? FPS_F32 : VSYNCS_I32, 2, 0 }; n++;
+dm/ios/Gen/src/host__hle_fpslock.c:313: // Application.targetFrameRate, an int32 in main's bss (-1 until a game sets it: left so), and the current quality level's vSyncCount. On the Switch, Unity presents at
+dm/ios/Gen/src/host__hle_fpslock.c:314: // vSyncCount vsyncs a frame: QualitySettings.vSyncCount's setter hands the count to the graphics device, which calls nvnWindowSetPresentInterval when it changes, and Unity steps
+dm/ios/Gen/src/host__hle_fpslock.c:315: // the game by the time that really passed (The Rogue Prince of Persia: vSyncCount 2, targetFrameRate -1; the same walk covers the same ground at 30 and 60 fps). The device
