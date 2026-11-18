@@ -33,8 +33,7 @@ static const lock_t k_locks[] = {
     // at the same speed. The game sets 30 after boot; it also asks for present interval 2, which the profile's present_interval display ignores.
     // From masagrator's FPSLocker config for this build (FPSLocker-Warehouse, patches/0100B04011742000/C9A3DD7702075ECD.yaml)
     { "c9a3dd7702075ecd90101f4555389582", "RE Engine frame limit", 0x1295b3f0, 0x434, FPS_F32, 1 },
-    // Resident Evil HD Remaster 1.0.0: timing probe. The constructor initializes adjacent floats at +0x48 and +0x4c to 30.0;
-    // sMain::move reads both (main+0x775b34 and main+0x775b94). Keep the pair synchronized while testing the MT Framework limit.
+    // Resident Evil HD Remaster 1.0.0: MT Framework frame limiter. This build reads the adjacent +0x48 and +0x4c values in sMain::move; keep both copies synchronized.
     { "6bec9b23b09df46c315aa6f4bfacf91c", "Resident Evil MT Framework primary frame limit", 0x157daa0, 0x48, FPS_F32, 2 },
     // Resident Evil 0 1.0.0: write only the MT Framework render limiter. +0x48 remains the native simulation-time scale.
     { "fb4239aa962b429b3d1776af92d93e79", "Resident Evil 0 MT Framework render frame limit", 0x1baac60, 0x4c, FPS_F32, 1 },
