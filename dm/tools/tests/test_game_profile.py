@@ -125,12 +125,14 @@ class BuildModules(unittest.TestCase):
 
 class IOSFrameRateMaximum(unittest.TestCase):
     def test_ios_maximum_is_validated_and_written_to_the_header(self):
-        rc, out = header('fps_max\t120\\nfps_max_ios\t120\\n')
+        rc, out = header('fps_max\t120\nfps_max_ios\t120\n')
         self.assertEqual((rc, out), (0, ''))
         with tempfile.TemporaryDirectory() as d:
             Path(d, ID).mkdir()
-            (Path(d, ID) / 'game.tsv').write_text(TSV + 'fps_max\t60\\nfps_max_ios\t120\\n')
+            (Path(d, ID) / 'game.tsv').write_text(TSV + 'fps_max\t60\nfps_max_ios\t120\n')
             r = subprocess.run([sys.executable, str(GAME), 'header', ID, str(Path(d, ID) / 'game.h')],
                                env={**os.environ, 'DM_GAMES_DIR': d}, capture_output=True, text=True)
         self.assertNotEqual(r.returncode, 0)
         self.assertIn('fps_max_ios must be 60 or 120 and no higher than fps_max', r.stderr)
+
+if __name__ == '__main__': unittest.main()
