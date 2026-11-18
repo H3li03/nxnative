@@ -1,0 +1,1344 @@
+
+========================================================================
+1. FUNZIONE setFrameWait 0x7AA330
+========================================================================
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  7aa300: a9464ff4     	ldp	x20, x19, [sp, #0x60]
+  7aa304: f9401bf9     	ldr	x25, [sp, #0x30]
+  7aa308: a94557f6     	ldp	x22, x21, [sp, #0x50]
+  7aa30c: a9445ff8     	ldp	x24, x23, [sp, #0x40]
+  7aa310: 910203ff     	add	sp, sp, #0x80
+  7aa314: d65f03c0     	ret
+		...
+  7aa320: 39414000     	ldrb	w0, [x0, #0x50]
+  7aa324: d65f03c0     	ret
+		...
+  7aa330: 12000028     	and	w8, w1, #0x1
+  7aa334: 39014008     	strb	w8, [x0, #0x50]
+  7aa338: f9402c08     	ldr	x8, [x0, #0x58]
+  7aa33c: a9067c08     	stp	x8, xzr, [x0, #0x60]
+  7aa340: 32091be8     	orr	w8, wzr, #0x3f800000
+  7aa344: b9007808     	str	w8, [x0, #0x78]
+  7aa348: b900881f     	str	wzr, [x0, #0x88]
+  7aa34c: d65f03c0     	ret
+  7aa350: f9402c08     	ldr	x8, [x0, #0x58]
+  7aa354: a9067c08     	stp	x8, xzr, [x0, #0x60]
+  7aa358: 32091be8     	orr	w8, wzr, #0x3f800000
+  7aa35c: b9007808     	str	w8, [x0, #0x78]
+  7aa360: b900881f     	str	wzr, [x0, #0x88]
+  7aa364: d65f03c0     	ret
+		...
+  7aa370: 17f2f898     	b	0x4685d0 <PT_LOAD#0+0x4685d0>
+		...
+  7aa380: f81e0ff3     	str	x19, [sp, #-0x20]!
+  7aa384: a9017bfd     	stp	x29, x30, [sp, #0x10]
+  7aa388: 910043fd     	add	x29, sp, #0x10
+  7aa38c: aa0003f3     	mov	x19, x0
+  7aa390: 940966c6     	bl	0xa03ea8 <PT_LOAD#0+0xa03ea8>
+  7aa394: f9404a68     	ldr	x8, [x19, #0x90]
+  7aa398: eb00011f     	cmp	x8, x0
+  7aa39c: 540000a1     	b.ne	0x7aa3b0 <PT_LOAD#0+0x7aa3b0>
+  7aa3a0: 320003e0     	orr	w0, wzr, #0x1
+  7aa3a4: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  7aa3a8: f84207f3     	ldr	x19, [sp], #0x20
+  7aa3ac: d65f03c0     	ret
+  7aa3b0: 528f4308     	mov	w8, #0x7a18             // =31256
+  7aa3b4: 72a000a8     	movk	w8, #0x5, lsl #16
+  7aa3b8: f8686a68     	ldr	x8, [x19, x8]
+  7aa3bc: eb00011f     	cmp	x8, x0
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x7aa300,0x7aa3c0) specified by --start-address/--stop-address
+
+========================================================================
+2. TUTTI I CHIAMANTI DI setFrameWait
+========================================================================
+  2b6864:      	ldr	w8, [x0, #0x48]
+  2b6868:      	str	w8, [x19, #0x48]
+  2b686c:      	ldr	w8, [x0, #0x4c]
+  2b6870:      	str	w8, [x19, #0x4c]
+  2b6874:      	ldrb	w8, [x0, #0x50]
+  2b6878:      	strb	w8, [x19, #0x50]
+  2b687c:      	mov	x8, #0x41f00000         // =1106247680
+  2b6880:      	movk	x8, #0x41f0, lsl #48
+  2b6884:      	mov	w1, wzr
+  2b6888:      	str	x8, [x0, #0x48]
+  2b688c:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  2b6890:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b6894:      	ldr	x8, [x8, #0x658]
+  2b6898:      	ldr	x20, [x8]
+  2b689c:      	cbz	x20, 0x2b6cc4 <PT_LOAD#0+0x2b6cc4>
+  2b68a0:      	mov	x0, x20
+  2b68a4:      	bl	0x2ba460 <PT_LOAD#0+0x2ba460>
+  2b68a8:      	tbz	w0, #0x0, 0x2b6ce8 <PT_LOAD#0+0x2b6ce8>
+  2b68ac:      	b	0x2b6cf8 <PT_LOAD#0+0x2b6cf8>
+  2b68b0:      	adrp	x9, 0x1288000 <PT_LOAD#0+0x1288000>
+---
+  2b6b64:      	orr	w10, wzr, #0x1
+  2b6b68:      	strb	w10, [x8, x9]
+  2b6b6c:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b6b70:      	ldr	x8, [x8, #0x650]
+  2b6b74:      	ldr	x0, [x8]
+  2b6b78:      	ldr	w8, [x19, #0x48]
+  2b6b7c:      	str	w8, [x0, #0x48]
+  2b6b80:      	ldr	w8, [x19, #0x4c]
+  2b6b84:      	str	w8, [x0, #0x4c]
+  2b6b88:      	ldrb	w1, [x19, #0x50]
+  2b6b8c:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  2b6b90:      	ldr	x0, [x19, #0x28]
+  2b6b94:      	cbz	x0, 0x2b6ba0 <PT_LOAD#0+0x2b6ba0>
+  2b6b98:      	bl	0x467eb0 <PT_LOAD#0+0x467eb0>
+  2b6b9c:      	str	xzr, [x19, #0x28]
+  2b6ba0:      	ldr	x8, [x19, #0x8]
+  2b6ba4:      	str	xzr, [x19, #0x28]
+  2b6ba8:      	cbz	x8, 0x2b6bcc <PT_LOAD#0+0x2b6bcc>
+  2b6bac:      	ldr	w9, [x8, #0x10]
+  2b6bb0:      	and	w9, w9, #0xffffdfff
+---
+  38e5dc:      	bl	0x4d5c90 <PT_LOAD#0+0x4d5c90>
+  38e5e0:      	adrp	x1, 0xfb3000 <PT_LOAD#0+0xfb3000>
+  38e5e4:      	add	x1, x1, #0x555
+  38e5e8:      	mov	x0, x19
+  38e5ec:      	bl	0x7a9960 <PT_LOAD#0+0x7a9960>
+  38e5f0:      	mov	x8, #0x41f00000         // =1106247680
+  38e5f4:      	movk	x8, #0x41f0, lsl #48
+  38e5f8:      	mov	x0, x19
+  38e5fc:      	mov	w1, wzr
+  38e600:      	str	x8, [x19, #0x48]
+  38e604:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  38e608:      	mov	x8, #0x4000000040000000 // =4611686019501129728
+  38e60c:      	orr	w0, wzr, #0x100
+  38e610:      	orr	w1, wzr, #0x10
+  38e614:      	stur	x8, [x19, #0x7c]
+  38e618:      	bl	0x237430 <PT_LOAD#0+0x237430>
+  38e61c:      	mov	x20, x0
+  38e620:      	bl	0x2375e0 <PT_LOAD#0+0x2375e0>
+  38e624:      	mov	w8, #0x8190             // =33168
+  38e628:      	movk	w8, #0x5, lsl #16
+---
+  78c620:      	ldr	x0, [x20]
+  78c624:      	ldrb	w8, [x0, #0x50]
+  78c628:      	mov	w9, #0x284c             // =10316
+  78c62c:      	strb	w8, [x19, x9]
+  78c630:      	ldr	w9, [x0, #0x4c]
+  78c634:      	mov	w8, #0x2854             // =10324
+  78c638:      	mov	w1, wzr
+  78c63c:      	str	w9, [x19, #0x2850]
+  78c640:      	strb	wzr, [x19, x8]
+  78c644:      	str	wzr, [x19, #0x2848]
+  78c648:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  78c64c:      	ldr	x8, [x20]
+  78c650:      	mov	w9, #0x4000             // =16384
+  78c654:      	movk	w9, #0x461c, lsl #16
+  78c658:      	b	0x78c798 <PT_LOAD#0+0x78c798>
+  78c65c:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  78c660:      	ldr	x8, [x8, #0x650]
+  78c664:      	ldr	x8, [x8]
+  78c668:      	orr	w9, wzr, #0x1
+  78c66c:      	strb	w9, [x8, #0x74]
+---
+  78c764:      	str	w8, [x19, #0x2834]
+  78c768:      	orr	w8, wzr, #0x2
+  78c76c:      	b	0x78c774 <PT_LOAD#0+0x78c774>
+  78c770:      	orr	w8, wzr, #0x1
+  78c774:      	str	w8, [x19, #0x283c]
+  78c778:      	adrp	x20, 0x1285000 <PT_LOAD#0+0x1285000>
+  78c77c:      	ldr	x20, [x20, #0x650]
+  78c780:      	mov	w8, #0x284c             // =10316
+  78c784:      	ldrb	w1, [x19, x8]
+  78c788:      	ldr	x0, [x20]
+  78c78c:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  78c790:      	ldr	x8, [x20]
+  78c794:      	ldr	w9, [x19, #0x2850]
+  78c798:      	str	w9, [x8, #0x4c]
+  78c79c:      	ldp	x29, x30, [sp, #0x10]
+  78c7a0:      	ldp	x20, x19, [sp], #0x20
+  78c7a4:      	ret
+		...
+  78c7b0:      	mov	w8, #0x28               // =40
+  78c7b4:      	umaddl	x8, w1, w8, x0
+---
+  791b94:      	stp	x20, x19, [sp, #0x10]
+  791b98:      	stp	x29, x30, [sp, #0x20]
+  791b9c:      	add	x29, sp, #0x20
+  791ba0:      	sub	sp, sp, #0x300
+  791ba4:      	adrp	x20, 0x1285000 <PT_LOAD#0+0x1285000>
+  791ba8:      	ldr	x20, [x20, #0x650]
+  791bac:      	mov	x19, x0
+  791bb0:      	strb	wzr, [x19, #0x75]
+  791bb4:      	ldr	x0, [x20]
+  791bb8:      	ldrb	w1, [x19, #0x76]
+  791bbc:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  791bc0:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  791bc4:      	ldr	x8, [x8, #0x8e0]
+  791bc8:      	ldr	x8, [x8]
+  791bcc:      	stur	xzr, [x8, #0x34]
+  791bd0:      	stur	xzr, [x8, #0x2c]
+  791bd4:      	ldr	w9, [x19, #0x64]
+  791bd8:      	str	w9, [x8, #0xd64]
+  791bdc:      	ldr	x8, [x20]
+  791be0:      	ldrb	w9, [x19, #0x77]
+---
+  792be8:      	csel	x3, x26, x8, eq
+  792bec:      	add	x0, sp, #0x310
+  792bf0:      	mov	x1, x24
+  792bf4:      	bl	0xa03f48 <PT_LOAD#0+0xa03f48>
+  792bf8:      	add	x0, sp, #0x310
+  792bfc:      	bl	0x425360 <PT_LOAD#0+0x425360>
+  792c00:      	tbnz	w0, #0x0, 0x792b0c <PT_LOAD#0+0x792b0c>
+  792c04:      	ldr	x0, [x27]
+  792c08:      	orr	w1, wzr, #0x1
+  792c0c:      	orr	w21, wzr, #0x1
+  792c10:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  792c14:      	ldr	x8, [x27]
+  792c18:      	adrp	x20, 0x1285000 <PT_LOAD#0+0x1285000>
+  792c1c:      	ldr	x20, [x20, #0x6d8]
+  792c20:      	strb	w21, [x8, #0x74]
+  792c24:      	ldr	x0, [x20, #0x38]
+  792c28:      	ldr	x8, [x0]
+  792c2c:      	ldrsw	x9, [x19, #0xb8]
+  792c30:      	lsl	x1, x9, #3
+  792c34:      	ldr	x8, [x8, #0x38]
+---
+
+========================================================================
+3. INIZIALIZZAZIONE 0x2B6858
+========================================================================
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  2b6840: 54002b48     	b.hi	0x2b6da8 <PT_LOAD#0+0x2b6da8>
+  2b6844: 9000694a     	adrp	x10, 0xfde000 <PT_LOAD#0+0xfde000>
+  2b6848: 9123d14a     	add	x10, x10, #0x8f4
+  2b684c: b8a97949     	ldrsw	x9, [x10, x9, lsl #2]
+  2b6850: 8b0a0129     	add	x9, x9, x10
+  2b6854: d61f0120     	br	x9
+  2b6858: f0007e68     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b685c: f9432908     	ldr	x8, [x8, #0x650]
+  2b6860: f9400100     	ldr	x0, [x8]
+  2b6864: b9404808     	ldr	w8, [x0, #0x48]
+  2b6868: b9004a68     	str	w8, [x19, #0x48]
+  2b686c: b9404c08     	ldr	w8, [x0, #0x4c]
+  2b6870: b9004e68     	str	w8, [x19, #0x4c]
+  2b6874: 39414008     	ldrb	w8, [x0, #0x50]
+  2b6878: 39014268     	strb	w8, [x19, #0x50]
+  2b687c: d2a83e08     	mov	x8, #0x41f00000         // =1106247680
+  2b6880: f2e83e08     	movk	x8, #0x41f0, lsl #48
+  2b6884: 2a1f03e1     	mov	w1, wzr
+  2b6888: f9002408     	str	x8, [x0, #0x48]
+  2b688c: 9413cea9     	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  2b6890: f0007e68     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b6894: f9432d08     	ldr	x8, [x8, #0x658]
+  2b6898: f9400114     	ldr	x20, [x8]
+  2b689c: b4002154     	cbz	x20, 0x2b6cc4 <PT_LOAD#0+0x2b6cc4>
+  2b68a0: aa1403e0     	mov	x0, x20
+  2b68a4: 94000eef     	bl	0x2ba460 <PT_LOAD#0+0x2ba460>
+  2b68a8: 36002200     	tbz	w0, #0x0, 0x2b6ce8 <PT_LOAD#0+0x2b6ce8>
+  2b68ac: 14000113     	b	0x2b6cf8 <PT_LOAD#0+0x2b6cf8>
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x2b6840,0x2b68b0) specified by --start-address/--stop-address
+
+========================================================================
+4. RIPRISTINO PARAMETRI 0x2B6B5C
+========================================================================
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  2b6b40: 1e202008     	fcmp	s0, #0.0
+  2b6b44: bd005660     	str	s0, [x19, #0x54]
+  2b6b48: 5400130a     	b.ge	0x2b6da8 <PT_LOAD#0+0x2b6da8>
+  2b6b4c: 940a2729     	bl	0x5407f0 <PT_LOAD#0+0x5407f0>
+  2b6b50: 350012c0     	cbnz	w0, 0x2b6da8 <PT_LOAD#0+0x2b6da8>
+  2b6b54: 321f07e8     	orr	w8, wzr, #0x6
+  2b6b58: 14000093     	b	0x2b6da4 <PT_LOAD#0+0x2b6da4>
+  2b6b5c: f94002a8     	ldr	x8, [x21]
+  2b6b60: 5290ce89     	mov	w9, #0x8674             // =34420
+  2b6b64: 320003ea     	orr	w10, wzr, #0x1
+  2b6b68: 3829690a     	strb	w10, [x8, x9]
+  2b6b6c: f0007e68     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b6b70: f9432908     	ldr	x8, [x8, #0x650]
+  2b6b74: f9400100     	ldr	x0, [x8]
+  2b6b78: b9404a68     	ldr	w8, [x19, #0x48]
+  2b6b7c: b9004808     	str	w8, [x0, #0x48]
+  2b6b80: b9404e68     	ldr	w8, [x19, #0x4c]
+  2b6b84: b9004c08     	str	w8, [x0, #0x4c]
+  2b6b88: 39414261     	ldrb	w1, [x19, #0x50]
+  2b6b8c: 9413cde9     	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  2b6b90: f9401660     	ldr	x0, [x19, #0x28]
+  2b6b94: b4000060     	cbz	x0, 0x2b6ba0 <PT_LOAD#0+0x2b6ba0>
+  2b6b98: 9406c4c6     	bl	0x467eb0 <PT_LOAD#0+0x467eb0>
+  2b6b9c: f900167f     	str	xzr, [x19, #0x28]
+  2b6ba0: f9400668     	ldr	x8, [x19, #0x8]
+  2b6ba4: f900167f     	str	xzr, [x19, #0x28]
+  2b6ba8: b4000128     	cbz	x8, 0x2b6bcc <PT_LOAD#0+0x2b6bcc>
+  2b6bac: b9401109     	ldr	w9, [x8, #0x10]
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x2b6b40,0x2b6bb0) specified by --start-address/--stop-address
+
+========================================================================
+5. CODICE DI TRANSIZIONE 0x2B6C20-0x2B6DA8
+========================================================================
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  2b6c20: b4000128     	cbz	x8, 0x2b6c44 <PT_LOAD#0+0x2b6c44>
+  2b6c24: b9401109     	ldr	w9, [x8, #0x10]
+  2b6c28: 12127929     	and	w9, w9, #0xffffdfff
+  2b6c2c: b9001109     	str	w9, [x8, #0x10]
+  2b6c30: f9402260     	ldr	x0, [x19, #0x40]
+  2b6c34: f9400008     	ldr	x8, [x0]
+  2b6c38: f9404108     	ldr	x8, [x8, #0x80]
+  2b6c3c: d63f0100     	blr	x8
+  2b6c40: f900227f     	str	xzr, [x19, #0x40]
+  2b6c44: f0007e75     	adrp	x21, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b6c48: f9432eb5     	ldr	x21, [x21, #0x658]
+  2b6c4c: f94002b4     	ldr	x20, [x21]
+  2b6c50: b4000754     	cbz	x20, 0x2b6d38 <PT_LOAD#0+0x2b6d38>
+  2b6c54: aa1403e0     	mov	x0, x20
+  2b6c58: 94000e02     	bl	0x2ba460 <PT_LOAD#0+0x2ba460>
+  2b6c5c: 36000800     	tbz	w0, #0x0, 0x2b6d5c <PT_LOAD#0+0x2b6d5c>
+  2b6c60: 39414a68     	ldrb	w8, [x19, #0x52]
+  2b6c64: 350007c8     	cbnz	w8, 0x2b6d5c <PT_LOAD#0+0x2b6d5c>
+  2b6c68: 32000be8     	orr	w8, wzr, #0x7
+  2b6c6c: 1400004e     	b	0x2b6da4 <PT_LOAD#0+0x2b6da4>
+  2b6c70: f0007e75     	adrp	x21, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b6c74: f9443eb5     	ldr	x21, [x21, #0x878]
+  2b6c78: f94002a0     	ldr	x0, [x21]
+  2b6c7c: b9402261     	ldr	w1, [x19, #0x20]
+  2b6c80: 9401eacc     	bl	0x3317b0 <PT_LOAD#0+0x3317b0>
+  2b6c84: 37000920     	tbnz	w0, #0x0, 0x2b6da8 <PT_LOAD#0+0x2b6da8>
+  2b6c88: f0007e68     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b6c8c: f9432d08     	ldr	x8, [x8, #0x658]
+  2b6c90: f9400114     	ldr	x20, [x8]
+  2b6c94: b50000f4     	cbnz	x20, 0x2b6cb0 <PT_LOAD#0+0x2b6cb0>
+  2b6c98: 90006740     	adrp	x0, 0xf9e000 <PT_LOAD#0+0xf9e000>
+  2b6c9c: 91204800     	add	x0, x0, #0x812
+  2b6ca0: 90006742     	adrp	x2, 0xf9e000 <PT_LOAD#0+0xf9e000>
+  2b6ca4: 91209442     	add	x2, x2, #0x825
+  2b6ca8: 52803161     	mov	w1, #0x18b              // =395
+  2b6cac: 97f53381     	bl	0x3ab0 <PT_LOAD#0+0x3ab0>
+  2b6cb0: aa1403e0     	mov	x0, x20
+  2b6cb4: 2a1f03e1     	mov	w1, wzr
+  2b6cb8: 94000df6     	bl	0x2ba490 <PT_LOAD#0+0x2ba490>
+  2b6cbc: f94002a0     	ldr	x0, [x21]
+  2b6cc0: 14000035     	b	0x2b6d94 <PT_LOAD#0+0x2b6d94>
+  2b6cc4: 90006740     	adrp	x0, 0xf9e000 <PT_LOAD#0+0xf9e000>
+  2b6cc8: 91204800     	add	x0, x0, #0x812
+  2b6ccc: 90006742     	adrp	x2, 0xf9e000 <PT_LOAD#0+0xf9e000>
+  2b6cd0: 91209442     	add	x2, x2, #0x825
+  2b6cd4: 52803161     	mov	w1, #0x18b              // =395
+  2b6cd8: 97f53376     	bl	0x3ab0 <PT_LOAD#0+0x3ab0>
+  2b6cdc: aa1403e0     	mov	x0, x20
+  2b6ce0: 94000de0     	bl	0x2ba460 <PT_LOAD#0+0x2ba460>
+  2b6ce4: 370000a0     	tbnz	w0, #0x0, 0x2b6cf8 <PT_LOAD#0+0x2b6cf8>
+  2b6ce8: b9402268     	ldr	w8, [x19, #0x20]
+  2b6cec: 5100b108     	sub	w8, w8, #0x2c
+  2b6cf0: 7100091f     	cmp	w8, #0x2
+  2b6cf4: 54000628     	b.hi	0x2b6db8 <PT_LOAD#0+0x2b6db8>
+  2b6cf8: 321f03e8     	orr	w8, wzr, #0x2
+  2b6cfc: 1400002a     	b	0x2b6da4 <PT_LOAD#0+0x2b6da4>
+  2b6d00: f9400660     	ldr	x0, [x19, #0x8]
+  2b6d04: 940a26bb     	bl	0x5407f0 <PT_LOAD#0+0x5407f0>
+  2b6d08: 39414a68     	ldrb	w8, [x19, #0x52]
+  2b6d0c: 51001009     	sub	w9, w0, #0x4
+  2b6d10: 7100093f     	cmp	w9, #0x2
+  2b6d14: 54000909     	b.ls	0x2b6e34 <PT_LOAD#0+0x2b6e34>
+  2b6d18: aa1303f4     	mov	x20, x19
+  2b6d1c: b8054e9f     	str	wzr, [x20, #0x54]!
+  2b6d20: 35000908     	cbnz	w8, 0x2b6e40 <PT_LOAD#0+0x2b6e40>
+  2b6d24: f9401a68     	ldr	x8, [x19, #0x30]
+  2b6d28: b2091be9     	mov	x9, #0x3f8000003f800000 // =4575657222473777152
+  2b6d2c: 3902011f     	strb	wzr, [x8, #0x80]
+  2b6d30: f9003909     	str	x9, [x8, #0x70]
+  2b6d34: 1400005b     	b	0x2b6ea0 <PT_LOAD#0+0x2b6ea0>
+  2b6d38: 90006740     	adrp	x0, 0xf9e000 <PT_LOAD#0+0xf9e000>
+  2b6d3c: 91204800     	add	x0, x0, #0x812
+  2b6d40: 90006742     	adrp	x2, 0xf9e000 <PT_LOAD#0+0xf9e000>
+  2b6d44: 91209442     	add	x2, x2, #0x825
+  2b6d48: 52803161     	mov	w1, #0x18b              // =395
+  2b6d4c: 97f53359     	bl	0x3ab0 <PT_LOAD#0+0x3ab0>
+  2b6d50: aa1403e0     	mov	x0, x20
+  2b6d54: 94000dc3     	bl	0x2ba460 <PT_LOAD#0+0x2ba460>
+  2b6d58: 3707f840     	tbnz	w0, #0x0, 0x2b6c60 <PT_LOAD#0+0x2b6c60>
+  2b6d5c: f94002b4     	ldr	x20, [x21]
+  2b6d60: b50000f4     	cbnz	x20, 0x2b6d7c <PT_LOAD#0+0x2b6d7c>
+  2b6d64: 90006740     	adrp	x0, 0xf9e000 <PT_LOAD#0+0xf9e000>
+  2b6d68: 91204800     	add	x0, x0, #0x812
+  2b6d6c: 90006742     	adrp	x2, 0xf9e000 <PT_LOAD#0+0xf9e000>
+  2b6d70: 91209442     	add	x2, x2, #0x825
+  2b6d74: 52803161     	mov	w1, #0x18b              // =395
+  2b6d78: 97f5334e     	bl	0x3ab0 <PT_LOAD#0+0x3ab0>
+  2b6d7c: aa1403e0     	mov	x0, x20
+  2b6d80: 2a1f03e1     	mov	w1, wzr
+  2b6d84: 94000dc3     	bl	0x2ba490 <PT_LOAD#0+0x2ba490>
+  2b6d88: f0007e68     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b6d8c: f9443d08     	ldr	x8, [x8, #0x878]
+  2b6d90: f9400100     	ldr	x0, [x8]
+  2b6d94: 9401ea37     	bl	0x331670 <PT_LOAD#0+0x331670>
+  2b6d98: 320003e8     	orr	w8, wzr, #0x1
+  2b6d9c: 39006668     	strb	w8, [x19, #0x19]
+  2b6da0: 321d03e8     	orr	w8, wzr, #0x8
+  2b6da4: b9001e68     	str	w8, [x19, #0x1c]
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x2b6c20,0x2b6da8) specified by --start-address/--stop-address
+
+========================================================================
+6. CHIAMANTE 0x38E5C0
+========================================================================
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  38e5b0: 94061724     	bl	0x514240 <PT_LOAD#0+0x514240>
+  38e5b4: 94037f43     	bl	0x46e2c0 <PT_LOAD#0+0x46e2c0>
+  38e5b8: 9406eb8e     	bl	0x5493f0 <PT_LOAD#0+0x5493f0>
+  38e5bc: 94056b51     	bl	0x4e9300 <PT_LOAD#0+0x4e9300>
+  38e5c0: 9407c828     	bl	0x580660 <PT_LOAD#0+0x580660>
+  38e5c4: 940f0057     	bl	0x74e720 <PT_LOAD#0+0x74e720>
+  38e5c8: 9403d26a     	bl	0x482f70 <PT_LOAD#0+0x482f70>
+  38e5cc: 940e9a4d     	bl	0x734f00 <PT_LOAD#0+0x734f00>
+  38e5d0: 94083db4     	bl	0x59dca0 <PT_LOAD#0+0x59dca0>
+  38e5d4: 9406e64b     	bl	0x547f00 <PT_LOAD#0+0x547f00>
+  38e5d8: 94068626     	bl	0x52fe70 <PT_LOAD#0+0x52fe70>
+  38e5dc: 94051dad     	bl	0x4d5c90 <PT_LOAD#0+0x4d5c90>
+  38e5e0: b0006121     	adrp	x1, 0xfb3000 <PT_LOAD#0+0xfb3000>
+  38e5e4: 91155421     	add	x1, x1, #0x555
+  38e5e8: aa1303e0     	mov	x0, x19
+  38e5ec: 94106cdd     	bl	0x7a9960 <PT_LOAD#0+0x7a9960>
+  38e5f0: d2a83e08     	mov	x8, #0x41f00000         // =1106247680
+  38e5f4: f2e83e08     	movk	x8, #0x41f0, lsl #48
+  38e5f8: aa1303e0     	mov	x0, x19
+  38e5fc: 2a1f03e1     	mov	w1, wzr
+  38e600: f9002668     	str	x8, [x19, #0x48]
+  38e604: 94106f4b     	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  38e608: b20203e8     	mov	x8, #0x4000000040000000 // =4611686019501129728
+  38e60c: 321803e0     	orr	w0, wzr, #0x100
+  38e610: 321c03e1     	orr	w1, wzr, #0x10
+  38e614: f807c268     	stur	x8, [x19, #0x7c]
+  38e618: 97faa386     	bl	0x237430 <PT_LOAD#0+0x237430>
+  38e61c: aa0003f4     	mov	x20, x0
+  38e620: 97faa3f0     	bl	0x2375e0 <PT_LOAD#0+0x2375e0>
+  38e624: 52903208     	mov	w8, #0x8190             // =33168
+  38e628: 72a000a8     	movk	w8, #0x5, lsl #16
+  38e62c: f8286a74     	str	x20, [x19, x8]
+  38e630: f94002c0     	ldr	x0, [x22]
+  38e634: 97f2dd23     	bl	0x45ac0 <PT_LOAD#0+0x45ac0>
+  38e638: f94002e0     	ldr	x0, [x23]
+  38e63c: 97fbcc65     	bl	0x2817d0 <PT_LOAD#0+0x2817d0>
+  38e640: f00077a8     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  38e644: f9432108     	ldr	x8, [x8, #0x640]
+  38e648: f9400100     	ldr	x0, [x8]
+  38e64c: f9400008     	ldr	x8, [x0]
+  38e650: f00077a1     	adrp	x1, 0x1285000 <PT_LOAD#0+0x1285000>
+  38e654: f9402d08     	ldr	x8, [x8, #0x58]
+  38e658: f944a821     	ldr	x1, [x1, #0x950]
+  38e65c: d63f0100     	blr	x8
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x38e5b0,0x38e660) specified by --start-address/--stop-address
+
+========================================================================
+7. CONFIGURAZIONE SECONDARIA 0x78C600
+========================================================================
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  78c600: f9402d08     	ldr	x8, [x8, #0x58]
+  78c604: aa1303e0     	mov	x0, x19
+  78c608: d63f0100     	blr	x8
+  78c60c: 36000820     	tbz	w0, #0x0, 0x78c710 <PT_LOAD#0+0x78c710>
+  78c610: b00057d4     	adrp	x20, 0x1285000 <PT_LOAD#0+0x1285000>
+  78c614: f9432a94     	ldr	x20, [x20, #0x650]
+  78c618: 321e03e8     	orr	w8, wzr, #0x4
+  78c61c: b9283e68     	str	w8, [x19, #0x283c]
+  78c620: f9400280     	ldr	x0, [x20]
+  78c624: 39414008     	ldrb	w8, [x0, #0x50]
+  78c628: 52850989     	mov	w9, #0x284c             // =10316
+  78c62c: 38296a68     	strb	w8, [x19, x9]
+  78c630: b9404c09     	ldr	w9, [x0, #0x4c]
+  78c634: 52850a88     	mov	w8, #0x2854             // =10324
+  78c638: 2a1f03e1     	mov	w1, wzr
+  78c63c: b9285269     	str	w9, [x19, #0x2850]
+  78c640: 38286a7f     	strb	wzr, [x19, x8]
+  78c644: b9284a7f     	str	wzr, [x19, #0x2848]
+  78c648: 9400773a     	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  78c64c: f9400288     	ldr	x8, [x20]
+  78c650: 52880009     	mov	w9, #0x4000             // =16384
+  78c654: 72a8c389     	movk	w9, #0x461c, lsl #16
+  78c658: 14000050     	b	0x78c798 <PT_LOAD#0+0x78c798>
+  78c65c: b00057c8     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  78c660: f9432908     	ldr	x8, [x8, #0x650]
+  78c664: f9400108     	ldr	x8, [x8]
+  78c668: 320003e9     	orr	w9, wzr, #0x1
+  78c66c: 3901d109     	strb	w9, [x8, #0x74]
+  78c670: b9684a69     	ldr	w9, [x19, #0x2848]
+  78c674: 11000529     	add	w9, w9, #0x1
+  78c678: 7100553f     	cmp	w9, #0x15
+  78c67c: b9284a69     	str	w9, [x19, #0x2848]
+  78c680: 54000483     	b.lo	0x78c710 <PT_LOAD#0+0x78c710>
+  78c684: b9284a7f     	str	wzr, [x19, #0x2848]
+  78c688: 3901d11f     	strb	wzr, [x8, #0x74]
+  78c68c: 528000a8     	mov	w8, #0x5                // =5
+  78c690: b9283e68     	str	w8, [x19, #0x283c]
+  78c694: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  78c698: a8c24ff4     	ldp	x20, x19, [sp], #0x20
+  78c69c: d65f03c0     	ret
+  78c6a0: b00057c9     	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+  78c6a4: b9683668     	ldr	w8, [x19, #0x2834]
+  78c6a8: f9432929     	ldr	x9, [x9, #0x650]
+  78c6ac: f9400129     	ldr	x9, [x9]
+  78c6b0: bd407920     	ldr	s0, [x9, #0x78]
+  78c6b4: bd684261     	ldr	s1, [x19, #0x2840]
+  78c6b8: 1e212800     	fadd	s0, s0, s1
+  78c6bc: b9684a6a     	ldr	w10, [x19, #0x2848]
+  78c6c0: 1100054a     	add	w10, w10, #0x1
+  78c6c4: b9284a6a     	str	w10, [x19, #0x2848]
+  78c6c8: 1e230143     	ucvtf	s3, w10
+  78c6cc: bd284260     	str	s0, [x19, #0x2840]
+  78c6d0: bd404921     	ldr	s1, [x9, #0x48]
+  78c6d4: d00041e9     	adrp	x9, 0xfca000 <PT_LOAD#0+0xfca000>
+  78c6d8: bd487122     	ldr	s2, [x9, #0x870]
+  78c6dc: 52800509     	mov	w9, #0x28               // =40
+  78c6e0: 9b094d08     	madd	x8, x8, x9, x19
+  78c6e4: 1e211841     	fdiv	s1, s2, s1
+  78c6e8: 1e210801     	fmul	s1, s0, s1
+  78c6ec: 1e231821     	fdiv	s1, s1, s3
+  78c6f0: 1e211841     	fdiv	s1, s2, s1
+  78c6f4: bd004d01     	str	s1, [x8, #0x4c]
+  78c6f8: bd684661     	ldr	s1, [x19, #0x2844]
+  78c6fc: 7e21d821     	ucvtf	s1, s1
+  78c700: 1e212000     	fcmp	s0, s1
+  78c704: 5400006b     	b.lt	0x78c710 <PT_LOAD#0+0x78c710>
+  78c708: 321f07e8     	orr	w8, wzr, #0x6
+  78c70c: b9283e68     	str	w8, [x19, #0x283c]
+  78c710: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  78c714: a8c24ff4     	ldp	x20, x19, [sp], #0x20
+  78c718: d65f03c0     	ret
+  78c71c: 52850728     	mov	w8, #0x2839             // =10297
+  78c720: 38686a68     	ldrb	w8, [x19, x8]
+  78c724: 34000108     	cbz	w8, 0x78c744 <PT_LOAD#0+0x78c744>
+  78c728: 2a1f03e8     	mov	w8, wzr
+  78c72c: 14000012     	b	0x78c774 <PT_LOAD#0+0x78c774>
+  78c730: 320003e8     	orr	w8, wzr, #0x1
+  78c734: b9283e68     	str	w8, [x19, #0x283c]
+  78c738: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  78c73c: a8c24ff4     	ldp	x20, x19, [sp], #0x20
+  78c740: d65f03c0     	ret
+  78c744: 52850708     	mov	w8, #0x2838             // =10296
+  78c748: 38686a68     	ldrb	w8, [x19, x8]
+  78c74c: 34000128     	cbz	w8, 0x78c770 <PT_LOAD#0+0x78c770>
+  78c750: b9683668     	ldr	w8, [x19, #0x2834]
+  78c754: b9683269     	ldr	w9, [x19, #0x2830]
+  78c758: 11000508     	add	w8, w8, #0x1
+  78c75c: 6b09011f     	cmp	w8, w9
+  78c760: 54000082     	b.hs	0x78c770 <PT_LOAD#0+0x78c770>
+  78c764: b9283668     	str	w8, [x19, #0x2834]
+  78c768: 321f03e8     	orr	w8, wzr, #0x2
+  78c76c: 14000002     	b	0x78c774 <PT_LOAD#0+0x78c774>
+  78c770: 320003e8     	orr	w8, wzr, #0x1
+  78c774: b9283e68     	str	w8, [x19, #0x283c]
+  78c778: b00057d4     	adrp	x20, 0x1285000 <PT_LOAD#0+0x1285000>
+  78c77c: f9432a94     	ldr	x20, [x20, #0x650]
+  78c780: 52850988     	mov	w8, #0x284c             // =10316
+  78c784: 38686a61     	ldrb	w1, [x19, x8]
+  78c788: f9400280     	ldr	x0, [x20]
+  78c78c: 940076e9     	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  78c790: f9400288     	ldr	x8, [x20]
+  78c794: b9685269     	ldr	w9, [x19, #0x2850]
+  78c798: b9004d09     	str	w9, [x8, #0x4c]
+  78c79c: a9417bfd     	ldp	x29, x30, [sp, #0x10]
+  78c7a0: a8c24ff4     	ldp	x20, x19, [sp], #0x20
+  78c7a4: d65f03c0     	ret
+		...
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x78c600,0x78c7b0) specified by --start-address/--stop-address
+
+========================================================================
+8. CONFIGURAZIONE SECONDARIA 0x791B90
+========================================================================
+
+tmp/re0-analysis/main.elf:	file format elf64-littleaarch64
+
+Disassembly of section PT_LOAD#0:
+
+0000000000000000 <PT_LOAD#0>:
+  791b90: f81d0ffc     	str	x28, [sp, #-0x30]!
+  791b94: a9014ff4     	stp	x20, x19, [sp, #0x10]
+  791b98: a9027bfd     	stp	x29, x30, [sp, #0x20]
+  791b9c: 910083fd     	add	x29, sp, #0x20
+  791ba0: d10c03ff     	sub	sp, sp, #0x300
+  791ba4: 900057b4     	adrp	x20, 0x1285000 <PT_LOAD#0+0x1285000>
+  791ba8: f9432a94     	ldr	x20, [x20, #0x650]
+  791bac: aa0003f3     	mov	x19, x0
+  791bb0: 3901d67f     	strb	wzr, [x19, #0x75]
+  791bb4: f9400280     	ldr	x0, [x20]
+  791bb8: 3941da61     	ldrb	w1, [x19, #0x76]
+  791bbc: 940061dd     	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  791bc0: 900057a8     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  791bc4: f9447108     	ldr	x8, [x8, #0x8e0]
+  791bc8: f9400108     	ldr	x8, [x8]
+  791bcc: f803411f     	stur	xzr, [x8, #0x34]
+  791bd0: f802c11f     	stur	xzr, [x8, #0x2c]
+  791bd4: b9406669     	ldr	w9, [x19, #0x64]
+  791bd8: b90d6509     	str	w9, [x8, #0xd64]
+  791bdc: f9400288     	ldr	x8, [x20]
+  791be0: 3941de69     	ldrb	w9, [x19, #0x77]
+  791be4: 3901d109     	strb	w9, [x8, #0x74]
+  791be8: f00057a8     	adrp	x8, 0x1288000 <PT_LOAD#0+0x1288000>
+  791bec: f940c908     	ldr	x8, [x8, #0x190]
+  791bf0: f9400108     	ldr	x8, [x8]
+  791bf4: b9407a69     	ldr	w9, [x19, #0x78]
+  791bf8: b9032109     	str	w9, [x8, #0x320]
+  791bfc: f9406661     	ldr	x1, [x19, #0xc8]
+  791c00: b40000e1     	cbz	x1, 0x791c1c <PT_LOAD#0+0x791c1c>
+  791c04: 900057a8     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  791c08: f9436d08     	ldr	x8, [x8, #0x6d8]
+  791c0c: f9401d00     	ldr	x0, [x8, #0x38]
+  791c10: f9400008     	ldr	x8, [x0]
+  791c14: f9403508     	ldr	x8, [x8, #0x68]
+  791c18: d63f0100     	blr	x8
+  791c1c: aa1303f4     	mov	x20, x19
+  791c20: f84c0e81     	ldr	x1, [x20, #0xc0]!
+  791c24: b40000e1     	cbz	x1, 0x791c40 <PT_LOAD#0+0x791c40>
+  791c28: 900057a8     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  791c2c: f9436d08     	ldr	x8, [x8, #0x6d8]
+  791c30: f9401d00     	ldr	x0, [x8, #0x38]
+  791c34: f9400008     	ldr	x8, [x0]
+  791c38: f9403508     	ldr	x8, [x8, #0x68]
+  791c3c: d63f0100     	blr	x8
+  791c40: f9407261     	ldr	x1, [x19, #0xe0]
+  791c44: b40000e1     	cbz	x1, 0x791c60 <PT_LOAD#0+0x791c60>
+  791c48: 900057a8     	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  791c4c: f9436d08     	ldr	x8, [x8, #0x6d8]
+  791c50: f9401d00     	ldr	x0, [x8, #0x38]
+  791c54: f9400008     	ldr	x8, [x0]
+  791c58: f9403508     	ldr	x8, [x8, #0x68]
+  791c5c: d63f0100     	blr	x8
+  791c60: f900727f     	str	xzr, [x19, #0xe0]
+  791c64: a9007e9f     	stp	xzr, xzr, [x20]
+  791c68: f9406e60     	ldr	x0, [x19, #0xd8]
+  791c6c: b40000a0     	cbz	x0, 0x791c80 <PT_LOAD#0+0x791c80>
+  791c70: f9400008     	ldr	x8, [x0]
+  791c74: f9400508     	ldr	x8, [x8, #0x8]
+  791c78: d63f0100     	blr	x8
+  791c7c: f9006e7f     	str	xzr, [x19, #0xd8]
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-objdump: warning: 'tmp/re0-analysis/main.elf': no section overlaps the range [0x791b90,0x791c80) specified by --start-address/--stop-address
+
+========================================================================
+9. ACCESSI AI CAMPI +48 +4C +50 NEI PERCORSI NOTI
+========================================================================
+   12b10:      	mov	w1, #0x18b              // =395
+   12b14:      	bl	0x3ab0 <PT_LOAD#0+0x3ab0>
+   12b18:      	mov	x0, x20
+   12b1c:      	bl	0x2dac50 <PT_LOAD#0+0x2dac50>
+   12b20:      	orr	w8, wzr, #0x1
+   12b24:      	str	w8, [x19, #0x48]
+   12b28:      	b	0x12b8c <PT_LOAD#0+0x12b8c>
+   12b2c:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+   12b30:      	ldr	x8, [x8, #0x668]
+   12b34:      	ldr	x20, [x8]
+   12b38:      	cbz	x20, 0x12b68 <PT_LOAD#0+0x12b68>
+---
+   12b38:      	cbz	x20, 0x12b68 <PT_LOAD#0+0x12b68>
+   12b3c:      	mov	x0, x20
+   12b40:      	bl	0x2dac70 <PT_LOAD#0+0x2dac70>
+   12b44:      	tbz	w0, #0x0, 0x12b8c <PT_LOAD#0+0x12b8c>
+   12b48:      	orr	w8, wzr, #0x2
+   12b4c:      	str	w8, [x19, #0x48]
+   12b50:      	ldr	x8, [x19]
+   12b54:      	ldr	x1, [x8, #0x70]
+   12b58:      	mov	x0, x19
+   12b5c:      	ldp	x29, x30, [sp, #0x10]
+   12b60:      	ldp	x20, x19, [sp], #0x20
+---
+   e2b4c:      	stp	w13, w14, [sp, #0x50]
+   e2b50:      	str	w15, [sp, #0x58]
+   e2b54:      	str	w16, [sp, #0x5c]
+   e2b58:      	bl	0x355c40 <PT_LOAD#0+0x355c40>
+   e2b5c:      	ldr	x8, [sp, #0x70]
+   e2b60:      	str	x8, [sp, #0x50]
+   e2b64:      	ldr	w8, [sp, #0x78]
+   e2b68:      	str	w8, [sp, #0x58]
+   e2b6c:      	ldr	w8, [sp, #0x7c]
+   e2b70:      	str	w8, [sp, #0x5c]
+   e2b74:      	adrp	x8, 0xfcc000 <PT_LOAD#0+0xfcc000>
+---
+   f2b48:      	mov	x0, x19
+   f2b4c:      	ldp	x29, x30, [sp, #0x80]
+   f2b50:      	ldp	x20, x19, [sp, #0x70]
+   f2b54:      	ldr	x27, [sp, #0x30]
+   f2b58:      	ldp	x22, x21, [sp, #0x60]
+   f2b5c:      	ldp	x24, x23, [sp, #0x50]
+   f2b60:      	ldp	x26, x25, [sp, #0x40]
+   f2b64:      	add	sp, sp, #0x90
+   f2b68:      	ret
+   f2b6c:      	udf	#0x0
+   f2b70:      	stp	x22, x21, [sp, #-0x30]!
+---
+  12b664:      	ldp	x28, x27, [sp, #0x30]
+  12b668:      	add	sp, sp, #0x90
+  12b66c:      	ret
+  12b670:      	sub	sp, sp, #0xc0
+  12b674:      	str	d10, [sp, #0x40]
+  12b678:      	stp	d9, d8, [sp, #0x50]
+  12b67c:      	stp	x28, x27, [sp, #0x60]
+  12b680:      	stp	x26, x25, [sp, #0x70]
+  12b684:      	stp	x24, x23, [sp, #0x80]
+  12b688:      	stp	x22, x21, [sp, #0x90]
+  12b68c:      	stp	x20, x19, [sp, #0xa0]
+---
+  279190:      	ret
+		...
+  2791a0:      	ret
+		...
+  2791b0:      	sub	sp, sp, #0x80
+  2791b4:      	str	x21, [sp, #0x50]
+  2791b8:      	stp	x20, x19, [sp, #0x60]
+  2791bc:      	stp	x29, x30, [sp, #0x70]
+  2791c0:      	add	x29, sp, #0x70
+  2791c4:      	mov	x19, x0
+  2791c8:      	ldr	x0, [x19, #0x8]
+---
+  2b6850:      	add	x9, x9, x10
+  2b6854:      	br	x9
+  2b6858:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b685c:      	ldr	x8, [x8, #0x650]
+  2b6860:      	ldr	x0, [x8]
+  2b6864:      	ldr	w8, [x0, #0x48]
+  2b6868:      	str	w8, [x19, #0x48]
+  2b686c:      	ldr	w8, [x0, #0x4c]
+  2b6870:      	str	w8, [x19, #0x4c]
+  2b6874:      	ldrb	w8, [x0, #0x50]
+  2b6878:      	strb	w8, [x19, #0x50]
+---
+  2b6854:      	br	x9
+  2b6858:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b685c:      	ldr	x8, [x8, #0x650]
+  2b6860:      	ldr	x0, [x8]
+  2b6864:      	ldr	w8, [x0, #0x48]
+  2b6868:      	str	w8, [x19, #0x48]
+  2b686c:      	ldr	w8, [x0, #0x4c]
+  2b6870:      	str	w8, [x19, #0x4c]
+  2b6874:      	ldrb	w8, [x0, #0x50]
+  2b6878:      	strb	w8, [x19, #0x50]
+  2b687c:      	mov	x8, #0x41f00000         // =1106247680
+---
+  2b6858:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b685c:      	ldr	x8, [x8, #0x650]
+  2b6860:      	ldr	x0, [x8]
+  2b6864:      	ldr	w8, [x0, #0x48]
+  2b6868:      	str	w8, [x19, #0x48]
+  2b686c:      	ldr	w8, [x0, #0x4c]
+  2b6870:      	str	w8, [x19, #0x4c]
+  2b6874:      	ldrb	w8, [x0, #0x50]
+  2b6878:      	strb	w8, [x19, #0x50]
+  2b687c:      	mov	x8, #0x41f00000         // =1106247680
+  2b6880:      	movk	x8, #0x41f0, lsl #48
+---
+  2b685c:      	ldr	x8, [x8, #0x650]
+  2b6860:      	ldr	x0, [x8]
+  2b6864:      	ldr	w8, [x0, #0x48]
+  2b6868:      	str	w8, [x19, #0x48]
+  2b686c:      	ldr	w8, [x0, #0x4c]
+  2b6870:      	str	w8, [x19, #0x4c]
+  2b6874:      	ldrb	w8, [x0, #0x50]
+  2b6878:      	strb	w8, [x19, #0x50]
+  2b687c:      	mov	x8, #0x41f00000         // =1106247680
+  2b6880:      	movk	x8, #0x41f0, lsl #48
+  2b6884:      	mov	w1, wzr
+---
+  2b6860:      	ldr	x0, [x8]
+  2b6864:      	ldr	w8, [x0, #0x48]
+  2b6868:      	str	w8, [x19, #0x48]
+  2b686c:      	ldr	w8, [x0, #0x4c]
+  2b6870:      	str	w8, [x19, #0x4c]
+  2b6874:      	ldrb	w8, [x0, #0x50]
+  2b6878:      	strb	w8, [x19, #0x50]
+  2b687c:      	mov	x8, #0x41f00000         // =1106247680
+  2b6880:      	movk	x8, #0x41f0, lsl #48
+  2b6884:      	mov	w1, wzr
+  2b6888:      	str	x8, [x0, #0x48]
+---
+  2b6864:      	ldr	w8, [x0, #0x48]
+  2b6868:      	str	w8, [x19, #0x48]
+  2b686c:      	ldr	w8, [x0, #0x4c]
+  2b6870:      	str	w8, [x19, #0x4c]
+  2b6874:      	ldrb	w8, [x0, #0x50]
+  2b6878:      	strb	w8, [x19, #0x50]
+  2b687c:      	mov	x8, #0x41f00000         // =1106247680
+  2b6880:      	movk	x8, #0x41f0, lsl #48
+  2b6884:      	mov	w1, wzr
+  2b6888:      	str	x8, [x0, #0x48]
+  2b688c:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+---
+  2b6874:      	ldrb	w8, [x0, #0x50]
+  2b6878:      	strb	w8, [x19, #0x50]
+  2b687c:      	mov	x8, #0x41f00000         // =1106247680
+  2b6880:      	movk	x8, #0x41f0, lsl #48
+  2b6884:      	mov	w1, wzr
+  2b6888:      	str	x8, [x0, #0x48]
+  2b688c:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  2b6890:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b6894:      	ldr	x8, [x8, #0x658]
+  2b6898:      	ldr	x20, [x8]
+  2b689c:      	cbz	x20, 0x2b6cc4 <PT_LOAD#0+0x2b6cc4>
+---
+  2b6b10:      	ldr	x0, [x19, #0x8]
+  2b6b14:      	cbz	x0, 0x2b6b54 <PT_LOAD#0+0x2b6b54>
+  2b6b18:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b6b1c:      	ldr	x8, [x8, #0x650]
+  2b6b20:      	ldr	x8, [x8]
+  2b6b24:      	ldr	s0, [x8, #0x48]
+  2b6b28:      	fmov	s1, #-1.00000000
+  2b6b2c:      	fdiv	s0, s1, s0
+  2b6b30:      	ldr	s1, [x8, #0x78]
+  2b6b34:      	fmul	s0, s0, s1
+  2b6b38:      	ldr	s1, [x19, #0x54]
+---
+  2b6b64:      	orr	w10, wzr, #0x1
+  2b6b68:      	strb	w10, [x8, x9]
+  2b6b6c:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b6b70:      	ldr	x8, [x8, #0x650]
+  2b6b74:      	ldr	x0, [x8]
+  2b6b78:      	ldr	w8, [x19, #0x48]
+  2b6b7c:      	str	w8, [x0, #0x48]
+  2b6b80:      	ldr	w8, [x19, #0x4c]
+  2b6b84:      	str	w8, [x0, #0x4c]
+  2b6b88:      	ldrb	w1, [x19, #0x50]
+  2b6b8c:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+---
+  2b6b68:      	strb	w10, [x8, x9]
+  2b6b6c:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b6b70:      	ldr	x8, [x8, #0x650]
+  2b6b74:      	ldr	x0, [x8]
+  2b6b78:      	ldr	w8, [x19, #0x48]
+  2b6b7c:      	str	w8, [x0, #0x48]
+  2b6b80:      	ldr	w8, [x19, #0x4c]
+  2b6b84:      	str	w8, [x0, #0x4c]
+  2b6b88:      	ldrb	w1, [x19, #0x50]
+  2b6b8c:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  2b6b90:      	ldr	x0, [x19, #0x28]
+---
+  2b6b6c:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  2b6b70:      	ldr	x8, [x8, #0x650]
+  2b6b74:      	ldr	x0, [x8]
+  2b6b78:      	ldr	w8, [x19, #0x48]
+  2b6b7c:      	str	w8, [x0, #0x48]
+  2b6b80:      	ldr	w8, [x19, #0x4c]
+  2b6b84:      	str	w8, [x0, #0x4c]
+  2b6b88:      	ldrb	w1, [x19, #0x50]
+  2b6b8c:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  2b6b90:      	ldr	x0, [x19, #0x28]
+  2b6b94:      	cbz	x0, 0x2b6ba0 <PT_LOAD#0+0x2b6ba0>
+---
+  2b6b70:      	ldr	x8, [x8, #0x650]
+  2b6b74:      	ldr	x0, [x8]
+  2b6b78:      	ldr	w8, [x19, #0x48]
+  2b6b7c:      	str	w8, [x0, #0x48]
+  2b6b80:      	ldr	w8, [x19, #0x4c]
+  2b6b84:      	str	w8, [x0, #0x4c]
+  2b6b88:      	ldrb	w1, [x19, #0x50]
+  2b6b8c:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  2b6b90:      	ldr	x0, [x19, #0x28]
+  2b6b94:      	cbz	x0, 0x2b6ba0 <PT_LOAD#0+0x2b6ba0>
+  2b6b98:      	bl	0x467eb0 <PT_LOAD#0+0x467eb0>
+---
+  2b6b74:      	ldr	x0, [x8]
+  2b6b78:      	ldr	w8, [x19, #0x48]
+  2b6b7c:      	str	w8, [x0, #0x48]
+  2b6b80:      	ldr	w8, [x19, #0x4c]
+  2b6b84:      	str	w8, [x0, #0x4c]
+  2b6b88:      	ldrb	w1, [x19, #0x50]
+  2b6b8c:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  2b6b90:      	ldr	x0, [x19, #0x28]
+  2b6b94:      	cbz	x0, 0x2b6ba0 <PT_LOAD#0+0x2b6ba0>
+  2b6b98:      	bl	0x467eb0 <PT_LOAD#0+0x467eb0>
+  2b6b9c:      	str	xzr, [x19, #0x28]
+---
+  322b54:      	str	d10, [sp, #0x10]
+  322b58:      	stp	d9, d8, [sp, #0x18]
+  322b5c:      	str	x25, [sp, #0x28]
+  322b60:      	stp	x24, x23, [sp, #0x30]
+  322b64:      	stp	x22, x21, [sp, #0x40]
+  322b68:      	stp	x20, x19, [sp, #0x50]
+  322b6c:      	stp	x29, x30, [sp, #0x60]
+  322b70:      	add	x29, sp, #0x60
+  322b74:      	mov	x19, x0
+  322b78:      	ldr	x8, [x19, #0x100]
+  322b7c:      	cbz	x8, 0x322e8c <PT_LOAD#0+0x322e8c>
+---
+  362b40:      	br	x2
+		...
+  362b50:      	sub	sp, sp, #0x70
+  362b54:      	str	x23, [sp, #0x30]
+  362b58:      	stp	x22, x21, [sp, #0x40]
+  362b5c:      	stp	x20, x19, [sp, #0x50]
+  362b60:      	stp	x29, x30, [sp, #0x60]
+  362b64:      	add	x29, sp, #0x60
+  362b68:      	mov	x19, x1
+  362b6c:      	mov	x20, x0
+  362b70:      	mov	x0, x19
+---
+  38e5ec:      	bl	0x7a9960 <PT_LOAD#0+0x7a9960>
+  38e5f0:      	mov	x8, #0x41f00000         // =1106247680
+  38e5f4:      	movk	x8, #0x41f0, lsl #48
+  38e5f8:      	mov	x0, x19
+  38e5fc:      	mov	w1, wzr
+  38e600:      	str	x8, [x19, #0x48]
+  38e604:      	bl	0x7aa330 <PT_LOAD#0+0x7aa330>
+  38e608:      	mov	x8, #0x4000000040000000 // =4611686019501129728
+  38e60c:      	orr	w0, wzr, #0x100
+  38e610:      	orr	w1, wzr, #0x10
+  38e614:      	stur	x8, [x19, #0x7c]
+---
+  478c4c:      	ldp	x29, x30, [sp, #0x10]
+  478c50:      	ldr	x19, [sp], #0x20
+  478c54:      	ret
+		...
+  478c60:      	ldr	s0, [x1]
+  478c64:      	ldp	s1, s2, [x0, #0x50]
+  478c68:      	fadd	s0, s0, s1
+  478c6c:      	ldr	s1, [x0, #0x58]
+  478c70:      	str	s0, [x0, #0x50]
+  478c74:      	ldr	s0, [x1, #0x4]
+  478c78:      	fadd	s0, s0, s2
+---
+		...
+  478c60:      	ldr	s0, [x1]
+  478c64:      	ldp	s1, s2, [x0, #0x50]
+  478c68:      	fadd	s0, s0, s1
+  478c6c:      	ldr	s1, [x0, #0x58]
+  478c70:      	str	s0, [x0, #0x50]
+  478c74:      	ldr	s0, [x1, #0x4]
+  478c78:      	fadd	s0, s0, s2
+  478c7c:      	str	s0, [x0, #0x54]
+  478c80:      	ldr	s0, [x1, #0x8]
+  478c84:      	fadd	s0, s0, s1
+---
+  542b4c:      	ldr	x9, [x8, #0x4b8]
+  542b50:      	cmn	x9, #0x1
+  542b54:      	b.ne	0x542b78 <PT_LOAD#0+0x542b78>
+  542b58:      	orr	w8, wzr, #0x1
+  542b5c:      	strb	w8, [x19, #0x71]
+  542b60:      	ldp	x29, x30, [sp, #0x50]
+  542b64:      	ldp	x20, x19, [sp, #0x40]
+  542b68:      	ldp	x22, x21, [sp, #0x30]
+  542b6c:      	ldp	x24, x23, [sp, #0x20]
+  542b70:      	add	sp, sp, #0x60
+  542b74:      	ret
+---
+  582b44:      	mov	x0, x19
+  582b48:      	str	x21, [x19, #0x8]
+  582b4c:      	add	x23, x20, #0x470
+  582b50:      	str	wzr, [sp, #0x5c]
+  582b54:      	stur	xzr, [sp, #0x54]
+  582b58:      	stur	xzr, [sp, #0x4c]
+  582b5c:      	stur	xzr, [sp, #0x44]
+  582b60:      	stur	xzr, [sp, #0x3c]
+  582b64:      	bl	0x3a9060 <PT_LOAD#0+0x3a9060>
+  582b68:      	mov	x21, x0
+  582b6c:      	adrp	x8, 0xfbb000 <PT_LOAD#0+0xfbb000>
+---
+  62b670:      	adrp	x8, 0x1290000 <PT_LOAD#0+0x1290000>
+  62b674:      	stp	xzr, xzr, [x0, #0x20]
+  62b678:      	ldr	x8, [x8, #0xaf0]
+  62b67c:      	stp	xzr, x8, [x0, #0x30]
+  62b680:      	str	wzr, [x0, #0x58]
+  62b684:      	stp	xzr, xzr, [x0, #0x48]
+  62b688:      	str	xzr, [x0, #0x40]
+  62b68c:      	stp	xzr, xzr, [x0, #0x60]
+  62b690:      	ldr	x8, [x19, #0x8]
+  62b694:      	cbz	x8, 0x62b6a4 <PT_LOAD#0+0x62b6a4>
+  62b698:      	str	x0, [x8, #0x60]
+---
+  72b674:      	bl	0x712690 <PT_LOAD#0+0x712690>
+  72b678:      	ldr	w8, [sp, #0x40]
+  72b67c:      	str	w8, [x21, #0x10]
+  72b680:      	ldr	w8, [sp, #0x44]
+  72b684:      	str	w8, [x21, #0x14]
+  72b688:      	ldr	w8, [sp, #0x48]
+  72b68c:      	ldr	x0, [x21, #0x8]
+  72b690:      	fneg	s0, s8
+  72b694:      	fneg	s1, s10
+  72b698:      	stp	w8, wzr, [x21, #0x18]
+  72b69c:      	ldr	x8, [x0]
+---
+  72b6bc:      	blr	x9
+  72b6c0:      	ldp	w8, w9, [sp, #0x40]
+  72b6c4:      	fmov	s0, w8
+  72b6c8:      	ldp	s1, s2, [x21, #0x10]
+  72b6cc:      	stp	w8, w9, [x21, #0x20]
+  72b6d0:      	ldr	w10, [sp, #0x48]
+  72b6d4:      	fmov	s3, w10
+  72b6d8:      	fsub	s0, s1, s0
+  72b6dc:      	fmov	s1, w9
+  72b6e0:      	fsub	s1, s2, s1
+  72b6e4:      	ldr	s2, [x21, #0x18]
+---
+  78c594:      	ldr	w20, [x19, #0x2834]
+  78c598:      	mov	w8, #0x28               // =40
+
+========================================================================
+10. RIFERIMENTI GLOBALI 0x1285650 E 0x1285658
+========================================================================
+    5688:      	add	x29, sp, #0x10
+    568c:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+    5690:      	ldr	x8, [x8, #0x650]
+    5694:      	ldr	x8, [x8]
+    5698:      	cbz	x8, 0x56a4 <PT_LOAD#0+0x56a4>
+---
+    56a0:      	cbz	w9, 0x56e4 <PT_LOAD#0+0x56e4>
+    56a4:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+    56a8:      	ldr	x8, [x8, #0x658]
+    56ac:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+    56b0:      	ldr	x9, [x9, #0x660]
+---
+    56a8:      	ldr	x8, [x8, #0x658]
+    56ac:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+    56b0:      	ldr	x9, [x9, #0x660]
+    56b4:      	ldr	x19, [x8]
+    56b8:      	cmp	x19, #0x0
+---
+    bad8:      	add	x29, sp, #0x10
+    badc:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+    bae0:      	ldr	x8, [x8, #0x7d8]
+    bae4:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+    bae8:      	ldr	x9, [x9, #0x650]
+---
+    bae0:      	ldr	x8, [x8, #0x7d8]
+    bae4:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+    bae8:      	ldr	x9, [x9, #0x650]
+    baec:      	mov	x19, x0
+    baf0:      	add	x8, x8, #0x10
+---
+    bb38:      	add	x29, sp, #0x10
+    bb3c:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+    bb40:      	ldr	x8, [x8, #0x7d8]
+    bb44:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+    bb48:      	ldr	x9, [x9, #0x650]
+---
+    bb40:      	ldr	x8, [x8, #0x7d8]
+    bb44:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+    bb48:      	ldr	x9, [x9, #0x650]
+    bb4c:      	mov	x19, x0
+    bb50:      	add	x8, x8, #0x10
+---
+    f458:      	add	x29, sp, #0x10
+    f45c:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+    f460:      	ldr	x8, [x8, #0x8c8]
+    f464:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+    f468:      	ldr	x9, [x9, #0x650]
+---
+    f460:      	ldr	x8, [x8, #0x8c8]
+    f464:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+    f468:      	ldr	x9, [x9, #0x650]
+    f46c:      	mov	x19, x0
+    f470:      	add	x8, x8, #0x10
+---
+    f4b8:      	add	x29, sp, #0x10
+    f4bc:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+    f4c0:      	ldr	x8, [x8, #0x8c8]
+    f4c4:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+    f4c8:      	ldr	x9, [x9, #0x650]
+---
+    f4c0:      	ldr	x8, [x8, #0x8c8]
+    f4c4:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+    f4c8:      	ldr	x9, [x9, #0x650]
+    f4cc:      	mov	x19, x0
+    f4d0:      	add	x8, x8, #0x10
+---
+    fc98:      	add	x29, sp, #0x10
+    fc9c:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+    fca0:      	ldr	x8, [x8, #0x8f8]
+    fca4:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+    fca8:      	ldr	x9, [x9, #0x650]
+---
+    fca0:      	ldr	x8, [x8, #0x8f8]
+    fca4:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+    fca8:      	ldr	x9, [x9, #0x650]
+    fcac:      	mov	x19, x0
+    fcb0:      	add	x8, x8, #0x10
+---
+    fcf8:      	add	x29, sp, #0x10
+    fcfc:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+    fd00:      	ldr	x8, [x8, #0x8f8]
+    fd04:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+    fd08:      	ldr	x9, [x9, #0x650]
+---
+    fd00:      	ldr	x8, [x8, #0x8f8]
+    fd04:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+    fd08:      	ldr	x9, [x9, #0x650]
+    fd0c:      	mov	x19, x0
+    fd10:      	add	x8, x8, #0x10
+---
+    fd8c:      	b.ne	0xfda4 <PT_LOAD#0+0xfda4>
+    fd90:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+    fd94:      	ldr	x8, [x8, #0x650]
+    fd98:      	ldr	x8, [x8]
+    fd9c:      	ldr	w8, [x8, #0x80]
+---
+   10014:      	cbnz	w8, 0x100c0 <PT_LOAD#0+0x100c0>
+   10018:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+   1001c:      	ldr	x8, [x8, #0x650]
+   10020:      	ldr	x8, [x8]
+   10024:      	ldr	s1, [x19, #0x50]
+---
+   10518:      	add	x29, sp, #0x10
+   1051c:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+   10520:      	ldr	x8, [x8, #0x910]
+   10524:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+   10528:      	ldr	x9, [x9, #0x650]
+---
+   10520:      	ldr	x8, [x8, #0x910]
+   10524:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+   10528:      	ldr	x9, [x9, #0x650]
+   1052c:      	mov	x19, x0
+   10530:      	add	x8, x8, #0x10
+---
+   105d8:      	add	x29, sp, #0x10
+   105dc:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+   105e0:      	ldr	x8, [x8, #0x910]
+   105e4:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+   105e8:      	ldr	x9, [x9, #0x650]
+---
+   105e0:      	ldr	x8, [x8, #0x910]
+   105e4:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+   105e8:      	ldr	x9, [x9, #0x650]
+   105ec:      	mov	x19, x0
+   105f0:      	add	x8, x8, #0x10
+---
+   106d0:      	b.ne	0x106e8 <PT_LOAD#0+0x106e8>
+   106d4:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+   106d8:      	ldr	x8, [x8, #0x650]
+   106dc:      	ldr	x8, [x8]
+   106e0:      	ldr	w8, [x8, #0x80]
+---
+   109b0:      	br	x8
+   109b4:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+   109b8:      	ldr	x8, [x8, #0x650]
+   109bc:      	ldr	x8, [x8]
+   109c0:      	ldr	s1, [x19, #0x50]
+---
+   11c3c:      	bl	0x1ce290 <PT_LOAD#0+0x1ce290>
+   11c40:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+   11c44:      	ldr	x8, [x8, #0x650]
+   11c48:      	ldr	x8, [x8]
+   11c4c:      	ldrb	w8, [x8, #0x44]
+---
+   34098:      	ldr	x19, [x19, #0x650]
+   3409c:      	adrp	x2, 0x1285000 <PT_LOAD#0+0x1285000>
+   340a0:      	ldr	x2, [x2, #0x990]
+   340a4:      	adrp	x1, 0xf9e000 <PT_LOAD#0+0xf9e000>
+   340a8:      	add	x1, x1, #0xf8a
+---
+   3cec0:      	ldr	x8, [x8, #0x9a0]
+   3cec4:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+   3cec8:      	ldr	x9, [x9, #0x650]
+   3cecc:      	mov	x19, x0
+   3ced0:      	add	x8, x8, #0x10
+---
+   3cf20:      	ldr	x8, [x8, #0x9a0]
+   3cf24:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+   3cf28:      	ldr	x9, [x9, #0x650]
+   3cf2c:      	mov	x19, x0
+   3cf30:      	add	x8, x8, #0x10
+---
+   3dc60:      	ldr	x8, [x8, #0x9c8]
+   3dc64:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+   3dc68:      	ldr	x9, [x9, #0x650]
+   3dc6c:      	mov	x19, x0
+   3dc70:      	add	x8, x8, #0x10
+---
+   3dce0:      	ldr	x8, [x8, #0x9c8]
+   3dce4:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+   3dce8:      	ldr	x9, [x9, #0x650]
+   3dcec:      	mov	x19, x0
+   3dcf0:      	add	x8, x8, #0x10
+---
+   458f0:      	ldr	x8, [x8, #0xa60]
+   458f4:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+   458f8:      	ldr	x9, [x9, #0x650]
+   458fc:      	mov	x19, x0
+   45900:      	add	x8, x8, #0x10
+---
+   45a50:      	ldr	x8, [x8, #0xa60]
+   45a54:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+   45a58:      	ldr	x9, [x9, #0x650]
+   45a5c:      	mov	x19, x0
+   45a60:      	add	x8, x8, #0x10
+---
+   8fe84:      	cbz	x0, 0x8fef4 <PT_LOAD#0+0x8fef4>
+   8fe88:      	adrp	x22, 0x1285000 <PT_LOAD#0+0x1285000>
+   8fe8c:      	ldr	x22, [x22, #0x650]
+   8fe90:      	fmov	s8, #3.00000000
+   8fe94:      	b	0x8fe9c <PT_LOAD#0+0x8fe9c>
+---
+   8ffb8:      	cbz	x0, 0x90028 <PT_LOAD#0+0x90028>
+   8ffbc:      	adrp	x21, 0x1285000 <PT_LOAD#0+0x1285000>
+   8ffc0:      	ldr	x21, [x21, #0x650]
+   8ffc4:      	fmov	s8, #3.00000000
+   8ffc8:      	b	0x8ffd0 <PT_LOAD#0+0x8ffd0>
+---
+   90fc8:      	cbz	x0, 0x91038 <PT_LOAD#0+0x91038>
+   90fcc:      	adrp	x21, 0x1285000 <PT_LOAD#0+0x1285000>
+   90fd0:      	ldr	x21, [x21, #0x650]
+   90fd4:      	fmov	s9, #7.00000000
+   90fd8:      	b	0x90fe0 <PT_LOAD#0+0x90fe0>
+---
+   93a98:      	tbz	w8, #0x8, 0x93a7c <PT_LOAD#0+0x93a7c>
+   93a9c:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+   93aa0:      	ldr	x9, [x9, #0x650]
+   93aa4:      	ldr	x9, [x9]
+   93aa8:      	ldr	s0, [x9, #0x48]
+---
+		...
+   95b70:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+   95b74:      	ldr	x8, [x8, #0x650]
+   95b78:      	ldr	x8, [x8]
+   95b7c:      	ldr	s0, [x8, #0x48]
+---
+   96588:      	b.le	0x965f4 <PT_LOAD#0+0x965f4>
+   9658c:      	adrp	x20, 0x1285000 <PT_LOAD#0+0x1285000>
+   96590:      	ldr	x20, [x20, #0x650]
+   96594:      	b	0x9659c <PT_LOAD#0+0x9659c>
+   96598:      	ldr	x0, [x19, #0x18]
+---
+   97424:      	ldr	s1, [x8, #0x1d4]
+   97428:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+   9742c:      	ldr	x8, [x8, #0x650]
+   97430:      	ldr	x8, [x8]
+   97434:      	fmul	s0, s0, s1
+---
+   97454:      	ldr	s2, [x8, #0x1d4]
+   97458:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+   9745c:      	ldr	x8, [x8, #0x650]
+   97460:      	fmul	s0, s0, s2
+   97464:      	ldr	x8, [x8]
+---
+   974a0:      	ldr	s1, [x8, #0x2b0]
+   974a4:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+   974a8:      	ldr	x8, [x8, #0x650]
+   974ac:      	fdiv	s0, s0, s1
+   974b0:      	ldr	x8, [x8]
+---
+   974d0:      	ldr	s2, [x8, #0x2b0]
+   974d4:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+   974d8:      	ldr	x8, [x8, #0x650]
+   974dc:      	fdiv	s0, s0, s2
+   974e0:      	ldr	x8, [x8]
+---
+   a0854:      	bl	0x188be0 <PT_LOAD#0+0x188be0>
+   a0858:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+   a085c:      	ldr	x8, [x8, #0x650]
+   a0860:      	ldr	x8, [x8]
+   a0864:      	ldr	s0, [x8, #0x48]
+---
+   a09f4:      	ldr	s0, [x8]
+   a09f8:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+   a09fc:      	ldr	x9, [x9, #0x650]
+   a0a00:      	ldr	x9, [x9]
+   a0a04:      	ldr	s1, [x9, #0x48]
+---
+		...
+   a27b0:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+   a27b4:      	ldr	x8, [x8, #0x650]
+   a27b8:      	ldr	x8, [x8]
+   a27bc:      	ldr	s0, [x8, #0x48]
+---
+   a5d80:      	b.hi	0xa5dd8 <PT_LOAD#0+0xa5dd8>
+   a5d84:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+   a5d88:      	ldr	x9, [x9, #0x650]
+   a5d8c:      	mov	w8, #0x86f0             // =34544
+   a5d90:      	ldr	s0, [x19, x8]
+---
+   a8134:      	b	0xa8548 <PT_LOAD#0+0xa8548>
+   a8138:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+   a813c:      	ldr	x8, [x8, #0x650]
+   a8140:      	ldr	x8, [x8]
+   a8144:      	ldr	s18, [x8, #0x48]
+---
+   a9438:      	bl	0xa2230 <PT_LOAD#0+0xa2230>
+   a943c:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+   a9440:      	ldr	x8, [x8, #0x650]
+   a9444:      	ldr	x8, [x8]
+   a9448:      	ldr	s0, [x8, #0x48]
+---
+   a975c:      	add	x29, sp, #0x20
+   a9760:      	adrp	x21, 0x1285000 <PT_LOAD#0+0x1285000>
+   a9764:      	ldr	x21, [x21, #0x650]
+   a9768:      	ldr	x8, [x21]
+   a976c:      	mov	x19, x0
+---
+   a9ed8:      	bl	0xa2230 <PT_LOAD#0+0xa2230>
+   a9edc:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+   a9ee0:      	ldr	x8, [x8, #0x650]
+   a9ee4:      	ldr	x8, [x8]
+   a9ee8:      	ldr	s0, [x8, #0x48]
+---
+   a9f74:      	ldr	x8, [x19]
+   a9f78:      	adrp	x10, 0x1285000 <PT_LOAD#0+0x1285000>
+   a9f7c:      	ldr	x8, [x8, #0x1d0]
+   a9f80:      	ldr	x10, [x10, #0x650]
+   a9f84:      	mov	w9, #0x8370             // =33648
+---
+   a9fc4:      	ldr	x8, [x19]
+   a9fc8:      	adrp	x10, 0x1285000 <PT_LOAD#0+0x1285000>
+   a9fcc:      	ldr	x8, [x8, #0x1d0]
+   a9fd0:      	ldr	x10, [x10, #0x650]
+   a9fd4:      	mov	w9, #0x8370             // =33648
+---
+   aa1f0:      	ldr	x8, [x19]
+   aa1f4:      	adrp	x10, 0x1285000 <PT_LOAD#0+0x1285000>
+   aa1f8:      	ldr	x8, [x8, #0x1d0]
+   aa1fc:      	ldr	x10, [x10, #0x650]
+   aa200:      	mov	w9, #0x8370             // =33648
+---
+   aa3d4:      	ldr	x8, [x19]
+   aa3d8:      	adrp	x10, 0x1285000 <PT_LOAD#0+0x1285000>
+   aa3dc:      	ldr	x8, [x8, #0x1d0]
+   aa3e0:      	ldr	x10, [x10, #0x650]
+   aa3e4:      	mov	w9, #0x8370             // =33648
+---
+   aabc8:      	tbz	w9, #0x0, 0xaae04 <PT_LOAD#0+0xaae04>
+   aabcc:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+   aabd0:      	ldr	x9, [x9, #0x650]
+   aabd4:      	ldr	x9, [x9]
+   aabd8:      	ldr	s0, [x9, #0x48]
+---
+   ab710:      	bl	0x11bc70 <PT_LOAD#0+0x11bc70>
+   ab714:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+   ab718:      	ldr	x8, [x8, #0x650]
+   ab71c:      	ldr	x8, [x8]
+   ab720:      	ldr	s0, [x8, #0x48]
+---
+   abed8:      	bl	0xa2230 <PT_LOAD#0+0xa2230>
+   abedc:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+   abee0:      	ldr	x8, [x8, #0x650]
+   abee4:      	ldr	x8, [x8]
+   abee8:      	ldr	s0, [x8, #0x48]
+---
+   acf9c:      	tbz	w9, #0x0, 0xad000 <PT_LOAD#0+0xad000>
+   acfa0:      	adrp	x9, 0x1285000 <PT_LOAD#0+0x1285000>
+   acfa4:      	ldr	x9, [x9, #0x650]
+   acfa8:      	ldr	x9, [x9]
+   acfac:      	ldr	s0, [x9, #0x48]
+---
+  11bb1c:      	udf	#0x0
+  11bb20:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
+  11bb24:      	ldr	x8, [x8, #0x650]
+  11bb28:      	ldr	x8, [x8]
+  11bb2c:      	ldr	s0, [x8, #0x48]
+---
+		...
+  121060:      	adrp	x8, 0x1285000 <PT_LOAD#0+0x1285000>
