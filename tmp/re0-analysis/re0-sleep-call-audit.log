@@ -1,0 +1,105 @@
+=== BUILD ID E BYTE DEL SITO ===
+0x7aa840: bl	0xa04238 <PT_LOAD#0+0xa04238>
+0x7aa934: bl	0xa04238 <PT_LOAD#0+0xa04238>
+0x7ce6f0: b.pl	0x7ce728 <PT_LOAD#0+0x7ce728>
+0x7ce738: bl	0xa04238 <PT_LOAD#0+0xa04238>
+
+=== TUTTE LE CHIAMATE ALLA FUNZIONE SLEEP ===
+  447f58:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  451530:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  4561f8:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  456218:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  4562fc:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  456594:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  4566a0:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  4567a4:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  4583b8:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  458728:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  4596f4:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  45984c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  459928:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  459a0c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  5422ac:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  56e22c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  768360:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  793ef8:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7a9344:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7aa840:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7aa934:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7ab8b8:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7ce738:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7d5508:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7d6474:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7d6878:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7d6984:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7d6da4:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7deb3c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7dec7c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  7ee188:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  82bd40:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  82c970:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  832884:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  832900:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  83297c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  8329f8:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  832a74:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  832af0:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  832b6c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  832be8:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  83301c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  83306c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  8330bc:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  83310c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  83315c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  8331ac:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  8331fc:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  83324c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  837744:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  83dd34:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  83de80:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  8438a8:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  843954:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  8557c8:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  8557f0:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  8e2f7c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  8f3a9c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  9cf29c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  9d2b94:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  9d2c10:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  9d9e24:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  9dc4a4:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  9dfb74:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  9dfbf0:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  9e2af4:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  9e2b5c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  9f3cb8:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  9f3f7c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  9f7254:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  9fc5d8:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  9fca44:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  9fcfbc:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  9fd050:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  9fd77c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  9fd8e8:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  a00f40:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  a00f8c:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  a01860:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+  a01e88:      	bl	0xa04238 <PT_LOAD#0+0xa04238>
+=== PATCH CONFIGURATA ===
+# Resident Evil 0 1.0.0 (main build fb4239aa962b429b3d1776af92d93e79).
+#
+# Experimental 60 fps probe: bypass only the dynamically computed SleepThread
+# call in the main update loop. The native elapsed-tick calculation and the
+# +0x48/+0x4c simulation clock fields are deliberately left untouched.
+#
+# main+0x7aa934: BL nn::os::SleepThread(nn::TimeSpan) -> NOP.
+# The other SleepThread call at main+0x7aa840 is intentionally preserved.
+#
+# This is a build-ID-scoped test, not a general RE0 update rule. If the loop
+# becomes unstable or simulation speed changes, remove this cut and rebuild.
+CUTS = {
+    "fb4239aa962b429b3d1776af92d93e79": [
+        (0x7aa934, "41660994", "1f2003d5",
+         "RE0 experiment: bypass only main-loop dynamic SleepThread at +0x7aa934; preserve tick-based delta and simulation clock"),
+    ],
+}
