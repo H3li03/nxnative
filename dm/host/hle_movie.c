@@ -152,9 +152,11 @@ void dm_movie_picture(const void *dec, const char *lib, int64_t ts_ns, int unkno
     }
     if (s->nwin == MD_RATE_PICS && abs(s->hz - s->logged_hz) > 1) { LOG("[movie] %s decoder %p: %d pictures a second", lib, dec, s->hz); s->logged_hz = s->hz; }
     s->ts = ts_ns; s->ns = now; s->n++;
-    // Resident Evil clock investigation: record actual decoded-picture timestamps
-    // at their source, rather than inferring movie activity from the frame loop.
-    if (!strcmp(DM_GAME_ID, "010050F00BC1A000")) {
+    // Resident Evil movie-clock verification: record decoded-picture PTS for
+    // both MT Framework Switch releases. NVN uses this measured rate to pace
+    // movie frames independently of the selected 60/120 gameplay target.
+    if (!strcmp(DM_GAME_ID, "010050F00BC1A000") ||
+        !strcmp(DM_GAME_ID, "010097000BC10000")) {
         static unsigned re_picture_probe_count;
         if (re_picture_probe_count < 32) {
             FILE *pf = fopen("/tmp/re_movie_clock_probe.log", "a");
