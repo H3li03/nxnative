@@ -162,6 +162,89 @@ static void re0_timing_probe(void) {
     if (samples >= 12) done = 1;
 }
 
+
+// Resident Evil 0 1.0.0: experimental 60/60 main-loop timing pair.
+// Disabled by default. Enable only with DM_RE0_TIMING_60=1.
+// We require the exact surveyed Build ID, singleton identity, and the original
+// 30/30 pair before writing. No render flags or other timing fields are touched.
+static void re0_timing_60fps_optin(void) {
+    static int config = -1, logged;
+    if (config < 0) {
+        const char *e = getenv("DM_RE0_TIMING_60");
+        config = e && !strcmp(e, "1");
+        if (e && !config)
+            LOG("[RE0 60 fps] DM_RE0_TIMING_60 must be 1; timing pair left unchanged");
+        if (config)
+            LOG("[RE0 60 fps] opt-in enabled; waiting for verified sMain 30/30 pair");
+    }
+    if (!config) return;
+
+    module_t *m = NULL;
+    for (int i = 0; i < g_nmod; i++)
+        if (!strcmp(g_mod[i].name, "main") &&
+            !strcmp(g_mod[i].build_id, "fb4239aa962b429b3d1776af92d93e79")) {
+            m = &g_mod[i];
+            break;
+        }
+    if (!m) return;
+
+    const uint64_t slot_off = 0x1285650;
+    const uint64_t main_instance_off = 0x1baac60;
+    if (slot_off > m->size || m->size - slot_off < sizeof(uint64_t) ||
+        main_instance_off > m->size || m->size - main_instance_off < sizeof(uint64_t))
+        return;
+
+    uint64_t owner = 0, instance = 0, singleton = 0;
+    const uint64_t slot = (uint64_t)(uintptr_t)(m->base + slot_off);
+    const uint64_t singleton_slot = (uint64_t)(uintptr_t)(m->base + main_instance_off);
+    if (!rd(slot, &owner, sizeof owner) || owner != singleton_slot ||
+        !rd(owner, &instance, sizeof instance) || instance < 0x1000 ||
+        instance > UINT64_MAX - 0x50 ||
+        !rd(singleton_slot, &singleton, sizeof singleton) || singleton != instance)
+        return;
+
+    uint32_t rate48 = 0, rate4c = 0;
+    if (!rd(instance + 0x48, &rate48, sizeof rate48) ||
+        !rd(instance + 0x4c, &rate4c, sizeof rate4c))
+        return;
+
+    const uint32_t fps30 = 0x41f00000; // 30.0f
+    const uint32_t fps60 = 0x42700000; // 60.0f
+    if (rate48 == fps60 && rate4c == fps60) {
+        if (!logged) {
+            LOG("[RE0 60 fps] sMain timing pair already reads 60/60");
+            logged = 1;
+        }
+        return;
+    }
+    if (rate48 != fps30 || rate4c != fps30) {
+        if (!logged) {
+            LOG("[RE0 60 fps] expected sMain 30/30, found %08x/%08x; no write",
+                rate48, rate4c);
+            logged = 1;
+        }
+        return;
+    }
+
+    // These are the two verified writable fields in the live sMain instance.
+    // Re-check the complete pair on every present so game-side resets are caught.
+    memcpy((void *)(uintptr_t)(instance + 0x48), &fps60, sizeof fps60);
+    memcpy((void *)(uintptr_t)(instance + 0x4c), &fps60, sizeof fps60);
+
+    uint32_t check48 = 0, check4c = 0;
+    if (rd(instance + 0x48, &check48, sizeof check48) &&
+        rd(instance + 0x4c, &check4c, sizeof check4c) &&
+        check48 == fps60 && check4c == fps60) {
+        if (!logged) {
+            LOG("[RE0 60 fps] sMain timing pair changed 30/30 -> 60/60; experimental, verify gameplay speed");
+            logged = 1;
+        }
+    } else if (!logged) {
+        LOG("[RE0 60 fps] timing pair write/readback failed; inspect runtime before continuing");
+        logged = 1;
+    }
+}
+
 // NieR 1.0.3 exposes its preset minimum but ships fixed mode-specific fallbacks.
 // Keep the native current-scale and UV controller intact; only select its
 // verified lower bound. This is independent of the FPS choice.
@@ -359,6 +442,7 @@ int nvn_fps_high_now(void);   // hle_nvn.c
 int nvn_game_fps(void);       // hle_nvn.c: sustained game-requested 30 fps interval
 void dm_fps_lock_tick(void) {
     re0_timing_probe();       // RE0: verify its live timing pointer chain without writing guest memory
+    re0_timing_60fps_optin(); // RE0: optional guarded 30/30 -> 60/60 experiment
     dynamic_resolution_tick();   // separate from the FPS cap
     static int state = -2, nlog[NLOCKS + 5], target, high; static const char *src;
     if (state == -1) return;
