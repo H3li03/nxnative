@@ -36,10 +36,10 @@ static const lock_t k_locks[] = {
     // sMain::move reads both (main+0x775b34 and main+0x775b94). Keep the pair synchronized while testing the MT Framework limit.
     { "6bec9b23b09df46c315aa6f4bfacf91c", "Resident Evil MT Framework primary frame limit", 0x157daa0, 0x48, FPS_F32, 2 },
     // Resident Evil 0 1.0.0: experimental timing-rate pair. The dispatch at main+0x2b6858
-    // resolves [main+0x1285650] to the object, copies its +0x48/+0x4c floats into the
-    // sMain object, then initializes both to 30.0 and disables frame-wait. sMain::move
-    // (main+0x7aa5a0) consumes both fields. Raise the pair together for a controlled
-    // 60 fps test; this is a candidate, not yet a verified simulation-safe limiter.
+    // loads [main+0x1285650], then dereferences it once more to obtain the timing object;
+    // its +0x48/+0x4c floats are initialized to 30.0 and consumed by sMain::move (+0x7aa5a0).
+    // The extra indirection is handled below. Raise the pair together for a controlled 60 fps
+    // test; this is a candidate, not yet a verified simulation-safe limiter.
     { "fb4239aa962b429b3d1776af92d93e79", "Resident Evil 0 experimental timing-rate pair", 0x1285650, 0x48, FPS_F32, 2 },
     // Luigi's Mansion 3 1.4.0: Next Level Games' frame limiter. At the end of each frame the main thread calls the frame callbacks (main+0xb7c308) with the milliseconds since the frame
     // started; the limiter (main+0x7a3e70) runs jobs or sleeps until 33.333 ms have passed, the float at main+0x13c94dc (read only there, at main+0x7a3ea8 and main+0x7a3f18), and the game
@@ -414,6 +414,7 @@ void dm_fps_lock_tick(void) {
         // continues to follow the display's dynamic 120/60 hold.
         int movie_hz = dm_movie_hz();
         int re_row = !strcmp(L->what, "Resident Evil MT Framework primary frame limit");
+        int re0_row = !strcmp(L->what, "Resident Evil 0 experimental timing-rate pair");
         int re_movie = !strcmp(DM_GAME_ID, "010050F00BC1A000") && re_row && movie_hz != 0;
         int row_target = re_movie ? movie_hz : re_row ? nvn_game_fps() : target;
         // The macOS launcher may detach dmhost from the launching terminal, so stderr is
@@ -480,7 +481,7 @@ void dm_fps_lock_tick(void) {
         }
         // Resident Evil's timing fields are in the second object: [main + 0x157daa0] -> object1 -> timing object.
         // The generic lock path above resolves only object1, so advance once more before writing +0x48/+0x4c.
-        if (re_row) {
+        if (re_row || re0_row) {
             uint64_t timing_obj = 0;
             if (!rd(obj, &timing_obj, sizeof timing_obj) || timing_obj < 0x1000) continue;
             obj = timing_obj;
