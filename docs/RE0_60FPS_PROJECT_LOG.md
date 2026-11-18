@@ -301,3 +301,42 @@ Interpretation:
 6. Re-test the default profile with no `DM_FPS_TARGET` override: it must remain 30 FPS.
 
 The source patch is committed but has not been built or run by the assistant. A successful local build and the runtime checks above are still required before treating this as validated.
+
+
+## 13. Default adaptive 120 FPS and movie-clock pacing (2026-11-18)
+
+### User-verified starting point
+
+The user reports the single-field limiter branch now runs RE0 at 60 FPS with correct gameplay speed. This is the first positive runtime result for the exact game/build; it is user-reported, not independently reproduced in this environment.
+
+### Reference patches and implementation choice
+
+- Exact RE0 1.0.0 FPSLocker reference: https://github.com/masagrator/FPSLocker-Warehouse/blob/b765680937f1177ec2719a6d31490b2d6e4edcb3/SaltySD/plugins/FPSLocker/patches/010097000BC10000/FB4239AA962B429B.yaml
+- That patch detects prerendered cutscenes (main offsets 0x9F2548 / 0x9F26EC) and selects a 30 Hz refresh rate while its cutscene flag is set.
+- nxnative already has a less offset-specific movie clock: `dm_movie_picture()` measures decoded picture PTS and `dm_movie_hz()` exposes the active decoder's actual picture rate. `hle_codec_video.c` reports nn::codec picture timestamps to this clock.
+- Resident Evil HD Remaster's NVN path uses `present_itv()` to convert the selected render rate into a per-picture interval while a movie is active. This RE0 change extends that same 60 Hz movie rule to RE0; the existing high/120 path already uses the same PTS ratio.
+- This avoids copying RE0's cutscene hook addresses into runtime code. It relies on the decoder reporting PTS and the game respecting the NVN window interval, both of which still need an in-game cutscene test.
+
+### Proposed source changes
+
+- Branch: `experiment/re0-default-120-movie-clock-20261118`
+- Base: single-field RE0 limiter branch `experiment/re0-single-field-60fps-20261118`.
+- `dm/games/010097000BC10000/game.tsv`: set `present_interval display`, `fps_target 120`, `fps_max 120`. The generic adaptive high-FPS path targets 120 on a 120 Hz display and falls back to 60 when the display/thermal hold requires it. On a 60 Hz display it cannot present 120.
+- `dm/gfx/nvn/hle_nvn.c`: remove the RE0-specific `DM_RE0_PRESENT_60` opt-in branch; the profile now enables display pacing. Extend the RE HD Remaster 60 Hz movie PTS interval rule to RE0.
+- `dm/host/hle_movie.c`: include RE0 in the existing bounded decoded-picture PTS diagnostic written to `/tmp/re_movie_clock_probe.log`.
+- The only RE0 guest timing write remains the build-ID-guarded float at `sMain::mpInstance + 0x4C`. `+0x48) remains untouched. The read-only NVN trace still requires `DM_RE0_TRACE_PRESENT=1) only when collecting diagnostics; it is not needed for normal operation.
+
+### Normal launch
+
+No RE0-specific environment variables are required. Keep `DM_PRESENT_INTERVAL`, `DM_RE0_PRESENT_60`, and `DM_RE0_TIMING_60` unset. The optional `DM_FPS_TARGET=30|60|120` remains a generic override, not a requirement. `DM_RE0_TRACE_PRESENT=1) is optional diagnostics only.
+
+### Validation still required on the user's Mac
+
+1. Compile the branch with the existing macOS NSP build command.
+2. On a 120 Hz display, confirm runtime logs show the RE0 engine limiter at 120 and NVN acquire/present near 8.33 ms; on a 60 Hz display expect 16.67 ms and 60 FPS.
+3. Confirm movement, animations and timers remain at normal real-time speed at both 60 and 120. Specifically verify `+0x48=30` and `+0x4C=120` while 120 is active, or +0x4C=60 under a 60 Hz hold.
+4. Play a prerendered cutscene at both selected targets. Check that the decoder PTS rate (typically 30 pictures/s) matches the movie playback duration and audio/subtitle synchronization; inspect `/tmp/re_movie_clock_probe.log` and `~/Library/Logs/nxnative/010097000BC10000.log`.
+5. Test a 60 Hz display separately. Adaptive 120 mode must fall back cleanly to 60 rather than claim 120.
+6. Confirm explicit 30 and 60 overrides still work.
+
+The GitHub source changes are proposed only. No macOS build, game launch, 120 Hz display run, or cutscene playback has been executed by the assistant; no build or runtime success is claimed here.
