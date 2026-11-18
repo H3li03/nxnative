@@ -60,8 +60,8 @@ static const lock_t k_locks[] = {
 static int rd(uint64_t a, void *out, size_t n) { vm_size_t got = 0; return a >= 0x1000 && vm_read_overwrite(mach_task_self(), (vm_address_t)a, n, (vm_address_t)out, &got) == KERN_SUCCESS && got == n; }
 
 // Resident Evil 0 1.0.0: read-only timing-field survey.
-// sRender::end reads object1+0x48; sMain::move uses the second object.
-// Keep both objects distinct in the log. This probe never writes guest memory.
+// The global slot points to sMain::mpInstance; sMain::move and sRender::end
+// both consume that same instance. Also sample sRender's live gate flags.
 static void re0_timing_probe(void) {
     static int done, tries, presents, samples;
     if (done || samples >= 12) { done = 1; return; }
@@ -80,12 +80,18 @@ static void re0_timing_probe(void) {
         return;
     }
     const uint64_t slot_off = 0x1285650;
-    if (slot_off > m->size || m->size - slot_off < sizeof(uint64_t)) {
-        LOG("[RE0 timing probe] main image too small for timing slot");
+    const uint64_t main_instance_off = 0x1baac60;  // _ZN5sMain10mpInstanceE
+    const uint64_t render_instance_off = 0x1bab108; // _ZN7sRender10mpInstanceE
+    const uint64_t frame_constant_off = 0xfca870;  // shared by sMain::move and sRender::end
+    if (slot_off > m->size || m->size - slot_off < sizeof(uint64_t) ||
+        main_instance_off > m->size || m->size - main_instance_off < sizeof(uint64_t) ||
+        render_instance_off > m->size || m->size - render_instance_off < sizeof(uint64_t) ||
+        frame_constant_off > m->size || m->size - frame_constant_off < sizeof(uint32_t)) {
+        LOG("[RE0 timing probe] main image too small for timing symbols");
         done = 1;
         return;
     }
-    uint64_t object1 = 0, object2 = 0;
+    uint64_t object1 = 0, object2 = 0, main_instance = 0, render_instance = 0;
     uint64_t slot = (uint64_t)(uintptr_t)(m->base + slot_off);
     if (!rd(slot, &object1, sizeof object1) || object1 < 0x1000 ||
         object1 > UINT64_MAX - 0x4c ||
@@ -99,36 +105,57 @@ static void re0_timing_probe(void) {
     }
     if ((++presents - 1) % 120 != 0) return;
     uint32_t o1_48 = 0, o1_4c = 0, o2_48 = 0, o2_4c = 0, o2_78 = 0;
-    uint8_t o2_50 = 0;
+    uint32_t frame_constant_bits = 0, render_58_bits = 0;
+    uint8_t o2_50 = 0, render_29 = 0, render_2a = 0, render_2f = 0;
+    int have_main_instance = rd((uint64_t)(uintptr_t)(m->base + main_instance_off),
+                                &main_instance, sizeof main_instance) && main_instance >= 0x1000;
+    int have_render_instance = rd((uint64_t)(uintptr_t)(m->base + render_instance_off),
+                                  &render_instance, sizeof render_instance) && render_instance >= 0x1000;
+    int have_render_flags = have_render_instance &&
+        rd(render_instance + 0x29, &render_29, 1) &&
+        rd(render_instance + 0x2a, &render_2a, 1) &&
+        rd(render_instance + 0x2f, &render_2f, 1) &&
+        rd(render_instance + 0x58, &render_58_bits, 4);
     if (!rd(object1 + 0x48, &o1_48, 4) ||
         !rd(object1 + 0x4c, &o1_4c, 4) ||
         !rd(object2 + 0x48, &o2_48, 4) ||
         !rd(object2 + 0x4c, &o2_4c, 4) ||
         !rd(object2 + 0x50, &o2_50, 1) ||
-        !rd(object2 + 0x78, &o2_78, 4)) {
+        !rd(object2 + 0x78, &o2_78, 4) ||
+        !rd((uint64_t)(uintptr_t)(m->base + frame_constant_off), &frame_constant_bits, 4)) {
         if (++tries >= 600) {
             LOG("[RE0 timing probe] timing fields unreadable; no memory written");
             done = 1;
         }
         return;
     }
-    float f1_48, f1_4c, f2_48, f2_4c, f2_78;
+    float f1_48, f1_4c, f2_48, f2_4c, f2_78, frame_constant, render_58;
     memcpy(&f1_48, &o1_48, 4); memcpy(&f1_4c, &o1_4c, 4);
     memcpy(&f2_48, &o2_48, 4); memcpy(&f2_4c, &o2_4c, 4);
     memcpy(&f2_78, &o2_78, 4);
+    memcpy(&frame_constant, &frame_constant_bits, 4);
+    memcpy(&render_58, &render_58_bits, 4);
     FILE *pf = fopen("/tmp/re0_timing_probe.log", samples ? "a" : "w");
     if (pf) {
         if (!samples)
-            fprintf(pf, "RE0 read-only timing samples; build=fb4239aa962b429b3d1776af92d93e79\nslot=main+%#llx\nobject1=%p\nobject2=%p\n",
-                    (unsigned long long)slot_off, (void *)(uintptr_t)object1, (void *)(uintptr_t)object2);
-        fprintf(pf, "sample=%d present=%d object1+48=%g (0x%08x) object1+4c=%g (0x%08x) object2+48=%g (0x%08x) object2+4c=%g (0x%08x) object2+50=%u (0x%02x) object2+78=%g (0x%08x)\n",
+            fprintf(pf, "RE0 read-only timing samples; build=fb4239aa962b429b3d1776af92d93e79\nslot=main+%#llx\nsMain::mpInstance=main+%#llx\nsRender::mpInstance=main+%#llx\nframe_constant=main+%#llx\nobject1=%p\nobject2=%p\n",
+                    (unsigned long long)slot_off, (unsigned long long)main_instance_off,
+                    (unsigned long long)render_instance_off, (unsigned long long)frame_constant_off,
+                    (void *)(uintptr_t)object1, (void *)(uintptr_t)object2);
+        fprintf(pf, "sample=%d present=%d object1+48=%g (0x%08x) object1+4c=%g (0x%08x) object2+48=%g (0x%08x) object2+4c=%g (0x%08x) object2+50=%u (0x%02x) object2+78=%g (0x%08x) main_instance=%p main_match=%u render_instance=%p render_flags_read=%u flags29=%u flags2a=%u flags2f=%u render+58=%g (0x%08x) frame_constant=%g (0x%08x)\n",
                 samples + 1, presents, f1_48, o1_48, f1_4c, o1_4c,
                 f2_48, o2_48, f2_4c, o2_4c, (unsigned)o2_50,
-                (unsigned)o2_50, f2_78, o2_78);
+                (unsigned)o2_50, f2_78, o2_78,
+                (void *)(uintptr_t)main_instance, (unsigned)(have_main_instance && main_instance == object2),
+                (void *)(uintptr_t)render_instance, (unsigned)have_render_flags,
+                (unsigned)render_29, (unsigned)render_2a, (unsigned)render_2f,
+                render_58, render_58_bits, frame_constant, frame_constant_bits);
         fclose(pf);
     }
-    LOG("[RE0 timing probe] %d/12: obj1 +48=%g +4c=%g; obj2 +48=%g +4c=%g +50=%u +78=%g; read-only",
-        samples + 1, f1_48, f1_4c, f2_48, f2_4c, (unsigned)o2_50, f2_78);
+    LOG("[RE0 timing probe] %d/12: sMain +48=%g +4c=%g +50=%u; main_match=%u; sRender flags=%u/%u/%u; read-only",
+        samples + 1, f2_48, f2_4c, (unsigned)o2_50,
+        (unsigned)(have_main_instance && main_instance == object2),
+        (unsigned)render_29, (unsigned)render_2a, (unsigned)render_2f);
     samples++;
     if (samples >= 12) done = 1;
 }
