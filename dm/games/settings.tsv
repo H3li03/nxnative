@@ -38,7 +38,7 @@ DM_NVN_ENC_THREAD	toggle	-	1|DM_GAME_ENC_THREAD	gfxapi:nvn	Performance	Encode th
 DM_FPS_HOLD	toggle	on/off	DM_GAME_FPS_HOLD	DM_GAME_FPS_TARGET!=0	Performance	Hold frames when late
 DM_METAL_HUD	toggle	-	0	always	Performance	Performance HUD
 
-DM_MGS4_RESOLUTION	choice	1080=1920x1080,1440=2560x1440,2160=3840x2160	1080	mgs4:mac	Game	Rendering resolution	Internal rendering; output remains 1920x1080. Higher resolutions use more GPU memory.	level=basic
+DM_MGS4_RESOLUTION	choice	1080=1920x1080,1440=2560x1440,2160=3840x2160	1080	mgs4:mac	Game	Rendering resolution	Native rendering and swap chain resolution. Higher resolutions use more GPU memory.	level=basic
 DM_MGS4_FPS	choice	30=30 fps,60=60 fps,0=Unlimited	0	mgs4:mac	Game	Frame rate limit	Presentation pacing only; engine timing may still limit FPS.	level=basic
 DM_MGS4_VSYNC	toggle	-	0	mgs4:mac	Game	VSync		level=basic
 DM_MGS4_DYNAMIC_RESOLUTION	toggle	-	0	mgs4:mac	Game	Dynamic resolution		

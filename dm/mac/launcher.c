@@ -223,8 +223,8 @@ static int mgs4_config(const char *romfs, const char *temp) {
                 if (!i && render) {
                     if(KEY("bufferSizeX")||KEY("bufferSizeX_Switch")) value=w;
                     if(KEY("bufferSizeY")||KEY("bufferSizeY_Switch")) value=h;
-                    if(KEY("windowSizeX")||KEY("windowSizeX_Switch")||KEY("DockModeCropSizeX_Switch")) value="1920";
-                    if(KEY("windowSizeY")||KEY("windowSizeY_Switch")||KEY("DockModeCropSizeY_Switch")) value="1080";
+                    if(KEY("windowSizeX")||KEY("windowSizeX_Switch")||KEY("DockModeCropSizeX_Switch")) value=w;
+                    if(KEY("windowSizeY")||KEY("windowSizeY_Switch")||KEY("DockModeCropSizeY_Switch")) value=h;
                     if(KEY("vsync")) value=*vs=='1'?"true":"false";
                     if(KEY("dynamicResolution")) value=*dr=='1'?"true":"false";
                 }
@@ -246,7 +246,7 @@ static int mgs4_config(const char *romfs, const char *temp) {
     setenv("DM_PRESENT_INTERVAL",strcmp(f,"0")?"display":"game",1);
     setenv("DM_PRESENT_HZ",!strcmp(f,"0")?"0":"60",1);
     setenv("DM_SCREEN_MATCH","0",0);
-    fprintf(stderr,"launcher: MGS4 graphics %sx%s, output 1920x1080, fps %s, vsync %s, dynamic %s, overlay %s\n",w,h,f,vs,dr,dir);
+    fprintf(stderr,"launcher: MGS4 graphics %sx%s, native swap chain, fps %s, vsync %s, dynamic %s, overlay %s\n",w,h,f,vs,dr,dir);
     return 1;
 }
 
