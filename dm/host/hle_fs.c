@@ -174,7 +174,9 @@ static int img_path(const char *p, int *mi, int64_t *k) {
         if (strstr(rest, "/.")) { if (!norm_rest(rest, normed, sizeof normed)) { *k = -1; return 1; } rest = normed; }
         char ov[1024]; if (g_mnt[i].overlay[0] && rom_overlay_path(&g_mnt[i], rest, ov, sizeof ov)) return 0;
         // MGS4 JP: keep regional assets, select standalone localization from the launcher.
-        if (!strcmp(DM_GAME_ID, "0100D0B01C4F4002")) {
+        const char *voice = getenv("DM_MGS4_VOICE");
+        if (!strcmp(DM_GAME_ID, "0100D0B01C4F4002") &&
+            (!voice || strcmp(voice, "en"))) {
             const char *lang = getenv("DM_LANG");
             const char *codes[] = {"en", "it", "fr", "de", "es", "pt"};
             const char *groups[] = {"lang", "codec", "demo", "spc", "movie"};

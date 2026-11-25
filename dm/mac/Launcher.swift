@@ -198,7 +198,15 @@ struct LauncherView: View {
             let rows = m.rows(in: section, basic: basic)
             if !rows.isEmpty {
                 Section(section) {
-                    ForEach(rows) { SettingRow(s: $0, m: m) }
+                    ForEach(rows) { setting in
+                        SettingRow(s: setting, m: m)
+                    }
+                    if basic && section == "Game" && info("DMTitleID")?.uppercased() == "0100D0B01C4F4002" {
+                        Text("Warning: Save data is not interchangeable between the Japanese and English voice versions.")
+                            .font(.caption)
+                            .foregroundStyle(.red)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                 }
             }
         }

@@ -169,13 +169,175 @@ static void mgs4_cleanup(void) {
     for (int i=0;i<4;i++) { snprintf(p,sizeof p,"%s/config/%s",mgs4_overlay,files[i]); unlink(p); }
     snprintf(p,sizeof p,"%s/config",mgs4_overlay); rmdir(p); rmdir(mgs4_overlay);
 }
+// Accept only advertised values; never inject arbitrary INI text.
+static const char *mgs4_choice(const char *name, const char *allowed) {
+    const char *v=getenv(name);
+    if (!v || !*v) return NULL;
+    size_t n=strlen(v);
+    for (const char *p=allowed; *p;) {
+        size_t k=strcspn(p,"|");
+        if (k==n && !memcmp(p,v,n)) return v;
+        p+=k; if (*p) p++;
+    }
+    return NULL;
+}
+static const char *mgs4_override(int file, const char *section, const char *key, int custom) {
+    const char *v;
+    if (!file && !strcmp(section,"render") && !strcmp(key,"fullscreen")) {
+        v=mgs4_choice("DM_MGS4_FULLSCREEN","true|false");
+        return v;
+    }
+    if (!file && !strcmp(section,"render") && !strcmp(key,"fxaa")) {
+        v=mgs4_choice("DM_MGS4_FXAA","true|false");
+        return v;
+    }
+    if (!file && !strcmp(section,"render") && !strcmp(key,"fxaa_Switch_Docked")) {
+        v=mgs4_choice("DM_MGS4_FXAA","true|false");
+        return v;
+    }
+    if (!file && !strcmp(section,"render") && !strcmp(key,"fxaa_Switch_Handheld")) {
+        v=mgs4_choice("DM_MGS4_FXAA","true|false");
+        return v;
+    }
+    if (!file && !strcmp(section,"render") && !strcmp(key,"fxaaParam")) {
+        v=mgs4_choice("DM_MGS4_FXAA_QUALITY","0|1|2");
+        return v;
+    }
+    if (!file && !strcmp(section,"render") && !strcmp(key,"particleQuality")) {
+        v=mgs4_choice("DM_MGS4_PARTICLES","0|1|2");
+        return v;
+    }
+    if (!file && !strcmp(section,"render") && !strcmp(key,"particleQuality_Switch")) {
+        v=mgs4_choice("DM_MGS4_PARTICLES","0|1|2");
+        return v;
+    }
+    if (!file && !strcmp(section,"render") && !strcmp(key,"hardware_occlusion")) {
+        v=mgs4_choice("DM_MGS4_OCCLUSION","true|false");
+        return v;
+    }
+    if (!file && !strcmp(section,"render") && !strcmp(key,"backbufferCount")) {
+        v=mgs4_choice("DM_MGS4_BACKBUFFERS","2|3");
+        return v;
+    }
+    if (!file && !strcmp(section,"render") && !strcmp(key,"backbufferCount_Switch")) {
+        v=mgs4_choice("DM_MGS4_BACKBUFFERS","2|3");
+        return v;
+    }
+    if (!file && !strcmp(section,"texture") && !strcmp(key,"directory_Switch")) {
+        v=mgs4_choice("DM_MGS4_TEXTURE_SOURCE","original|upscaled");
+        return v ? (!strcmp(v,"original") ? "" : "NX_TXN_UP") : NULL;
+    }
+    if (!file && !strcmp(section,"texture") && !strcmp(key,"directoryTxnPak_Switch")) {
+        v=mgs4_choice("DM_MGS4_TEXTURE_SOURCE","original|upscaled");
+        return v ? (!strcmp(v,"original") ? "" : "NX_TXN_UP") : NULL;
+    }
+    if (!file && !strcmp(section,"texture") && !strcmp(key,"directoryTxnDataPak_Switch")) {
+        v=mgs4_choice("DM_MGS4_TEXTURE_SOURCE","original|upscaled");
+        return v ? (!strcmp(v,"original") ? "" : "NX_TXN_UP/paks") : NULL;
+    }
+    if (file==3 && custom && !strcmp(section,"Shadow@3") && !strcmp(key,"ShadowBufferSize")) {
+        v=mgs4_choice("DM_MGS4_SHADOW_SIZE","512|1024|2048");
+        return v;
+    }
+    if (file==3 && custom && !strcmp(section,"Shadow@3") && !strcmp(key,"ShadowSampleCount")) {
+        v=mgs4_choice("DM_MGS4_SHADOW_SAMPLES","4|7");
+        return v;
+    }
+    if (file==3 && custom && !strcmp(section,"VFX_Default") && !strcmp(key,"@3")) {
+        v=mgs4_choice("DM_MGS4_VFX_DEFAULT","0.1|0.2|0.3|0.5|0.6|0.65|0.7|0.75|0.8|0.9|1.0");
+        return v;
+    }
+    if (file==3 && custom && !strcmp(section,"VFX_MissileSmoke") && !strcmp(key,"@3")) {
+        v=mgs4_choice("DM_MGS4_VFX_MISSILESMOKE","0.1|0.2|0.3|0.5|0.6|0.65|0.7|0.75|0.8|0.9|1.0");
+        return v;
+    }
+    if (file==3 && custom && !strcmp(section,"VFX_OctopusInkjet") && !strcmp(key,"@3")) {
+        v=mgs4_choice("DM_MGS4_VFX_OCTOPUSINKJET","0.1|0.2|0.3|0.5|0.6|0.65|0.7|0.75|0.8|0.9|1.0");
+        return v;
+    }
+    if (file==3 && custom && !strcmp(section,"VFX_Fragment") && !strcmp(key,"@3")) {
+        v=mgs4_choice("DM_MGS4_VFX_FRAGMENT","0.1|0.2|0.3|0.5|0.6|0.65|0.7|0.75|0.8|0.9|1.0");
+        return v;
+    }
+    if (file==3 && custom && !strcmp(section,"VFX_Blast") && !strcmp(key,"@3")) {
+        v=mgs4_choice("DM_MGS4_VFX_BLAST","0.1|0.2|0.3|0.5|0.6|0.65|0.7|0.75|0.8|0.9|1.0");
+        return v;
+    }
+    if (file==3 && custom && !strcmp(section,"VFX_Weather") && !strcmp(key,"@3")) {
+        v=mgs4_choice("DM_MGS4_VFX_WEATHER","0.1|0.2|0.3|0.5|0.6|0.65|0.7|0.75|0.8|0.9|1.0");
+        return v;
+    }
+    if (file==3 && custom && !strcmp(section,"VFX_Environment") && !strcmp(key,"@3")) {
+        v=mgs4_choice("DM_MGS4_VFX_ENVIRONMENT","0.1|0.2|0.3|0.5|0.6|0.65|0.7|0.75|0.8|0.9|1.0");
+        return v;
+    }
+    if (file==3 && custom && !strcmp(section,"VFX_Rex") && !strcmp(key,"@3")) {
+        v=mgs4_choice("DM_MGS4_VFX_REX","0.1|0.2|0.3|0.5|0.6|0.65|0.7|0.75|0.8|0.9|1.0");
+        return v;
+    }
+    if (file==3 && custom && !strcmp(section,"VFX_Bullet") && !strcmp(key,"@3")) {
+        v=mgs4_choice("DM_MGS4_VFX_BULLET","0.1|0.2|0.3|0.5|0.6|0.65|0.7|0.75|0.8|0.9|1.0");
+        return v;
+    }
+    if (file==3 && custom && !strcmp(section,"VFX_SandSmoke") && !strcmp(key,"@3")) {
+        v=mgs4_choice("DM_MGS4_VFX_SANDSMOKE","0.1|0.2|0.3|0.5|0.6|0.65|0.7|0.75|0.8|0.9|1.0");
+        return v;
+    }
+    if (file==3 && custom && !strcmp(section,"VFX_PE_Smoke") && !strcmp(key,"@3")) {
+        v=mgs4_choice("DM_MGS4_VFX_PE_SMOKE","0.1|0.2|0.3|0.5|0.6|0.65|0.7|0.75|0.8|0.9|1.0");
+        return v;
+    }
+    if (file==3 && custom && !strcmp(section,"VFX_RpgSmoke") && !strcmp(key,"@3")) {
+        v=mgs4_choice("DM_MGS4_VFX_RPGSMOKE","0.1|0.2|0.3|0.5|0.6|0.65|0.7|0.75|0.8|0.9|1.0");
+        return v;
+    }
+    if (file==3 && custom && !strcmp(section,"VFX_PE_Normal") && !strcmp(key,"@3")) {
+        v=mgs4_choice("DM_MGS4_VFX_PE_NORMAL","0.1|0.2|0.3|0.5|0.6|0.65|0.7|0.75|0.8|0.9|1.0");
+        return v;
+    }
+    if (file==3 && custom && !strcmp(section,"VFX_PE_Explosion") && !strcmp(key,"@3")) {
+        v=mgs4_choice("DM_MGS4_VFX_PE_EXPLOSION","0.1|0.2|0.3|0.5|0.6|0.65|0.7|0.75|0.8|0.9|1.0");
+        return v;
+    }
+    if (file==3 && custom && !strcmp(section,"VFX_Mid_Explosion") && !strcmp(key,"@3")) {
+        v=mgs4_choice("DM_MGS4_VFX_MID_EXPLOSION","0.1|0.2|0.3|0.5|0.6|0.65|0.7|0.75|0.8|0.9|1.0");
+        return v;
+    }
+    return NULL;
+}
+static int mgs4_texture(FILE *out, const char *key, const char *original) {
+    const char *fields[]={"MinLod","MaxLod","MipBias","MaxAniso"};
+    const char *allowed[]={"0|1|2","0|16","0|1","1|2|4|8"};
+    const char *groups[]={"TG_Default","TG_FixedModel","TG_Character","TG_FixedModel_Normal","TG_Character_Normal","TG_Effect","TG_UI","TG_NoMip","TG_NoBias"};
+    int found=0; for (size_t j=0;j<sizeof groups/sizeof *groups;j++) if (!strcmp(key,groups[j])) found=1;
+    if (!found) return 0;
+    const char *values[4]={0}; int changed=0;
+    for (int j=0;j<4;j++) {
+        char env[128]; snprintf(env,sizeof env,"DM_MGS4_%s_%s",key,fields[j]);
+        for (char *p=env;*p;p++) *p=(char)toupper((unsigned char)*p);
+        values[j]=mgs4_choice(env,allowed[j]); if (values[j]) changed=1;
+    }
+    if (!changed) return 0;
+    char *copy=strdup(original); if (!copy) return 0;
+    fprintf(out,"%s=",key); int emitted=0; char *save=NULL;
+    for (char *t=strtok_r(copy,",\r\n",&save);t;t=strtok_r(NULL,",\r\n",&save)) {
+        int j; for(j=0;j<4;j++) if (!strncmp(t,fields[j],strlen(fields[j])) && t[strlen(fields[j])]=='=') break;
+        if (j<4 && values[j]) { fprintf(out,"%s%s=%s",emitted++?",":"",fields[j],values[j]); values[j]=NULL; }
+        else fprintf(out,"%s%s",emitted++?",":"",t);
+    }
+    for(int j=0;j<4;j++) if(values[j]) fprintf(out,"%s%s=%s",emitted++?",":"",fields[j],values[j]);
+    fputc('\n',out); free(copy); return 1;
+}
 static int mgs4_config(const char *romfs, const char *temp) {
     const char *r = getenv("DM_MGS4_RESOLUTION"), *f = getenv("DM_MGS4_FPS");
     const char *vs = getenv("DM_MGS4_VSYNC"), *dr = getenv("DM_MGS4_DYNAMIC_RESOLUTION");
     const char *w = "1920", *h = "1080";
     if (r && !strcmp(r, "1440")) { w = "2560"; h = "1440"; }
     else if (r && !strcmp(r, "2160")) { w = "3840"; h = "2160"; }
-    f = f && !strcmp(f,"30") ? "30" : f && !strcmp(f,"60") ? "60" : "0";
+    f = f && (!strcmp(f,"30") || !strcmp(f,"60") || !strcmp(f,"120")) ? f : "60";
+    const char *preset=mgs4_choice("DM_MGS4_PRESET","0|1|2|3|4");
+    int custom=preset && !strcmp(preset,"4");
+    if (!preset || custom) preset=custom ? "3" : "0";
     vs = vs && !strcmp(vs,"1") ? "1" : "0";
     dr = dr && !strcmp(dr,"1") ? "1" : "0";
     if (getenv("DM_ROMFS_OVERLAY")) {
@@ -210,11 +372,11 @@ static int mgs4_config(const char *romfs, const char *temp) {
         snprintf(path,sizeof path,"%s/config/%s",dir,files[i]);
         FILE *out=fopen(path,"w");
         if (!out) { free(buf); ok=0; break; }
-        int render=0, limiter=0;
+        int render=0, limiter=0; char section[80]="";
         for (char *line=buf;line && *line;) {
             char *next=strchr(line,'\n'); if(next) *next++=0;
             char *s=line; while(*s==' '||*s=='\t') s++;
-            if (*s=='[') { render=!strncmp(s,"[render]",8); limiter=!strncmp(s,"[FPSLimiter]",12); }
+            if (*s=='[') { section[0]=0; sscanf(s,"[%79[^]]]",section); render=!strncmp(s,"[render]",8); limiter=!strncmp(s,"[FPSLimiter]",12); }
             char *eq=strchr(s,'='); const char *value=NULL;
             if(eq) {
                 char *end=eq; while(end>s && isspace((unsigned char)end[-1])) end--;
@@ -228,7 +390,15 @@ static int mgs4_config(const char *romfs, const char *temp) {
                     if(KEY("vsync")) value=*vs=='1'?"true":"false";
                     if(KEY("dynamicResolution")) value=*dr=='1'?"true":"false";
                 }
-                if(i && limiter && KEY("FPS_NX")) value=!strcmp(f,"30")?"30":"60";
+                char key[128];
+                if (len<sizeof key) {
+                    memcpy(key,s,len); key[len]=0;
+                    if (!i && !strcmp(section,"scalability") && KEY("scalabilityLevel_NX")) value=preset;
+                    const char *override=mgs4_override(i,section,key,custom);
+                    if (override) value=override;
+                    if (i==3 && custom && !strcmp(section,"TextureGroup@3") && mgs4_texture(out,key,eq+1)) { line=next; continue; }
+                }
+                if(i && limiter && KEY("FPS_NX")) value=f;
 #undef KEY
             }
             if(value) fprintf(out,"%.*s= %s\n",(int)(eq-line),line,value);
@@ -313,7 +483,36 @@ int main(int argc, char **argv) {
     struct sigaction sa = {.sa_handler = forward};   // no SA_RESTART: waitpid below sees EINTR and waits again
     sigemptyset(&sa.sa_mask);
     sigaction(SIGTERM, &sa, NULL); sigaction(SIGINT, &sa, NULL); sigaction(SIGHUP, &sa, NULL);
-    char *host_argv[] = {host, dm, NULL};
+    char *host_argv[] = {host, dm, NULL, NULL, NULL, NULL, NULL, NULL};
+    if (!strcmp(id, "0100D0B01C4F4002")) {
+        const char *voice = getenv("DM_MGS4_VOICE");
+        int english = voice && !strcmp(voice, "en");
+        if (english) {
+            const char *aoc = getenv("DM_AOC_DIR");
+            char bank[PATH_MAX];
+            int n = aoc ? snprintf(bank, sizeof bank, "%s/1/ww/bank/nx", aoc) : -1;
+            if (n < 0 || n >= (int)sizeof bank || stat(bank, &st) || !S_ISDIR(st.st_mode)) {
+                alert(name, "English voice requires the extracted multilingual DLC (aoc/1/ww).");
+                return 1;
+            }
+            const char *language = getenv("DM_LANG");
+            char *native = "en";
+            if (language) {
+                if (!strcmp(language, "it")) native = "it";
+                else if (!strcmp(language, "fr")) native = "fr";
+                else if (!strcmp(language, "de")) native = "gr";
+                else if (!strcmp(language, "es")) native = "sp";
+                else if (!strcmp(language, "pt")) native = "pt";
+            }
+            host_argv[2] = "--";
+            host_argv[3] = "--region";
+            host_argv[4] = "ww";
+            host_argv[5] = "-lan";
+            host_argv[6] = native;
+            fprintf(stderr, "launcher: MGS4 English voice, native language %s\n", native);
+        }
+        setenv("DM_MGS4_VOICE", english ? "en" : "ja", 1);
+    }
     int err = posix_spawn(&g_child, host, NULL, NULL, host_argv, environ);
     if (err) { fprintf(stderr, "[RED] launcher: cannot start %s: %s\n", host, strerror(err)); return 1; }
     int status;

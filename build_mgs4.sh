@@ -52,11 +52,12 @@ if [ -f "$DUMP/ExeFS/main" ] && [ -d "$DUMP/RomFS" ]; then
 else
     reuse=0
 fi
+KEYS=$(ask_file "Path to prod.keys")
+BASE=$(ask_file "Path to base NSP")
+UPDATE=$(ask_file "Path to update NSP (v393216)")
+DLC=$(ask_file "Path to multilingual NSP")
 if [ "$reuse" = 0 ]; then
     [ ! -e "$DUMP" ] && [ ! -L "$DUMP" ] || fail "Existing dump protected. Move it aside or choose another workspace."
-    KEYS=$(ask_file "Path to prod.keys")
-    BASE=$(ask_file "Path to base NSP")
-    UPDATE=$(ask_file "Path to update NSP (v393216)")
     dotnet run --project "$REPO/dm/tools/nx_extract" -c Release -- \
         "$KEYS" "$BASE" "$UPDATE" "$DUMP" --program=0100D0B01C4F4002 \
         2>&1 | tee "$WORK/logs/extraction.log"
@@ -73,6 +74,18 @@ ln -sfn "$WORK/dump/program_2/ExeFS" \
 
 ln -sfn "$WORK/dump/program_2/RomFS" \
 "$WORK/game/updates/393216/romfs"
+
+DLC_DUMP="$WORK/dump/multilingual"
+if [ -d "$DLC_DUMP/ww/bank/nx" ]; then
+    read -r -p "Reuse existing multilingual dump (must match selected NSP)? [y/N] " answer
+    case "$answer" in y|Y) ;; *) fail "Existing DLC dump protected. Move it aside first." ;; esac
+else
+    [ ! -e "$DLC_DUMP" ] || fail "Incomplete DLC dump; move it aside first."
+    dotnet run --project "$REPO/dm/tools/nx_extract" -c Release -- \
+        "$KEYS" --aoc "$DLC" "$DLC_DUMP" 0100D0B01C4F5001 \
+        2>&1 | tee "$WORK/logs/multilingual.log"
+fi
+[ -d "$DLC_DUMP/ww/bank/nx" ] || fail "Missing multilingual assets"
 
 echo
 echo "=== BUILDING MGS4 ==="
@@ -103,6 +116,14 @@ fi
 2>&1 | tee "$WORK/logs/build.log"
 
 test -x "$WORK/MGS4.app/Contents/MacOS/dmhost"
+if [ -n "$DLC_DUMP" ]; then
+    AOC="$WORK/MGS4.app/Contents/Resources/aoc"
+    mkdir -p "$AOC"
+    [ ! -e "$AOC/1" ] && [ ! -L "$AOC/1" ] || fail "DLC destination already exists"
+    mkdir "$AOC/1"
+    cp -R "$DLC_DUMP/ww" "$AOC/1/"
+    codesign --force --sign - "$WORK/MGS4.app"
+fi
 codesign --verify --deep --strict "$WORK/MGS4.app"
 echo
 echo "========================================"
