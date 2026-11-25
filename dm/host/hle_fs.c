@@ -173,6 +173,27 @@ static int img_path(const char *p, int *mi, int64_t *k) {
         char normed[1024]; const char *rest = c + 1; *mi = i;
         if (strstr(rest, "/.")) { if (!norm_rest(rest, normed, sizeof normed)) { *k = -1; return 1; } rest = normed; }
         char ov[1024]; if (g_mnt[i].overlay[0] && rom_overlay_path(&g_mnt[i], rest, ov, sizeof ov)) return 0;
+        // MGS4 JP: keep regional assets, select standalone localization from the launcher.
+        if (!strcmp(DM_GAME_ID, "0100D0B01C4F4002")) {
+            const char *lang = getenv("DM_LANG");
+            const char *codes[] = {"en", "it", "fr", "de", "es", "pt"};
+            const char *groups[] = {"lang", "codec", "demo", "spc", "movie"};
+            const char *r = rest; while (*r == '/') r++;
+            for (size_t a = 0; lang && a < sizeof codes / sizeof *codes; a++) {
+                if (strncmp(lang, codes[a], 2) || (lang[2] && lang[2] != '-' && lang[2] != '_')) continue;
+                for (size_t b = 0; b < sizeof groups / sizeof *groups; b++) {
+                    char from[128], to[128];
+                    snprintf(from, sizeof from, "common/localization/%s/%s_ja", groups[b], groups[b]);
+                    if (strcmp(r, from)) continue;
+                    snprintf(to, sizeof to, "common/localization/%s/%s_%s", groups[b], groups[b], codes[a]);
+                    int64_t target = img_find(g_mnt[i].img, to);
+                    if (target >= 0 && g_mnt[i].img->e[target].type == ENT_FILE) {
+                        *k = target; LOG("fs MGS4 localization: %s -> %s", from, to); return 1;
+                    }
+                }
+                break;
+            }
+        }
         *k = img_find(g_mnt[i].img, rest); return 1;
     }
     return 0;
