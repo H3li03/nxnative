@@ -96,7 +96,14 @@ HLE_FORCE("_ZN2nn7account16ShowUserSelectorEPNS0_3UidERKNS0_21UserSelectionSetti
     DM_APPLET("user selector"); return show_selector(out, settings, 0);
 }
 // The host runs one program and has no sessions handed over by an earlier program.
-HLE_FORCE("_ZN2nn7account12PopOpenUsersEPiPNS0_10UserHandleEi", "no users handed over by another program", void, h_acc_PopOpen, int *n, UserHandle *out, int max) { (void)out; (void)max; *n = 0; }
+HLE_FORCE("_ZN2nn7account12PopOpenUsersEPiPNS0_10UserHandleEi", "no users handed over by another program", void, h_acc_PopOpen, int *n, UserHandle *out, int max) {
+    *n = 0;
+    // MGS4 standalone: emulate the launcher account handoff.
+    if (!strcmp(DM_GAME_ID, "0100D0B01C4F4002") && out && max > 0) {
+        if (open_user(&out[0], &k_uid) == RES_OK)
+            *n = 1;
+    }
+}
 HLE_FORCE("_ZN2nn7account13PushOpenUsersEv", "the host runs only this program", void, h_acc_PushOpen, void) {}
 HLE_FORCE("_ZN2nn7account22TryOpenPreselectedUserEPNS0_10UserHandleE", "open a session for the launch user (returns bool)", unsigned, h_acc_TryOpenPre, UserHandle *h) { return open_user(h, &k_uid) == RES_OK; }
 // SDK 6 uses the Result; newer SDKs ignore it. Preserve that shared ABI.
