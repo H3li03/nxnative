@@ -2562,11 +2562,6 @@ static int present_itv(const win_t *o) {
 // frame step) or display mode decides the pacing itself and keeps it
 static int present_unpaced(const win_t *o) {
     present_cfg(o);
-    const char *fps = getenv("DM_MGS4_FPS");
-    if (!strcmp(DM_GAME_ID, "0100D0B01C4F4002") &&
-        fps && !strcmp(fps, "0") && g_hz == 0 &&
-        !g_display_mode && !fps_present_cap())
-        return 1;
     return o->interval == 0 && !g_display_mode && !fps_present_cap();
 }
 // The present interval the game reads back (nvnWindowGetPresentInterval): the one it set, except in display mode, where the window presents at the interval above (1, or the cap's)

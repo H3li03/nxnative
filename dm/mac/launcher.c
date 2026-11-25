@@ -243,8 +243,8 @@ static int mgs4_config(const char *romfs, const char *temp) {
     setenv("DM_ROMFS_OVERLAY",dir,1);
     setenv("DM_MGS4_FPS",f,1); setenv("DM_MGS4_VSYNC",vs,1);
     setenv("DM_FPS_TARGET","0",1);
-    setenv("DM_PRESENT_INTERVAL",strcmp(f,"0")?"display":"game",1);
-    setenv("DM_PRESENT_HZ",!strcmp(f,"0")?"0":"60",1);
+    setenv("DM_PRESENT_INTERVAL","display",1);
+    setenv("DM_PRESENT_HZ","60",1);
     setenv("DM_SCREEN_MATCH","0",0);
     fprintf(stderr,"launcher: MGS4 graphics %sx%s, native swap chain, fps %s, vsync %s, dynamic %s, overlay %s\n",w,h,f,vs,dr,dir);
     return 1;
