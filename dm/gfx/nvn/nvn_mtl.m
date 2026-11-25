@@ -8004,13 +8004,14 @@ static void mgs4_vbuf_ranges(const nvn_refl *rf, const p_draw *dw, const p_draw_
         if (mtl_addr_known(di->ibuf, n) && nvn_host_readable(di->ibuf, n) && !g_sbw_over && !sbw_hits(di->ibuf, di->ibuf+n) && !gw_live(di->ibuf, di->ibuf+n) && !nvn_sparse_gen())
             known = vc_draw_range(dw, di, &lo, &hi);
     } else if (dw) known = vc_draw_range(dw, NULL, &lo, &hi);
-    // MGS4: conservative bound for direct 16-bit indexed draws.
+    // MGS4: conservative bound for direct 8/16-bit indexed draws.
     // Do not read indices that may be GPU-written.
     if (!known && di && !di->ind && !di->mdi_cnt &&
-        di->count > 0 && di->itype == 1 &&
-        di->base_vertex == 0) {
-        lo = 0;
-        hi = UINT16_MAX;
+        di->count > 0 &&
+        (di->itype == 0 || di->itype == 1) &&
+        di->base_vertex >= 0) {
+        lo = (int64_t)di->base_vertex;
+        hi = lo + (di->itype == 0 ? UINT8_MAX : UINT16_MAX);
         known = 1;
     }
 
@@ -8605,6 +8606,25 @@ static int ix_range(const p_draw_idx *di, uint32_t *mn, uint32_t *mx) {
     if (di->ind || di->mdi_cnt || di->count <= 0 || !di->ibuf || pend_hits(di->ibuf, n)) return 0;
     const void *p = (const void *)(uintptr_t)di->ibuf;
     ir_key k = {di->ibuf, di->count, di->itype}; ir_ent *e = nvn_hm_get(&g_ir, &k); uint64_t now = nvn_dirty_now();
+    // MGS4: rescan previously GPU-written indices without
+    // reusing or revalidating their cached range.
+    if (e && e->gpuw &&
+        !strcmp(DM_GAME_ID, "0100D0B01C4F4002") &&
+        di->itype == 1 &&
+        di->ibuf <= UINT64_MAX - n &&
+        mtl_addr_known(di->ibuf, n) &&
+        nvn_host_readable(di->ibuf, n) &&
+        !pend_hits(di->ibuf, n) &&
+        !g_sbw_over &&
+        !sbw_hits(di->ibuf, di->ibuf + n) &&
+        !gw_live(di->ibuf, di->ibuf + n) &&
+        !nvn_sparse_gen()) {
+
+        ix_minmax(p, isz, di->count, mn, mx);
+
+        return 1;
+    }
+
     if (e && e->gpuw) return 0;
     if (e && (now == e->seen || !nvn_dirty_since_span(e->span, p, (size_t)n, e->stamp))) {
         e->seen = now; *mn = e->mn; *mx = e->mx;
