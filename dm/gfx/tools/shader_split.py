@@ -3635,12 +3635,37 @@ def scan_file(args):
         print(f'[RED] {why} (its shaders are left out)', flush=True)
         return args[1], {}, set(), ('unreadable', why, 1)
 
+def mgs4_vpak_shaders(d, label):
+    # VPAK v3: lengths immediately before NVN code, then control.
+    out = []
+    pos = 0
+    while (c := d.find(CTL_MAGIC, pos)) >= 0:
+        pos = c + 4
+        if c + 0x708 > len(d): continue
+        cn = struct.unpack_from('<I', d, c + 0x20)[0]
+        kn = struct.unpack_from('<I', d, c + 0x704)[0]
+        k = c - kn
+        if not (0x760 <= cn <= 0x100000 and kn >= 0x34 and k >= 8 and c + cn <= len(d)): continue
+        if struct.unpack_from('<II', d, k - 8) != (kn, cn): continue
+        if d[k:k+4] not in (GFX_MAGIC, CS_MAGIC): continue
+        ctl, code = d[c:c+cn], d[k:c]
+        st = glslc_stage(ctl, code)
+        if st and not check(label, st, ctl, code):
+            out.append((f'{label}#VPAK@{c:#x}', st, ctl, code))
+    if not out: red(f'{label}: no validated VPAK shaders')
+    print(f'{label}: VPAK {len(out)} records, {len({skey(c,k) for _,_,c,k in out})} unique keys', flush=True)
+    return out
+
 def scan_file_in(args):
     path, rel = args[:2]
     stem, ext = os.path.splitext(path)
     if ext in ('.data', '.patch', '.debug', '.nxpc') and os.path.exists(stem + '.dict'): return rel, {}, set(), {}   # read through its Next Level Games index (nlg_shaders)
     with open(path, 'rb') as f: head = f.read(16)
     found = []; trees = {}
+    if head[:8] == b'VPAK\x03\x00\x01\x00':
+        with open(path, 'rb') as f:
+            found = mgs4_vpak_shaders(f.read(), '/' + rel)
+        return rel, uniq_keys(found), var_pairs(found), trees
     if len(args) > 2 and args[2][0] == LSPK:
         if args[2][1] is None: red(args[2][2])
         lspk_shaders(args[2][1], rel, found)
