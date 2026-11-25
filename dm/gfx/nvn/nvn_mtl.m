@@ -7986,11 +7986,66 @@ static void vbuf_need(const nvn_refl *rf, const p_draw *dw, const p_draw_idx *di
         if (end > S.vbuf[st].size && end > g_vbuf_need[st]) g_vbuf_need[st] = end;
     }
 }
+// MGS4: resolve only the proven vertex range when BGFX overstates the binding size.
+static int vc_draw_range(const p_draw *, const p_draw_idx *, int64_t *, int64_t *);
+static uint64_t mgs4_vbuf_span[16];
+static void mgs4_vbuf_ranges(const nvn_refl *rf, const p_draw *dw, const p_draw_idx *di) {
+    memset(mgs4_vbuf_span, 0, sizeof mgs4_vbuf_span);
+    if (strcmp(DM_GAME_ID, "0100D0B01C4F4002") || !rf) return;
+    uint64_t ends[16] = {0}; unsigned bad = 0, candidates = 0;
+    for (int st = 0; st < 16; st++) {
+        uint64_t a = S.vbuf[st].address, n = S.vbuf[st].size;
+        if (a && n && !(a & 3) && !mtl_addr_known(a, n) && mtl_addr_known(a, 1)) candidates |= 1u << st;
+    }
+    if (!candidates) return;
+    int64_t lo = 0, hi = 0; int known = 0;
+    if (di && !di->ind && !di->mdi_cnt && di->count > 0 && di->itype >= 0 && di->itype <= 2) {
+        uint64_t n = (uint64_t)di->count * (1u << di->itype);
+        if (mtl_addr_known(di->ibuf, n) && nvn_host_readable(di->ibuf, n) && !g_sbw_over && !sbw_hits(di->ibuf, di->ibuf+n) && !gw_live(di->ibuf, di->ibuf+n) && !nvn_sparse_gen())
+            known = vc_draw_range(dw, di, &lo, &hi);
+    } else if (dw) known = vc_draw_range(dw, NULL, &lo, &hi);
+    // MGS4: conservative bound for direct 16-bit indexed draws.
+    // Do not read indices that may be GPU-written.
+    if (!known && di && !di->ind && !di->mdi_cnt &&
+        di->count > 0 && di->itype == 1 &&
+        di->base_vertex == 0) {
+        lo = 0;
+        hi = UINT16_MAX;
+        known = 1;
+    }
+
+    for (int v = 0; v < rf->nv; v++) {
+        int a = rf->v[v].nvn;
+        if (a >= 32 || a >= S.nattr || !S.attr[a].fmt) continue;
+        int st = S.attr[a].stream;
+        if (st >= 16 || !(candidates & (1u << st))) continue;
+        int eb = vattr_bytes(S.attr[a].fmt); uint64_t last = 0;
+        if (!eb) { bad |= 1u << st; continue; }
+        if (S.stream[st].divisor || !S.stream[st].stride) {
+            if (!vstream_last(st, dw, di, &last)) { bad |= 1u << st; continue; }
+        } else {
+            if (!known || lo < 0 || hi < lo) { bad |= 1u << st; continue; }
+            last = (uint64_t)hi;
+        }
+        uint64_t tail = (uint64_t)S.attr[a].offset + eb, stride = S.stream[st].stride;
+        if (stride && last > (UINT64_MAX-tail)/stride) { bad |= 1u << st; continue; }
+        uint64_t end = last * stride + tail;
+        if (end > ends[st]) ends[st] = end;
+    }
+    for (int st = 0; st < 16; st++) {
+        uint64_t n = ends[st], a = S.vbuf[st].address;
+        if (!n || (bad & (1u << st)) || n > S.vbuf[st].size || n > UINT64_MAX-3) continue;
+        n = (n+3) & ~3ull;
+        if (!mtl_addr_known(a, n)) continue;
+        mgs4_vbuf_span[st] = n;
+    }
+}
 static void vbuf_prepare(const nvn_refl *rf, const p_draw *dw, const p_draw_idx *di) {   // before the draw's render encoder: rf, dw / di the draw's vertex shader and record (NULL: no bounds)
     static uint64_t sub, gen, sparse;
     uint64_t pool_gen = atomic_load_explicit(&g_pool_gen, memory_order_acquire), sparse_gen = nvn_sparse_gen();
     if (sub != g_sub_serial || gen != pool_gen || sparse != sparse_gen) nvn_hm_clear(&g_vbuf_unaligned, free);
     vbuf_need(rf, dw, di);
+    mgs4_vbuf_ranges(rf, dw, di);
     for (int s = 0; s < 16; s++) if (((S.vbuf[s].address & 3) && S.vbuf[s].size) || g_vbuf_need[s]) {   // an empty stream no draw reads past has no bytes to align
         if (g_vbuf_need[s]) { static int once; if (!once++) MLOG("a draw reads %llu bytes of vertex stream %d, bound with %llu: bound as a copy with zeros past the bound range, as Maxwell's fetch reads them", (unsigned long long)g_vbuf_need[s], s, (unsigned long long)S.vbuf[s].size); }
         vbuf_unaligned(S.vbuf[s].address, S.vbuf[s].size, g_vbuf_need[s], 1);
@@ -8014,6 +8069,12 @@ static int bind_vbufs(id<MTL4RenderCommandEncoder> en, const nvn_refl *rf) {
         uint64_t addr = S.vbuf[s].address, gpu;
         if (!addr) continue;
         if (((addr & 3) && S.vbuf[s].size) || g_vbuf_need[s]) { uint64_t c = vbuf_unaligned(addr, S.vbuf[s].size, g_vbuf_need[s], 0); if (c) { cache[s].addr = 0; enc_r_vbuf(en, VB_SLOT(s), c); continue; } }   // not cached: the copy is per submission
+        if (mgs4_vbuf_span[s]) {
+            void *mb; uint64_t mo;
+            if (mtl_gpu_addr(addr, mgs4_vbuf_span[s], &mb, &mo, &gpu)) {
+                cache[s].addr = 0; enc_r_vbuf(en, VB_SLOT(s), gpu); continue;
+            }
+        }
         if (g_vbuf_cache && cache[s].addr == addr && cache[s].gen == gen && cache[s].size == S.vbuf[s].size) { gpu = cache[s].gpu; g_vbuf_reuse++; }
         else {
             void *mb; uint64_t mo; g_vbuf_resolve++;
@@ -8045,7 +8106,7 @@ static void pull_layout_fill(pull_layout *Lp) {
         uint64_t addr = S.vbuf[st].address, gpu; void *mb; uint64_t mo;
         if (!addr) continue;
         if (!g_vbuf_need[st] || !(gpu = vbuf_unaligned(addr, S.vbuf[st].size, g_vbuf_need[st], 0)))   // a stream the draw reads past: its copy padded with zeros (vbuf_need)
-            if (!mtl_gpu_addr(addr, S.vbuf[st].size ? S.vbuf[st].size : 1, &mb, &mo, &gpu)) continue;
+            if (!mtl_gpu_addr(addr, mgs4_vbuf_span[st] ? mgs4_vbuf_span[st] : (S.vbuf[st].size ? S.vbuf[st].size : 1), &mb, &mo, &gpu)) continue;
         L.s[st].base = gpu & ~3ull; lo[st] = (uint32_t)(gpu & 3); L.s[st].stride = S.stream[st].stride; L.s[st].divisor = S.stream[st].divisor;
     }
     for (int a = 0; a < 32 && a < S.nattr; a++) {
