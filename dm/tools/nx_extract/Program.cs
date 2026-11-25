@@ -85,7 +85,17 @@ static class P {
             return 0;
         }
         Fit(new[] { MissingKey(ks, basePkg, a[1]), updPkg == null ? null : MissingKey(ks, updPkg, a[2]) });
-        Nca baseProg = Pick(basePkg, NcaContentType.Program, progId) ?? throw new Exception(progId == null ? "no Program NCA in the base NSP" : $"no Program NCA {progId:x16} in the base NSP");
+        // Experimental: a program introduced by an update, with no original data section.
+        Nca patchOnly = progId != null && updPkg != null && Pick(basePkg, NcaContentType.Program, progId) == null
+            ? Pick(updPkg, NcaContentType.Program, progId) : null;
+        Nca emptyDataBase = null;
+        if (patchOnly != null && html) throw new Exception("Patch-only HTML extraction is not implemented");
+        if (patchOnly != null) {
+            emptyDataBase = basePkg.Find(n => !n.SectionExists(1));
+            if (emptyDataBase == null) throw new Exception("No NCA with absent data section for patch-only reconstruction");
+            Console.WriteLine("Experimental patch-only program: using LibHac NullStorage for original data");
+        }
+        Nca baseProg = patchOnly ?? Pick(basePkg, NcaContentType.Program, progId) ?? throw new Exception(progId == null ? "no Program NCA in the base NSP" : $"no Program NCA {progId:x16} in the base NSP");
         if (html) {   // an update's NCA is read alone, or over a base game's NCA when its header marks the data section a patch (a relocation table); which base NCA it patches the
                       // header does not say: the one it reads with passes the hash check
             int k = 0; ulong tid = baseProg.Header.TitleId; var bases = basePkg.FindAll(n => n.Header.ContentType == NcaContentType.Manual && n.Header.TitleId == tid);
@@ -114,7 +124,7 @@ static class P {
             Console.WriteLine($"{k} HtmlDocument NCAs");
             return Damaged();
         }
-        Nca updProg = updPkg == null ? null : Pick(updPkg, NcaContentType.Program, baseProg.Header.TitleId) ?? throw new Exception("no Program NCA of the base game's program in the update NSP");
+        Nca updProg = patchOnly != null || updPkg == null ? null : Pick(updPkg, NcaContentType.Program, baseProg.Header.TitleId) ?? throw new Exception("no Program NCA of the base game's program in the update NSP");
         Nca ctrl = Pick(updPkg ?? basePkg, NcaContentType.Control, baseProg.Header.TitleId);
         Console.WriteLine($"title {baseProg.Header.TitleId:x16}" + (updProg != null ? $", update {updProg.Header.TitleId:x16}" : ""));
         string outDir = a[3], cmpDir = a.Length > 4 ? a[4] : null;
@@ -148,7 +158,7 @@ static class P {
             Console.WriteLine("program has no data section: empty RomFS");
             return Damaged();
         }
-        IFileSystem Romfs(IntegrityCheckLevel level) => new RomFsFileSystem(updProg != null ? baseProg.OpenStorageWithPatch(updProg, NcaSectionType.Data, level) : baseProg.OpenStorage(NcaSectionType.Data, level));
+        IFileSystem Romfs(IntegrityCheckLevel level) => new RomFsFileSystem(patchOnly != null && patchOnly.GetFsHeader(1).IsPatchSection() ? emptyDataBase.OpenStorageWithPatch(patchOnly, 1, level) : updProg != null ? baseProg.OpenStorageWithPatch(updProg, NcaSectionType.Data, level) : baseProg.OpenStorage(NcaSectionType.Data, level));
         Func<IFileSystem> romfs = () => Romfs(IntegrityCheckLevel.ErrorOnInvalid);
         // the same RomFS without hash checks, for reading damaged files as they are (--allow-damaged)
         g_lenient = () => Romfs(IntegrityCheckLevel.IgnoreOnInvalid);
