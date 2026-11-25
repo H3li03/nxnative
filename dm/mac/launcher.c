@@ -160,6 +160,96 @@ static void programs_table(const char *contents, const char *res, const char *su
     fclose(f); fclose(o); setenv("DM_PROGRAMS", out, 0);
 }
 
+// MGS4 graphics settings: regenerate only configuration files from the original image.
+static char mgs4_overlay[PATH_MAX];
+static void mgs4_cleanup(void) {
+    if (!*mgs4_overlay) return;
+    const char *files[] = {"mgs4.ini","mgs4.scalability.ini","mgs4.scalability_PC.ini","mgs4.scalability_NX.ini"};
+    char p[PATH_MAX];
+    for (int i=0;i<4;i++) { snprintf(p,sizeof p,"%s/config/%s",mgs4_overlay,files[i]); unlink(p); }
+    snprintf(p,sizeof p,"%s/config",mgs4_overlay); rmdir(p); rmdir(mgs4_overlay);
+}
+static int mgs4_config(const char *romfs, const char *temp) {
+    const char *r = getenv("DM_MGS4_RESOLUTION"), *f = getenv("DM_MGS4_FPS");
+    const char *vs = getenv("DM_MGS4_VSYNC"), *dr = getenv("DM_MGS4_DYNAMIC_RESOLUTION");
+    const char *w = "1920", *h = "1080";
+    if (r && !strcmp(r, "1440")) { w = "2560"; h = "1440"; }
+    else if (r && !strcmp(r, "2160")) { w = "3840"; h = "2160"; }
+    f = f && !strcmp(f,"30") ? "30" : f && !strcmp(f,"60") ? "60" : "0";
+    vs = vs && !strcmp(vs,"1") ? "1" : "0";
+    dr = dr && !strcmp(dr,"1") ? "1" : "0";
+    if (getenv("DM_ROMFS_OVERLAY")) {
+        fprintf(stderr, "launcher: MGS4 external overlay supplied; automatic graphics configuration skipped\n");
+        return 1;
+    }
+    char dir[PATH_MAX], path[PATH_MAX];
+    if (snprintf(dir,sizeof dir,"%s/mgs4-graphics.XXXXXX",temp) >= sizeof dir || !mkdtemp(dir)) return 0;
+    snprintf(mgs4_overlay,sizeof mgs4_overlay,"%s",dir);
+    atexit(mgs4_cleanup);
+    snprintf(path,sizeof path,"%s/config",dir);
+    if (mkdir(path,0700)) return 0;
+    romfs_img *im = romfs_image_open(romfs);
+    if (!im) return 0;
+    const img_ent *cfg = NULL;
+    for (uint64_t j=0;j<im->e[0].b;j++) {
+        const img_ent *e = &im->e[im->e[0].a+j];
+        if (!e->type && e->nlen==6 && !memcmp(im->names+e->name,"config",6)) cfg=e;
+    }
+    const char *files[] = {"mgs4.ini","mgs4.scalability.ini","mgs4.scalability_PC.ini","mgs4.scalability_NX.ini"};
+    int ok = cfg != NULL;
+    for (int i=0;ok && i<4;i++) {
+        const img_ent *e=NULL;
+        for (uint64_t j=0;j<cfg->b;j++) {
+            const img_ent *x=&im->e[cfg->a+j];
+            if (x->type && x->nlen==strlen(files[i]) && !memcmp(im->names+x->name,files[i],x->nlen)) e=x;
+        }
+        if (!e || e->flags || e->b>1048576) { ok=0; break; }
+        char *buf=malloc((size_t)e->b+1);
+        if (!buf || !romfs_image_read(im->fd,buf,(size_t)e->b,(off_t)e->a)) { free(buf); ok=0; break; }
+        buf[e->b]=0;
+        snprintf(path,sizeof path,"%s/config/%s",dir,files[i]);
+        FILE *out=fopen(path,"w");
+        if (!out) { free(buf); ok=0; break; }
+        int render=0, limiter=0;
+        for (char *line=buf;line && *line;) {
+            char *next=strchr(line,'\n'); if(next) *next++=0;
+            char *s=line; while(*s==' '||*s=='\t') s++;
+            if (*s=='[') { render=!strncmp(s,"[render]",8); limiter=!strncmp(s,"[FPSLimiter]",12); }
+            char *eq=strchr(s,'='); const char *value=NULL;
+            if(eq) {
+                char *end=eq; while(end>s && isspace((unsigned char)end[-1])) end--;
+                size_t len=(size_t)(end-s);
+#define KEY(k) (len==sizeof(k)-1 && !memcmp(s,k,sizeof(k)-1))
+                if (!i && render) {
+                    if(KEY("bufferSizeX")||KEY("bufferSizeX_Switch")) value=w;
+                    if(KEY("bufferSizeY")||KEY("bufferSizeY_Switch")) value=h;
+                    if(KEY("windowSizeX")||KEY("windowSizeX_Switch")||KEY("DockModeCropSizeX_Switch")) value="1920";
+                    if(KEY("windowSizeY")||KEY("windowSizeY_Switch")||KEY("DockModeCropSizeY_Switch")) value="1080";
+                    if(KEY("vsync")) value=*vs=='1'?"true":"false";
+                    if(KEY("dynamicResolution")) value=*dr=='1'?"true":"false";
+                }
+                if(i && limiter && KEY("FPS_NX")) value=!strcmp(f,"30")?"30":"60";
+#undef KEY
+            }
+            if(value) fprintf(out,"%.*s= %s\n",(int)(eq-line),line,value);
+            else fprintf(out,"%s\n",line);
+            line=next;
+        }
+        int bad=ferror(out); if(fclose(out)||bad) ok=0;
+        free(buf);
+    }
+    romfs_image_close(im);
+    if(!ok) return 0;
+    setenv("DM_ROMFS_OVERLAY",dir,1);
+    setenv("DM_MGS4_FPS",f,1); setenv("DM_MGS4_VSYNC",vs,1);
+    setenv("DM_FPS_TARGET","0",1);
+    setenv("DM_PRESENT_INTERVAL",strcmp(f,"0")?"display":"game",1);
+    setenv("DM_PRESENT_HZ",!strcmp(f,"0")?"0":"60",1);
+    setenv("DM_SCREEN_MATCH","0",0);
+    fprintf(stderr,"launcher: MGS4 graphics %sx%s, output 1920x1080, fps %s, vsync %s, dynamic %s, overlay %s\n",w,h,f,vs,dr,dir);
+    return 1;
+}
+
 int main(int argc, char **argv) {
     char self[PATH_MAX], exe[PATH_MAX]; uint32_t n = sizeof self;
     if (_NSGetExecutablePath(self, &n) || !realpath(self, exe)) return 1;
@@ -205,6 +295,9 @@ int main(int argc, char **argv) {
     int shown = window ? dm_mac_launcher() : 2;
     if (!shown) return 0;   // Quit: no game
     if (shown == 2) saved_choices();
+    if (!strcmp(id, "0100D0B01C4F4002") && !mgs4_config(romfs, temp)) {
+        alert(name, "Cannot prepare MGS4 graphics configuration from RomFS."); return 1;
+    }
     cloud_saves_folder();
     setenv("DM_ROOT", sup, 0); setenv("DM_ROMFS", romfs, 0); setenv("DM_TEMP", temp, 0);
     snprintf(p, sizeof p, "%s/Library/Application Support/nxnative/system", home); setenv("DM_SYSTEM_DIR", p, 0);   // the player's own console files, for every game

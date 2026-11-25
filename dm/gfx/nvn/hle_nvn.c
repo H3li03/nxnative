@@ -2540,6 +2540,11 @@ static void present_cfg(const win_t *o) {
         m ? "DM_PRESENT_INTERVAL" : "game profile / Resident Evil timing profile", o->interval, scr > 0 ? "window" : "no window");
 }
 static int present_itv(const win_t *o) {
+    if (!strcmp(DM_GAME_ID, "0100D0B01C4F4002")) {
+        const char *fps = getenv("DM_MGS4_FPS");
+        if (fps && !strcmp(fps, "30")) return 2;
+        if (fps && !strcmp(fps, "60")) return 1;
+    }
     int movie = dm_movie_hz(), c = fps_present_cap(), k = atomic_load(&g_fs_k);
     const char *e = getenv("DM_FPS_TARGET"); int t = e ? atoi(e) : DM_GAME_FPS_TARGET;
     int re_movie_60 = (!strcmp(DM_GAME_ID, "010050F00BC1A000") ||
@@ -2555,7 +2560,15 @@ static int present_itv(const win_t *o) {
 // wait, so the loading screen took about 5 minutes. Presentation keeps one frame per display tick (the display link drops the older frames waiting, nvn_mtl.m: there Ori made
 // 446 frames in 315 ticks, 146 dropped), and the acquire's ticket wait still holds a texture until the frame it showed is taken or dropped. A host frame cap (fps_target, the
 // frame step) or display mode decides the pacing itself and keeps it
-static int present_unpaced(const win_t *o) { present_cfg(o); return o->interval == 0 && !g_display_mode && !fps_present_cap(); }
+static int present_unpaced(const win_t *o) {
+    present_cfg(o);
+    const char *fps = getenv("DM_MGS4_FPS");
+    if (!strcmp(DM_GAME_ID, "0100D0B01C4F4002") &&
+        fps && !strcmp(fps, "0") && g_hz == 0 &&
+        !g_display_mode && !fps_present_cap())
+        return 1;
+    return o->interval == 0 && !g_display_mode && !fps_present_cap();
+}
 // The present interval the game reads back (nvnWindowGetPresentInterval): the one it set, except in display mode, where the window presents at the interval above (1, or the cap's)
 // whatever the game set, and answering the game's own let it pace for that interval itself. Luigi's Mansion 3 (30 fps on the Switch, interval 2) reads the newest frame-history entry
 // and the interval before each present (main+0xb7a4b8): while that frame is not shown it sleeps 16.67 ms per vsync of the interval, and once shown it waits until (interval - 1)

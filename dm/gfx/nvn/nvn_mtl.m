@@ -18171,7 +18171,12 @@ static int present_now(const tex_t *t, double period, uint64_t frame, uint64_t t
     CAMetalLayer *layer = (__bridge CAMetalLayer *)front_metal_layer();
     if (!layer) return 0;
 #if TARGET_OS_OSX
-    if (!layer.displaySyncEnabled) layer.displaySyncEnabled = YES;   // Windowed mode follows the display's vsync to prevent tearing
+    const char *mgs4_vsync = getenv("DM_MGS4_VSYNC");
+    BOOL display_sync = YES;
+    if (!strcmp(DM_GAME_ID, "0100D0B01C4F4002") && mgs4_vsync)
+        display_sync = strcmp(mgs4_vsync, "0") != 0;
+    if (layer.displaySyncEnabled != display_sync)
+        layer.displaySyncEnabled = display_sync;   // Windowed mode follows the display's vsync to prevent tearing
 #endif
     present_pipeline(layer.pixelFormat);   // Same as the original path: the first frame compiles the pipeline before taking the drawable
     if (g_grab_cb) grab_present(src, crop, layer.drawableSize);   // Game picture needed by the whole-window screenshot (peek without the lock first; the real take locks inside the function)
