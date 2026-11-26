@@ -50,8 +50,8 @@ DM_MGS4_FXAA_QUALITY	choice	default=Game Default,0=Slow,1=Medium,2=Fast	default	
 DM_MGS4_PARTICLES	choice	default=Game Default,0=High,1=Medium,2=Low	default	mgs4:apple	Graphics Quality	Particle quality
 DM_MGS4_OCCLUSION	choice	default=Game Default,true=On,false=Off	default	mgs4:apple	Graphics Quality	Hardware occlusion
 DM_MGS4_BACKBUFFERS	choice	default=Game Default,2=2,3=3	default	mgs4:apple	Performance	Backbuffer count
-DM_MGS4_SHADOW_SIZE	choice	default=Game Default,512=512,1024=1024,2048=2048	default	mgs4:apple	Shadows	ShadowBufferSize		needs=DM_MGS4_PRESET=4
-DM_MGS4_SHADOW_SAMPLES	choice	default=Game Default,4=4,7=7	default	mgs4:apple	Shadows	ShadowSampleCount		needs=DM_MGS4_PRESET=4
+DM_MGS4_SHADOW_SIZE	choice	default=Game Default,512=512,1024=1024,2048=2048	default	mgs4:apple	Shadows	ShadowBufferSize	
+DM_MGS4_SHADOW_SAMPLES	choice	default=Game Default,4=4,7=7	default	mgs4:apple	Shadows	ShadowSampleCount	
 
-DM_MGS4_TEXTURE_QUALITY	choice	default=Game Default,0=Low,1=Medium,2=High,3=Highest	default	mgs4:apple	Textures	Texture quality	Applies to supported texture groups.	needs=DM_MGS4_PRESET=4
-DM_MGS4_VFX_QUALITY	choice	default=Game Default,0=Low,1=Medium,2=High,3=Highest	default	mgs4:apple	Visual Effects	Effects quality	Applies to all VFX groups.	needs=DM_MGS4_PRESET=4
+DM_MGS4_TEXTURE_QUALITY	choice	default=Game Default,0=Low,1=Medium,2=High,3=Highest	default	mgs4:apple	Textures	Texture quality	Applies to supported texture groups.
+DM_MGS4_VFX_QUALITY	choice	default=Game Default,0=Low,1=Medium,2=High,3=Highest	default	mgs4:apple	Visual Effects	Effects quality	Applies to all VFX groups.

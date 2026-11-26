@@ -29,9 +29,12 @@ static const char *mgs4_choice(const char *name, const char *allowed) {
     }
     return NULL;
 }
-static const char *mgs4_override(int file, const char *section, const char *key, int custom) {
+static const char *mgs4_override(int file, const char *section, const char *key, int custom, const char *preset) {
     const char *v;
-    if (file == 3 && custom && !strncmp(section, "VFX_", 4) && !strcmp(key, "@3")) {
+    char active_key[8], active_shadow[24];
+    snprintf(active_key, sizeof active_key, "@%s", preset);
+    snprintf(active_shadow, sizeof active_shadow, "Shadow@%s", preset);
+    if (file == 3 && !strncmp(section, "VFX_", 4) && !strcmp(key, active_key)) {
         const char *q = mgs4_choice("DM_MGS4_VFX_QUALITY", "0|1|2|3");
         static const char *levels[] = {"0.5", "0.7", "0.8", "1.0"};
         if (q) return levels[atoi(q)];
@@ -88,11 +91,11 @@ static const char *mgs4_override(int file, const char *section, const char *key,
         v=mgs4_choice("DM_MGS4_TEXTURE_SOURCE","original|upscaled");
         return v ? (!strcmp(v,"original") ? "" : "NX_TXN_UP/paks") : NULL;
     }
-    if (file==3 && custom && !strcmp(section,"Shadow@3") && !strcmp(key,"ShadowBufferSize")) {
+    if (file==3 && !strcmp(section,active_shadow) && !strcmp(key,"ShadowBufferSize")) {
         v=mgs4_choice("DM_MGS4_SHADOW_SIZE","512|1024|2048");
         return v;
     }
-    if (file==3 && custom && !strcmp(section,"Shadow@3") && !strcmp(key,"ShadowSampleCount")) {
+    if (file==3 && !strcmp(section,active_shadow) && !strcmp(key,"ShadowSampleCount")) {
         v=mgs4_choice("DM_MGS4_SHADOW_SAMPLES","4|7");
         return v;
     }
@@ -158,7 +161,7 @@ static const char *mgs4_override(int file, const char *section, const char *key,
     }
     return NULL;
 }
-static int mgs4_texture(FILE *out, const char *key, const char *original) {
+static int mgs4_texture(FILE *out, const char *key, const char *original, int custom) {
     const char *fields[]={"MinLod","MaxLod","MipBias","MaxAniso"};
     const char *allowed[]={"0|1|2","0|16","0|1","1|2|4|8"};
     const char *groups[]={"TG_Default","TG_FixedModel","TG_Character","TG_FixedModel_Normal","TG_Character_Normal","TG_Effect","TG_UI","TG_NoMip","TG_NoBias"};
@@ -168,7 +171,7 @@ static int mgs4_texture(FILE *out, const char *key, const char *original) {
     for (int j=0;j<4;j++) {
         char env[128]; snprintf(env,sizeof env,"DM_MGS4_%s_%s",key,fields[j]);
         for (char *p=env;*p;p++) *p=(char)toupper((unsigned char)*p);
-        values[j]=mgs4_choice(env,allowed[j]); if (values[j]) changed=1;
+        values[j]=custom ? mgs4_choice(env,allowed[j]) : NULL; if (values[j]) changed=1;
     }
     const char *q = mgs4_choice("DM_MGS4_TEXTURE_QUALITY", "0|1|2|3");
     if (q) {
@@ -202,6 +205,8 @@ static int mgs4_config(const char *romfs, const char *temp) {
     const char *preset=mgs4_choice("DM_MGS4_PRESET","0|1|2|3|4");
     int custom=preset && !strcmp(preset,"4");
     if (!preset || custom) preset=custom ? "3" : "0";
+    char texture_section[32];
+    snprintf(texture_section,sizeof texture_section,"TextureGroup@%s",preset);
     vs = vs && !strcmp(vs,"1") ? "1" : "0";
     dr = dr && !strcmp(dr,"1") ? "1" : "0";
     if (getenv("DM_ROMFS_OVERLAY")) {
@@ -258,9 +263,9 @@ static int mgs4_config(const char *romfs, const char *temp) {
                 if (len<sizeof key) {
                     memcpy(key,s,len); key[len]=0;
                     if (!i && !strcmp(section,"scalability") && KEY("scalabilityLevel_NX")) value=preset;
-                    const char *override=mgs4_override(i,section,key,custom);
+                    const char *override=mgs4_override(i,section,key,custom,preset);
                     if (override) value=override;
-                    if (i==3 && custom && !strcmp(section,"TextureGroup@3") && mgs4_texture(out,key,eq+1)) { line=next; continue; }
+                    if (i==3 && !strcmp(section,texture_section) && mgs4_texture(out,key,eq+1,custom)) { line=next; continue; }
                 }
                 if(i && limiter && KEY("FPS_NX")) value=f;
 #undef KEY
