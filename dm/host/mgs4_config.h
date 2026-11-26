@@ -31,6 +31,11 @@ static const char *mgs4_choice(const char *name, const char *allowed) {
 }
 static const char *mgs4_override(int file, const char *section, const char *key, int custom) {
     const char *v;
+    if (file == 3 && custom && !strncmp(section, "VFX_", 4) && !strcmp(key, "@3")) {
+        const char *q = mgs4_choice("DM_MGS4_VFX_QUALITY", "0|1|2|3");
+        static const char *levels[] = {"0.5", "0.7", "0.8", "1.0"};
+        if (q) return levels[atoi(q)];
+    }
     if (!file && !strcmp(section,"render") && !strcmp(key,"fullscreen")) {
         v=mgs4_choice("DM_MGS4_FULLSCREEN","true|false");
         return v;
@@ -164,6 +169,17 @@ static int mgs4_texture(FILE *out, const char *key, const char *original) {
         char env[128]; snprintf(env,sizeof env,"DM_MGS4_%s_%s",key,fields[j]);
         for (char *p=env;*p;p++) *p=(char)toupper((unsigned char)*p);
         values[j]=mgs4_choice(env,allowed[j]); if (values[j]) changed=1;
+    }
+    const char *q = mgs4_choice("DM_MGS4_TEXTURE_QUALITY", "0|1|2|3");
+    if (q) {
+        static const char *lod[] = {"2", "1", "0", "0"};
+        static const char *bias[] = {"1", "0", "0", "0"};
+        static const char *aniso[] = {"1", "4", "4", "8"};
+        int level = atoi(q);
+        if (!strcmp(key, "TG_UI") || !strcmp(key, "TG_NoMip") || !strcmp(key, "TG_NoBias")) return 0;
+        values[0] = lod[level]; values[1] = "16";
+        values[2] = bias[level]; values[3] = aniso[level];
+        changed = 1;
     }
     if (!changed) return 0;
     char *copy=strdup(original); if (!copy) return 0;

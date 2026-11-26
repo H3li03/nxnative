@@ -201,7 +201,7 @@ struct LauncherView: View {
                     ForEach(rows) { setting in
                         SettingRow(s: setting, m: m)
                     }
-                    if basic && section == "Game" && info("DMTitleID")?.uppercased() == "0100D0B01C4F4002" {
+                    if basic && section == "Language & Audio" && info("DMTitleID")?.uppercased() == "0100D0B01C4F4002" {
                         Text("Warning: Save data is not interchangeable between the Japanese and English voice versions.")
                             .font(.caption)
                             .foregroundStyle(.red)

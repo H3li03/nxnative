@@ -10,7 +10,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE)); sys.path.insert(0, str(HERE.parent / 'tools'))
 import game, nacp
 
-SECTIONS = ('Game', 'Controls', 'Performance')   # headings on the single settings screen
+SECTIONS = ('Game', 'Controls', 'Performance', 'Display & Frame Rate', 'Graphics Quality', 'Language & Audio', 'Textures', 'Shadows', 'Visual Effects')   # headings on the single settings screen
 SCHEMA = 1   # launcher.json's version (docs/launcher.schema.json); it grows only by optional fields, so a reader of 1 reads every 1
 # The meta column's keys, each with the pattern its value must match. A key is added here, in docs/frontends.md and in
 # docs/launcher.schema.json together (test_launcher_settings.py checks that the three agree); a reader ignores keys it does not know
@@ -117,6 +117,9 @@ def build(gid, patched, control):
             can = table[need]
             if can is not None and want not in can: sys.exit(f'settings.tsv:{n}: needs a value {need} never takes: {want} (it takes {", ".join(sorted(can))})')
         if not shown(cond, n): continue
+        if str(g.id).upper() == '0100D0B01C4F4002' and platform in ('mac', 'ios'):
+            if var in ('DM_FULLSCREEN', 'DM_OPMODE'): section = 'Display & Frame Rate'
+            if var == 'DM_LANG': section = 'Language & Audio'
         s = {'env': var, 'kind': kind, 'section': section, 'label': label, 'note': note, 'default': value(default, n), **m}
         if var == 'DM_RENDER_SCALE' and base: s['base'] = base   # the render scale in pixels, for the console mode chosen
         if kind == 'choice':

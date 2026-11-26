@@ -38,69 +38,20 @@ DM_NVN_ENC_THREAD	toggle	-	1|DM_GAME_ENC_THREAD	gfxapi:nvn	Performance	Encode th
 DM_FPS_HOLD	toggle	on/off	DM_GAME_FPS_HOLD	DM_GAME_FPS_TARGET!=0	Performance	Hold frames when late
 DM_METAL_HUD	toggle	-	0	always	Performance	Performance HUD
 
-DM_MGS4_RESOLUTION	choice	1080=1920x1080,1440=2560x1440,2160=3840x2160	1080	mgs4:apple	Game	Rendering resolution	Native rendering and swap chain resolution. Higher resolutions use more GPU memory.	level=basic
-DM_MGS4_FPS	choice	30=30 fps,60=60 fps,120=120 fps (experimental)	60	mgs4:apple	Game	Frame rate limit	Native limiter; 120 fps timing is unverified.	level=basic
-DM_MGS4_VSYNC	toggle	-	0	mgs4:apple	Game	VSync		level=basic
-DM_MGS4_DYNAMIC_RESOLUTION	toggle	-	0	mgs4:apple	Game	Dynamic resolution
-DM_MGS4_VOICE	choice	ja=Japanese,en=English	ja	mgs4:apple	Game	Voice language	English requires the multilingual DLC.	level=basic
-DM_MGS4_PRESET	choice	0=Low,1=Medium,2=High,3=Highest,4=Custom	0	mgs4:apple	Game	Graphics preset		level=basic
-DM_MGS4_FULLSCREEN	choice	default=Game Default,true=On,false=Off	default	mgs4:apple	Performance	Fullscreen
-DM_MGS4_FXAA	choice	default=Game Default,true=On,false=Off	default	mgs4:apple	Performance	FXAA
-DM_MGS4_FXAA_QUALITY	choice	default=Game Default,0=Slow,1=Medium,2=Fast	default	mgs4:apple	Performance	FXAA quality
-DM_MGS4_PARTICLES	choice	default=Game Default,0=High,1=Medium,2=Low	default	mgs4:apple	Performance	Particle quality
-DM_MGS4_OCCLUSION	choice	default=Game Default,true=On,false=Off	default	mgs4:apple	Performance	Hardware occlusion
+DM_MGS4_RESOLUTION	choice	1080=1920x1080,1440=2560x1440,2160=3840x2160	1080	mgs4:apple	Display & Frame Rate	Rendering resolution	Native rendering and swap chain resolution. Higher resolutions use more GPU memory.	level=basic
+DM_MGS4_FPS	choice	30=30 fps,60=60 fps,120=120 fps (experimental)	60	mgs4:apple	Display & Frame Rate	Frame rate limit	Native limiter; 120 fps timing is unverified.	level=basic
+DM_MGS4_VSYNC	toggle	-	0	mgs4:apple	Display & Frame Rate	VSync		level=basic
+DM_MGS4_DYNAMIC_RESOLUTION	toggle	-	0	mgs4:apple	Display & Frame Rate	Dynamic resolution
+DM_MGS4_VOICE	choice	ja=Japanese,en=English	ja	mgs4:apple	Language & Audio	Voice language	English requires the multilingual DLC.	level=basic
+DM_MGS4_PRESET	choice	0=Low,1=Medium,2=High,3=Highest,4=Custom	0	mgs4:apple	Graphics Quality	Graphics preset		level=basic
+DM_MGS4_FULLSCREEN	choice	default=Game Default,true=On,false=Off	default	mgs4:apple	Display & Frame Rate	Fullscreen
+DM_MGS4_FXAA	choice	default=Game Default,true=On,false=Off	default	mgs4:apple	Graphics Quality	FXAA
+DM_MGS4_FXAA_QUALITY	choice	default=Game Default,0=Slow,1=Medium,2=Fast	default	mgs4:apple	Graphics Quality	FXAA quality
+DM_MGS4_PARTICLES	choice	default=Game Default,0=High,1=Medium,2=Low	default	mgs4:apple	Graphics Quality	Particle quality
+DM_MGS4_OCCLUSION	choice	default=Game Default,true=On,false=Off	default	mgs4:apple	Graphics Quality	Hardware occlusion
 DM_MGS4_BACKBUFFERS	choice	default=Game Default,2=2,3=3	default	mgs4:apple	Performance	Backbuffer count
-DM_MGS4_TEXTURE_SOURCE	choice	default=Game Default,original=Original,upscaled=Switch Upscaled	default	mgs4:apple	Performance	Texture source
-DM_MGS4_TG_DEFAULT_MINLOD	choice	default=Game Default,0=0,1=1,2=2	default	mgs4:apple	Performance	Default — MinLod		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_DEFAULT_MAXLOD	choice	default=Game Default,0=0,16=16	default	mgs4:apple	Performance	Default — MaxLod		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_DEFAULT_MIPBIAS	choice	default=Game Default,0=0,1=1	default	mgs4:apple	Performance	Default — MipBias		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_DEFAULT_MAXANISO	choice	default=Game Default,1=1,2=2,4=4,8=8	default	mgs4:apple	Performance	Default — MaxAniso		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_FIXEDMODEL_MINLOD	choice	default=Game Default,0=0,1=1,2=2	default	mgs4:apple	Performance	FixedModel — MinLod		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_FIXEDMODEL_MAXLOD	choice	default=Game Default,0=0,16=16	default	mgs4:apple	Performance	FixedModel — MaxLod		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_FIXEDMODEL_MIPBIAS	choice	default=Game Default,0=0,1=1	default	mgs4:apple	Performance	FixedModel — MipBias		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_FIXEDMODEL_MAXANISO	choice	default=Game Default,1=1,2=2,4=4,8=8	default	mgs4:apple	Performance	FixedModel — MaxAniso		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_CHARACTER_MINLOD	choice	default=Game Default,0=0,1=1,2=2	default	mgs4:apple	Performance	Character — MinLod		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_CHARACTER_MAXLOD	choice	default=Game Default,0=0,16=16	default	mgs4:apple	Performance	Character — MaxLod		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_CHARACTER_MIPBIAS	choice	default=Game Default,0=0,1=1	default	mgs4:apple	Performance	Character — MipBias		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_CHARACTER_MAXANISO	choice	default=Game Default,1=1,2=2,4=4,8=8	default	mgs4:apple	Performance	Character — MaxAniso		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_FIXEDMODEL_NORMAL_MINLOD	choice	default=Game Default,0=0,1=1,2=2	default	mgs4:apple	Performance	FixedModel Normal — MinLod		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_FIXEDMODEL_NORMAL_MAXLOD	choice	default=Game Default,0=0,16=16	default	mgs4:apple	Performance	FixedModel Normal — MaxLod		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_FIXEDMODEL_NORMAL_MIPBIAS	choice	default=Game Default,0=0,1=1	default	mgs4:apple	Performance	FixedModel Normal — MipBias		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_FIXEDMODEL_NORMAL_MAXANISO	choice	default=Game Default,1=1,2=2,4=4,8=8	default	mgs4:apple	Performance	FixedModel Normal — MaxAniso		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_CHARACTER_NORMAL_MINLOD	choice	default=Game Default,0=0,1=1,2=2	default	mgs4:apple	Performance	Character Normal — MinLod		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_CHARACTER_NORMAL_MAXLOD	choice	default=Game Default,0=0,16=16	default	mgs4:apple	Performance	Character Normal — MaxLod		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_CHARACTER_NORMAL_MIPBIAS	choice	default=Game Default,0=0,1=1	default	mgs4:apple	Performance	Character Normal — MipBias		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_CHARACTER_NORMAL_MAXANISO	choice	default=Game Default,1=1,2=2,4=4,8=8	default	mgs4:apple	Performance	Character Normal — MaxAniso		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_EFFECT_MINLOD	choice	default=Game Default,0=0,1=1,2=2	default	mgs4:apple	Performance	Effect — MinLod		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_EFFECT_MAXLOD	choice	default=Game Default,0=0,16=16	default	mgs4:apple	Performance	Effect — MaxLod		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_EFFECT_MIPBIAS	choice	default=Game Default,0=0,1=1	default	mgs4:apple	Performance	Effect — MipBias		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_EFFECT_MAXANISO	choice	default=Game Default,1=1,2=2,4=4,8=8	default	mgs4:apple	Performance	Effect — MaxAniso		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_UI_MINLOD	choice	default=Game Default,0=0,1=1,2=2	default	mgs4:apple	Performance	UI — MinLod		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_UI_MAXLOD	choice	default=Game Default,0=0,16=16	default	mgs4:apple	Performance	UI — MaxLod		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_UI_MIPBIAS	choice	default=Game Default,0=0,1=1	default	mgs4:apple	Performance	UI — MipBias		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_UI_MAXANISO	choice	default=Game Default,1=1,2=2,4=4,8=8	default	mgs4:apple	Performance	UI — MaxAniso		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_NOMIP_MINLOD	choice	default=Game Default,0=0,1=1,2=2	default	mgs4:apple	Performance	NoMip — MinLod		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_NOMIP_MAXLOD	choice	default=Game Default,0=0,16=16	default	mgs4:apple	Performance	NoMip — MaxLod		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_NOMIP_MIPBIAS	choice	default=Game Default,0=0,1=1	default	mgs4:apple	Performance	NoMip — MipBias		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_NOMIP_MAXANISO	choice	default=Game Default,1=1,2=2,4=4,8=8	default	mgs4:apple	Performance	NoMip — MaxAniso		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_NOBIAS_MINLOD	choice	default=Game Default,0=0,1=1,2=2	default	mgs4:apple	Performance	NoBias — MinLod		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_NOBIAS_MAXLOD	choice	default=Game Default,0=0,16=16	default	mgs4:apple	Performance	NoBias — MaxLod		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_NOBIAS_MIPBIAS	choice	default=Game Default,0=0,1=1	default	mgs4:apple	Performance	NoBias — MipBias		needs=DM_MGS4_PRESET=4
-DM_MGS4_TG_NOBIAS_MAXANISO	choice	default=Game Default,1=1,2=2,4=4,8=8	default	mgs4:apple	Performance	NoBias — MaxAniso		needs=DM_MGS4_PRESET=4
-DM_MGS4_SHADOW_SIZE	choice	default=Game Default,512=512,1024=1024,2048=2048	default	mgs4:apple	Performance	ShadowBufferSize		needs=DM_MGS4_PRESET=4
-DM_MGS4_SHADOW_SAMPLES	choice	default=Game Default,4=4,7=7	default	mgs4:apple	Performance	ShadowSampleCount		needs=DM_MGS4_PRESET=4
-DM_MGS4_VFX_DEFAULT	choice	default=Game Default,0.1=10%,0.2=20%,0.3=30%,0.5=50%,0.6=60%,0.65=65%,0.7=70%,0.75=75%,0.8=80%,0.9=90%,1.0=100%	default	mgs4:apple	Performance	Default		needs=DM_MGS4_PRESET=4
-DM_MGS4_VFX_MISSILESMOKE	choice	default=Game Default,0.1=10%,0.2=20%,0.3=30%,0.5=50%,0.6=60%,0.65=65%,0.7=70%,0.75=75%,0.8=80%,0.9=90%,1.0=100%	default	mgs4:apple	Performance	MissileSmoke		needs=DM_MGS4_PRESET=4
-DM_MGS4_VFX_OCTOPUSINKJET	choice	default=Game Default,0.1=10%,0.2=20%,0.3=30%,0.5=50%,0.6=60%,0.65=65%,0.7=70%,0.75=75%,0.8=80%,0.9=90%,1.0=100%	default	mgs4:apple	Performance	OctopusInkjet		needs=DM_MGS4_PRESET=4
-DM_MGS4_VFX_FRAGMENT	choice	default=Game Default,0.1=10%,0.2=20%,0.3=30%,0.5=50%,0.6=60%,0.65=65%,0.7=70%,0.75=75%,0.8=80%,0.9=90%,1.0=100%	default	mgs4:apple	Performance	Fragment		needs=DM_MGS4_PRESET=4
-DM_MGS4_VFX_BLAST	choice	default=Game Default,0.1=10%,0.2=20%,0.3=30%,0.5=50%,0.6=60%,0.65=65%,0.7=70%,0.75=75%,0.8=80%,0.9=90%,1.0=100%	default	mgs4:apple	Performance	Blast		needs=DM_MGS4_PRESET=4
-DM_MGS4_VFX_WEATHER	choice	default=Game Default,0.1=10%,0.2=20%,0.3=30%,0.5=50%,0.6=60%,0.65=65%,0.7=70%,0.75=75%,0.8=80%,0.9=90%,1.0=100%	default	mgs4:apple	Performance	Weather		needs=DM_MGS4_PRESET=4
-DM_MGS4_VFX_ENVIRONMENT	choice	default=Game Default,0.1=10%,0.2=20%,0.3=30%,0.5=50%,0.6=60%,0.65=65%,0.7=70%,0.75=75%,0.8=80%,0.9=90%,1.0=100%	default	mgs4:apple	Performance	Environment		needs=DM_MGS4_PRESET=4
-DM_MGS4_VFX_REX	choice	default=Game Default,0.1=10%,0.2=20%,0.3=30%,0.5=50%,0.6=60%,0.65=65%,0.7=70%,0.75=75%,0.8=80%,0.9=90%,1.0=100%	default	mgs4:apple	Performance	Rex		needs=DM_MGS4_PRESET=4
-DM_MGS4_VFX_BULLET	choice	default=Game Default,0.1=10%,0.2=20%,0.3=30%,0.5=50%,0.6=60%,0.65=65%,0.7=70%,0.75=75%,0.8=80%,0.9=90%,1.0=100%	default	mgs4:apple	Performance	Bullet		needs=DM_MGS4_PRESET=4
-DM_MGS4_VFX_SANDSMOKE	choice	default=Game Default,0.1=10%,0.2=20%,0.3=30%,0.5=50%,0.6=60%,0.65=65%,0.7=70%,0.75=75%,0.8=80%,0.9=90%,1.0=100%	default	mgs4:apple	Performance	SandSmoke		needs=DM_MGS4_PRESET=4
-DM_MGS4_VFX_PE_SMOKE	choice	default=Game Default,0.1=10%,0.2=20%,0.3=30%,0.5=50%,0.6=60%,0.65=65%,0.7=70%,0.75=75%,0.8=80%,0.9=90%,1.0=100%	default	mgs4:apple	Performance	PE Smoke		needs=DM_MGS4_PRESET=4
-DM_MGS4_VFX_RPGSMOKE	choice	default=Game Default,0.1=10%,0.2=20%,0.3=30%,0.5=50%,0.6=60%,0.65=65%,0.7=70%,0.75=75%,0.8=80%,0.9=90%,1.0=100%	default	mgs4:apple	Performance	RpgSmoke		needs=DM_MGS4_PRESET=4
-DM_MGS4_VFX_PE_NORMAL	choice	default=Game Default,0.1=10%,0.2=20%,0.3=30%,0.5=50%,0.6=60%,0.65=65%,0.7=70%,0.75=75%,0.8=80%,0.9=90%,1.0=100%	default	mgs4:apple	Performance	PE Normal		needs=DM_MGS4_PRESET=4
-DM_MGS4_VFX_PE_EXPLOSION	choice	default=Game Default,0.1=10%,0.2=20%,0.3=30%,0.5=50%,0.6=60%,0.65=65%,0.7=70%,0.75=75%,0.8=80%,0.9=90%,1.0=100%	default	mgs4:apple	Performance	PE Explosion		needs=DM_MGS4_PRESET=4
-DM_MGS4_VFX_MID_EXPLOSION	choice	default=Game Default,0.1=10%,0.2=20%,0.3=30%,0.5=50%,0.6=60%,0.65=65%,0.7=70%,0.75=75%,0.8=80%,0.9=90%,1.0=100%	default	mgs4:apple	Performance	Mid Explosion		needs=DM_MGS4_PRESET=4
+DM_MGS4_SHADOW_SIZE	choice	default=Game Default,512=512,1024=1024,2048=2048	default	mgs4:apple	Shadows	ShadowBufferSize		needs=DM_MGS4_PRESET=4
+DM_MGS4_SHADOW_SAMPLES	choice	default=Game Default,4=4,7=7	default	mgs4:apple	Shadows	ShadowSampleCount		needs=DM_MGS4_PRESET=4
+
+DM_MGS4_TEXTURE_QUALITY	choice	default=Game Default,0=Low,1=Medium,2=High,3=Highest	default	mgs4:apple	Textures	Texture quality	Applies to supported texture groups.	needs=DM_MGS4_PRESET=4
+DM_MGS4_VFX_QUALITY	choice	default=Game Default,0=Low,1=Medium,2=High,3=Highest	default	mgs4:apple	Visual Effects	Effects quality	Applies to all VFX groups.	needs=DM_MGS4_PRESET=4
