@@ -36,11 +36,17 @@ ask_file() {
         echo "File not found. Try again." >&2
     done
 }
-read -e -r -p "Workspace [$HOME/MGS4-Native]: " WORK
+if [ "${MGS4_GUI:-0}" = 1 ]; then
+    WORK="${MGS4_WORK:?Missing workspace}"
+else
+    read -e -r -p "Workspace [$HOME/MGS4-Native]: " WORK
+fi
 WORK=$(normalize "${WORK:-$HOME/MGS4-Native}")
 mkdir -p "$WORK"
 WORK=$(cd "$WORK" && pwd -P)
-read -r -p "Target: 1 macOS, 2 iPadOS, 3 both [1]: " target
+if [ "${MGS4_GUI:-0}" = 1 ]; then target="${MGS4_TARGET:?Missing target}"; else
+    read -r -p "Target: 1 macOS, 2 iPadOS, 3 both [1]: " target
+fi
 target=${target:-1}
 case "$target" in 1|2|3) ;; *) fail "Invalid target" ;; esac
 if [ "$target" != 1 ]; then
@@ -50,19 +56,29 @@ fi
 DUMP="$WORK/dump/program_2"
 mkdir -p "$WORK/logs" "$WORK/build" "$WORK/dump" "$WORK/game/updates/393216"
 if [ "$target" != 2 ] && { [ -e "$WORK/MGS4.app" ] || [ -L "$WORK/MGS4.app" ]; }; then
-    read -r -p "Existing app will be moved to a backup. Continue? [y/N] " answer
+    if [ "${MGS4_GUI:-0}" = 1 ]; then answer=y; else read -r -p "Existing app will be moved to a backup. Continue? [y/N] " answer; fi
     case "$answer" in y|Y) ;; *) exit 1 ;; esac
 fi
 if [ -f "$DUMP/ExeFS/main" ] && [ -d "$DUMP/RomFS" ]; then
-    read -r -p "Reuse existing dump (must be program 4002, update 393216)? [y/N] " answer
+    if [ "${MGS4_GUI:-0}" = 1 ]; then answer="${MGS4_REUSE:-n}"; else read -r -p "Reuse existing dump (must be program 4002, update 393216)? [y/N] " answer; fi
     case "$answer" in y|Y) reuse=1 ;; *) reuse=0 ;; esac
 else
     reuse=0
 fi
-KEYS=$(ask_file "Path to prod.keys")
-BASE=$(ask_file "Path to base NSP")
-UPDATE=$(ask_file "Path to update NSP (v393216)")
-DLC=$(ask_file "Path to multilingual NSP")
+if [ "${MGS4_GUI:-0}" = 1 ]; then
+    KEYS="${MGS4_KEYS:?Missing keys}"
+    BASE="${MGS4_BASE:?Missing base NSP}"
+    UPDATE="${MGS4_UPDATE:?Missing update NSP}"
+    DLC="${MGS4_DLC:?Missing DLC NSP}"
+    for path in "$KEYS" "$BASE" "$UPDATE" "$DLC"; do
+        [ -f "$path" ] || fail "File not found: $path"
+    done
+else
+    KEYS=$(ask_file "Path to prod.keys")
+    BASE=$(ask_file "Path to base NSP")
+    UPDATE=$(ask_file "Path to update NSP (v393216)")
+    DLC=$(ask_file "Path to multilingual NSP")
+fi
 if [ "$reuse" = 0 ]; then
     [ ! -e "$DUMP" ] && [ ! -L "$DUMP" ] || fail "Existing dump protected. Move it aside or choose another workspace."
     dotnet run --project "$REPO/dm/tools/nx_extract" -c Release -- \
@@ -84,7 +100,7 @@ ln -sfn "$WORK/dump/program_2/RomFS" \
 
 DLC_DUMP="$WORK/dump/multilingual"
 if [ -d "$DLC_DUMP/ww/bank/nx" ]; then
-    read -r -p "Reuse existing multilingual dump (must match selected NSP)? [y/N] " answer
+    if [ "${MGS4_GUI:-0}" = 1 ]; then answer="${MGS4_REUSE:-n}"; else read -r -p "Reuse existing multilingual dump (must match selected NSP)? [y/N] " answer; fi
     case "$answer" in y|Y) ;; *) fail "Existing DLC dump protected. Move it aside first." ;; esac
 else
     [ ! -e "$DLC_DUMP" ] || fail "Incomplete DLC dump; move it aside first."
