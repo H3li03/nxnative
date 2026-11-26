@@ -3,7 +3,10 @@ set -euo pipefail
 cd "$(dirname "$0")"
 REPO="$PWD"
 APP="${1:-$HOME/MGS4-Native/MGS4 Builder.app}"
-mkdir -p "$APP/Contents/MacOS"
+ICON="$REPO/tools/mgs4-builder/AppIcon.icns"
+[ -f "$ICON" ] || { echo "Missing icon: $ICON" >&2; exit 1; }
+mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
+cp "$ICON" "$APP/Contents/Resources/AppIcon.icns"
 xcrun swiftc -O -parse-as-library -target arm64-apple-macos14.0 -framework SwiftUI -framework AppKit "$REPO/tools/mgs4-builder/Builder.swift" -o "$APP/Contents/MacOS/MGS4Builder"
 cat > "$APP/Contents/Info.plist" <<'PLIST'
 <?xml version="1.0" encoding="UTF-8"?>
@@ -11,6 +14,7 @@ cat > "$APP/Contents/Info.plist" <<'PLIST'
 <plist version="1.0"><dict>
 <key>CFBundleExecutable</key><string>MGS4Builder</string>
 <key>CFBundleIdentifier</key><string>org.nxnative.mgs4builder</string>
+<key>CFBundleIconFile</key><string>AppIcon.icns</string>
 <key>CFBundleName</key><string>MGS4 Builder</string>
 <key>CFBundlePackageType</key><string>APPL</string>
 <key>CFBundleShortVersionString</key><string>1.0</string>
