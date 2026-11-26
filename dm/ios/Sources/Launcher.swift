@@ -124,6 +124,9 @@ private struct LauncherView: View {
                         if !rows.isEmpty {
                             Section(section) {
                                 ForEach(rows) { SettingRow(s: $0, m: m) }
+                                if section == "Game" && rows.contains(where: { $0.env == "DM_MGS4_VOICE" }) {
+                                    Text("Warning: Save data is not interchangeable between the Japanese and English voice versions.").foregroundStyle(.red)
+                                }
                             }
                         }
                     }

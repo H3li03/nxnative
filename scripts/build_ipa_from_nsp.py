@@ -3403,6 +3403,10 @@ def main(args=None):
         if on: say(src[k][1])
     PROG.add(glslc + vkcap + glcap + uedec + (gfx == 'nvn'))
     aoc = extract_aoc(nx, keys, repo, work, app, fam, logs)
+    if f"{app:016X}" == "0100D0B01C4F4002" and os.environ.get("DM_MGS4_AOC_DIR"):
+        aoc = Path(os.environ["DM_MGS4_AOC_DIR"]).resolve()
+        if not (aoc / "1/ww/bank/nx").is_dir():
+            raise SystemExit("Incomplete MGS4 multilingual DLC directory")
     dlc_roms = sorted(p for p in aoc.iterdir() if p.is_dir() or p.suffix == '.img') if aoc else []
     base = next((dirs[v] for v in versions if picks[v][1] is None), dirs[versions[0]])   # the folder the base game was extracted to alone
     # the app name and bundle ID both come from the base NSP: the game name in its control data, and a bundle ID from its title ID; a setting / the command line overrides them

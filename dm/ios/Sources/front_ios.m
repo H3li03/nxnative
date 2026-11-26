@@ -21,6 +21,7 @@ void dm_gamepad_active(void);
 #import "DmGameMenu.h"
 
 void front_ios_boot(void);
+const char *front_ios_mgs4_prepare(void);
 int front_ios_boot_ok(void);
 const char *front_ios_boot_message(void);   // main.m: why a build that keeps the game files off the IPA found none usable (NULL = the generic hint)
 const char *front_ios_device_check(void);   // main.m: why this device cannot run the games (its GPU has no BC textures; NULL = supported); makes the first Metal device
@@ -153,6 +154,8 @@ static void launcher_done(void) { [g_root startGame]; }
 // The game view, the pad and the frame-rate counter are made once the launcher has set the switches they read (DM_SHOW_FPS, DM_METAL_HUD). Host loading normally began at app launch (main.m); Resident Evil defers it until its signed FPS variant is chosen.
 - (void)startGame {
     if (self.game) return;
+    const char *mgs4 = front_ios_mgs4_prepare();
+    if (mgs4) { [self showHint:@(mgs4)]; return; }
     dm_cloud_saves_env();   // DM_SAVE_SYNC from the launcher's Cloud saves pick, before the game's first save mount reads it (CloudSaves.m, save_sync.h)
     front_hud_env();   // before the process's first Metal device, which reads MTL_HUD_ENABLED (an env file's DM_METAL_HUD sets it in main.m already; GitHub issue #840)
     const char *dev = front_ios_device_check();   // that first device: a GPU without BC textures is refused here, not at launch, so the launcher's HUD switch counts

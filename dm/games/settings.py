@@ -74,9 +74,9 @@ def build(gid, patched, control):
 
     def shown(cond, n):
         if cond == 'always': return True
-        if cond == 'mgs4:mac':
+        if cond == 'mgs4:apple':
             return (
-                platform == 'mac'
+                platform in ('mac', 'ios')
                 and str(g.id).upper() == '0100D0B01C4F4002'
             )
 

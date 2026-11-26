@@ -40,9 +40,16 @@ read -e -r -p "Workspace [$HOME/MGS4-Native]: " WORK
 WORK=$(normalize "${WORK:-$HOME/MGS4-Native}")
 mkdir -p "$WORK"
 WORK=$(cd "$WORK" && pwd -P)
+read -r -p "Target: 1 macOS, 2 iPadOS, 3 both [1]: " target
+target=${target:-1}
+case "$target" in 1|2|3) ;; *) fail "Invalid target" ;; esac
+if [ "$target" != 1 ]; then
+    command -v xcodegen >/dev/null || fail "Missing dependency: xcodegen"
+    xcrun --sdk iphoneos --find clang >/dev/null || fail "iOS SDK required"
+fi
 DUMP="$WORK/dump/program_2"
 mkdir -p "$WORK/logs" "$WORK/build" "$WORK/dump" "$WORK/game/updates/393216"
-if [ -e "$WORK/MGS4.app" ] || [ -L "$WORK/MGS4.app" ]; then
+if [ "$target" != 2 ] && { [ -e "$WORK/MGS4.app" ] || [ -L "$WORK/MGS4.app" ]; }; then
     read -r -p "Existing app will be moved to a backup. Continue? [y/N] " answer
     case "$answer" in y|Y) ;; *) exit 1 ;; esac
 fi
@@ -95,7 +102,8 @@ if [ -f "$WORK/dump/program_2/icon.jpg" ]; then
     ICON=(--icon "$WORK/dump/program_2/icon.jpg")
 fi
 
-if [ -e "$WORK/MGS4.app" ] || [ -L "$WORK/MGS4.app" ]; then
+if [ "$target" != 2 ]; then
+if [ "$target" != 2 ] && { [ -e "$WORK/MGS4.app" ] || [ -L "$WORK/MGS4.app" ]; }; then
     backup=$(mktemp -d "$WORK/app-backup.XXXXXXXX")
     mv "$WORK/MGS4.app" "$backup/"
     echo "Previous app saved in $backup"
@@ -125,8 +133,26 @@ if [ -n "$DLC_DUMP" ]; then
     codesign --force --sign - "$WORK/MGS4.app"
 fi
 codesign --verify --deep --strict "$WORK/MGS4.app"
+fi
+if [ "$target" != 1 ]; then
+    AOC_STAGE="$WORK/game-aoc"
+    mkdir -p "$AOC_STAGE/1"
+    if [ ! -d "$AOC_STAGE/1/ww" ]; then cp -R "$DLC_DUMP/ww" "$AOC_STAGE/1/"; fi
+    [ -d "$AOC_STAGE/1/ww/bank/nx" ] || fail "Incomplete staged DLC"
+    if [ -e "$WORK/MGS4.ipa" ]; then
+        backup=$(mktemp -d "$WORK/ipa-backup.XXXXXXXX")
+        mv "$WORK/MGS4.ipa" "$backup/"
+    fi
+    DM_MGS4_AOC_DIR="$AOC_STAGE" "$PYTHON" "$REPO/scripts/build_ipa_from_nsp.py" \
+        "$WORK/game" --platform ios --title-id 0100D0B01C4F4002 -p v393216 \
+        --app-name "Metal Gear Solid 4" "${ICON[@]}" --work-dir "$WORK/build-ios" \
+        --provisional --no-prebake --keep-extracted --progress lines \
+        -o "$WORK/MGS4.ipa" 2>&1 | tee "$WORK/logs/build-ios.log"
+    test -s "$WORK/MGS4.ipa"
+fi
 echo
 echo "========================================"
 echo "  BUILD COMPLETE"
-echo "  $WORK/MGS4.app"
+[ "$target" = 2 ] || echo "  $WORK/MGS4.app"
+[ "$target" = 1 ] || echo "  $WORK/MGS4.ipa (unsigned)"
 echo "========================================"

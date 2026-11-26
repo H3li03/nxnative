@@ -13,6 +13,7 @@
 #include "romfs_image.h"
 #include "romfs_identity.h"
 #include "player_env.h"
+#include "../../host/mgs4_config.h"
 #ifndef DM_PLAYER_BUILD
 #define DM_PLAYER_BUILD 0
 #endif
@@ -23,7 +24,7 @@ int dm_main(int argc, char **argv);   // dm/host/main.c compiled in with -Dmain=
 UIViewController *front_ios_root(void);
 void front_ios_focus_event(int ev);
 
-static char *g_argv[4]; static int g_argc;
+static char *g_argv[8]; static int g_argc;
 
 // Documents/romfs.img, one RomFS image file (dm/tools/romfs_image.py, scripts/push_romfs.sh): only a complete one counts. Its index is written last and ends the file, so a copy cut off partway is skipped
 static int romfs_image_complete(NSString *path) {
@@ -189,7 +190,7 @@ static int boot_env(void) {
     // Resident Evil's signed main text has prebuilt 30/60/120 variants. map_image()
     // must see the launcher's final DM_FPS_TARGET before it chooses one; early preload
     // would map the default (usually 60) while the launcher is still on screen.
-    if (strcmp(DM_GAME_ID, "010050F00BC1A000"))
+    if (strcmp(DM_GAME_ID, "010050F00BC1A000") && strcmp(DM_GAME_ID, "0100D0B01C4F4002"))
         dm_host_preload_start(g_argc, g_argv);
     else
         fprintf(stderr, "boot: Resident Evil host loading waits for the launcher FPS choice\\n");
@@ -237,6 +238,30 @@ static NSString *program_env(void) {
     return dmdir;
 }
 static int g_boot_ok;
+
+// Apply the final launcher choices before the host or its preload reads them.
+const char *front_ios_mgs4_prepare(void) {
+    if (strcmp(DM_GAME_ID, "0100D0B01C4F4002")) return NULL;
+    const char *voice = getenv("DM_MGS4_VOICE");
+    int english = voice && !strcmp(voice,"en");
+    if (english) {
+        const char *aoc = getenv("DM_AOC_DIR"); char bank[PATH_MAX]; struct stat st;
+        int n = aoc ? snprintf(bank,sizeof bank,"%s/1/ww/bank/nx",aoc) : -1;
+        if (n < 0 || n >= (int)sizeof bank || stat(bank,&st) || !S_ISDIR(st.st_mode)) return "English voice requires multilingual DLC (aoc/1/ww).";
+        const char *lang = getenv("DM_LANG"); char *native = "en";
+        if (lang && !strcmp(lang,"it")) native="it";
+        else if (lang && !strcmp(lang,"fr")) native="fr";
+        else if (lang && !strcmp(lang,"de")) native="gr";
+        else if (lang && !strcmp(lang,"es")) native="sp";
+        else if (lang && !strcmp(lang,"pt")) native="pt";
+        g_argv[2]="--"; g_argv[3]="--region"; g_argv[4]="ww"; g_argv[5]="-lan"; g_argv[6]=native; g_argv[7]=NULL; g_argc=7;
+    }
+    setenv("DM_MGS4_VOICE",english?"en":"ja",1);
+    const char *romfs=getenv("DM_ROMFS"), *temp=getenv("DM_TEMP");
+    if (!romfs || !temp || !mgs4_config(romfs,temp)) return "MGS4 graphics configuration failed. A complete RomFS image is required.";
+    return NULL;
+}
+
 
 static void *boot_thread(void *p) {
     (void)p;
