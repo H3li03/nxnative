@@ -396,7 +396,8 @@ static void screen_refresh(void) {
     if (hz <= 0) return;   // no screen yet: keep what was read
     if (lpm && hz > 60) hz = 60;
     int was = atomic_exchange_explicit(&g_screen_hz, hz, memory_order_relaxed);
-    if (was && was != hz) LOG("front end: screen %d Hz → %d Hz%s", was, hz, lpm ? " (Low Power Mode)" : "");
+    if (was != hz) LOG("front end: screen %d Hz → %d Hz%s", was, hz, lpm ? " (Low Power Mode)" : "");
+    if (!was) LOG("front end: ProMotion opt-in=%d, display maximum=%d Hz", [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CADisableMinimumFrameDurationOnPhone"] boolValue], ws ? (int)ws.screen.maximumFramesPerSecond : 0);
 }
 // Offline HTML pages (web_apple.m): the page's view goes over the game view and under the gamepad, which lets touches on no control through to it while the page is
 // shown (DmGamepad.m hitTest); the page takes them as a click on what they land on, and the gamepad and controllers drive it as on the Switch
