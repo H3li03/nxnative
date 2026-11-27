@@ -3388,6 +3388,16 @@ def main(args=None):
         say(f'derived game profile for {pkg_ver} ({disp}): {g.dir}')
     sv = versions if derived else need   # the versions whose files the shaders come from
     game = dirs[pkg_ver]
+    # MGS4 PC textures need a larger guest heap on macOS (allocation failure at main+0x97da5c).
+    # Apply to cached provisional profiles too; keep the mobile memory budget unchanged.
+    if mac and provisional and app == 0x0100D0B01C4F4002:
+        pc = rfs.source(game) / 'common/textures/PC_TXN_UP'
+        if all((pc / name).is_file() for name in ('txn_up.1.pak', 'txn_up.2.pak', 'paks/TextureData.pak')):
+            changes = {k: (v, 'MGS4 PC textures: tested macOS guest memory budget')
+                       for k, v in (('mem_reserve', '0x160000000'), ('app_pool', '0x14D500000'))
+                       if int(g.get(k), 0) < int(v, 0)}
+            if changes: g = set_keys(g, changes, 'MGS4 PC texture memory')
+            say('MGS4 PC texture memory: reserve ' + g.get('mem_reserve') + ', pool ' + g.get('app_pool'))
     # how the shaders are got follows from the packed version's files (profile_guess.py shader_sources): the graphics API, and the shaders made only at run time
     src = build_sources(repo, game, g.modules_in(game / 'ExeFS'))
     gfx = src['graphics'][0]   # nvn, vulkan (Hades: the host's Vulkan layer, SPIR-V shaders) or gl (Digimon Story Cyber Sleuth: the host's GL layer, GLSL sources)
