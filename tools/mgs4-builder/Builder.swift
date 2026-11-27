@@ -62,12 +62,13 @@ final class Builder: ObservableObject {
     @Published var running = false
     @Published var status = "Ready"
     private var process: Process?
-    func start(repo: String, work: String, target: String, keys: String, base: String, update: String, dlc: String, reuse: Bool, pcTextures: String) {
+    func start(repo: String, work: String, target: String, keys: String, base: String, update: String, dlc: String, reuse: Bool, pcTextures: String, pcISO: String) {
         guard !running else { return }
         var env = ProcessInfo.processInfo.environment
         env["PATH"] = "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/share/dotnet:/usr/bin:/bin:/usr/sbin:/sbin:" + (env["PATH"] ?? "")
         env["PYTHONUNBUFFERED"] = "1"
         env["MGS4_PC_TEXTURES"] = pcTextures
+        env["MGS4_PC_ISO"] = pcISO
         for (k,v) in ["MGS4_GUI":"1","MGS4_WORK":work,"MGS4_TARGET":target,"MGS4_KEYS":keys,"MGS4_BASE":base,"MGS4_UPDATE":update,"MGS4_DLC":dlc,"MGS4_REUSE":reuse ? "y" : "n"] { env[k] = v }
         run(arguments: [repo + "/build_mgs4.sh"], directory: repo, env: env, activity: "Building", success: "Build complete")
     }
@@ -170,6 +171,7 @@ struct ContentView: View {
     @AppStorage("update") private var update = ""
     @AppStorage("dlc") private var dlc = ""
     @AppStorage("target") private var target = "2"
+    @AppStorage("pcISO") private var pcISO = ""
     @AppStorage("pcTextures") private var pcTextures = ""
     @State private var reuse = true
     @State private var confirm = false
@@ -195,7 +197,7 @@ struct ContentView: View {
     }
     var valid: Bool {
         FileManager.default.fileExists(atPath: repo + "/build_mgs4.sh") &&
-        !work.isEmpty && [keys,base,update,dlc].allSatisfy {
+        !work.isEmpty && (pcISO.isEmpty || pcTextures.isEmpty) && [keys,base,update,dlc].allSatisfy {
             var dir: ObjCBool = false
             return FileManager.default.fileExists(atPath: $0, isDirectory: &dir) && !dir.boolValue
         }
@@ -222,7 +224,8 @@ struct ContentView: View {
                         FileSlot(title: "Update v393216", hint: "Drop update NSP", folder: false, path: $update)
                         FileSlot(title: "Multilingual DLC", hint: "Drop multilingual NSP", folder: false, path: $dlc)
                         FileSlot(title: "PC textures (optional)", hint: "Select extracted MGS4 folder", folder: true, path: $pcTextures)
-                        Button("Use Switch textures only") { pcTextures = "" }
+                        FileSlot(title: "PC base ISO (optional)", hint: "Select ISO instead of extracted folder", folder: false, path: $pcISO)
+                        Button("Use Switch textures only") { pcTextures = ""; pcISO = "" }
                         Picker("Target", selection: $target) {
                             Text("macOS").tag("1")
                             Text("iOS / iPadOS").tag("2")
@@ -256,7 +259,7 @@ struct ContentView: View {
             }
         }
         .confirmationDialog("Start build? Existing outputs will be backed up.", isPresented: $confirm, titleVisibility: .visible) {
-            Button("Start build") { builder.start(repo: repo, work: work, target: target, keys: keys, base: base, update: update, dlc: dlc, reuse: reuse, pcTextures: pcTextures) }
+            Button("Start build") { builder.start(repo: repo, work: work, target: target, keys: keys, base: base, update: update, dlc: dlc, reuse: reuse, pcTextures: pcTextures, pcISO: pcISO) }
             Button("Cancel", role: .cancel) {}
         }
     }
