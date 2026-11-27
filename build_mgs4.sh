@@ -111,6 +111,44 @@ fi
 [ -d "$DLC_DUMP/ww/bank/nx" ] || fail "Missing multilingual assets"
 
 echo
+
+# Import only the six verified base-PC archives, preserving the original NX assets.
+if [ -n "${MGS4_PC_TEXTURES:-}" ]; then
+    "$PYTHON" - "$MGS4_PC_TEXTURES" "$DUMP/RomFS" "$DLC_DUMP" <<'PY'
+import pathlib, sys, shutil, tempfile, os
+src, rom, dlc = map(pathlib.Path, sys.argv[1:])
+if (src / "MGS4").is_dir():
+    src = src / "MGS4"
+sizes = {"common": (1733122,3175475,4859421106), "ww": (927746,175942,1280007417)}
+names = ("txn_up.1.pak","txn_up.2.pak","paks/TextureData.pak")
+jobs = []
+for region, root in (("common",rom),("ww",dlc)):
+    for name,size in zip(names,sizes[region]):
+        rel = pathlib.Path(region)/"textures/PC_TXN_UP"/name
+        p = src/rel
+        if not p.is_file() or p.stat().st_size != size:
+            raise SystemExit(f"Missing or unexpected PC archive: {p}")
+        jobs.append((p,root/rel))
+for p,d in jobs:
+    d.parent.mkdir(parents=True,exist_ok=True)
+    if d.is_symlink():
+        raise SystemExit(f"Refusing existing symlink: {d}")
+    fd,tmp = tempfile.mkstemp(dir=d.parent)
+    os.close(fd)
+    try:
+        shutil.copyfile(p,tmp)
+        os.replace(tmp,d)
+    finally:
+        if os.path.exists(tmp): os.unlink(tmp)
+    print(f"Imported {d}",flush=True)
+PY
+    # Separate cache from Switch-only builds.
+    BUILD_SUFFIX="-pc"
+else
+    BUILD_SUFFIX=""
+    [ ! -e "$DUMP/RomFS/common/textures/PC_TXN_UP" ] || fail "PC archives already in dump; use a clean workspace for Switch-only builds"
+fi
+
 echo "=== BUILDING MGS4 ==="
 
 ICON=()
@@ -131,7 +169,7 @@ fi
 -p v393216 \
 --app-name "Metal Gear Solid 4" \
 "${ICON[@]}" \
---work-dir "$WORK/build" \
+--work-dir "$WORK/build$BUILD_SUFFIX" \
 --provisional \
 --no-prebake \
 --keep-extracted \
@@ -151,7 +189,7 @@ fi
 codesign --verify --deep --strict "$WORK/MGS4.app"
 fi
 if [ "$target" != 1 ]; then
-    AOC_STAGE="$WORK/game-aoc"
+    AOC_STAGE="$WORK/game-aoc$BUILD_SUFFIX"
     mkdir -p "$AOC_STAGE/1"
     if [ ! -d "$AOC_STAGE/1/ww" ]; then cp -R "$DLC_DUMP/ww" "$AOC_STAGE/1/"; fi
     [ -d "$AOC_STAGE/1/ww/bank/nx" ] || fail "Incomplete staged DLC"
@@ -161,7 +199,7 @@ if [ "$target" != 1 ]; then
     fi
     DM_MGS4_AOC_DIR="$AOC_STAGE" "$PYTHON" "$REPO/scripts/build_ipa_from_nsp.py" \
         "$WORK/game" --platform ios --title-id 0100D0B01C4F4002 -p v393216 \
-        --app-name "Metal Gear Solid 4" "${ICON[@]}" --work-dir "$WORK/build-ios" \
+        --app-name "Metal Gear Solid 4" "${ICON[@]}" --work-dir "$WORK/build-ios$BUILD_SUFFIX" \
         --provisional --no-prebake --keep-extracted --progress lines \
         -o "$WORK/MGS4.ipa" 2>&1 | tee "$WORK/logs/build-ios.log"
     test -s "$WORK/MGS4.ipa"
