@@ -94,7 +94,7 @@ for n in names:
             struct.pack_into('<I',source,0x8d2fd0,0x141cb06c)
             for fps in (0,30,60,120,144):
                 variant = bytearray(source)
-                if fps: struct.pack_into('<I',variant,0x10e4,0x52800014|((1000000//fps)<<5))
+                if fps and fps != 144: struct.pack_into('<I',variant,0x10e4,0x52800014|((1000000//fps)<<5))
                 else: struct.pack_into('<I',variant,0x1214,0x14000015)
                 path = os.path.join(os.path.dirname(os.path.abspath(dst)),f'{tag or "base"}_mgs4_{fps}_x0.bin')
                 with open(path,'wb') as f: f.write(variant)
