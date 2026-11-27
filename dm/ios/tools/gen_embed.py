@@ -14,7 +14,7 @@
 # programs of a multi-program application, build_ipa.sh PROGRAMS_TSV): the program's sections are __dm<tag><name>x0 / __DM<tag><name>W / __dm<tag><name>x1 and __dm<tag>_nro_*, which the
 # loader takes from DM_EMBED_TAG (main.m). --jit <jit.img> (a game whose code comes through nn::jit: dm/tools/jit_capture.py's image, beside the RomFS) puts that image in
 # __TEXT,__dm<tag>_jit, which the host remaps as the code memory's start (hle_jit.c jit_map_image)
-import os, sys
+import os, sys, struct
 a = sys.argv[1:]; tag = ''; jit = None; re_fps = False
 while a[:1] in (['--tag'], ['--jit'], ['--re-fps']):
     if a[0] == '--tag': tag = a[1]; a = a[2:]
@@ -79,6 +79,28 @@ for n in names:
             sect = f'__TEXT,__dm{tag}{n}{fps}x0'
             assert all(len(x) <= 16 for x in sect.split(','))
             asm.append(f'    .section {sect}'); place(asm, variant_path, len(variant), 0, len(variant))
+    if n == 'main':
+        hdr = dict(l[2:].split() for l in open(f'{out}/{n}.fixups.tsv'))
+        if hdr.get('BUILD_ID') == '3e7443aca182388f98e13069311fb51f':
+            z0 = parts[0][1]
+            with open(bin_, 'rb') as f: source = bytearray(f.read(z0))
+            if int(hdr['TEXT_END'],16) != 0xfff180 or len(source) != 0x1000000:
+                sys.exit('MGS4: unexpected text layout')
+            for off, word in ((0x10e4,0x1ad40954),(0x1214,0x910fa2c8),(0x8d2fd0,0xfc190fe8)):
+                if struct.unpack_from('<I',source,off)[0] != word:
+                    sys.exit(f'MGS4: instruction mismatch at {off:#x}')
+            if any(source[0xfff180:0xfff19c]): sys.exit('MGS4: code cave occupied')
+            struct.pack_into('<7I',source,0xfff180,0xf00023f0,0xf9425e10,0xb9401210,0x34000070,0xfc190fe8,0x17e34f90,0xd65f03c0)
+            struct.pack_into('<I',source,0x8d2fd0,0x141cb06c)
+            for fps in (0,30,60,120,144):
+                variant = bytearray(source)
+                if fps: struct.pack_into('<I',variant,0x10e4,0x52800014|((1000000//fps)<<5))
+                else: struct.pack_into('<I',variant,0x1214,0x14000015)
+                path = os.path.join(os.path.dirname(os.path.abspath(dst)),f'{tag or "base"}_mgs4_{fps}_x0.bin')
+                with open(path,'wb') as f: f.write(variant)
+                sect = f'__TEXT,__dm{tag}{n}{fps}x0'
+                assert all(len(x)<=16 for x in sect.split(','))
+                asm.append(f'    .section {sect}'); place(asm,path,len(variant),0,len(variant))
     flags.append(f'-Wl,-segprot,__DM{tag}{n}W,rw,rw')
 tab = os.path.join(out, 'nro.tsv')
 nros = [ln.split('\t')[0] for ln in open(tab) if ln.strip() and not ln.startswith('#') and not ln.startswith('refused\t')] if os.path.exists(tab) else []
