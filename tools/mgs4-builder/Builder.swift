@@ -87,7 +87,18 @@ final class Builder: ObservableObject {
         env["MGS4_PC_TEXTURES"] = pcTextures
         env["MGS4_PC_ISO"] = pcISO
         for (k,v) in ["MGS4_GUI":"1","MGS4_WORK":work,"MGS4_TARGET":target,"MGS4_KEYS":keys,"MGS4_BASE":base,"MGS4_UPDATE":update,"MGS4_DLC":dlc,"MGS4_REUSE":reuse ? "y" : "n"] { env[k] = v }
-        run(arguments: [repo + "/build_mgs4.sh"], directory: repo, env: env, activity: "Building", success: "Build complete")
+        let script = #"""
+set -euo pipefail
+echo "=== UPDATING BUILD SOURCES ==="
+test "$(git branch --show-current)" = "mgs4-iOs-Mac-native" || { echo "Wrong repository branch"; exit 1; }
+test -z "$(git status --porcelain --untracked-files=no)" || { echo "Local tracked changes detected; update manually."; exit 1; }
+git pull --ff-only https://github.com/H3li03/nxnative.git mgs4-iOs-Mac-native
+git submodule update --init --recursive
+git log -1 --oneline
+grep -q 'PC TEXTURE SELECTION' build_mgs4.sh || { echo "Outdated build script"; exit 1; }
+exec /bin/bash ./build_mgs4.sh
+"""#
+        run(arguments: ["-c", script], directory: repo, env: env, activity: "Building", success: "Build complete")
     }
 
     func prepare(work: String, repo: String, completion: @escaping (Bool) -> Void) {
@@ -185,7 +196,7 @@ struct Console: NSViewRepresentable {
 
 struct ContentView: View {
     @StateObject private var builder = Builder()
-    @AppStorage("repo") private var repo = ProcessInfo.processInfo.environment["MGS4_REPO"] ?? ""
+    @AppStorage("repo.v12") private var repo = ProcessInfo.processInfo.environment["MGS4_REPO"] ?? ""
     @AppStorage("work") private var work = NSHomeDirectory() + "/MGS4-Native"
     @AppStorage("keys") private var keys = ""
     @AppStorage("base") private var base = ""
@@ -197,7 +208,7 @@ struct ContentView: View {
     @State private var reuse = true
     @State private var confirm = false
     @State private var didPrompt = false
-    @AppStorage("setupComplete") private var setupComplete = false
+    @AppStorage("setupComplete.v12") private var setupComplete = false
 
     private func chooseProject() {
         let panel = NSOpenPanel()
@@ -209,8 +220,8 @@ struct ContentView: View {
         panel.allowsMultipleSelection = false
         if panel.runModal() == .OK, let url = panel.url {
             let root = url.path
-            let existing = ["nxnative", "nxnative-ipados"].map { url.appendingPathComponent($0).path }.first { FileManager.default.fileExists(atPath: $0 + "/.git") }
-            let destination = existing ?? url.appendingPathComponent("nxnative").path
+            let existing = ["nxnative-v1.2"].map { url.appendingPathComponent($0).path }.first { FileManager.default.fileExists(atPath: $0 + "/.git") }
+            let destination = existing ?? url.appendingPathComponent("nxnative-v1.2").path
             builder.prepare(work: root, repo: destination) { ok in
                 if ok { work = root; repo = destination; setupComplete = true }
             }
