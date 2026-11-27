@@ -112,12 +112,18 @@ fi
 
 echo
 
+echo "=== PC TEXTURE SELECTION ==="
 if [ -n "${MGS4_PC_ISO:-}" ]; then
+    echo "[PC] ISO selected: $MGS4_PC_ISO"
+    echo "[PC] Starting native ISO extraction..."
     [ -z "${MGS4_PC_TEXTURES:-}" ] || fail "Choose either ISO or extracted textures"
-    MGS4_PC_TEXTURES=$(bash "$REPO/tools/mgs4-builder/extract_pc.sh" "$MGS4_PC_ISO" "$WORK")
+    MGS4_PC_TEXTURES=$(bash "$REPO/tools/mgs4-builder/extract_pc.sh" "$MGS4_PC_ISO" "$WORK" 2> >(tee "$WORK/logs/pc-extraction.log" >&2))
+    echo "[PC] Extraction complete: $MGS4_PC_TEXTURES"
 fi
 # Import only the six verified base-PC archives, preserving the original NX assets.
 if [ -n "${MGS4_PC_TEXTURES:-}" ]; then
+    echo "=== VERIFYING AND IMPORTING PC TEXTURES ==="
+    echo "[PC] Source: $MGS4_PC_TEXTURES"
     MGS4_CRC_TOOL="$WORK/tools/mgs4-crc"
     mkdir -p "$WORK/tools"
     xcrun clang -O3 "$REPO/tools/mgs4-builder/pc_crc.c" -o "$MGS4_CRC_TOOL"
@@ -144,11 +150,13 @@ for region, root in (("common",rom),("ww",dlc)):
         print(f"Verifying {p}",flush=True)
         if crc(p) != checksum:
             raise SystemExit(f"PC archive CRC mismatch: {p}")
+        print(f"[PC] CRC OK: {rel}",flush=True)
         jobs.append((p,root/rel))
 for p,d in jobs:
     d.parent.mkdir(parents=True,exist_ok=True)
     if d.is_symlink():
         raise SystemExit(f"Refusing existing symlink: {d}")
+    print(f"[PC] Copying {p.stat().st_size:,} bytes to {d}",flush=True)
     fd,tmp = tempfile.mkstemp(dir=d.parent)
     os.close(fd)
     try:
@@ -158,9 +166,11 @@ for p,d in jobs:
         if os.path.exists(tmp): os.unlink(tmp)
     print(f"Imported {d}",flush=True)
 PY
+    echo "[PC] All six archives verified and imported. PC build cache selected."
     # Separate cache from Switch-only builds.
     BUILD_SUFFIX="-pc"
 else
+    echo "[PC] No ISO or extracted PC textures selected; Switch-only build."
     BUILD_SUFFIX=""
     [ ! -e "$DUMP/RomFS/common/textures/PC_TXN_UP" ] || fail "PC archives already in dump; use a clean workspace for Switch-only builds"
 fi
