@@ -15,11 +15,13 @@ cleanup() {
     rm -rf "$TMP"
 }
 trap cleanup EXIT
+echo "[ISO] Mounting $ISO read-only" >&2
 hdiutil attach -readonly -nobrowse -mountpoint "$MOUNT" "$ISO" >&2
 attached=1
 ARCHIVE="$MOUNT/setup-1.bin"
 [ -f "$ARCHIVE" ] || { echo "Base setup-1.bin not found"; exit 1; }
 [ "$(stat -f %z "$ARCHIVE")" = 21924976657 ] || { echo "Unsupported PC base archive"; exit 1; }
+echo "[ISO] Base archive size verified; preparing native UnArc" >&2
 git clone https://github.com/Helaas/unarc.git "$TMP/unarc" >&2
 git -C "$TMP/unarc" checkout --detach 70cd3eb3f1b08feb499a2f4f53c739229aaf86ee >&2
 python3.14 - "$TMP/unarc/Environment.cpp" <<'PY'
@@ -31,6 +33,7 @@ p.write_text(s.replace("0xEDB88320L","0x8E092638L"),encoding="latin1")
 PY
 make -C "$TMP/unarc" -j1 >&2
 OUT=$(mktemp -d "$WORK/PC-Textures.XXXXXXXX")
-echo "Extracting to $OUT" >&2
+echo "[ISO] Extracting txn_up.1.pak, txn_up.2.pak and TextureData.pak (common and ww) to $OUT" >&2
 "$TMP/unarc/unarc" x --noarcext "-dp$OUT" "$ARCHIVE" txn_up.1.pak txn_up.2.pak TextureData.pak >&2
+echo "[ISO] UnArc extraction finished" >&2
 printf '%s\n' "$OUT"
