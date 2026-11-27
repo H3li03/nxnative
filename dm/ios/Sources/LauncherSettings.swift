@@ -68,13 +68,27 @@ final class LauncherModel: ObservableObject {
 
     init(_ settings: [Setting], defaults: UserDefaults = .standard) {
         self.defaults = defaults
-        self.settings = settings
+        let textureEnv = "DM_MGS4_TEXTURE_SOURCE"
+        let isMGS4 = (Bundle.main.object(forInfoDictionaryKey: "DMTitleID") as? String)?.uppercased() == "0100D0B01C4F4002"
+            || settings.contains { $0.env == "DM_MGS4_TEXTURE_QUALITY" || $0.env == "DM_MGS4_CUSTOM_FPS" }
+        var resolved = settings
+        if isMGS4 {
+            let json = #"{"env":"DM_MGS4_TEXTURE_SOURCE","kind":"choice","label":"Texture Source","note":"Select PC original textures or Switch upscaled textures.","default":"default","section":"Textures","level":"basic","options":[["default","Game Default"],["original","Original Textures"],["upscaled","Switch Upscaled Textures"]]}"#
+            if let texture = try? JSONDecoder().decode(Setting.self, from: Data(json.utf8)) {
+                if let index = resolved.firstIndex(where: { $0.env == textureEnv }) {
+                    resolved[index] = texture
+                } else {
+                    resolved.append(texture)
+                }
+            }
+        }
+        self.settings = resolved
         let env = ProcessInfo.processInfo.environment
         fromLaunch = Set((env["DM_ENV_LAUNCH_KEYS"] ?? "").split(separator: " ").map(String.init))
         fixed = fromLaunch.union((env["DM_ENV_FILE_KEYS"] ?? "").split(separator: " ").map(String.init))
         ignoreSaved = env["DM_SAVED_CHOICES"] == "0"
         if ignoreSaved { fputs("launcher: saved choices ignored (DM_SAVED_CHOICES=0)\n", stderr) }
-        for s in settings {
+        for s in self.settings {
             if pcTexturesMissing(s) { values[s.env] = "upscaled"; continue }
             if fixed.contains(s.env), let v = env[s.env] { values[s.env] = v; continue }
             let saved = ignoreSaved ? nil : defaults.object(forKey: "launcher." + s.env) as? String   // a string, as launcher.c reads it: not string(forKey:), which turns a number into one
@@ -142,7 +156,9 @@ final class LauncherModel: ObservableObject {
 
     // DM_LAUNCHER=0: no screen, but the saved choices still apply (only DM_SAVED_CHOICES=0 ignores them); nothing is written
     func applySaved() {
-        for s in settings where !fixed.contains(s.env) {
+        for s in settings {
+            if pcTexturesMissing(s) { setenv(s.env, "upscaled", 1); continue }
+            if fixed.contains(s.env) { continue }
             let v = values[s.env] ?? s.def
             if !s.isDefault(v) { setenv(s.env, v, 1); fputs("launcher: \(s.env)=\(v) (saved choice)\n", stderr) }
         }
