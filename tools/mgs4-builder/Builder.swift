@@ -227,7 +227,7 @@ struct ContentView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Image(systemName: "gamecontroller.fill").font(.largeTitle)
-                Text("MGS4 Native Builder 1.2 Dev").font(.largeTitle.bold())
+                Text("MGS4 Native Builder 1.2").font(.largeTitle.bold())
                 Spacer()
             }.padding(16).modifier(BuilderGlass())
             Text("Build native macOS and iPadOS applications from your own game files.").foregroundStyle(.secondary)
