@@ -82,7 +82,7 @@ final class Builder: ObservableObject {
 set -euo pipefail
 repo="$1"
 url="https://github.com/H3li03/nxnative.git"
-branch="mgs4-builder-v1.2-dev"
+branch="mgs4-iOs-Mac-native"
 if [ -e "$repo" ] || [ -L "$repo" ]; then
     [ -d "$repo/.git" ] || { echo "Existing folder is not a Git checkout: $repo"; exit 1; }
     origin=$(git -C "$repo" remote get-url origin)
