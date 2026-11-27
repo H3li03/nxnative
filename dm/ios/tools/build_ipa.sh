@@ -237,6 +237,9 @@ xcodebuild -project DmIOS.xcodeproj -scheme DmIOS -configuration Release -destin
 # SYMROOT and OBJROOT above keep the unsigned build separate from the interactive Xcode app.
 APP=$DD/Build/Products/Release-iphoneos/DmIOS.app
 [ -n "$APP" ] && [ -d "$APP" ] || die "no built app"; t "app: $APP"
+PROMOTION=$(/usr/libexec/PlistBuddy -c "Print :CADisableMinimumFrameDurationOnPhone" "$APP/Info.plist") || die "Missing iPhone ProMotion opt-in in built app"
+[ "$PROMOTION" = true ] || die "iPhone ProMotion opt-in is not enabled"
+t "iPhone ProMotion opt-in verified: $PROMOTION"
 
 # Straight from the sources: the app without its signature, and without the folders an app built before pack_ipa.py still has (DerivedData keeps resources that left the project;
 # msl/ is also deleted there, it took 1.5 GB of the home disk), then the shader libraries, the add-on content (the RomFS extracted from the player's DLC NSPs, one folder per index:
