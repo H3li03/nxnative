@@ -57,7 +57,12 @@ static void mgs4_fps_env(int fps) {
     if (fps == 144) hz = "0"; // use the unlocked presentation path; NVN supplies a separate software cap
 #endif
     setenv("DM_PRESENT_HZ",hz,1);
+    #if TARGET_OS_IOS
+    // Request display-driven presentation for the fixed ProMotion mode.
+    setenv("DM_PRESENT_LINK",fps == 120 ? "1" : "0",1);
+#else
     setenv("DM_PRESENT_LINK","0",1);
+#endif
     setenv("DM_PRESENT_SCREEN","0",1);
     setenv("DM_SCREEN_MATCH","0",1);
     setenv("DM_MGS4_FPS","120",1);
