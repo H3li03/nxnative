@@ -131,6 +131,12 @@ def build(gid, patched, control):
             s.update(on=on_off[0], off=on_off[1], default=on_off[0] if s['default'] == '1' else on_off[1])   # the default as the value the variable takes
         else: sys.exit(f'settings.tsv:{n}: unknown kind {kind}')
         out.append(s)
+    if g.id.upper() == '0100D0B01C4F4002' and keys.get('BUILD_ID') == '3e7443aca182388f98e13069311fb51f':
+        out = [s for s in out if s['env'] not in ('DM_FPS_TARGET','DM_MGS4_FPS','DM_MGS4_CUSTOM_FPS')]
+        out.insert(0, {'env':'DM_MGS4_CUSTOM_FPS','kind':'choice','section':'Game',
+                       'label':'Frame rate limit','note':'Experimental cinematic timing fix; higher rates increase heat.',
+                       'default':'60','level':'basic',
+                       'options':[[str(n),f'{n} FPS'] for n in (30,60,120,144)]+[['0','Unlocked']]})
     return {'schema': SCHEMA, 'game': g.id, 'settings': out}
 
 
