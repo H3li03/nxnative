@@ -6,14 +6,31 @@ struct BuilderGlass: ViewModifier {
     @ViewBuilder func body(content: Content) -> some View {
         #if compiler(>=6.2)
         if #available(macOS 26.0, *) {
-            content.glassEffect(.regular, in: .rect(cornerRadius: 16))
+            content.glassEffect(.clear, in: .rect(cornerRadius: 16))
         } else {
-            content.background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
+            content.background(.thinMaterial, in: RoundedRectangle(cornerRadius: 16))
         }
         #else
-        content.background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
+        content.background(.thinMaterial, in: RoundedRectangle(cornerRadius: 16))
         #endif
     }
+}
+
+struct WindowGlass: NSViewRepresentable {
+    func makeNSView(context: Context) -> NSVisualEffectView {
+        let view = NSVisualEffectView()
+        view.material = .hudWindow
+        view.blendingMode = .behindWindow
+        view.state = .followsWindowActiveState
+        DispatchQueue.main.async {
+            guard let window = view.window else { return }
+            window.isOpaque = false
+            window.backgroundColor = .clear
+            window.titlebarAppearsTransparent = true
+        }
+        return view
+    }
+    func updateNSView(_ view: NSVisualEffectView, context: Context) {}
 }
 
 struct FileSlot: View {
@@ -40,7 +57,7 @@ struct FileSlot: View {
             }
         }
         .padding(12)
-        .background(RoundedRectangle(cornerRadius: 8).fill(hovering ? Color.accentColor.opacity(0.15) : Color.secondary.opacity(0.07)))
+        .background(RoundedRectangle(cornerRadius: 8).fill(hovering ? Color.accentColor.opacity(0.15) : Color.secondary.opacity(0.035)))
         .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(Color.secondary.opacity(0.5), style: StrokeStyle(lineWidth: 1, dash: [5, 4])))
         .onDrop(of: [.fileURL], isTargeted: $hovering) { providers in
             guard let p = providers.first else { return false }
@@ -151,6 +168,8 @@ struct Console: NSViewRepresentable {
         view.isEditable = false
         view.font = .monospacedSystemFont(ofSize: 11, weight: .regular)
         view.textColor = .textColor
+        view.drawsBackground = false
+        scroll.drawsBackground = false
         return scroll
     }
     func updateNSView(_ scroll: NSScrollView, context: Context) {
@@ -241,7 +260,9 @@ struct ContentView: View {
                         Spacer()
                         Button("Copy log") { NSPasteboard.general.clearContents(); NSPasteboard.general.setString(builder.output, forType: .string) }
                     }
-                    Console(text: builder.output).border(Color.secondary.opacity(0.3))
+                    Console(text: builder.output)
+                        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 10))
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                     HStack {
                         if builder.running { ProgressView().controlSize(.small) }
                         Text(builder.status)
@@ -252,6 +273,7 @@ struct ContentView: View {
                 }.padding(12).modifier(BuilderGlass()).frame(minWidth: 420)
             }
         }.padding(20).frame(minWidth: 850, minHeight: 640)
+        .background { WindowGlass().ignoresSafeArea() }
         .onAppear {
             if !didPrompt && (!setupComplete || !FileManager.default.fileExists(atPath: repo + "/build_mgs4.sh")) {
                 didPrompt = true
