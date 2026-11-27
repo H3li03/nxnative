@@ -112,6 +112,10 @@ fi
 
 echo
 
+if [ -n "${MGS4_PC_ISO:-}" ]; then
+    [ -z "${MGS4_PC_TEXTURES:-}" ] || fail "Choose either ISO or extracted textures"
+    MGS4_PC_TEXTURES=$(bash "$REPO/tools/mgs4-builder/extract_pc.sh" "$MGS4_PC_ISO" "$WORK")
+fi
 # Import only the six verified base-PC archives, preserving the original NX assets.
 if [ -n "${MGS4_PC_TEXTURES:-}" ]; then
     "$PYTHON" - "$MGS4_PC_TEXTURES" "$DUMP/RomFS" "$DLC_DUMP" <<'PY'
