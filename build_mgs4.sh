@@ -121,13 +121,33 @@ if (src / "MGS4").is_dir():
     src = src / "MGS4"
 sizes = {"common": (1733122,3175475,4859421106), "ww": (927746,175942,1280007417)}
 names = ("txn_up.1.pak","txn_up.2.pak","paks/TextureData.pak")
+# Custom FreeArc CRC used by the verified PC base archive.
+poly = 0x8E092638
+table = []
+for i in range(256):
+    c = i
+    for _ in range(8):
+        c = (c >> 1) ^ (poly if c & 1 else 0)
+    table.append(c)
+def crc(path):
+    c = 0xffffffff
+    with path.open("rb") as f:
+        while chunk := f.read(1024*1024):
+            for b in chunk:
+                c = (c >> 8) ^ table[(c ^ b) & 255]
+    return c ^ 0xffffffff
+expected = {"common": (0x5d72435f,0xcd6cf1a9,0xf5cb7cde),
+            "ww": (0xa279b24d,0x536a7fb8,0x2fdc5e1b)}
 jobs = []
 for region, root in (("common",rom),("ww",dlc)):
-    for name,size in zip(names,sizes[region]):
+    for name,size,checksum in zip(names,sizes[region],expected[region]):
         rel = pathlib.Path(region)/"textures/PC_TXN_UP"/name
         p = src/rel
         if not p.is_file() or p.stat().st_size != size:
             raise SystemExit(f"Missing or unexpected PC archive: {p}")
+        print(f"Verifying {p}",flush=True)
+        if crc(p) != checksum:
+            raise SystemExit(f"PC archive CRC mismatch: {p}")
         jobs.append((p,root/rel))
 for p,d in jobs:
     d.parent.mkdir(parents=True,exist_ok=True)
