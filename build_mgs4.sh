@@ -118,6 +118,10 @@ if [ -n "${MGS4_PC_ISO:-}" ]; then
 fi
 # Import only the six verified base-PC archives, preserving the original NX assets.
 if [ -n "${MGS4_PC_TEXTURES:-}" ]; then
+    MGS4_CRC_TOOL="$WORK/tools/mgs4-crc"
+    mkdir -p "$WORK/tools"
+    xcrun clang -O3 "$REPO/tools/mgs4-builder/pc_crc.c" -o "$MGS4_CRC_TOOL"
+    export MGS4_CRC_TOOL
     "$PYTHON" - "$MGS4_PC_TEXTURES" "$DUMP/RomFS" "$DLC_DUMP" <<'PY'
 import pathlib, sys, shutil, tempfile, os
 src, rom, dlc = map(pathlib.Path, sys.argv[1:])
@@ -125,21 +129,9 @@ if (src / "MGS4").is_dir():
     src = src / "MGS4"
 sizes = {"common": (1733122,3175475,4859421106), "ww": (927746,175942,1280007417)}
 names = ("txn_up.1.pak","txn_up.2.pak","paks/TextureData.pak")
-# Custom FreeArc CRC used by the verified PC base archive.
-poly = 0x8E092638
-table = []
-for i in range(256):
-    c = i
-    for _ in range(8):
-        c = (c >> 1) ^ (poly if c & 1 else 0)
-    table.append(c)
+import subprocess
 def crc(path):
-    c = 0xffffffff
-    with path.open("rb") as f:
-        while chunk := f.read(1024*1024):
-            for b in chunk:
-                c = (c >> 8) ^ table[(c ^ b) & 255]
-    return c ^ 0xffffffff
+    return int(subprocess.check_output([os.environ["MGS4_CRC_TOOL"],str(path)],text=True).strip(),16)
 expected = {"common": (0x5d72435f,0xcd6cf1a9,0xf5cb7cde),
             "ww": (0xa279b24d,0x536a7fb8,0x2fdc5e1b)}
 jobs = []
