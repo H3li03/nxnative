@@ -39,7 +39,7 @@ DM_FPS_HOLD	toggle	on/off	DM_GAME_FPS_HOLD	DM_GAME_FPS_TARGET!=0	Performance	Hol
 DM_METAL_HUD	toggle	-	0	always	Performance	Performance HUD
 
 DM_MGS4_RESOLUTION	choice	1080=1920x1080,1440=2560x1440,2160=3840x2160	1080	mgs4:apple	Display & Frame Rate	Rendering resolution	Native rendering and swap chain resolution. Higher resolutions use more GPU memory.	level=basic
-DM_MGS4_FPS	choice	30=30 fps,60=60 fps,120=120 fps (experimental)	60	mgs4:apple	Display & Frame Rate	Frame rate limit	Native limiter; 120 fps timing is unverified.	level=basic
+DM_MGS4_CUSTOM_FPS	choice	30=30 fps,60=60 fps,120=120 fps,144=144 fps,0=Unlocked	60	mgs4:apple	Display & Frame Rate	Frame rate limit	Experimental engine timing limiter with cinematic tick correction. At high FPS performance and temperatures vary.	level=basic
 DM_MGS4_VSYNC	toggle	-	0	mgs4:apple	Display & Frame Rate	VSync		level=basic
 DM_MGS4_DYNAMIC_RESOLUTION	toggle	-	0	mgs4:apple	Display & Frame Rate	Dynamic resolution
 DM_MGS4_VOICE	choice	ja=Japanese,en=English	ja	mgs4:apple	Language & Audio	Voice language	English requires the multilingual DLC.	level=basic
