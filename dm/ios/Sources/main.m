@@ -189,10 +189,10 @@ static int boot_env(void) {
     // Resident Evil's signed main text has prebuilt 30/60/120 variants. map_image()
     // must see the launcher's final DM_FPS_TARGET before it chooses one; early preload
     // would map the default (usually 60) while the launcher is still on screen.
-    if (strcmp(DM_GAME_ID, "010050F00BC1A000"))
+    if (strcmp(DM_GAME_ID, "010050F00BC1A000") && strcmp(DM_GAME_ID, "0100D0B01C4F4002"))
         dm_host_preload_start(g_argc, g_argv);
     else
-        fprintf(stderr, "boot: Resident Evil host loading waits for the launcher FPS choice\\n");
+        fprintf(stderr, "boot: host loading waits for the launcher FPS choice\\n");
     return 1;
 }
 
