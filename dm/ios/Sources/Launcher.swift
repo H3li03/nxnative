@@ -238,7 +238,8 @@ public func dmShowLauncher(_ viewController: UnsafeMutableRawPointer, _ done: @c
     let dir = getenv("DM_APP_DM").map { URL(fileURLWithPath: String(cString: $0)) } ?? Bundle.main.resourceURL?.appendingPathComponent("dm")
     guard let url = dir?.appendingPathComponent("launcher.json"), let data = try? Data(contentsOf: url) else { return false }
     guard let file = try? JSONDecoder().decode(SettingsFile.self, from: data), !file.settings.isEmpty else { fputs("[RED] launcher: dm/launcher.json cannot be read; starting the game\n", stderr); return false }
-    let model = LauncherModel(file.settings)
+    let model = LauncherModel(file.settings, gameID: file.game)
+    fputs("launcher: texture source row \(model.settings.contains { $0.env == "DM_MGS4_TEXTURE_SOURCE" }), PC assets \(LauncherModel.pcTexturesAvailable())\n", stderr)
     gameMenuModel = model   // the in-game menu shows and saves the same choices (GameMenu.swift)
     if ProcessInfo.processInfo.environment["DM_LAUNCHER"] == "0" { fputs("launcher: off (DM_LAUNCHER=0)\n", stderr); model.applySaved(); return false }
     let parent = Unmanaged<UIViewController>.fromOpaque(viewController).takeUnretainedValue()
@@ -253,6 +254,6 @@ public func dmShowLauncher(_ viewController: UnsafeMutableRawPointer, _ done: @c
     h.modalPresentationStyle = .fullScreen
     host = h
     parent.present(h, animated: false)
-    fputs("launcher: \(file.settings.count) settings shown\n", stderr)
+    fputs("launcher: \(model.settings.count) settings shown\n", stderr)
     return true
 }
