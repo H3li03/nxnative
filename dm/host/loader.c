@@ -33,6 +33,31 @@ static pthread_key_t key_value(unsigned i) {
     default: return g_keygate;
     }
 }
+// MGS4 1.0: exact reviewed guest build; never change other modules.
+static int mgs4_fps_build(module_t *m) {
+    return !strcmp(DM_GAME_ID, "0100D0B01C4F4002") && !strcmp(m->name, "main") &&
+           !strcmp(m->build_id, "3e7443aca182388f98e13069311fb51f");
+}
+static int mgs4_fps_mode(void) {
+    const char *e = getenv("DM_MGS4_CUSTOM_FPS");
+    if (!e) return 60;
+    if (!strcmp(e,"0")) return 0;
+    if (!strcmp(e,"30")) return 30;
+    if (!strcmp(e,"60")) return 60;
+    if (!strcmp(e,"120")) return 120;
+    if (!strcmp(e,"144")) return 144;
+    die("MGS4: invalid FPS mode %s", e);
+    return 60;
+}
+static void mgs4_fps_env(void) {
+    setenv("DM_PRESENT_HZ","0",1);
+    setenv("DM_PRESENT_LINK","0",1);
+    setenv("DM_PRESENT_SCREEN","0",1);
+    setenv("DM_SCREEN_MATCH","0",1);
+    setenv("DM_MGS4_FPS","120",1);
+    setenv("DM_FPS_TARGET","120",1);
+}
+
 static void create_keys(void) {
     if (pthread_key_create(&g_key18, NULL) || pthread_key_create(&g_keytls, NULL) ||
         pthread_key_create(&g_keytlr, NULL) || pthread_key_create(&g_keygate, NULL)) die("cannot create the host key");
@@ -790,6 +815,14 @@ static void map_image(module_t *m, const char *dir) {
     if (m->nro) { if (!nro_pieces(m->name, &x0, &z0, &w, &zw, &x1, &z1)) die("NRO %s: not in the embedded NRO table (__DATA,__dm_nro_tab)", m->name); }
     else {
         x0 = getsectiondata(IMAGE_MH, "__TEXT", sx0, &z0);
+        if (mgs4_fps_build(m)) {
+            int fps = mgs4_fps_mode();
+            snprintf(sx0, sizeof sx0, "__dm%s%s%dx0", g, m->name, fps);
+            x0 = getsectiondata(IMAGE_MH, "__TEXT", sx0, &z0);
+            if (!x0) die("MGS4: signed FPS variant %s missing", sx0);
+            mgs4_fps_env();
+            LOG("MGS4: selected %d FPS (0 = unlocked)", fps);
+        }
         // Resident Evil's code pages are signed __TEXT. Select a prebuilt, signed text variant instead of writing into the mapped code.
         if (!strcmp(DM_GAME_ID, "010050F00BC1A000") && !strcmp(m->name, "main") &&
             !strcmp(m->build_id, "6bec9b23b09df46c315aa6f4bfacf91c")) {
@@ -875,6 +908,24 @@ static void resident_evil_timing_profile(module_t *m) {
     LOG("main: Resident Evil timing profile %d fps (%s)", fps, fps == 30 ? "native instructions" : fps == 60 ? "60 fps timing" : "tested 120 fps timing");
 }
 
+static void mgs4_timing_profile(module_t *m) {
+    if (!mgs4_fps_build(m)) return;
+    if (m->text_end != 0xfff180 || m->size < 0x1000000) die("MGS4: unexpected image layout");
+    uint32_t *w = (uint32_t *)m->base;
+    static const uint32_t cave[] = {0xf00023f0,0xf9425e10,0xb9401210,0x34000070,0xfc190fe8,0x17e34f90,0xd65f03c0};
+    if (w[0x10e4/4] != 0x1ad40954 || w[0x1214/4] != 0x910fa2c8 || w[0x8d2fd0/4] != 0xfc190fe8)
+        die("MGS4: timing instruction mismatch");
+    for (size_t i=0;i<sizeof cave/4;i++) if (w[0xfff180/4+i]) die("MGS4: code cave occupied");
+    memcpy(m->base+0xfff180,cave,sizeof cave);
+    w[0x8d2fd0/4]=0x141cb06c;
+    int fps=mgs4_fps_mode();
+    if (fps) w[0x10e4/4]=0x52800014u|((1000000u/(unsigned)fps)<<5);
+    else w[0x1214/4]=0x14000015;
+    __builtin___clear_cache((char *)m->base,(char *)m->base+0x1000000);
+    mgs4_fps_env();
+    LOG("MGS4: selected %d FPS (0 = unlocked)",fps);
+}
+
 // Seal the code area immediately after copying into anonymous pages (16 KB pages): [0, text_end) and the patch area are read-only+execute, and from then on any write to the code area crashes on the spot;
 // what lies between (ro and data on the same page can only go together) is writable
 static void map_image(module_t *m, const char *dir) {
@@ -892,7 +943,7 @@ static void map_image(module_t *m, const char *dir) {
         if (a == MAP_FAILED) die("%s mmap %#llx", m->name, (unsigned long long)(pre + m->size));
         m->base = a + pre;
         memcpy(m->base, raw, fl); memcpy(a, raw + fl, sz - bl - fl); if (bl) memcpy(m->base + m->back_off, raw + sz - bl, bl);
-        free(raw); resident_evil_timing_profile(m); install_key_page(m);
+        free(raw); resident_evil_timing_profile(m); mgs4_timing_profile(m); install_key_page(m);
         if (bl && mprotect(m->base + m->back_off, bl, PROT_READ | PROT_EXEC)) die("%s mprotect back patch", m->name);
         uint64_t rx = (m->text_end + 0x3FFF) & ~0x3FFFull;
         if (mprotect(m->base, rx, PROT_READ | PROT_EXEC)) die("%s mprotect text", m->name);
@@ -904,7 +955,7 @@ static void map_image(module_t *m, const char *dir) {
     uint8_t *slot = jit_slot(m, m->size, 0);
     m->base = mmap(slot, m->size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON | (slot ? MAP_FIXED : 0), -1, 0);
     if (m->base == MAP_FAILED) die("%s mmap", m->name);
-    memcpy(m->base, raw, sz); free(raw); resident_evil_timing_profile(m); install_key_page(m);
+    memcpy(m->base, raw, sz); free(raw); resident_evil_timing_profile(m); mgs4_timing_profile(m); install_key_page(m);
     uint64_t rx = (m->text_end + 0x3FFF) & ~0x3FFFull;
     if (mprotect(m->base, rx, PROT_READ | PROT_EXEC)) die("%s mprotect text", m->name);
     uint64_t po = m->patch_off & ~0x3FFFull;
