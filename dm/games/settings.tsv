@@ -54,4 +54,5 @@ DM_MGS4_SHADOW_SIZE	choice	default=Game Default,512=512,1024=1024,2048=2048	defa
 DM_MGS4_SHADOW_SAMPLES	choice	default=Game Default,4=4,7=7	default	mgs4:apple	Shadows	ShadowSampleCount	
 
 DM_MGS4_TEXTURE_QUALITY	choice	default=Game Default,0=Low,1=Medium,2=High,3=Highest	default	mgs4:apple	Textures	Texture quality	Applies to supported texture groups.
+DM_MGS4_TEXTURE_SOURCE	choice	default=Game Default,original=Original Textures,upscaled=Switch Upscaled Textures	default	mgs4:apple	Textures	Texture Source	Experimental: original assets may be missing; restore Game Default if loading fails.
 DM_MGS4_VFX_QUALITY	choice	default=Game Default,0=Low,1=Medium,2=High,3=Highest	default	mgs4:apple	Visual Effects	Effects quality	Applies to all VFX groups.
