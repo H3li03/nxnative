@@ -48,11 +48,12 @@ final class Builder: ObservableObject {
     @Published var running = false
     @Published var status = "Ready"
     private var process: Process?
-    func start(repo: String, work: String, target: String, keys: String, base: String, update: String, dlc: String, reuse: Bool) {
+    func start(repo: String, work: String, target: String, keys: String, base: String, update: String, dlc: String, reuse: Bool, pcTextures: String) {
         guard !running else { return }
         var env = ProcessInfo.processInfo.environment
         env["PATH"] = "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/share/dotnet:/usr/bin:/bin:/usr/sbin:/sbin:" + (env["PATH"] ?? "")
         env["PYTHONUNBUFFERED"] = "1"
+        env["MGS4_PC_TEXTURES"] = pcTextures
         for (k,v) in ["MGS4_GUI":"1","MGS4_WORK":work,"MGS4_TARGET":target,"MGS4_KEYS":keys,"MGS4_BASE":base,"MGS4_UPDATE":update,"MGS4_DLC":dlc,"MGS4_REUSE":reuse ? "y" : "n"] { env[k] = v }
         run(arguments: [repo + "/build_mgs4.sh"], directory: repo, env: env, activity: "Building", success: "Build complete")
     }
@@ -66,7 +67,7 @@ final class Builder: ObservableObject {
 set -euo pipefail
 repo="$1"
 url="https://github.com/H3li03/nxnative.git"
-branch="mgs4-iOs-Mac-native"
+branch="mgs4-builder-v1.2-dev"
 if [ -e "$repo" ] || [ -L "$repo" ]; then
     [ -d "$repo/.git" ] || { echo "Existing folder is not a Git checkout: $repo"; exit 1; }
     origin=$(git -C "$repo" remote get-url origin)
@@ -155,6 +156,7 @@ struct ContentView: View {
     @AppStorage("update") private var update = ""
     @AppStorage("dlc") private var dlc = ""
     @AppStorage("target") private var target = "2"
+    @AppStorage("pcTextures") private var pcTextures = ""
     @State private var reuse = true
     @State private var confirm = false
     @State private var didPrompt = false
@@ -186,7 +188,7 @@ struct ContentView: View {
     }
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("MGS4 Native Builder 1.1").font(.largeTitle.bold())
+            Text("MGS4 Native Builder 1.2 Dev").font(.largeTitle.bold())
             Text("Build native macOS and iPadOS applications from your own game files.").foregroundStyle(.secondary)
             HSplitView {
                 ScrollView {
@@ -201,9 +203,11 @@ struct ContentView: View {
                         FileSlot(title: "Base game", hint: "Drop base NSP", folder: false, path: $base)
                         FileSlot(title: "Update v393216", hint: "Drop update NSP", folder: false, path: $update)
                         FileSlot(title: "Multilingual DLC", hint: "Drop multilingual NSP", folder: false, path: $dlc)
+                        FileSlot(title: "PC textures (optional)", hint: "Select extracted MGS4 folder", folder: true, path: $pcTextures)
+                        Button("Use Switch textures only") { pcTextures = "" }
                         Picker("Target", selection: $target) {
                             Text("macOS").tag("1")
-                            Text("iPadOS").tag("2")
+                            Text("iOS / iPadOS").tag("2")
                             Text("Both").tag("3")
                         }.pickerStyle(.segmented)
                         Toggle("Reuse existing game and DLC dumps", isOn: $reuse)
@@ -234,7 +238,7 @@ struct ContentView: View {
             }
         }
         .confirmationDialog("Start build? Existing outputs will be backed up.", isPresented: $confirm, titleVisibility: .visible) {
-            Button("Start build") { builder.start(repo: repo, work: work, target: target, keys: keys, base: base, update: update, dlc: dlc, reuse: reuse) }
+            Button("Start build") { builder.start(repo: repo, work: work, target: target, keys: keys, base: base, update: update, dlc: dlc, reuse: reuse, pcTextures: pcTextures) }
             Button("Cancel", role: .cancel) {}
         }
     }
