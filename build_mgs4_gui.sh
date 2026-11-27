@@ -17,7 +17,7 @@ cat > "$APP/Contents/Info.plist" <<'PLIST'
 <key>CFBundleIconFile</key><string>AppIcon.icns</string>
 <key>CFBundleName</key><string>MGS4 Builder</string>
 <key>CFBundlePackageType</key><string>APPL</string>
-<key>CFBundleShortVersionString</key><string>1.1</string>
+<key>CFBundleShortVersionString</key><string>1.2</string>
 <key>LSMinimumSystemVersion</key><string>14.0</string>
 </dict></plist>
 PLIST

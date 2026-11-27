@@ -2,6 +2,20 @@ import SwiftUI
 import AppKit
 import UniformTypeIdentifiers
 
+struct BuilderGlass: ViewModifier {
+    @ViewBuilder func body(content: Content) -> some View {
+        #if compiler(>=6.2)
+        if #available(macOS 26.0, *) {
+            content.glassEffect(.regular, in: .rect(cornerRadius: 16))
+        } else {
+            content.background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
+        }
+        #else
+        content.background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
+        #endif
+    }
+}
+
 struct FileSlot: View {
     let title: String
     let hint: String
@@ -48,11 +62,13 @@ final class Builder: ObservableObject {
     @Published var running = false
     @Published var status = "Ready"
     private var process: Process?
-    func start(repo: String, work: String, target: String, keys: String, base: String, update: String, dlc: String, reuse: Bool) {
+    func start(repo: String, work: String, target: String, keys: String, base: String, update: String, dlc: String, reuse: Bool, pcTextures: String, pcISO: String) {
         guard !running else { return }
         var env = ProcessInfo.processInfo.environment
         env["PATH"] = "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/share/dotnet:/usr/bin:/bin:/usr/sbin:/sbin:" + (env["PATH"] ?? "")
         env["PYTHONUNBUFFERED"] = "1"
+        env["MGS4_PC_TEXTURES"] = pcTextures
+        env["MGS4_PC_ISO"] = pcISO
         for (k,v) in ["MGS4_GUI":"1","MGS4_WORK":work,"MGS4_TARGET":target,"MGS4_KEYS":keys,"MGS4_BASE":base,"MGS4_UPDATE":update,"MGS4_DLC":dlc,"MGS4_REUSE":reuse ? "y" : "n"] { env[k] = v }
         run(arguments: [repo + "/build_mgs4.sh"], directory: repo, env: env, activity: "Building", success: "Build complete")
     }
@@ -155,6 +171,8 @@ struct ContentView: View {
     @AppStorage("update") private var update = ""
     @AppStorage("dlc") private var dlc = ""
     @AppStorage("target") private var target = "2"
+    @AppStorage("pcISO") private var pcISO = ""
+    @AppStorage("pcTextures") private var pcTextures = ""
     @State private var reuse = true
     @State private var confirm = false
     @State private var didPrompt = false
@@ -179,14 +197,18 @@ struct ContentView: View {
     }
     var valid: Bool {
         FileManager.default.fileExists(atPath: repo + "/build_mgs4.sh") &&
-        !work.isEmpty && [keys,base,update,dlc].allSatisfy {
+        !work.isEmpty && (pcISO.isEmpty || pcTextures.isEmpty) && [keys,base,update,dlc].allSatisfy {
             var dir: ObjCBool = false
             return FileManager.default.fileExists(atPath: $0, isDirectory: &dir) && !dir.boolValue
         }
     }
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("MGS4 Native Builder 1.1").font(.largeTitle.bold())
+            HStack {
+                Image(systemName: "gamecontroller.fill").font(.largeTitle)
+                Text("MGS4 Native Builder 1.2 Dev").font(.largeTitle.bold())
+                Spacer()
+            }.padding(16).modifier(BuilderGlass())
             Text("Build native macOS and iPadOS applications from your own game files.").foregroundStyle(.secondary)
             HSplitView {
                 ScrollView {
@@ -201,9 +223,12 @@ struct ContentView: View {
                         FileSlot(title: "Base game", hint: "Drop base NSP", folder: false, path: $base)
                         FileSlot(title: "Update v393216", hint: "Drop update NSP", folder: false, path: $update)
                         FileSlot(title: "Multilingual DLC", hint: "Drop multilingual NSP", folder: false, path: $dlc)
+                        FileSlot(title: "PC textures (optional)", hint: "Select extracted MGS4 folder", folder: true, path: $pcTextures)
+                        FileSlot(title: "PC base ISO (optional)", hint: "Select ISO instead of extracted folder", folder: false, path: $pcISO)
+                        Button("Use Switch textures only") { pcTextures = ""; pcISO = "" }
                         Picker("Target", selection: $target) {
                             Text("macOS").tag("1")
-                            Text("iPadOS").tag("2")
+                            Text("iOS / iPadOS").tag("2")
                             Text("Both").tag("3")
                         }.pickerStyle(.segmented)
                         Toggle("Reuse existing game and DLC dumps", isOn: $reuse)
@@ -224,7 +249,7 @@ struct ContentView: View {
                         Button("Open workspace") { NSWorkspace.shared.open(URL(fileURLWithPath: work)) }
                         Button("Build") { confirm = true }.keyboardShortcut(.defaultAction).disabled(!valid || builder.running)
                     }
-                }.padding(4).frame(minWidth: 420)
+                }.padding(12).modifier(BuilderGlass()).frame(minWidth: 420)
             }
         }.padding(20).frame(minWidth: 850, minHeight: 640)
         .onAppear {
@@ -234,7 +259,7 @@ struct ContentView: View {
             }
         }
         .confirmationDialog("Start build? Existing outputs will be backed up.", isPresented: $confirm, titleVisibility: .visible) {
-            Button("Start build") { builder.start(repo: repo, work: work, target: target, keys: keys, base: base, update: update, dlc: dlc, reuse: reuse) }
+            Button("Start build") { builder.start(repo: repo, work: work, target: target, keys: keys, base: base, update: update, dlc: dlc, reuse: reuse, pcTextures: pcTextures, pcISO: pcISO) }
             Button("Cancel", role: .cancel) {}
         }
     }

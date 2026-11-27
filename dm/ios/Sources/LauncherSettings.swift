@@ -54,6 +54,16 @@ final class LauncherModel: ObservableObject {
     let ignoreSaved: Bool   // DM_SAVED_CHOICES=0: start from the defaults, and leave the saved choices as they are
     @Published var values: [String: String] = [:]
 
+    static func pcTexturesAvailable() -> Bool {
+        guard let root = Bundle.main.resourceURL else { return false }
+        let base = root.appendingPathComponent("aoc/1/ww/textures/PC_TXN_UP")
+        return ["txn_up.1.pak", "txn_up.2.pak", "paks/TextureData.pak"].allSatisfy {
+            FileManager.default.fileExists(atPath: base.appendingPathComponent($0).path)
+        }
+    }
+    func pcTexturesMissing(_ s: Setting) -> Bool {
+        s.env == "DM_MGS4_TEXTURE_SOURCE" && !Self.pcTexturesAvailable()
+    }
     private let defaults: UserDefaults
 
     init(_ settings: [Setting], defaults: UserDefaults = .standard) {
@@ -65,6 +75,7 @@ final class LauncherModel: ObservableObject {
         ignoreSaved = env["DM_SAVED_CHOICES"] == "0"
         if ignoreSaved { fputs("launcher: saved choices ignored (DM_SAVED_CHOICES=0)\n", stderr) }
         for s in settings {
+            if pcTexturesMissing(s) { values[s.env] = "upscaled"; continue }
             if fixed.contains(s.env), let v = env[s.env] { values[s.env] = v; continue }
             let saved = ignoreSaved ? nil : defaults.object(forKey: "launcher." + s.env) as? String   // a string, as launcher.c reads it: not string(forKey:), which turns a number into one
             values[s.env] = saved.flatMap { s.accepts($0) ? $0 : nil } ?? s.def   // a saved choice the game no longer offers: its default
@@ -102,7 +113,7 @@ final class LauncherModel: ObservableObject {
     // Reset every launcher choice to the game's defaults on the screen; values fixed by an env file or at launch stay. The saved choices are forgotten when Play applies
     // the defaults (apply() keeps no default), so Quit after Reset keeps them, and a choice a launch override hides is kept
     func reset() {
-        for s in settings where !fixed.contains(s.env) { values[s.env] = s.def }
+        for s in settings where !fixed.contains(s.env) { values[s.env] = pcTexturesMissing(s) ? "upscaled" : s.def }
         fputs("launcher: settings reset to the game's defaults\n", stderr)
     }
 
@@ -110,6 +121,7 @@ final class LauncherModel: ObservableObject {
     // differs from the game's default is stored: a setting the player left at its default follows the defaults of a later build (the settings it was tested with)
     func apply() {
         for s in settings {
+            if pcTexturesMissing(s) { setenv(s.env, "upscaled", 1); continue }
             let v = values[s.env] ?? s.def
             if fixed.contains(s.env) { fputs("launcher: \(s.env) kept at \(v) (\(fromLaunch.contains(s.env) ? "launch environment" : "env file"))\n", stderr); continue }
             store(s, v)
@@ -123,7 +135,7 @@ final class LauncherModel: ObservableObject {
     // A choice made while the game runs (the iOS in-game menu, GameMenu.swift): saved as Play saves it, so the settings screen shows it at the next start, and put in the environment.
     // A value an env file or the launch fixed stays
     func choose(_ s: Setting, _ v: String) {
-        guard !fixed.contains(s.env), s.accepts(v) else { return }
+        guard !pcTexturesMissing(s), !fixed.contains(s.env), s.accepts(v) else { return }
         values[s.env] = v; store(s, v); setenv(s.env, v, 1)
         fputs("launcher: \(s.env)=\(v) (in-game menu)\n", stderr)
     }
