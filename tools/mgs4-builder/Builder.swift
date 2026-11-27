@@ -50,22 +50,53 @@ final class Builder: ObservableObject {
     private var process: Process?
     func start(repo: String, work: String, target: String, keys: String, base: String, update: String, dlc: String, reuse: Bool) {
         guard !running else { return }
-        let p = Process()
-        let pipe = Pipe()
-        p.executableURL = URL(fileURLWithPath: "/bin/bash")
-        p.arguments = [repo + "/build_mgs4.sh"]
-        p.currentDirectoryURL = URL(fileURLWithPath: repo)
         var env = ProcessInfo.processInfo.environment
         env["PATH"] = "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/share/dotnet:/usr/bin:/bin:/usr/sbin:/sbin:" + (env["PATH"] ?? "")
         env["PYTHONUNBUFFERED"] = "1"
         for (k,v) in ["MGS4_GUI":"1","MGS4_WORK":work,"MGS4_TARGET":target,"MGS4_KEYS":keys,"MGS4_BASE":base,"MGS4_UPDATE":update,"MGS4_DLC":dlc,"MGS4_REUSE":reuse ? "y" : "n"] { env[k] = v }
+        run(arguments: [repo + "/build_mgs4.sh"], directory: repo, env: env, activity: "Building", success: "Build complete")
+    }
+
+    func prepare(work: String, repo: String, completion: @escaping (Bool) -> Void) {
+        guard !running else { return }
+        var env = ProcessInfo.processInfo.environment
+        env["GIT_TERMINAL_PROMPT"] = "0"
+        env["PATH"] = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:" + (env["PATH"] ?? "")
+        let script = #"""
+set -euo pipefail
+repo="$1"
+url="https://github.com/H3li03/nxnative.git"
+branch="mgs4-iOs-Mac-native"
+if [ -e "$repo" ] || [ -L "$repo" ]; then
+    [ -d "$repo/.git" ] || { echo "Existing folder is not a Git checkout: $repo"; exit 1; }
+    origin=$(git -C "$repo" remote get-url origin)
+    case "$origin" in "$url"|https://github.com/H3li03/nxnative|git@github.com:H3li03/nxnative.git) ;; *) echo "Unexpected origin: $origin"; exit 1;; esac
+    [ "$(git -C "$repo" branch --show-current)" = "$branch" ] || { echo "Wrong branch; select another project folder."; exit 1; }
+    [ -z "$(git -C "$repo" status --porcelain --untracked-files=no)" ] || { echo "Local tracked changes detected; update manually."; exit 1; }
+    git -C "$repo" pull --ff-only origin "$branch"
+else
+    git clone --progress --single-branch --branch "$branch" "$url" "$repo"
+fi
+git -C "$repo" submodule update --init --recursive --progress
+git -C "$repo" log -1 --oneline
+test -f "$repo/build_mgs4.sh"
+"""#
+        run(arguments: ["-c", script, "setup", repo], directory: work, env: env, activity: "Preparing project", success: "Project ready", completion: completion)
+    }
+
+    private func run(arguments: [String], directory: String, env: [String:String], activity: String, success: String, completion: ((Bool) -> Void)? = nil) {
+        let p = Process()
+        let pipe = Pipe()
+        p.executableURL = URL(fileURLWithPath: "/bin/bash")
+        p.arguments = arguments
+        p.currentDirectoryURL = URL(fileURLWithPath: directory)
         p.environment = env
         p.standardOutput = pipe
         p.standardError = pipe
         p.standardInput = FileHandle.nullDevice
         output = ""
         running = true
-        status = "Building…"
+        status = activity + "…"
         process = p
         pipe.fileHandleForReading.readabilityHandler = { [weak self] handle in
             let data = handle.availableData
@@ -80,8 +111,9 @@ final class Builder: ObservableObject {
         p.terminationHandler = { [weak self] task in
             DispatchQueue.main.async {
                 self?.running = false
-                self?.status = task.terminationStatus == 0 ? "Build complete" : "Build failed (exit \(task.terminationStatus))"
+                self?.status = task.terminationStatus == 0 ? success : "\(activity) failed (exit \(task.terminationStatus))"
                 self?.process = nil
+                completion?(task.terminationStatus == 0)
             }
         }
         do { try p.run() } catch {
@@ -90,6 +122,7 @@ final class Builder: ObservableObject {
             status = "Could not start"
             output = error.localizedDescription
             process = nil
+            completion?(false)
         }
     }
 }
@@ -124,6 +157,26 @@ struct ContentView: View {
     @AppStorage("target") private var target = "2"
     @State private var reuse = true
     @State private var confirm = false
+    @State private var didPrompt = false
+    @AppStorage("setupComplete") private var setupComplete = false
+
+    private func chooseProject() {
+        let panel = NSOpenPanel()
+        panel.title = "Select MGS4 project folder"
+        panel.prompt = "Select folder"
+        panel.canChooseDirectories = true
+        panel.canChooseFiles = false
+        panel.canCreateDirectories = true
+        panel.allowsMultipleSelection = false
+        if panel.runModal() == .OK, let url = panel.url {
+            let root = url.path
+            let existing = ["nxnative", "nxnative-ipados"].map { url.appendingPathComponent($0).path }.first { FileManager.default.fileExists(atPath: $0 + "/.git") }
+            let destination = existing ?? url.appendingPathComponent("nxnative").path
+            builder.prepare(work: root, repo: destination) { ok in
+                if ok { work = root; repo = destination; setupComplete = true }
+            }
+        }
+    }
     var valid: Bool {
         FileManager.default.fileExists(atPath: repo + "/build_mgs4.sh") &&
         !work.isEmpty && [keys,base,update,dlc].allSatisfy {
@@ -133,13 +186,17 @@ struct ContentView: View {
     }
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("MGS4 Native Builder").font(.largeTitle.bold())
+            Text("MGS4 Native Builder 1.1").font(.largeTitle.bold())
             Text("Build native macOS and iPadOS applications from your own game files.").foregroundStyle(.secondary)
             HSplitView {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 10) {
-                        FileSlot(title: "Repository", hint: "Drop nxnative folder", folder: true, path: $repo)
-                        FileSlot(title: "Workspace", hint: "Choose output folder", folder: true, path: $work)
+                        Button("Select project folder & download sources…") { chooseProject() }
+                        Button("Update repository") {
+                            builder.prepare(work: work, repo: repo) { ok in if ok { setupComplete = true } }
+                        }.disabled(repo.isEmpty || !FileManager.default.fileExists(atPath: repo + "/.git"))
+                        FileSlot(title: "Repository", hint: "Set automatically by project setup", folder: true, path: $repo)
+                        FileSlot(title: "Workspace", hint: "Project output folder", folder: true, path: $work)
                         FileSlot(title: "Production keys", hint: "Drop prod.keys", folder: false, path: $keys)
                         FileSlot(title: "Base game", hint: "Drop base NSP", folder: false, path: $base)
                         FileSlot(title: "Update v393216", hint: "Drop update NSP", folder: false, path: $update)
@@ -170,6 +227,12 @@ struct ContentView: View {
                 }.padding(4).frame(minWidth: 420)
             }
         }.padding(20).frame(minWidth: 850, minHeight: 640)
+        .onAppear {
+            if !didPrompt && (!setupComplete || !FileManager.default.fileExists(atPath: repo + "/build_mgs4.sh")) {
+                didPrompt = true
+                DispatchQueue.main.async { chooseProject() }
+            }
+        }
         .confirmationDialog("Start build? Existing outputs will be backed up.", isPresented: $confirm, titleVisibility: .visible) {
             Button("Start build") { builder.start(repo: repo, work: work, target: target, keys: keys, base: base, update: update, dlc: dlc, reuse: reuse) }
             Button("Cancel", role: .cancel) {}
