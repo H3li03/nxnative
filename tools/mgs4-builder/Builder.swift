@@ -2,6 +2,20 @@ import SwiftUI
 import AppKit
 import UniformTypeIdentifiers
 
+struct BuilderGlass: ViewModifier {
+    @ViewBuilder func body(content: Content) -> some View {
+        #if compiler(>=6.2)
+        if #available(macOS 26.0, *) {
+            content.glassEffect(.regular, in: .rect(cornerRadius: 16))
+        } else {
+            content.background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
+        }
+        #else
+        content.background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
+        #endif
+    }
+}
+
 struct FileSlot: View {
     let title: String
     let hint: String
@@ -188,7 +202,11 @@ struct ContentView: View {
     }
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("MGS4 Native Builder 1.2 Dev").font(.largeTitle.bold())
+            HStack {
+                Image(systemName: "gamecontroller.fill").font(.largeTitle)
+                Text("MGS4 Native Builder 1.2 Dev").font(.largeTitle.bold())
+                Spacer()
+            }.padding(16).modifier(BuilderGlass())
             Text("Build native macOS and iPadOS applications from your own game files.").foregroundStyle(.secondary)
             HSplitView {
                 ScrollView {
@@ -228,7 +246,7 @@ struct ContentView: View {
                         Button("Open workspace") { NSWorkspace.shared.open(URL(fileURLWithPath: work)) }
                         Button("Build") { confirm = true }.keyboardShortcut(.defaultAction).disabled(!valid || builder.running)
                     }
-                }.padding(4).frame(minWidth: 420)
+                }.padding(12).modifier(BuilderGlass()).frame(minWidth: 420)
             }
         }.padding(20).frame(minWidth: 850, minHeight: 640)
         .onAppear {
