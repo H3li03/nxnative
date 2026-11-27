@@ -81,15 +81,15 @@ static const char *mgs4_override(int file, const char *section, const char *key,
     }
     if (!file && !strcmp(section,"texture") && !strcmp(key,"directory_Switch")) {
         v=mgs4_choice("DM_MGS4_TEXTURE_SOURCE","original|upscaled");
-        return v ? (!strcmp(v,"original") ? "" : "NX_TXN_UP") : NULL;
+        return v ? (!strcmp(v,"original") ? "PC_TXN_UP" : "NX_TXN_UP") : NULL;
     }
     if (!file && !strcmp(section,"texture") && !strcmp(key,"directoryTxnPak_Switch")) {
         v=mgs4_choice("DM_MGS4_TEXTURE_SOURCE","original|upscaled");
-        return v ? (!strcmp(v,"original") ? "" : "NX_TXN_UP") : NULL;
+        return v ? (!strcmp(v,"original") ? "PC_TXN_UP" : "NX_TXN_UP") : NULL;
     }
     if (!file && !strcmp(section,"texture") && !strcmp(key,"directoryTxnDataPak_Switch")) {
         v=mgs4_choice("DM_MGS4_TEXTURE_SOURCE","original|upscaled");
-        return v ? (!strcmp(v,"original") ? "" : "NX_TXN_UP/paks") : NULL;
+        return v ? (!strcmp(v,"original") ? "PC_TXN_UP/paks" : "NX_TXN_UP/paks") : NULL;
     }
     if (file==3 && !strcmp(section,active_shadow) && !strcmp(key,"ShadowBufferSize")) {
         v=mgs4_choice("DM_MGS4_SHADOW_SIZE","512|1024|2048");
