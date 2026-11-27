@@ -167,7 +167,9 @@ struct Console: NSViewRepresentable {
         let view = scroll.documentView as! NSTextView
         view.isEditable = false
         view.font = .monospacedSystemFont(ofSize: 11, weight: .regular)
-        view.textColor = .textColor
+        view.textColor = NSColor(srgbRed: 0.30, green: 1.0, blue: 0.46, alpha: 1)
+        view.insertionPointColor = view.textColor
+        view.textContainerInset = NSSize(width: 12, height: 12)
         view.drawsBackground = false
         scroll.drawsBackground = false
         return scroll
@@ -256,12 +258,14 @@ struct ContentView: View {
                 }.frame(minWidth: 340, idealWidth: 390)
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("Build console").font(.headline)
+                        Label("BUILD CONSOLE", systemImage: "terminal").font(.system(.headline, design: .monospaced))
+                            .foregroundStyle(Color(red: 0.30, green: 1.0, blue: 0.46))
                         Spacer()
                         Button("Copy log") { NSPasteboard.general.clearContents(); NSPasteboard.general.setString(builder.output, forType: .string) }
                     }
                     Console(text: builder.output)
-                        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 10))
+                        .background(Color(red: 0.015, green: 0.045, blue: 0.025).opacity(0.94), in: RoundedRectangle(cornerRadius: 10))
+                        .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(Color.green.opacity(0.35), lineWidth: 1))
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                     HStack {
                         if builder.running { ProgressView().controlSize(.small) }
