@@ -32,7 +32,7 @@ struct Setting: Decodable, Identifiable {
     }
     enum CodingKeys: String, CodingKey { case env, kind, label, note, def = "default", section, needs, level, base, options, min, max, step, on, off }
 }
-struct SettingsFile: Decodable { let settings: [Setting] }
+struct SettingsFile: Decodable { let settings: [Setting]; let game: String? }
 
 // The Frame rate row offers 120 only where the screen shows it: on an iPhone or iPad the host's reading of the game's screen (front_ios.m front_screen_max_fps: 60 on a screen
 // below 120 Hz and in Low Power Mode, where the host holds 60 anyway, hle_nvn.c high_cap_tick). The value in use stays listed, so a choice made on another screen is not dropped.
@@ -66,10 +66,11 @@ final class LauncherModel: ObservableObject {
     }
     private let defaults: UserDefaults
 
-    init(_ settings: [Setting], defaults: UserDefaults = .standard) {
+    init(_ settings: [Setting], defaults: UserDefaults = .standard, gameID: String? = nil) {
         self.defaults = defaults
         let textureEnv = "DM_MGS4_TEXTURE_SOURCE"
-        let isMGS4 = (Bundle.main.object(forInfoDictionaryKey: "DMTitleID") as? String)?.uppercased() == "0100D0B01C4F4002"
+        let isMGS4 = gameID?.uppercased() == "0100D0B01C4F4002"
+            || (Bundle.main.object(forInfoDictionaryKey: "DMTitleID") as? String)?.uppercased() == "0100D0B01C4F4002"
             || settings.contains { $0.env == "DM_MGS4_TEXTURE_QUALITY" || $0.env == "DM_MGS4_CUSTOM_FPS" }
         var resolved = settings
         if isMGS4 {
