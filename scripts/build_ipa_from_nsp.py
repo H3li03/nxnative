@@ -3389,11 +3389,11 @@ def main(args=None):
     sv = versions if derived else need   # the versions whose files the shaders come from
     game = dirs[pkg_ver]
     # MGS4 PC textures need a larger guest heap on macOS (allocation failure at main+0x97da5c).
-    # Apply to cached provisional profiles too; keep the mobile memory budget unchanged.
-    if mac and provisional and app == 0x0100D0B01C4F4002:
+    # Apply to cached provisional profiles on macOS, iOS and iPadOS.
+    if provisional and app == 0x0100D0B01C4F4002:
         pc = rfs.source(game) / 'common/textures/PC_TXN_UP'
         if all((pc / name).is_file() for name in ('txn_up.1.pak', 'txn_up.2.pak', 'paks/TextureData.pak')):
-            changes = {k: (v, 'MGS4 PC textures: tested macOS guest memory budget')
+            changes = {k: (v, 'MGS4 PC textures: expanded guest memory budget (validated on macOS; experimental on iOS)')
                        for k, v in (('mem_reserve', '0x160000000'), ('app_pool', '0x14D500000'))
                        if int(g.get(k), 0) < int(v, 0)}
             if changes: g = set_keys(g, changes, 'MGS4 PC texture memory')
