@@ -10,8 +10,9 @@ struct SettingRow: View {
     let s: Setting
     @ObservedObject var m: LauncherModel
 
-    private var locked: Bool { m.fixed.contains(s.env) }
+    private var locked: Bool { m.fixed.contains(s.env) || m.pcTexturesMissing(s) }
     private var note: String {
+        if m.pcTexturesMissing(s) { return "" }
         guard locked else { return s.note }
         return (s.note.isEmpty ? "" : s.note + " · ") + (m.fromLaunch.contains(s.env) ? "Set at launch" : "Set by an env file")
     }
@@ -29,6 +30,7 @@ struct SettingRow: View {
     }
 
     var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
         Group {
             switch s.kind {
             case "choice":
@@ -56,5 +58,9 @@ struct SettingRow: View {
             }
         }
         .disabled(locked)
+        if m.pcTexturesMissing(s) {
+            Text("PC textures not installed.").font(.footnote).foregroundStyle(.red)
+        }
+        }
     }
 }
