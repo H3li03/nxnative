@@ -58,8 +58,8 @@ static void mgs4_fps_env(int fps) {
 #endif
     setenv("DM_PRESENT_HZ",hz,1);
     #if TARGET_OS_IOS
-    // Request display-driven presentation for the fixed ProMotion mode.
-    setenv("DM_PRESENT_LINK",fps == 120 ? "1" : "0",1);
+    // Request display-driven presentation for fixed 120 and unlocked high-refresh modes.
+    setenv("DM_PRESENT_LINK",(fps == 120 || fps == 0) ? "1" : "0",1);
 #else
     setenv("DM_PRESENT_LINK","0",1);
 #endif
