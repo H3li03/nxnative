@@ -53,6 +53,9 @@ static void mgs4_fps_env(int fps) {
     // Bound presentation as well as guest timing for fixed high-rate modes.
     // Keep the verified 30/60 guest limiter and genuinely uncapped mode unchanged.
     const char *hz = fps == 120 ? "120" : fps == 144 ? "144" : "0";
+#if TARGET_OS_OSX
+    if (fps == 144) hz = "0"; // use the unlocked presentation path; NVN supplies a separate software cap
+#endif
     setenv("DM_PRESENT_HZ",hz,1);
     setenv("DM_PRESENT_LINK","0",1);
     setenv("DM_PRESENT_SCREEN","0",1);

@@ -2729,6 +2729,22 @@ static const int *present_crop(const int win[4], int tw, int th, int lc[4]) {
 }
 NVN(nvnQueuePresentTexture, void, NVNqueue *q, NVNwindow *w, int idx) {
     (void)q; win_t *o = (win_t *)w; o->presents++;
+#if TARGET_OS_OSX
+    // MGS4 144: pace the unlocked path independently of display refresh.
+    static int mgs4_144 = -1;
+    static uint64_t mgs4_last;
+    if (mgs4_144 < 0) {
+        const char *mode = getenv("DM_MGS4_CUSTOM_FPS");
+        mgs4_144 = !strcmp(DM_GAME_ID, "0100D0B01C4F4002") && mode && !strcmp(mode, "144");
+        if (mgs4_144) LOG("[nvn] MGS4: independent 144 FPS software pacer");
+    }
+    if (mgs4_144 && !dm_detclock_enabled()) {
+        const uint64_t step = 1000000000ull / 144;
+        uint64_t now = now_ns();
+        if (mgs4_last && now < mgs4_last + step) sleep_until_ns(mgs4_last + step);
+        mgs4_last = now_ns();
+    }
+#endif
     dm_ue_cvar_tick();
     if (fps_high()) high_cap_tick();
     int movie = dm_movie_hz();
