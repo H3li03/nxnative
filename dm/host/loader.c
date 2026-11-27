@@ -49,8 +49,11 @@ static int mgs4_fps_mode(void) {
     die("MGS4: invalid FPS mode %s", e);
     return 60;
 }
-static void mgs4_fps_env(void) {
-    setenv("DM_PRESENT_HZ","0",1);
+static void mgs4_fps_env(int fps) {
+    // Bound presentation as well as guest timing for fixed high-rate modes.
+    // Keep the verified 30/60 guest limiter and genuinely uncapped mode unchanged.
+    const char *hz = fps == 120 ? "120" : fps == 144 ? "144" : "0";
+    setenv("DM_PRESENT_HZ",hz,1);
     setenv("DM_PRESENT_LINK","0",1);
     setenv("DM_PRESENT_SCREEN","0",1);
     setenv("DM_SCREEN_MATCH","0",1);
@@ -820,7 +823,7 @@ static void map_image(module_t *m, const char *dir) {
             snprintf(sx0, sizeof sx0, "__dm%s%s%dx0", g, m->name, fps);
             x0 = getsectiondata(IMAGE_MH, "__TEXT", sx0, &z0);
             if (!x0) die("MGS4: signed FPS variant %s missing", sx0);
-            mgs4_fps_env();
+            mgs4_fps_env(fps);
             LOG("MGS4: selected %d FPS (0 = unlocked)", fps);
         }
         // Resident Evil's code pages are signed __TEXT. Select a prebuilt, signed text variant instead of writing into the mapped code.
@@ -922,7 +925,7 @@ static void mgs4_timing_profile(module_t *m) {
     if (fps) w[0x10e4/4]=0x52800014u|((1000000u/(unsigned)fps)<<5);
     else w[0x1214/4]=0x14000015;
     __builtin___clear_cache((char *)m->base,(char *)m->base+0x1000000);
-    mgs4_fps_env();
+    mgs4_fps_env(fps);
     LOG("MGS4: selected %d FPS (0 = unlocked)",fps);
 }
 
