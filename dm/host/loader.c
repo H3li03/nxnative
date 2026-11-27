@@ -922,8 +922,8 @@ static void mgs4_timing_profile(module_t *m) {
     memcpy(m->base+0xfff180,cave,sizeof cave);
     w[0x8d2fd0/4]=0x141cb06c;
     int fps=mgs4_fps_mode();
-    if (fps) w[0x10e4/4]=0x52800014u|((1000000u/(unsigned)fps)<<5);
-    else w[0x1214/4]=0x14000015;
+    if (fps && fps != 144) w[0x10e4/4]=0x52800014u|((1000000u/(unsigned)fps)<<5);
+    else w[0x1214/4]=0x14000015; // 144 uses the unlocked guest wait path, paced by host at 144 Hz
     __builtin___clear_cache((char *)m->base,(char *)m->base+0x1000000);
     mgs4_fps_env(fps);
     LOG("MGS4: selected %d FPS (0 = unlocked)",fps);
